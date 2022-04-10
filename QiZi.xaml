@@ -1,0 +1,14 @@
+﻿<UserControl x:Name="qizi" x:Class="Chess.QiZi"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chess"
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="70">
+    <Grid MouseLeftButtonUp="Image_MouseLeftButtonUp">
+        <Image x:Name="image" HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Stretch="None" Panel.ZIndex="5"/>
+        <Image x:Name="yuxuankuang" HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Source="/picture/预选框.png" Panel.ZIndex="2"/>
+
+    </Grid>
+</UserControl>

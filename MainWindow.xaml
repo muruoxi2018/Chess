@@ -1,0 +1,34 @@
+﻿<Window x:Class="Chess.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chess"
+        mc:Ignorable="d"
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" d:DesignWidth="854" d:DesignHeight="871" Margin="0,0,0,0" Width="900" Height="870" Loaded="MainFormLoaded">
+    <Grid x:Name="grid" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Grid.Background>
+            <RadialGradientBrush>
+                <GradientStop Color="#FF014B19" Offset="1"/>
+                <GradientStop Color="Lime" Offset="0"/>
+                <GradientStop Color="#FFB0F733" Offset="0.383"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+        <Image x:Name="qipan" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Top" MouseUp="QiPanMouseUp"/>
+        <Canvas x:Name="qiziCanvas">
+            <Image x:Name="qizi0" Source="/picture/红兵.png" Stretch="None" Cursor="Hand" Panel.ZIndex="1" Width="70" Height="70" Visibility="Visible" Uid="1" RenderTransformOrigin="0.5,0.5" Canvas.Left="212" Canvas.Top="266">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0" Y="0"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </Canvas>
+
+        <Button x:Name="ResetBtn" Content="Button" HorizontalAlignment="Left" Margin="702,28,0,0" VerticalAlignment="Top" Width="46" Panel.ZIndex="102" Background="#FFDDDDDD" Click="ResetBtnClick"/>
+        <TextBox x:Name="testbox1" HorizontalAlignment="Left" Margin="30,765,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="737" Height="34"/>
+    </Grid>
+</Window>

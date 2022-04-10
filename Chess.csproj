@@ -1,0 +1,107 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="picture\原位置.png" />
+    <None Remove="picture\将军.png" />
+    <None Remove="picture\棋盘1覆膜.png" />
+    <None Remove="picture\棋盘（红上）.png" />
+    <None Remove="picture\棋盘（黑上）.png" />
+    <None Remove="picture\红仕.png" />
+    <None Remove="picture\红兵.png" />
+    <None Remove="picture\红帅.png" />
+    <None Remove="picture\红炮.png" />
+    <None Remove="picture\红相.png" />
+    <None Remove="picture\红车.png" />
+    <None Remove="picture\红马.png" />
+    <None Remove="picture\象棋棋子阴影.png" />
+    <None Remove="picture\路径点.png" />
+    <None Remove="picture\预选框.png" />
+    <None Remove="picture\黑卒.png" />
+    <None Remove="picture\黑士.png" />
+    <None Remove="picture\黑将.png" />
+    <None Remove="picture\黑炮.png" />
+    <None Remove="picture\黑象.png" />
+    <None Remove="picture\黑车.png" />
+    <None Remove="picture\黑马.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Dictionary1.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="picture\原位置.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\将军.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\棋盘1覆膜.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\棋盘（红上）.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\棋盘（黑上）.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\红仕.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\红兵.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\红帅.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\红炮.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\红相.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\红车.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\红马.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\象棋棋子阴影.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\路径点.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\预选框.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\黑卒.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\黑士.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\黑将.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\黑炮.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\黑象.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\黑车.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\黑马.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>
