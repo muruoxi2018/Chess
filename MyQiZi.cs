@@ -39,6 +39,10 @@ namespace Chess
 
         private void Image_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            foreach (QiZi item in GlobalValue.myqz)
+            {
+                item.Deselect();
+            }
             select();
         }
 
