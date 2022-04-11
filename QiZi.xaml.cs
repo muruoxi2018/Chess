@@ -37,6 +37,7 @@ namespace Chess
         public QiZi(int id)
         {
             InitializeComponent();
+            if ((id < 0) || (id > 31)) return;
             Qiziid = id;
             string path = Environment.CurrentDirectory + "\\picture\\" + GlobalValue.qzimage[Qiziid] + ".png";
             BitmapImage bi = new(new Uri(path, UriKind.Absolute));

@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-D:\CSHARP\Chess\obj\Debug\net5.0-windows\
+E:\source\repos\Chess\obj\Debug\net5.0-windows\
 Chess
 none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
-D:\CSHARP\Chess\App.xaml
+E:\source\repos\Chess\App.xaml
 3-389527592
 
-9838913954
+7-2118577891
 193-1891726104
 MainWindow.xaml;PathPoint.xaml;QiZi.xaml;
 

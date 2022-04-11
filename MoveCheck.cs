@@ -7,7 +7,7 @@ namespace Chess
         public static int Getpath(int thisqz)   // 查找棋子可移动的路径，并标记
 
         {
-            GlobalValue.qzpath.Initialize();//  清除所有棋子路径数据
+            //GlobalValue.qzpath.Initialize();//  清除所有棋子路径数据
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
@@ -17,13 +17,13 @@ namespace Chess
 
                     if (QzMoveCheck(thisqz, i, j))
                     {
-                        GlobalValue.qzpath[i, j] = true;
+                        //GlobalValue.qzpath[i, j] = true;
                         GlobalValue.pathImage[i, j].hasPoint = true;
                     }
                 }
             }
 
-            GlobalValue.qzpath[GlobalValue.myqz[thisqz].Col, GlobalValue.myqz[thisqz].Row] = false;
+            //GlobalValue.qzpath[GlobalValue.myqz[thisqz].Col, GlobalValue.myqz[thisqz].Row] = false;
             GlobalValue.pathImage[GlobalValue.myqz[thisqz].Col, GlobalValue.myqz[thisqz].Row].hasPoint = false;
             return 0;
         }
@@ -53,7 +53,7 @@ namespace Chess
                     {
                         return false;
                     }
-                    if (mypx == m)  // 车垂直移动时
+                    if (mypx == m)  // 车的垂直方向
                     {
                         for (int i = 0; i <= 31; i++)
                         {
@@ -69,7 +69,7 @@ namespace Chess
                             }
                         }
                     }
-                    if (mypy == n)  // 车水平移动时
+                    if (mypy == n)  // 车的水平方向
                     {
                         for (int i = 0; i <= 31; i++)
                         {
@@ -361,7 +361,7 @@ namespace Chess
                     }
                     break;
                 default:
-                    break;
+                    return false;
             }
 
             if ((MoveQiZi != 4) && (MoveQiZi != 20) && (GlobalValue.myqz[4].Col == GlobalValue.myqz[20].Col) && (mypx == GlobalValue.myqz[4].Col))       // 将帅之间只有一个棋子时，该棋子不可以平移
@@ -387,6 +387,7 @@ namespace Chess
         // 判断是不是同一方棋子
         public static bool IsTongBang(int qz1, int qz2)
         {
+            if ((qz1 < 0) || (qz2 < 0)) return false;
             return ((qz1 <= 15) && (qz2 <= 15)) || ((qz1 >= 16) && (qz2 >= 16));
         }
         public static bool IsIsTongBang(int m0, int n0, int m1, int n1)

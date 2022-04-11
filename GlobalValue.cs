@@ -19,7 +19,7 @@ namespace Chess
         public static int CurrentQiZi;
         public const bool BLACKSIDE = false;
         public const bool REDSIDE = true;
-        public static bool sidetag,gameover;
+        public static bool sidetag, gameover;
         public const float girdwidth = 67.5f;   //棋盘格为 67.5*67.5
         public static string[] qzimage = {
             "黑将", "黑士", "黑士", "黑象", "黑象", "黑马", "黑马", "黑车", "黑车", "黑炮", "黑炮", "黑卒", "黑卒", "黑卒", "黑卒", "黑卒",
@@ -51,7 +51,7 @@ namespace Chess
 
         public static string[] CnNumber = { "", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
 
-        public static Image[] images;
+        //public static Image[] images;
 
     }
 }

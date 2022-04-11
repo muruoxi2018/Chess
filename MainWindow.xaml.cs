@@ -5,16 +5,20 @@ using System.Windows.Input;
 namespace Chess
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// 主窗口类
     /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-
         }
-
+        
+        /// <summary>
+        /// 主窗口载入时，初始化自定义控件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainFormLoaded(object sender, RoutedEventArgs e)
         {
             qizi0.SetValue(VisibilityProperty, Visibility.Collapsed);
@@ -34,6 +38,11 @@ namespace Chess
             Reset();
         }
 
+        /// <summary>
+        /// 点击棋盘空白位置时的处理，暂时没用。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QiPanMouseUp(object sender, MouseButtonEventArgs e)  // 点击棋盘空位置时
         {
             double x0 = 110.0;
@@ -52,9 +61,14 @@ namespace Chess
             {
                 return;
             }
-
-
+            testbox1.Text = string.Format("Col={0},Row={1},qipan[]={2}",m,n,GlobalValue.qipan[m, n]);
         }
+
+        /// <summary>
+        /// 重新开局
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
          private void ResetBtnClick(object sender, RoutedEventArgs e)
         {
             Reset();
@@ -74,21 +88,12 @@ namespace Chess
                     GlobalValue.qipan[i, j] = -1;
                     GlobalValue.pathImage[i, j].SetHidden();
                     GlobalValue.pathImage[i, j].hasPoint = false;
-
-                    //GlobalValue.pathImage[i, j].hasPoint = true;
-                    //GlobalValue.pathImage[i, j].SetVisable();
                 }
             }
-            //Console.WriteLine(GlobalValue.qipan.ToString());
-
             for (int i = 0; i < 32; i++)
             {
-
                 GlobalValue.qipan[GlobalValue.myqz[i].Col, GlobalValue.myqz[i].Row] = i;
-
             }
-
-
         }
     }
 }

@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="GlobalValueBase.cs" />
+    <Compile Remove="MyQiZi.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="picture\原位置.png" />
     <None Remove="picture\将军.png" />
     <None Remove="picture\棋盘1覆膜.png" />
