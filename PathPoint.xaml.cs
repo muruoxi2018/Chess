@@ -13,6 +13,7 @@ namespace Chess
         public bool hasPoint { get; set; }  // 是否是有效的走棋路径点
         public int Col { get; set; }    // 路径点的列坐标
         public int Row { get; set; }    // 路径点的行坐标
+
         /// <summary>
         /// 棋子移动目的地标记类，
         /// 在棋子可移动到的有效位置，设置标记。
@@ -27,12 +28,27 @@ namespace Chess
             if (x > 8) return;
             if (y < 0) return;
             if (y > 9) return;
-            SetValue(Canvas.LeftProperty, GlobalValue.qipanGridX[x] + 5.0);
-            SetValue(Canvas.TopProperty, GlobalValue.qipanGridY[y] + 5.0);
             hasPoint = false;
+            Setposition(x, y);
+
+        }
+
+        /// <summary>
+        /// 设置本棋子的坐标位置
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void Setposition(int x, int y)
+        {
             Col = x;
             Row = y;
-
+            if (GlobalValue.qipanfanzhuan)
+            {
+                x = 8 - x;
+                y = 9 - y;
+            }
+            SetValue(Canvas.LeftProperty, GlobalValue.qipanGridX[x] + 5.0);
+            SetValue(Canvas.TopProperty, GlobalValue.qipanGridY[y] + 5.0);
         }
 
         /// <summary>
@@ -106,7 +122,6 @@ namespace Chess
 
         }
 
-
         /// <summary>
         /// 棋子移动的处理
         /// </summary>
@@ -163,7 +178,7 @@ namespace Chess
             //AddJilu(QiZi, x0, y0, m, n, DieQz);
 
             GlobalValue.sidetag = !GlobalValue.sidetag;  // 变换走棋方
-            GlobalValue.myqz[QiZi].Deselect();
+            GlobalValue.myqz[QiZi].PutDown();
 
             GlobalValue.CurrentQiZi = 100;
             // 取消棋子预选状态

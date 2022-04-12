@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Effects;
+using System.Windows.Media;
 
 namespace Chess
 {
@@ -73,7 +74,7 @@ namespace Chess
         public void Deselect()
         {
             Selected = false;
-            image.SetValue(EffectProperty, null);
+            PutDown();
             yuxuankuang.Visibility = Visibility.Hidden;
         }
         /// <summary>
@@ -82,6 +83,10 @@ namespace Chess
         public void Select()
         {
             Selected = true;
+            TransformGroup group = image.FindResource("UserControlRenderTransform1") as TransformGroup;
+            ScaleTransform scaler = group.Children[0] as ScaleTransform;
+            scaler.ScaleX *= 1.01;
+            scaler.ScaleY *= 1.01;
             image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, Opacity = 0.7 });
             yuxuankuang.Visibility = Visibility.Visible;
             GlobalValue.CurrentQiZi = GetId();
@@ -93,6 +98,7 @@ namespace Chess
                     GlobalValue.pathImage[i, j].SetVisable();
                 }
             }
+            
 
         }
 
@@ -102,6 +108,11 @@ namespace Chess
         public void PutDown()
         {
             image.SetValue(EffectProperty, null);
+            TransformGroup group = image.FindResource("UserControlRenderTransform1") as TransformGroup;
+            ScaleTransform scaler = group.Children[0] as ScaleTransform;
+            scaler.ScaleX = 1.0;
+            scaler.ScaleY = 1.0;
+            
         }
 
         /// <summary>
@@ -122,6 +133,11 @@ namespace Chess
         {
             Col = x;
             Row = y;
+            if (GlobalValue.qipanfanzhuan)
+            {
+                x = 8 - x;
+                y = 9 - y;
+            }
             SetValue(Canvas.LeftProperty, GlobalValue.qipanGridX[x]);
             SetValue(Canvas.TopProperty, GlobalValue.qipanGridY[y]);
         }
