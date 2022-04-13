@@ -18,9 +18,9 @@ namespace Chess
 
         public int Col { get; set; }  // 棋子的列坐标
         public int Row { get; set; }  // 棋子的行坐标
-        public int Qiziid { get; set; }  // 棋子编号
+        public int QiziId { get; set; }  // 棋子编号
         public bool Selected { get; set; }  // 棋子的选中状态
-        public bool Pcolor { get; set; }  // 棋子属于哪一方，false：黑棋，true：红棋
+        public bool SideColor { get; set; }  // 棋子属于哪一方，false：黑棋，true：红棋
 
         /// <summary>
         /// 棋子类构造函数
@@ -38,16 +38,19 @@ namespace Chess
         public QiZi(int id)
         {
             InitializeComponent();
-            if ((id < 0) || (id > 31)) return;
-            Qiziid = id;
-            string path = Environment.CurrentDirectory + "\\picture\\" + GlobalValue.qzimage[Qiziid] + ".png";
+            if (id is < 0 or > 31)
+            {
+                return;
+            }
+            QiziId = id;
+            string path = Environment.CurrentDirectory + "\\picture\\" + GlobalValue.QiZiImageFileName[QiziId] + ".png";
             BitmapImage bi = new(new Uri(path, UriKind.Absolute));
             bi.Freeze();
             image.Source = bi;
-            init_col = GlobalValue.qiziInitPosition[id, 0];
-            init_row = GlobalValue.qiziInitPosition[id, 1];
+            init_col = GlobalValue.QiZiInitPosition[id, 0];
+            init_row = GlobalValue.QiZiInitPosition[id, 1];
             Setposition(init_col, init_row);
-            Pcolor = id < 16 ? GlobalValue.BLACKSIDE : GlobalValue.REDSIDE;
+            SideColor = id >= 16;
             yuxuankuang.Visibility = Visibility.Hidden;
         }
 
@@ -58,11 +61,11 @@ namespace Chess
         /// <param name="e"></param>
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            foreach (QiZi item in GlobalValue.myqz)
+            foreach (QiZi item in GlobalValue.QiZiArray)
             {
                 item.Deselect();
             }
-            if (Pcolor == GlobalValue.sidetag)
+            if (SideColor == GlobalValue.SideTag)
             {
                 Select();
             }
@@ -83,25 +86,19 @@ namespace Chess
         public void Select()
         {
             Selected = true;
-            TransformGroup group = image.FindResource("UserControlRenderTransform1") as TransformGroup;
-            ScaleTransform scaler = group.Children[0] as ScaleTransform;
-            scaler.ScaleX *= 1.01;
-            scaler.ScaleY *= 1.01;
-            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, Opacity = 0.7 });
+            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 15, Opacity = 0.6 });
             yuxuankuang.Visibility = Visibility.Visible;
             GlobalValue.CurrentQiZi = GetId();
-            MoveCheck.Getpath(GlobalValue.CurrentQiZi);
+            _ = MoveCheck.Getpath(GlobalValue.CurrentQiZi);
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
                 {
-                    GlobalValue.pathImage[i, j].SetVisable();
+                    GlobalValue.PathPointImage[i, j].SetVisable();
                 }
             }
             GlobalValue.YuanWeiZhi.Setposition(Col, Row);
             GlobalValue.YuanWeiZhi.ShowYuanWeiZhiImage();
-            
-
         }
 
         /// <summary>
@@ -110,11 +107,7 @@ namespace Chess
         public void PutDown()
         {
             image.SetValue(EffectProperty, null);
-            TransformGroup group = image.FindResource("UserControlRenderTransform1") as TransformGroup;
-            ScaleTransform scaler = group.Children[0] as ScaleTransform;
-            scaler.ScaleX = 1.0;
-            scaler.ScaleY = 1.0;
-            
+            Scall(1);
         }
 
         /// <summary>
@@ -123,7 +116,7 @@ namespace Chess
         /// <returns></returns>
         public int GetId()
         {
-            return Qiziid;
+            return QiziId;
         }
 
         /// <summary>
@@ -135,13 +128,13 @@ namespace Chess
         {
             Col = x;
             Row = y;
-            if (GlobalValue.qipanfanzhuan)
+            if (GlobalValue.QiPanFanZhuan)
             {
                 x = 8 - x;
                 y = 9 - y;
             }
-            SetValue(Canvas.LeftProperty, GlobalValue.qipanGridX[x]);
-            SetValue(Canvas.TopProperty, GlobalValue.qipanGridY[y]);
+            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x]);
+            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
         }
 
         /// <summary>
@@ -152,6 +145,20 @@ namespace Chess
             Setposition(init_col, init_row);
             Deselect();
             Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// 缩放
+        /// </summary>
+        /// <param name="scaller">缩放参数，1.0=原始尺寸</param>
+        public void Scall(double scaller)
+        {
+            if (scaller is > 0 and < 10)
+            {
+                TransformGroup group = image.FindResource("UserControlRenderTransform1") as TransformGroup;
+                ScaleTransform scaler = group.Children[0] as ScaleTransform;
+                scaler.ScaleX = scaller;
+                scaler.ScaleY = scaller;
+            }
         }
         public void FanZhuanPosition()
         {

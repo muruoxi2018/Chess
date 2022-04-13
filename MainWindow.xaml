@@ -6,15 +6,10 @@
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
         Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" d:DesignWidth="854" d:DesignHeight="871" Margin="0,0,0,0" Width="900" Height="870" Loaded="MainFormLoaded">
-    <Grid x:Name="grid" VerticalAlignment="Top" HorizontalAlignment="Left">
-        <Grid.Background>
-            <RadialGradientBrush>
-                <GradientStop Color="#FF014B19" Offset="1"/>
-                <GradientStop Color="Lime" Offset="0"/>
-                <GradientStop Color="#FFB0F733" Offset="0.383"/>
-            </RadialGradientBrush>
-        </Grid.Background>
-        <Image x:Name="qipan" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Top" MouseUp="QiPanMouseUp"/>
+    <Grid x:Name="grid" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#FF07475F">
+        <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Top" MouseUp="QiPanMouseUp" Visibility="Visible" Opacity="0.9"/>
+        <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Opacity="0.9" />
+
         <Canvas x:Name="qiziCanvas">
             <Image x:Name="qizi0" Source="/picture/红兵.png" Stretch="None" Cursor="Hand" Panel.ZIndex="1" Width="70" Height="70" Visibility="Visible" Uid="1" RenderTransformOrigin="0.5,0.5" Canvas.Left="212" Canvas.Top="266">
                 <Image.RenderTransform>
@@ -29,7 +24,6 @@
         </Canvas>
 
         <Button x:Name="ResetBtn" Content="开局" HorizontalAlignment="Left" Margin="600,28,0,0" VerticalAlignment="Top" Width="70" Panel.ZIndex="102" Background="#FFDDDDDD" Click="ResetBtnClick"/>
-        <TextBox x:Name="testbox1" HorizontalAlignment="Left" Margin="30,765,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="737" Height="34"/>
         <Button Content="翻转棋盘" HorizontalAlignment="Left" Margin="425,28,0,0" VerticalAlignment="Top" Width="70" Click="OnFanZhuanQiPan"/>
     </Grid>
 </Window>

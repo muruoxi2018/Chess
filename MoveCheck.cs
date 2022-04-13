@@ -12,13 +12,13 @@ namespace Chess
             {
                 for (int j = 0; j <= 9; j++)
                 {
-                    GlobalValue.pathImage[i, j].hasPoint = false;
-                    GlobalValue.pathImage[i, j].SetHidden();
+                    GlobalValue.PathPointImage[i, j].HasPoint = false;
+                    GlobalValue.PathPointImage[i, j].SetHidden();
 
                 }
             }
             _ = QzMoveCheck(thisqz);
-            GlobalValue.pathImage[GlobalValue.myqz[thisqz].Col, GlobalValue.myqz[thisqz].Row].hasPoint = false;
+            GlobalValue.PathPointImage[GlobalValue.QiZiArray[thisqz].Col, GlobalValue.QiZiArray[thisqz].Row].HasPoint = false;
             return 0;
         }
 
@@ -33,8 +33,8 @@ namespace Chess
             {
                 return false;
             }
-            int mypx = GlobalValue.myqz[MoveQiZi].Col;
-            int mypy = GlobalValue.myqz[MoveQiZi].Row;
+            int MoveQiZi_Col = GlobalValue.QiZiArray[MoveQiZi].Col;
+            int MoveQiZi_Row = GlobalValue.QiZiArray[MoveQiZi].Row;
             int m = 0, n = 0;
             int side = 0;
 
@@ -46,63 +46,63 @@ namespace Chess
                 case 24:    // 车的移动  ================================================
                     if (!JustOneIsThis(MoveQiZi))
                     {
-                        for (int i = mypx - 1; i >= 0; i--) // 同一行向左找
+                        for (int i = MoveQiZi_Col - 1; i >= 0; i--) // 同一行向左找
                         {
-                            if (GlobalValue.qipan[i, mypy] == -1)
+                            if (GlobalValue.QiPan[i, MoveQiZi_Row] == -1)
                             {
-                                GlobalValue.pathImage[i, mypy].hasPoint = true;
+                                GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
                             }
                             else
                             {
-                                if (!IsTongBang(MoveQiZi, GlobalValue.qipan[i, mypy]))
+                                if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[i, MoveQiZi_Row]))
                                 {
-                                    GlobalValue.pathImage[i, mypy].hasPoint = true;
+                                    GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
                                 }
                                 break;
                             }
                         }
-                        for (int i = mypx + 1; i <= 8; i++) // 同一行向右找
+                        for (int i = MoveQiZi_Col + 1; i <= 8; i++) // 同一行向右找
                         {
-                            if (GlobalValue.qipan[i, mypy] == -1)
+                            if (GlobalValue.QiPan[i, MoveQiZi_Row] == -1)
                             {
-                                GlobalValue.pathImage[i, mypy].hasPoint = true;
+                                GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
                             }
                             else
                             {
-                                if (!IsTongBang(MoveQiZi, GlobalValue.qipan[i, mypy]))
+                                if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[i, MoveQiZi_Row]))
                                 {
-                                    GlobalValue.pathImage[i, mypy].hasPoint = true;
+                                    GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
                                 }
                                 break;
                             }
                         }
                     }
-                    for (int i = mypy - 1; i >= 0; i--) // 同一列向上找
+                    for (int i = MoveQiZi_Row - 1; i >= 0; i--) // 同一列向上找
                     {
-                        if (GlobalValue.qipan[mypx, i] == -1)
+                        if (GlobalValue.QiPan[MoveQiZi_Col, i] == -1)
                         {
-                            GlobalValue.pathImage[mypx, i].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
                         }
                         else
                         {
-                            if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx, i]))
+                            if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, i]))
                             {
-                                GlobalValue.pathImage[mypx, i].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
                             }
                             break;
                         }
                     }
-                    for (int i = mypy + 1; i <= 9; i++) // 同一列向下找
+                    for (int i = MoveQiZi_Row + 1; i <= 9; i++) // 同一列向下找
                     {
-                        if (GlobalValue.qipan[mypx, i] == -1)
+                        if (GlobalValue.QiPan[MoveQiZi_Col, i] == -1)
                         {
-                            GlobalValue.pathImage[mypx, i].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
                         }
                         else
                         {
-                            if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx, i]))
+                            if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, i]))
                             {
-                                GlobalValue.pathImage[mypx, i].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
                             }
                             break;
                         }
@@ -119,51 +119,51 @@ namespace Chess
                         break;
                     }
                     // 八个方向，逐个检查
-                    if ((mypy > 1) && (GlobalValue.qipan[mypx, mypy - 1] == -1)) // 检查上方，如不在边上，且没蹩马腿
+                    if (MoveQiZi_Row > 1 && GlobalValue.QiPan[MoveQiZi_Col, MoveQiZi_Row - 1] == -1) // 检查上方，如不在边上，且没蹩马腿
                     {
-                        if ((mypx > 0) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 1, mypy - 2])))
+                        if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row - 2]))
                         {
-                            GlobalValue.pathImage[mypx - 1, mypy - 2].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row - 2].HasPoint = true;
                         }
-                        if ((mypx < 8) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 1, mypy - 2])))
+                        if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row - 2]))
                         {
-                            GlobalValue.pathImage[mypx + 1, mypy - 2].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row - 2].HasPoint = true;
                         }
                     }
 
-                    if ((mypy < 8) && (GlobalValue.qipan[mypx, mypy + 1] == -1)) // 检查下方，如不在边上，且没蹩马腿
+                    if (MoveQiZi_Row < 8 && GlobalValue.QiPan[MoveQiZi_Col, MoveQiZi_Row + 1] == -1) // 检查下方，如不在边上，且没蹩马腿
                     {
-                        if ((mypx > 0) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 1, mypy + 2])))
+                        if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row + 2]))
                         {
-                            GlobalValue.pathImage[mypx - 1, mypy + 2].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row + 2].HasPoint = true;
                         }
-                        if ((mypx < 8) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 1, mypy + 2])))
+                        if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row + 2]))
                         {
-                            GlobalValue.pathImage[mypx + 1, mypy + 2].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row + 2].HasPoint = true;
                         }
                     }
 
-                    if ((mypx > 1) && (GlobalValue.qipan[mypx - 1, mypy] == -1)) // 检查左方，如不在边上，且没蹩马腿
+                    if (MoveQiZi_Col > 1 && GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row] == -1) // 检查左方，如不在边上，且没蹩马腿
                     {
-                        if ((mypy > 0) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 2, mypy - 1])))
+                        if (MoveQiZi_Row > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 2, MoveQiZi_Row - 1]))
                         {
-                            GlobalValue.pathImage[mypx - 2, mypy - 1].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col - 2, MoveQiZi_Row - 1].HasPoint = true;
                         }
-                        if ((mypy < 9) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 2, mypy + 1])))
+                        if (MoveQiZi_Row < 9 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 2, MoveQiZi_Row + 1]))
                         {
-                            GlobalValue.pathImage[mypx - 2, mypy + 1].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col - 2, MoveQiZi_Row + 1].HasPoint = true;
                         }
                     }
 
-                    if ((mypx < 7) && (GlobalValue.qipan[mypx + 1, mypy] == -1)) // 检查右方，如不在边上，且没蹩马腿
+                    if (MoveQiZi_Col < 7 && GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row] == -1) // 检查右方，如不在边上，且没蹩马腿
                     {
-                        if ((mypy > 0) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 2, mypy - 1])))
+                        if (MoveQiZi_Row > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 2, MoveQiZi_Row - 1]))
                         {
-                            GlobalValue.pathImage[mypx + 2, mypy - 1].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col + 2, MoveQiZi_Row - 1].HasPoint = true;
                         }
-                        if ((mypy < 9) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 2, mypy + 1])))
+                        if (MoveQiZi_Row < 9 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 2, MoveQiZi_Row + 1]))
                         {
-                            GlobalValue.pathImage[mypx + 2, mypy + 1].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col + 2, MoveQiZi_Row + 1].HasPoint = true;
                         }
                     }
                     break;
@@ -172,7 +172,7 @@ namespace Chess
                 case 4:
                 case 19:
                 case 20: // 相的移动 ================================================
-                    if (mypy <= 4) // 如果是上方相，则上下边界设定为0--4，下方相的边界设定为5--9
+                    if (MoveQiZi_Row <= 4) // 如果是上方相，则上下边界设定为0--4，下方相的边界设定为5--9
                     {
                         side = 5;
                     }
@@ -180,37 +180,37 @@ namespace Chess
                     {
                         break;
                     }
-                    if (mypy != 9 - side)  // 如果不在下边界上，则探查下方的可移动路径
+                    if (MoveQiZi_Row != 9 - side)  // 如果不在下边界上，则探查下方的可移动路径
                     {
-                        if (mypx > 0)
+                        if (MoveQiZi_Col > 0)
                         {
-                            if ((GlobalValue.qipan[mypx - 1, mypy + 1] == -1) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 2, mypy + 2]))) // 左下方
+                            if (GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row + 1] == -1 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 2, MoveQiZi_Row + 2])) // 左下方
                             {
-                                GlobalValue.pathImage[mypx - 2, mypy + 2].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col - 2, MoveQiZi_Row + 2].HasPoint = true;
                             }
                         }
-                        if (mypx < 8)
+                        if (MoveQiZi_Col < 8)
                         {
-                            if ((GlobalValue.qipan[mypx + 1, mypy + 1] == -1) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 2, mypy + 2]))) // 右下方
+                            if (GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row + 1] == -1 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 2, MoveQiZi_Row + 2])) // 右下方
                             {
-                                GlobalValue.pathImage[mypx + 2, mypy + 2].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col + 2, MoveQiZi_Row + 2].HasPoint = true;
                             }
                         }
                     }
-                    if (mypy != 5 - side)  // 如果不在上边界上，则探查上方的可移动路径
+                    if (MoveQiZi_Row != 5 - side)  // 如果不在上边界上，则探查上方的可移动路径
                     {
-                        if (mypx > 0)
+                        if (MoveQiZi_Col > 0)
                         {
-                            if ((GlobalValue.qipan[mypx - 1, mypy - 1] == -1) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 2, mypy - 2]))) // 左上方
+                            if (GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row - 1] == -1 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 2, MoveQiZi_Row - 2])) // 左上方
                             {
-                                GlobalValue.pathImage[mypx - 2, mypy - 2].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col - 2, MoveQiZi_Row - 2].HasPoint = true;
                             }
                         }
-                        if (mypx < 8)
+                        if (MoveQiZi_Col < 8)
                         {
-                            if ((GlobalValue.qipan[mypx + 1, mypy - 1] == -1) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 2, mypy - 2]))) // 右上方
+                            if (GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row - 1] == -1 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 2, MoveQiZi_Row - 2])) // 右上方
                             {
-                                GlobalValue.pathImage[mypx + 2, mypy - 2].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col + 2, MoveQiZi_Row - 2].HasPoint = true;
                             }
                         }
                     }
@@ -220,7 +220,7 @@ namespace Chess
                 case 17:
                 case 18: // 士的移动 ================================================
                     side = 0;
-                    if (mypy <= 4) // 如果是上方棋子，则上下边界设定为0--2，下方相的边界设定为7--9
+                    if (MoveQiZi_Row <= 4) // 如果是上方棋子，则上下边界设定为0--2，下方相的边界设定为7--9
                     {
                         side = 7;
                     }
@@ -228,37 +228,37 @@ namespace Chess
                     {
                         break;
                     }
-                    if (mypy != 9 - side)  // 如果不在下边界上，则探查下方的可移动路径
+                    if (MoveQiZi_Row != 9 - side)  // 如果不在下边界上，则探查下方的可移动路径
                     {
-                        if (mypx > 3)
+                        if (MoveQiZi_Col > 3)
                         {
-                            if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 1, mypy + 1])) // 左下方
+                            if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row + 1])) // 左下方
                             {
-                                GlobalValue.pathImage[mypx - 1, mypy + 1].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row + 1].HasPoint = true;
                             }
                         }
-                        if (mypx < 5)
+                        if (MoveQiZi_Col < 5)
                         {
-                            if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 1, mypy + 1])) // 右下方
+                            if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row + 1])) // 右下方
                             {
-                                GlobalValue.pathImage[mypx + 1, mypy + 1].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row + 1].HasPoint = true;
                             }
                         }
                     }
-                    if (mypy != 7 - side)  // 如果不在上边界上，则探查上方的可移动路径
+                    if (MoveQiZi_Row != 7 - side)  // 如果不在上边界上，则探查上方的可移动路径
                     {
-                        if (mypx > 3)
+                        if (MoveQiZi_Col > 3)
                         {
-                            if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 1, mypy - 1]))// 左上方
+                            if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row - 1]))// 左上方
                             {
-                                GlobalValue.pathImage[mypx - 1, mypy - 1].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row - 1].HasPoint = true;
                             }
                         }
-                        if (mypx < 5)
+                        if (MoveQiZi_Col < 5)
                         {
-                            if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 1, mypy - 1])) // 右上方
+                            if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row - 1])) // 右上方
                             {
-                                GlobalValue.pathImage[mypx + 1, mypy - 1].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row - 1].HasPoint = true;
                             }
                         }
                     }
@@ -266,59 +266,59 @@ namespace Chess
                 case 0:
                 case 16: // 将帅的移动 ================================================
                     side = 0;
-                    if (mypy <= 4) // 如果是上方棋子，则上下边界设定为0--2，下方相的边界设定为7--9
+                    if (MoveQiZi_Row <= 4) // 如果是上方棋子，则上下边界设定为0--2，下方相的边界设定为7--9
                     {
                         side = 7;
                     }
-                    if (mypy != (9 - side))  // 如果不在下边界上，则探查下方的可移动路径
+                    if (MoveQiZi_Row != (9 - side))  // 如果不在下边界上，则探查下方的可移动路径
                     {
-                        if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx, mypy + 1])) // 下方移一格
+                        if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, MoveQiZi_Row + 1])) // 下方移一格
                         {
-                            if (GlobalValue.myqz[0].Col != GlobalValue.myqz[16].Col)    // 如果将帅横向不同线
+                            if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅横向不同线
                             {
-                                GlobalValue.pathImage[mypx, mypy + 1].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row + 1].HasPoint = true;
                             }
                             else
                             {
                                 if (MoveQiZi == 0)
                                 {
-                                    for (int i = GlobalValue.myqz[0].Row + 2; i < GlobalValue.myqz[16].Row; i++)
+                                    for (int i = GlobalValue.QiZiArray[0].Row + 2; i < GlobalValue.QiZiArray[16].Row; i++)
                                     {
-                                        if (GlobalValue.qipan[mypx, i] != -1)
+                                        if (GlobalValue.QiPan[MoveQiZi_Col, i] != -1)
                                         {
-                                            GlobalValue.pathImage[mypx, mypy + 1].hasPoint = true;
+                                            GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row + 1].HasPoint = true;
                                             break;
                                         }
                                     }
                                 }
                                 if (MoveQiZi == 16)
                                 {
-                                    GlobalValue.pathImage[mypx, mypy + 1].hasPoint = true;
+                                    GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row + 1].HasPoint = true;
                                 }
                             }
                         }
                     }
-                    if (mypy != (7 - side))  // 如果不在上边界上，则探查上方的可移动路径
+                    if (MoveQiZi_Row != (7 - side))  // 如果不在上边界上，则探查上方的可移动路径
                     {
-                        if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx, mypy - 1]))// 上方移一格
+                        if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, MoveQiZi_Row - 1]))// 上方移一格
                         {
-                            if (GlobalValue.myqz[0].Col != GlobalValue.myqz[16].Col)    // 如果将帅横向不同线
+                            if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅横向不同线
                             {
-                                GlobalValue.pathImage[mypx, mypy - 1].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row - 1].HasPoint = true;
                             }
                             else
                             {
                                 if (MoveQiZi == 0)
                                 {
-                                    GlobalValue.pathImage[mypx, mypy - 1].hasPoint = true;
+                                    GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row - 1].HasPoint = true;
                                 }
                                 if (MoveQiZi == 16)
                                 {
-                                    for (int i = GlobalValue.myqz[0].Row + 1; i < GlobalValue.myqz[16].Row - 1; i++)
+                                    for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row - 1; i++)
                                     {
-                                        if (GlobalValue.qipan[mypx, i] != -1)
+                                        if (GlobalValue.QiPan[MoveQiZi_Col, i] != -1)
                                         {
-                                            GlobalValue.pathImage[mypx, mypy - 1].hasPoint = true;
+                                            GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row - 1].HasPoint = true;
                                             break;
                                         }
                                     }
@@ -326,57 +326,57 @@ namespace Chess
                             }
                         }
                     }
-                    if (mypx > 3)  // 如果不在左边界上，则探查左方的可移动路径
+                    if (MoveQiZi_Col > 3)  // 如果不在左边界上，则探查左方的可移动路径
                     {
-                        if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 1, mypy])) // 左方移一格
+                        if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row])) // 左方移一格
                         {
-                            if (((mypx - 1) == GlobalValue.myqz[0].Col) || ((mypx - 1) == GlobalValue.myqz[16].Col))    // 如果将帅横向移动一格
+                            if (((MoveQiZi_Col - 1) == GlobalValue.QiZiArray[0].Col) || ((MoveQiZi_Col - 1) == GlobalValue.QiZiArray[16].Col))    // 如果将帅横向移动一格
                             {
-                                for (int i = GlobalValue.myqz[0].Row + 1; i < GlobalValue.myqz[16].Row; i++)
+                                for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row; i++)
                                 {
-                                    if (GlobalValue.qipan[mypx - 1, i] != -1)
+                                    if (GlobalValue.QiPan[MoveQiZi_Col - 1, i] != -1)
                                     {
-                                        GlobalValue.pathImage[mypx - 1, mypy].hasPoint = true;
+                                        GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row].HasPoint = true;
                                         break;
                                     }
                                 }
                             }
                             else
                             {
-                                GlobalValue.pathImage[mypx - 1, mypy].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row].HasPoint = true;
                             }
                         }
 
                     }
-                    if (mypx < 5)  // 如果不在右边界上，则探查右方的可移动路径
+                    if (MoveQiZi_Col < 5)  // 如果不在右边界上，则探查右方的可移动路径
                     {
-                        if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 1, mypy])) // 右方移一格
+                        if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row])) // 右方移一格
                         {
-                            if (((mypx + 1) == GlobalValue.myqz[0].Col) || ((mypx + 1) == GlobalValue.myqz[16].Col))    // 如果将帅横向移动一格
+                            if (((MoveQiZi_Col + 1) == GlobalValue.QiZiArray[0].Col) || ((MoveQiZi_Col + 1) == GlobalValue.QiZiArray[16].Col))    // 如果将帅横向移动一格
                             {
-                                for (int i = GlobalValue.myqz[0].Row + 1; i < GlobalValue.myqz[16].Row; i++)
+                                for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row; i++)
                                 {
-                                    if (GlobalValue.qipan[mypx + 1, i] != -1)
+                                    if (GlobalValue.QiPan[MoveQiZi_Col + 1, i] != -1)
                                     {
-                                        GlobalValue.pathImage[mypx + 1, mypy].hasPoint = true;
+                                        GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row].HasPoint = true;
                                         break;
                                     }
                                 }
                             }
                             else
                             {
-                                GlobalValue.pathImage[mypx + 1, mypy].hasPoint = true;
+                                GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row].HasPoint = true;
                             }
                         }
                     }
 
                     int j;
-                    if ((GlobalValue.myqz[0].Col == GlobalValue.myqz[16].Col) && (mypx == m))      //  将帅前进吃子后不能见面
+                    if (GlobalValue.QiZiArray[0].Col == GlobalValue.QiZiArray[16].Col && MoveQiZi_Col == m)      //  将帅前进吃子后不能见面
                     {
                         j = 0;
-                        for (int i = Math.Min(GlobalValue.myqz[0].Row, GlobalValue.myqz[16].Row) + 1; i < Math.Max(GlobalValue.myqz[0].Row, GlobalValue.myqz[16].Row) - 1; i++)
+                        for (int i = Math.Min(GlobalValue.QiZiArray[0].Row, GlobalValue.QiZiArray[16].Row) + 1; i < Math.Max(GlobalValue.QiZiArray[0].Row, GlobalValue.QiZiArray[16].Row) - 1; i++)
                         {
-                            if (GlobalValue.qipan[mypx, i] != -1)
+                            if (GlobalValue.QiPan[MoveQiZi_Col, i] != -1)
                             {
                                 j++;
                             }
@@ -385,12 +385,12 @@ namespace Chess
                         {
                             return false;
                         }
-                        if ((MoveQiZi == 4) && (Math.Abs(GlobalValue.myqz[0].Row - n) == 1))
+                        if (MoveQiZi == 4 && Math.Abs(GlobalValue.QiZiArray[0].Row - n) == 1)
                         {
                             j = 0;
-                            for (int i = Math.Min(n, GlobalValue.myqz[16].Row) + 1; i < Math.Max(n, GlobalValue.myqz[16].Row) - 1; i++)
+                            for (int i = Math.Min(n, GlobalValue.QiZiArray[16].Row) + 1; i < Math.Max(n, GlobalValue.QiZiArray[16].Row) - 1; i++)
                             {
-                                if (GlobalValue.qipan[mypx, i] != -1)
+                                if (GlobalValue.QiPan[MoveQiZi_Col, i] != -1)
                                 {
                                     j++;
                                 }
@@ -400,12 +400,12 @@ namespace Chess
                                 return false;
                             }
                         }
-                        if ((MoveQiZi == 20) && (Math.Abs(GlobalValue.myqz[20].Row - n) == 1))
+                        if (MoveQiZi == 20 && Math.Abs(GlobalValue.QiZiArray[20].Row - n) == 1)
                         {
                             j = 0;
-                            for (int i = Math.Min(n, GlobalValue.myqz[4].Row) + 1; i < Math.Max(n, GlobalValue.myqz[4].Row) - 1; i++)
+                            for (int i = Math.Min(n, GlobalValue.QiZiArray[4].Row) + 1; i < Math.Max(n, GlobalValue.QiZiArray[4].Row) - 1; i++)
                             {
-                                if (GlobalValue.qipan[mypx, i] != -1)
+                                if (GlobalValue.QiPan[MoveQiZi_Col, i] != -1)
                                 {
                                     j++;
                                 }
@@ -424,67 +424,90 @@ namespace Chess
                     int gezi = 0; // 隔子计数
                     if (!JustOneIsThis(MoveQiZi))
                     {
-                        for (int i = mypx - 1; i >= 0; i--) // 同一行向左找
+                        for (int i = MoveQiZi_Col - 1; i >= 0; i--) // 同一行向左找
                         {
-                            if (GlobalValue.qipan[i, mypy] == -1)
+                            if (GlobalValue.QiPan[i, MoveQiZi_Row] == -1)
                             {
                                 if (gezi == 0)
-                                    GlobalValue.pathImage[i, mypy].hasPoint = true;
+                                {
+                                    GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                }
                             }
                             else
                             {
-                                if (!IsTongBang(MoveQiZi, GlobalValue.qipan[i, mypy]))
+                                if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[i, MoveQiZi_Row]))
                                 {
-                                    if (gezi == 1) GlobalValue.pathImage[i, mypy].hasPoint = true;
+                                    if (gezi == 1)
+                                    {
+                                        GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                    }
                                 }
                                 gezi++;
                             }
                         }
                         gezi = 0; // 隔子计数
-                        for (int i = mypx + 1; i <= 8; i++) // 同一行向右找
+                        for (int i = MoveQiZi_Col + 1; i <= 8; i++) // 同一行向右找
                         {
-                            if (GlobalValue.qipan[i, mypy] == -1)
+                            if (GlobalValue.QiPan[i, MoveQiZi_Row] == -1)
                             {
-                                if (gezi == 0) GlobalValue.pathImage[i, mypy].hasPoint = true;
+                                if (gezi == 0)
+                                {
+                                    GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                }
                             }
                             else
                             {
-                                if (!IsTongBang(MoveQiZi, GlobalValue.qipan[i, mypy]))
+                                if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[i, MoveQiZi_Row]))
                                 {
-                                    if (gezi == 1) GlobalValue.pathImage[i, mypy].hasPoint = true;
+                                    if (gezi == 1)
+                                    {
+                                        GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                    }
                                 }
                                 gezi++;
                             }
                         }
                     }
                     gezi = 0; // 隔子计数
-                    for (int i = mypy - 1; i >= 0; i--) // 同一列向上找
+                    for (int i = MoveQiZi_Row - 1; i >= 0; i--) // 同一列向上找
                     {
-                        if (GlobalValue.qipan[mypx, i] == -1)
+                        if (GlobalValue.QiPan[MoveQiZi_Col, i] == -1)
                         {
-                            if (gezi == 0) GlobalValue.pathImage[mypx, i].hasPoint = true;
+                            if (gezi == 0)
+                            {
+                                GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                            }
                         }
                         else
                         {
-                            if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx, i]))
+                            if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, i]))
                             {
-                                if (gezi == 1) GlobalValue.pathImage[mypx, i].hasPoint = true;
+                                if (gezi == 1)
+                                {
+                                    GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                                }
                             }
                             gezi++;
                         }
                     }
                     gezi = 0; // 隔子计数
-                    for (int i = mypy + 1; i <= 9; i++) // 同一列向下找
+                    for (int i = MoveQiZi_Row + 1; i <= 9; i++) // 同一列向下找
                     {
-                        if (GlobalValue.qipan[mypx, i] == -1)
+                        if (GlobalValue.QiPan[MoveQiZi_Col, i] == -1)
                         {
-                            if (gezi == 0) GlobalValue.pathImage[mypx, i].hasPoint = true;
+                            if (gezi == 0)
+                            {
+                                GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                            }
                         }
                         else
                         {
-                            if (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx, i]))
+                            if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, i]))
                             {
-                                if (gezi == 1) GlobalValue.pathImage[mypx, i].hasPoint = true;
+                                if (gezi == 1)
+                                {
+                                    GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                                }
                             }
                             gezi++;
                         }
@@ -494,65 +517,48 @@ namespace Chess
                 case 12:
                 case 13:
                 case 14:
-                case 15:
+                case 15: // 黑方卒的移动
+                    if (MoveQiZi_Row < 9 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, MoveQiZi_Row + 1])) // 下方一格
+                    {
+                        GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row + 1].HasPoint = true;
+                    }
+                    if (!JustOneIsThis(MoveQiZi) && MoveQiZi_Row <= 9 && MoveQiZi_Row > 4) // 水平一格
+                    {
+                        if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row]))
+                        {
+                            GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row].HasPoint = true;
+                        }
+
+                        if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row]))
+                        {
+                            GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row].HasPoint = true;
+                        }
+                    }
+                    break;
                 case 27:
                 case 28:
                 case 29:
                 case 30:
-                case 31:
-
-                    // 卒的移动 ================================================
-
-                    if (GlobalValue.myqz[MoveQiZi].Pcolor == GlobalValue.qipanfanzhuan)  // 上方兵卒的移动
+                case 31:// 红方兵的移动
+                    if (MoveQiZi_Row > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, MoveQiZi_Row - 1])) // 上方一格
                     {
-                        if ((mypy < 9) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx, mypy + 1]))) // 下方一格
+                        GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row - 1].HasPoint = true;
+                    }
+                    if (!JustOneIsThis(MoveQiZi) && MoveQiZi_Row >= 0 && MoveQiZi_Row < 5) // 水平一格
+                    {
+                        if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row]))
                         {
-                            GlobalValue.pathImage[mypx, mypy + 1].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row].HasPoint = true;
                         }
-                        if (!JustOneIsThis(MoveQiZi) && (mypy <= 9) && (mypy > 4)) // 水平一格
+
+                        if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row]))
                         {
-                            if ((mypx > 0) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 1, mypy])))
-                                GlobalValue.pathImage[mypx - 1, mypy].hasPoint = true;
-                            if ((mypx < 8) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 1, mypy])))
-                                GlobalValue.pathImage[mypx + 1, mypy].hasPoint = true;
+                            GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row].HasPoint = true;
                         }
                     }
-                    if (GlobalValue.myqz[MoveQiZi].Pcolor != GlobalValue.qipanfanzhuan)  // 上方兵卒的移动
-                    {
-                        if ((mypy > 0) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx, mypy - 1]))) // 上方一格
-                        {
-                            GlobalValue.pathImage[mypx, mypy - 1].hasPoint = true;
-                        }
-                        if (!JustOneIsThis(MoveQiZi) && (mypy >= 0) && (mypy < 5)) // 水平一格
-                        {
-                            if ((mypx > 0) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx - 1, mypy])))
-                                GlobalValue.pathImage[mypx - 1, mypy].hasPoint = true;
-                            if ((mypx < 8) && (!IsTongBang(MoveQiZi, GlobalValue.qipan[mypx + 1, mypy])))
-                                GlobalValue.pathImage[mypx + 1, mypy].hasPoint = true;
-                        }
-                    }
-
                     break;
                 default:
                     return false;
-            }
-
-            if ((MoveQiZi != 4) && (MoveQiZi != 20) && (GlobalValue.myqz[4].Col == GlobalValue.myqz[20].Col) && (mypx == GlobalValue.myqz[4].Col))       // 将帅之间只有一个棋子时，该棋子不可以平移
-            {
-                int j = 0;
-                for (int i = Math.Min(GlobalValue.myqz[4].Row, GlobalValue.myqz[20].Row) + 1; i < Math.Max(GlobalValue.myqz[4].Row, GlobalValue.myqz[20].Row) - 1; i++)
-                {
-                    if (GlobalValue.qipan[GlobalValue.myqz[4].Col, i] != -1)
-                    {
-                        j++;
-                    }
-                }
-                if ((j == 1) && (m != mypx))       //   将帅之间只有一个棋子时，该棋子不可以平移
-                {
-                    return false;
-
-                }
-
             }
             return true;
         }
@@ -560,8 +566,7 @@ namespace Chess
         // 判断是不是同一方棋子
         public static bool IsTongBang(int qz1, int qz2)
         {
-            if ((qz1 < 0) || (qz2 < 0)) return false;
-            return ((qz1 <= 15) && (qz2 <= 15)) || ((qz1 >= 16) && (qz2 >= 16));
+            return qz1 >= 0 && qz2 >= 0 && ((qz1 <= 15 && qz2 <= 15) || (qz1 >= 16 && qz2 >= 16));
         }
 
         /// <summary>
@@ -571,29 +576,23 @@ namespace Chess
         /// <returns>将帅同列时，如果本棋子是他们之间的唯一棋子，则返回ture。</returns>
         private static bool JustOneIsThis(int qz)
         {
-            if (GlobalValue.myqz[0].Col != GlobalValue.myqz[16].Col)    // 如果将帅不在同一列
+            if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅不在同一列
             {
                 return false;
             }
-            if (GlobalValue.myqz[qz].Col != GlobalValue.myqz[0].Col)    // 如果棋子不与将帅同列
+            if (GlobalValue.QiZiArray[qz].Col != GlobalValue.QiZiArray[0].Col)    // 如果棋子不与将帅同列
             {
                 return false;
             }
             int count = 0;
-            for (int i = GlobalValue.myqz[0].Row + 1; i < GlobalValue.myqz[16].Row; i++)
+            for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row; i++)
             {
-                if (GlobalValue.qipan[GlobalValue.myqz[0].Col, i] != -1)
+                if (GlobalValue.QiPan[GlobalValue.QiZiArray[0].Col, i] != -1)
                 {
                     count++;
                 }
             }
-            if (count == 1)
-            {
-                return true;
-            }
-            return false;
-
+            return count == 1;
         }
-
     }
 }
