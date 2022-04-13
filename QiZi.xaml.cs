@@ -151,6 +151,10 @@ namespace Chess
             Deselect();
             Visibility = Visibility.Visible;
         }
+        public void FanZhuanPosition()
+        {
+            Setposition(Col, Row);
+        }
         /// <summary>
         /// 棋子被杀死
         /// </summary>

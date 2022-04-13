@@ -50,7 +50,10 @@ namespace Chess
             SetValue(Canvas.LeftProperty, GlobalValue.qipanGridX[x] + 5.0);
             SetValue(Canvas.TopProperty, GlobalValue.qipanGridY[y] + 5.0);
         }
-
+        public void FanZhuPosition()
+        {
+            Setposition(Col, Row);
+        }
         /// <summary>
         /// 隐藏标记
         /// </summary>

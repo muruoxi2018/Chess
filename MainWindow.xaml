@@ -28,7 +28,8 @@
             </Image>
         </Canvas>
 
-        <Button x:Name="ResetBtn" Content="Button" HorizontalAlignment="Left" Margin="702,28,0,0" VerticalAlignment="Top" Width="46" Panel.ZIndex="102" Background="#FFDDDDDD" Click="ResetBtnClick"/>
+        <Button x:Name="ResetBtn" Content="开局" HorizontalAlignment="Left" Margin="600,28,0,0" VerticalAlignment="Top" Width="70" Panel.ZIndex="102" Background="#FFDDDDDD" Click="ResetBtnClick"/>
         <TextBox x:Name="testbox1" HorizontalAlignment="Left" Margin="30,765,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="737" Height="34"/>
+        <Button Content="翻转棋盘" HorizontalAlignment="Left" Margin="425,28,0,0" VerticalAlignment="Top" Width="70" Click="OnFanZhuanQiPan"/>
     </Grid>
 </Window>

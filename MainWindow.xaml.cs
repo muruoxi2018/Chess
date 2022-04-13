@@ -35,6 +35,7 @@ namespace Chess
                     _ = qiziCanvas.Children.Add(GlobalValue.pathImage[i, j]);
                 }
             }
+            GlobalValue.qipanfanzhuan = false;
             Reset();
         }
 
@@ -80,7 +81,6 @@ namespace Chess
                 item.SetInitPosition();
             }
             GlobalValue.sidetag = GlobalValue.REDSIDE;
-            GlobalValue.qipanfanzhuan = false;
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
@@ -93,6 +93,22 @@ namespace Chess
             for (int i = 0; i < 32; i++)
             {
                 GlobalValue.qipan[GlobalValue.myqz[i].Col, GlobalValue.myqz[i].Row] = i;
+            }
+        }
+
+        private void OnFanZhuanQiPan(object sender, RoutedEventArgs e)
+        {
+            GlobalValue.qipanfanzhuan = !GlobalValue.qipanfanzhuan;
+            foreach (QiZi item in GlobalValue.myqz)
+            {
+                item.FanZhuanPosition();
+            }
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    GlobalValue.pathImage[i, j].FanZhuPosition();
+                }
             }
         }
     }
