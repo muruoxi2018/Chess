@@ -10,7 +10,7 @@ namespace Chess
     /// </summary>
     public partial class PathPoint : UserControl
     {
-        public bool hasPoint { get; set; }  // 是否是有效的走棋路径点
+        public bool HasPoint { get; set; }  // 是否是有效的走棋路径点
         public int Col { get; set; }    // 路径点的列坐标
         public int Row { get; set; }    // 路径点的行坐标
 
@@ -24,11 +24,15 @@ namespace Chess
         public PathPoint(int x, int y)
         {
             InitializeComponent();
-            if (x < 0) return;
-            if (x > 8) return;
-            if (y < 0) return;
-            if (y > 9) return;
-            hasPoint = false;
+            if (x is < 0 or > 8)
+            {
+                return;
+            }
+            if (y is < 0 or > 9)
+            {
+                return;
+            }
+            HasPoint = false;
             Setposition(x, y);
 
         }
@@ -42,15 +46,18 @@ namespace Chess
         {
             Col = x;
             Row = y;
-            if (GlobalValue.qipanfanzhuan)
+            if (GlobalValue.QiPanFanZhuan)
             {
                 x = 8 - x;
                 y = 9 - y;
             }
-            SetValue(Canvas.LeftProperty, GlobalValue.qipanGridX[x] + 5.0);
-            SetValue(Canvas.TopProperty, GlobalValue.qipanGridY[y] + 5.0);
+            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x] + 5.0);
+            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] + 5.0);
         }
-
+        public void FanZhuPosition()
+        {
+            Setposition(Col, Row);
+        }
         /// <summary>
         /// 隐藏标记
         /// </summary>
@@ -65,7 +72,7 @@ namespace Chess
         /// </summary>
         public void SetVisable()
         {
-            if (!hasPoint)
+            if (!HasPoint)
             {
                 return;
             }
@@ -77,7 +84,7 @@ namespace Chess
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void onMouseEnter(object sender, MouseEventArgs e)
+        private void OnMouseEnter(object sender, MouseEventArgs e)
         {
             image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 3, Opacity = 0.7 });
         }
@@ -87,7 +94,7 @@ namespace Chess
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void onMouseLeave(object sender, MouseEventArgs e)
+        private void OnMouseLeave(object sender, MouseEventArgs e)
         {
             image.SetValue(EffectProperty, null);
         }
@@ -97,9 +104,9 @@ namespace Chess
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void onMouseup(object sender, MouseButtonEventArgs e)
+        private void OnMouseup(object sender, MouseButtonEventArgs e)
         {
-            if (GlobalValue.qipan[Col, Row] == -1)
+            if (GlobalValue.QiPan[Col, Row] == -1)
             {
                 // 当前有预选棋子时，将预选棋子运子到(m,n)位置================= 运子
                 QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, -1, true);
@@ -107,7 +114,7 @@ namespace Chess
             else
             {
                 // 点击位置有棋子时，将预选棋子运子到(m,n)位置，并吃掉目标位置的对方棋子===== 吃子
-                int dieqz = GlobalValue.qipan[Col, Row];
+                int dieqz = GlobalValue.QiPan[Col, Row];
                 QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, dieqz, true);
 
             }
@@ -115,8 +122,8 @@ namespace Chess
             {
                 for (int j = 0; j <= 9; j++)
                 {
-                    GlobalValue.pathImage[i, j].SetHidden();
-                    GlobalValue.pathImage[i, j].hasPoint = false;
+                    GlobalValue.PathPointImage[i, j].SetHidden();
+                    GlobalValue.PathPointImage[i, j].HasPoint = false;
                 }
             }
 
@@ -130,22 +137,22 @@ namespace Chess
         /// <param name="n">目的地的行</param>
         /// <param name="DieQz">所杀死的棋子的编号，-1表示没有杀死棋子</param>
         /// <param name="sound">是否打开声音效果</param>
-        private void QiZiMoveTo(int QiZi, int m, int n, int DieQz, bool sound)  // 运子
+        private static void QiZiMoveTo(int QiZi, int m, int n, int DieQz, bool sound)  // 运子
         {
             // 运子到(m,n)位置
-            int x0 = GlobalValue.myqz[QiZi].Col;
-            int y0 = GlobalValue.myqz[QiZi].Row;
+            int x0 = GlobalValue.QiZiArray[QiZi].Col;
+            int y0 = GlobalValue.QiZiArray[QiZi].Row;
 
-            GlobalValue.qipan[x0, y0] = -1;
+            GlobalValue.QiPan[x0, y0] = -1;
             //yuanweizhi.setpoint(x0, y0);
             //yuanweizhi.Show;
-            GlobalValue.myqz[QiZi].Setposition(m, n);
-            GlobalValue.qipan[m, n] = QiZi;
+            GlobalValue.QiZiArray[QiZi].Setposition(m, n);
+            GlobalValue.QiPan[m, n] = QiZi;
             //xianweizhi.setpoint(m, n);
             //xianweizhi.Show;
             if (DieQz != -1)
             {
-                GlobalValue.myqz[DieQz].SetDied();
+                GlobalValue.QiZiArray[DieQz].SetDied();
                 if (sound)
                 {
                     /*Form2.mp1.FileName := 'sounds/eat.mp3';
@@ -154,12 +161,12 @@ namespace Chess
                 }
                 if (DieQz == 4)  // 黑将被吃，则红方胜
                 {
-                    GlobalValue.gameover = true;
+                    GlobalValue.GameOver = true;
                     //Form2.lbl3.Caption := '战斗结束！红方胜！！';
                 }
                 if (DieQz == 20)  // 红帅被吃，则黑方胜
                 {
-                    GlobalValue.gameover = true;
+                    GlobalValue.GameOver = true;
                     //Form2.lbl3.Caption := '战斗结束！黑方胜！！';
                 }
 
@@ -177,8 +184,8 @@ namespace Chess
 
             //AddJilu(QiZi, x0, y0, m, n, DieQz);
 
-            GlobalValue.sidetag = !GlobalValue.sidetag;  // 变换走棋方
-            GlobalValue.myqz[QiZi].PutDown();
+            GlobalValue.SideTag = !GlobalValue.SideTag;  // 变换走棋方
+            GlobalValue.QiZiArray[QiZi].PutDown();
 
             GlobalValue.CurrentQiZi = 100;
             // 取消棋子预选状态
