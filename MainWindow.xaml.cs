@@ -137,5 +137,11 @@ namespace Chess
                 qipan_topRed.Visibility = Visibility.Hidden;
             }
         }
+
+        private void OpenJiPuWindow(object sender, RoutedEventArgs e)
+        {
+            Window_JiPu jipu = new Window_JiPu();
+            jipu.Show();
+        }
     }
 }
