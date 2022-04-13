@@ -141,7 +141,7 @@ namespace Chess
         private void OpenJiPuWindow(object sender, RoutedEventArgs e)
         {
             Window_JiPu jipu = new Window_JiPu();
-            jipu.Show();
+            jipu.Show();            
         }
     }
 }
