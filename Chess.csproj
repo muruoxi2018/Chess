@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="DB\KaiJuKu.db" />
     <None Remove="picture\原位置.png" />
     <None Remove="picture\将军.png" />
     <None Remove="picture\棋盘1覆膜.png" />
@@ -49,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="DB\KaiJuKu.db" />
     <Resource Include="picture\原位置.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
