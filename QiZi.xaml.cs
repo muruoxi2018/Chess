@@ -98,6 +98,8 @@ namespace Chess
                     GlobalValue.pathImage[i, j].SetVisable();
                 }
             }
+            GlobalValue.YuanWeiZhi.Setposition(Col, Row);
+            GlobalValue.YuanWeiZhi.ShowYuanWeiZhiImage();
             
 
         }
@@ -172,6 +174,14 @@ namespace Chess
             Visibility = Visibility.Visible;
         }
 
+        public void ShowYuanWeiZhiImage()
+        {
+            yuanweizhi.Visibility = Visibility.Visible;
+        }
+        public void HiddenYuanWeiZhiImage()
+        {
+            yuanweizhi.Visibility = Visibility.Hidden;
+        }
     }
 }
 

@@ -15,6 +15,7 @@ namespace Chess
         public static bool[,] qzpath = new bool[9, 10]; // 棋子可走的路径
         public static PathPoint[,] pathImage = new PathPoint[9, 10];
         public static QiZi[] myqz=new QiZi[32];
+        public static QiZi YuanWeiZhi;
         public static string qipustr;
         public static int CurrentQiZi;
         public const bool BLACKSIDE = false;

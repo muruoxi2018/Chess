@@ -22,6 +22,8 @@ namespace Chess
         private void MainFormLoaded(object sender, RoutedEventArgs e)
         {
             qizi0.SetValue(VisibilityProperty, Visibility.Collapsed);
+            GlobalValue.YuanWeiZhi = new QiZi();
+            _ = qiziCanvas.Children.Add(GlobalValue.YuanWeiZhi);
             for (int i = 0; i < 32; i++)
             {
                 GlobalValue.myqz[i] = new QiZi(i);
@@ -94,11 +96,13 @@ namespace Chess
             {
                 GlobalValue.qipan[GlobalValue.myqz[i].Col, GlobalValue.myqz[i].Row] = i;
             }
+            GlobalValue.YuanWeiZhi.HiddenYuanWeiZhiImage();
         }
 
         private void OnFanZhuanQiPan(object sender, RoutedEventArgs e)
         {
             GlobalValue.qipanfanzhuan = !GlobalValue.qipanfanzhuan;
+            GlobalValue.YuanWeiZhi.FanZhuanPosition();
             foreach (QiZi item in GlobalValue.myqz)
             {
                 item.FanZhuanPosition();
