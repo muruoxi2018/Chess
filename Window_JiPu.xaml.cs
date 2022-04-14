@@ -20,9 +20,38 @@ namespace Chess
     /// </summary>
     public partial class Window_JiPu : Window
     {
+<<<<<<< HEAD
+=======
+        System.Data.DataSet ds = new System.Data.DataSet();
+>>>>>>> 91aa539efa0436e39ac7f0d6c2a49ad828577092
         public Window_JiPu()
         {
             InitializeComponent();
         }
+<<<<<<< HEAD
+=======
+
+        private void WindowJiPu_Load(object sender, RoutedEventArgs e)
+        {
+            System.Data.SQLite.SQLiteConnection conn = new SQLiteConnection("data source=E:/source/repos/Chess/DB/KaiJuKu.db");
+            conn.Open();
+            
+            System.Data.SQLite.SQLiteCommand comm = conn.CreateCommand();
+            comm.CommandText = "select * from mybook";
+            
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter(comm);
+            _ = adapter.Fill(ds);
+            //Console.WriteLine(ds.Tables.ToString());
+            lv.Items.Add(ds);
+            text1.Text = ds.Tables.ToString();
+
+
+        }
+
+        private void lv_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+>>>>>>> 91aa539efa0436e39ac7f0d6c2a49ad828577092
     }
 }

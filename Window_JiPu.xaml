@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
+<<<<<<< HEAD
         xmlns:Collections="clr-namespace:System.Collections;assembly=System.Runtime" x:Class="Chess.Window_JiPu"
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
@@ -13,5 +14,22 @@
                 <Collections:ArrayList/>
             </ListView.ItemsSource>
         </ListView>
+=======
+        xmlns:Collections="clr-namespace:System.Collections;assembly=System.Runtime" xmlns:SQLite="clr-namespace:System.Data.SQLite;assembly=System.Data.SQLite" xmlns:SqlClient="clr-namespace:System.Data.SqlClient;assembly=System.Security.Permissions" x:Class="Chess.Window_JiPu"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800" Loaded="WindowJiPu_Load">
+    <Grid>
+
+        <DataGrid x:Name="datagrid" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding}" Header="date"/>
+                <DataGridTextColumn Header="author"/>
+                <DataGridTextColumn Header="tityle"/>
+                <DataGridTextColumn Header="type" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <ListView x:Name="lv" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="44,44,0,0" Width="229" Height="277"/>
+        <TextBox x:Name="text1" HorizontalAlignment="Left" Margin="374,110,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="392"/>
+>>>>>>> 91aa539efa0436e39ac7f0d6c2a49ad828577092
     </Grid>
 </Window>
