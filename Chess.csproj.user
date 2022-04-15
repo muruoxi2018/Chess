@@ -15,6 +15,9 @@
     <Compile Update="PathPoint.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="SetupWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Window_JiPu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -27,6 +30,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="PathPoint.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SetupWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Window_JiPu.xaml">

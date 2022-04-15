@@ -68,7 +68,7 @@ namespace Chess
                         con.Open();
                         return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
                     }
-                    catch (System.Exception ex)
+                    catch (System.Exception)
                     {
                         con.Close();
                         con.Dispose();

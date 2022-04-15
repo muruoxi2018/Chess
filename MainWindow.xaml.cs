@@ -143,5 +143,31 @@ namespace Chess
             Window_JiPu jipu = new Window_JiPu();
             jipu.Show();            
         }
+
+        private void SetupOption(object sender, RoutedEventArgs e)
+        {
+            SetupWindow sw=new SetupWindow();
+            sw.Show();  
+        }
+
+        private void HuiQi(object sender, RoutedEventArgs e)
+        {
+            if (Qipu.QiPuList.Count < 1) return;
+            Qipu.Step step =Qipu.QiPuList[Qipu.QiPuList.Count - 1].StepRecode;
+            GlobalValue.QiZiArray[step.QiZi].Setposition(step.x0, step.y0);
+            GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
+            GlobalValue.QiZiArray[step.QiZi].Deselect();
+
+            if (step.DieQz > -1)
+            {
+                GlobalValue.QiZiArray[step.DieQz].Setlived();
+                GlobalValue.QiZiArray[step.DieQz].Setposition(step.x1, step.y1);
+            }
+            GlobalValue.QiPan[step.x0,step.y0]=step.QiZi;
+            GlobalValue.QiPan[step.x1,step.y1]=step.DieQz;
+            Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count-1);
+            GlobalValue.SideTag = !GlobalValue.SideTag;
+
+        }
     }
 }

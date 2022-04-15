@@ -13,6 +13,23 @@ namespace Chess
             public int id { get; set; }
             public string Nm { get; set; } // 数字代码
             public string Cn { get; set; } // 中文代码
+            public Step StepRecode { get; set; }
+            public List<QPStep> qPSteps { get; set; }=new List<QPStep>();   // 棋谱变化
+ 
+        }
+        public class Step
+        {
+            public int QiZi { get; set; }
+            public int x0 { get; set; }
+            public int y0 { get; set; }
+            public int x1 { get; set; }
+            public int y1 { get; set; }
+            public int DieQz { get; set; }
+
+        }
+        public static void SetStepRecode(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
+        {
+            
         }
 
         public static List<QPStep> QiPuList = new(); // 棋谱步骤列表
@@ -55,7 +72,8 @@ namespace Chess
             {
                 id = QiPuList.Count()+1,
                 Nm = string.Format("{0:d2} {1:d} {2:d} {3:d} {4:d} {5:d}", QiZi, x0, y0, x1, y1, DieQz),
-                Cn = char1 + char2 + char3 + char4
+                Cn = char1 + char2 + char3 + char4,
+                StepRecode=new Step() { QiZi=QiZi, DieQz = DieQz, x0 = x0, y0 = y0, x1 = x1, y1 = y1,}
             });
 
         }

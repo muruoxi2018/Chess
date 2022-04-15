@@ -51,7 +51,6 @@
   </ItemGroup>
 
   <ItemGroup>
-
     <Resource Include="picture\原位置.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
