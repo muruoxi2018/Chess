@@ -9,6 +9,7 @@ namespace Chess
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly Window_JiPu jipuwindow = new();
         public MainWindow()
         {
             InitializeComponent();
@@ -140,20 +141,27 @@ namespace Chess
 
         private void OpenJiPuWindow(object sender, RoutedEventArgs e)
         {
-            Window_JiPu jipu = new Window_JiPu();
-            jipu.Show();            
+
+            double value = MainWin.Left + MainWin.Width;
+            jipuwindow.SetValue(LeftProperty, value);
+            jipuwindow.SetValue(TopProperty, MainWin.Top);
+            jipuwindow.Show();
         }
 
         private void SetupOption(object sender, RoutedEventArgs e)
         {
-            SetupWindow sw=new SetupWindow();
-            sw.Show();  
+            SetupWindow sw = new();
+            sw.Show();
         }
 
         private void HuiQi(object sender, RoutedEventArgs e)
         {
-            if (Qipu.QiPuList.Count < 1) return;
-            Qipu.Step step =Qipu.QiPuList[Qipu.QiPuList.Count - 1].StepRecode;
+            if (Qipu.QiPuList.Count < 1)
+            {
+                return;
+            }
+
+            Qipu.Step step = Qipu.QiPuList[^1].StepRecode;
             GlobalValue.QiZiArray[step.QiZi].Setposition(step.x0, step.y0);
             GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
             GlobalValue.QiZiArray[step.QiZi].Deselect();
@@ -163,11 +171,16 @@ namespace Chess
                 GlobalValue.QiZiArray[step.DieQz].Setlived();
                 GlobalValue.QiZiArray[step.DieQz].Setposition(step.x1, step.y1);
             }
-            GlobalValue.QiPan[step.x0,step.y0]=step.QiZi;
-            GlobalValue.QiPan[step.x1,step.y1]=step.DieQz;
-            Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count-1);
+            GlobalValue.QiPan[step.x0, step.y0] = step.QiZi;
+            GlobalValue.QiPan[step.x1, step.y1] = step.DieQz;
+            Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count - 1);
             GlobalValue.SideTag = !GlobalValue.SideTag;
 
+        }
+
+        private void OnMainWindowClose(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            jipuwindow.Close();
         }
     }
 }

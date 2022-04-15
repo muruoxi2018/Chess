@@ -21,6 +21,9 @@
     <Compile Update="Window_JiPu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Window_QiPu.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
@@ -36,6 +39,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Window_JiPu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Window_QiPu.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

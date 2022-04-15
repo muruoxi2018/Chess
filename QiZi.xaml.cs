@@ -5,6 +5,8 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Effects;
 using System.Windows.Media;
+using System.Threading;
+using System.Windows.Media.Animation;
 
 namespace Chess
 {
@@ -29,6 +31,7 @@ namespace Chess
         public QiZi()
         {
             InitializeComponent();
+            QiziId = -1;
         }
         /// <summary>
         /// 棋子类构造函数
@@ -86,9 +89,19 @@ namespace Chess
         public void Select()
         {
             Selected = true;
-            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 15, Opacity = 0.6 });
+            /*DoubleAnimation DA = new DoubleAnimation
+            {
+                From = 8.0,
+                To = 18.0,
+                //FillBehavior = FillBehavior.HoldEnd,
+                AutoReverse = true,
+                Duration = new Duration(TimeSpan.FromSeconds(2))
+            };
+            image.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);*/
+            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 18, Opacity = 0.6 });
             yuxuankuang.Visibility = Visibility.Visible;
             GlobalValue.CurrentQiZi = GetId();
+            //Scall(1.01);
             _ = MoveCheck.Getpath(GlobalValue.CurrentQiZi);
             for (int i = 0; i <= 8; i++)
             {
@@ -106,8 +119,15 @@ namespace Chess
         /// </summary>
         public void PutDown()
         {
-            image.SetValue(EffectProperty, null);
-            Scall(1);
+            //Thread.Sleep(100);
+            /*DoubleAnimation DA = new DoubleAnimation();
+            DA.From = 18.0;
+            DA.To = 8.0;
+            DA.Duration = new Duration(TimeSpan.FromSeconds(2));
+            DA.FillBehavior = FillBehavior.HoldEnd;
+            image.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);*/
+            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, Opacity = 0.6 });
+            //Scall(1);
         }
 
         /// <summary>
@@ -126,8 +146,11 @@ namespace Chess
         /// <param name="y"></param>
         public void Setposition(int x, int y)
         {
-            GlobalValue.QiPan[Col, Row] = -1;
-            GlobalValue.QiPan[x, y] = QiziId;
+            if (QiziId > -1) // 仅仅对棋子有效
+            {
+                GlobalValue.QiPan[Col, Row] = -1;
+                GlobalValue.QiPan[x, y] = QiziId;
+            }
             Col = x;
             Row = y;
             if (GlobalValue.QiPanFanZhuan)
@@ -137,7 +160,7 @@ namespace Chess
             }
             SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x]);
             SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
-            
+
         }
 
         /// <summary>
