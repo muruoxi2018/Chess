@@ -21,16 +21,14 @@ namespace Chess
     /// </summary>
     public partial class Window_JiPu : Window
     {
-<<<<<<< HEAD
-=======
+
         System.Data.DataSet ds = new System.Data.DataSet();
->>>>>>> 91aa539efa0436e39ac7f0d6c2a49ad828577092
+
         public Window_JiPu()
         {
             InitializeComponent();
         }
-<<<<<<< HEAD
-=======
+
 
         private void WindowJiPu_Load(object sender, RoutedEventArgs e)
         {
@@ -45,6 +43,6 @@ namespace Chess
         {
 
         }
->>>>>>> 91aa539efa0436e39ac7f0d6c2a49ad828577092
+
     }
 }

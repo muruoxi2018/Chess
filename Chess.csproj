@@ -51,10 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-=======
-    <Resource Include="DB\KaiJuKu.db" />
->>>>>>> 91aa539efa0436e39ac7f0d6c2a49ad828577092
+
     <Resource Include="picture\原位置.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

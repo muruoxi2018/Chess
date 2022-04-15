@@ -21,7 +21,7 @@ namespace Chess
         /// <param name="e"></param>
         private void MainFormLoaded(object sender, RoutedEventArgs e)
         {
-            qizi0.SetValue(VisibilityProperty, Visibility.Collapsed);
+            //qizi0.SetValue(VisibilityProperty, Visibility.Collapsed);
             GlobalValue.YuanWeiZhi = new QiZi();
             _ = qiziCanvas.Children.Add(GlobalValue.YuanWeiZhi);
             for (int i = 0; i < 32; i++)
