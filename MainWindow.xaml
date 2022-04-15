@@ -1,4 +1,4 @@
-﻿<Window x:Class="Chess.MainWindow"
+﻿<Window x:Name="MainWin" x:Class="Chess.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,19 +8,19 @@
         Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Width="804" Height="913" Loaded="MainFormLoaded" Background="#FF085870">
     <Grid x:Name="grid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="767" Height="842">
         <Border BorderThickness="1"/>
-        <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseUp="QiPanMouseUp" Visibility="Visible" Opacity="0.9">
+        <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseUp="QiPanMouseUp" Visibility="Visible">
             <Image.Effect>
                 <DropShadowEffect Opacity="0.6" BlurRadius="10" ShadowDepth="10"/>
             </Image.Effect>
         </Image>
-        <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" Opacity="0.9" >
+        <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" >
             <Image.Effect>
                 <DropShadowEffect Opacity="0.6" BlurRadius="10" ShadowDepth="10"/>
             </Image.Effect>
         </Image>
 
         <Canvas x:Name="qiziCanvas">
-            <Image x:Name="qizi0" Source="/picture/红兵.png" Stretch="None" Cursor="Hand" Panel.ZIndex="1" Width="70" Height="70" Visibility="Visible" Uid="1" RenderTransformOrigin="0.5,0.5" Canvas.Left="212" Canvas.Top="266">
+            <d:Image x:Name="qizi0" Source="/picture/红兵.png" Stretch="None" Cursor="Hand" Panel.ZIndex="1" Width="70" Height="70" Visibility="Visible" Uid="1" RenderTransformOrigin="0.5,0.5" Canvas.Left="212" Canvas.Top="266">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -29,12 +29,14 @@
                         <TranslateTransform X="0" Y="0"/>
                     </TransformGroup>
                 </Image.RenderTransform>
-            </Image>
+            </d:Image>
         </Canvas>
 
-        <Button x:Name="ResetBtn" Content="开局" HorizontalAlignment="Left" Margin="77,773,0,0" VerticalAlignment="Top" Width="70" Panel.ZIndex="102" Background="#FFDDDDDD" Click="ResetBtnClick"/>
-        <Button Content="翻转棋盘" HorizontalAlignment="Left" Margin="614,768,0,0" VerticalAlignment="Top" Width="70" Click="OnFanZhuanQiPan"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="384,783,0,0" VerticalAlignment="Top" Click="OpenJiPuWindow"/>
+        <Button x:Name="ResetBtn" Content="开局" HorizontalAlignment="Left" Margin="77,773,0,0" VerticalAlignment="Top" Width="70" Panel.ZIndex="102" Background="#FFDDDDDD" Click="ResetBtnClick" Height="25"/>
+        <Button Content="翻转棋盘" HorizontalAlignment="Left" Margin="614,773,0,0" VerticalAlignment="Top" Width="70" Click="OnFanZhuanQiPan" Height="25"/>
+        <Button Content="棋谱库" HorizontalAlignment="Left" Margin="384,773,0,0" VerticalAlignment="Top" Click="OpenJiPuWindow" Width="70" Height="25"/>
+        <Button Content="设置" HorizontalAlignment="Left" Margin="508,773,0,0" VerticalAlignment="Top" Click="SetupOption" Width="70" Height="25"/>
+        <Button Content="悔棋" HorizontalAlignment="Left" Margin="166,773,0,0" VerticalAlignment="Top" Width="70" Click="HuiQi" Height="25"/>
 
     </Grid>
 </Window>

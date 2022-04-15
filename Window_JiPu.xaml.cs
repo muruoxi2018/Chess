@@ -21,24 +21,23 @@ namespace Chess
     /// </summary>
     public partial class Window_JiPu : Window
     {
-        System.Data.DataSet ds = new System.Data.DataSet();
         public Window_JiPu()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// 窗口打开时，显示棋谱库列表，以及走棋记录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WindowJiPu_Load(object sender, RoutedEventArgs e)
         {
             System.Data.DataTable sr = SqliteHelper.ExecuteTable("select rowid,* from mybook");
             datagrid.ItemsSource = sr.DefaultView;
 
             qplst.Text = JsonConvert.SerializeObject(Qipu.QiPuList);
+            dglist.AutoGenerateColumns = false;
             dglist.ItemsSource = Qipu.QiPuList;
-        }
-
-        private void lv_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

@@ -2,13 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Chess"
-        xmlns:Collections="clr-namespace:System.Collections;assembly=System.Runtime" xmlns:SQLite="clr-namespace:System.Data.SQLite;assembly=System.Data.SQLite" xmlns:SqlClient="clr-namespace:System.Data.SqlClient;assembly=System.Security.Permissions" x:Class="Chess.Window_JiPu"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  x:Class="Chess.Window_JiPu"
         mc:Ignorable="d"
         Title="棋谱库列表" Height="450" Width="800" Loaded="WindowJiPu_Load" WindowState="Maximized">
     <Grid>
-        <DataGrid x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
+        <DataGrid x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding rowid}" Header="编号"/>
                 <DataGridTextColumn Binding="{Binding date}" Header="日期"/>
@@ -16,12 +14,20 @@
                 <DataGridTextColumn Binding="{Binding title}" Header="标题" />
                 <DataGridTextColumn Binding="{Binding type}" Header="类型" />
                 <DataGridTextColumn Binding="{Binding video}" Header="视频" />
-                <DataGridTextColumn Binding="{Binding record}" Header="棋谱" />
-
+                <DataGridTextColumn Binding="{Binding record}" Header="棋谱" >
+                    
+                </DataGridTextColumn>
             </DataGrid.Columns>
+            <d:TabItem/>
         </DataGrid>
-        <ListView x:Name="lv" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-        <TextBlock x:Name="qplst" HorizontalAlignment="Stretch" Margin="18,0,0,59" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-        <DataGrid x:Name="dglist" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,8"/>
+        <TextBlock x:Name="qplst" HorizontalAlignment="Stretch" Margin="18,0,474,59" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+        <DataGrid x:Name="dglist" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,8" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding id}" Header="步" Width="30"/>
+                <DataGridTextColumn Binding="{Binding Nm}" Header="代码" Width="200"/>
+                <DataGridTextColumn Binding="{Binding Cn}" Header="棋谱" Width="200"/>
+            </DataGrid.Columns>
+            <d:TabItem/>
+        </DataGrid>
     </Grid>
 </Window>

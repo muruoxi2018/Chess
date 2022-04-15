@@ -126,6 +126,8 @@ namespace Chess
         /// <param name="y"></param>
         public void Setposition(int x, int y)
         {
+            GlobalValue.QiPan[Col, Row] = -1;
+            GlobalValue.QiPan[x, y] = QiziId;
             Col = x;
             Row = y;
             if (GlobalValue.QiPanFanZhuan)
@@ -135,6 +137,7 @@ namespace Chess
             }
             SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x]);
             SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
+            
         }
 
         /// <summary>

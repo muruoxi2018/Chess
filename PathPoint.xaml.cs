@@ -135,11 +135,11 @@ namespace Chess
             int y0 = GlobalValue.QiZiArray[QiZi].Row;
             Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 棋谱记录
 
-            GlobalValue.QiPan[x0, y0] = -1;
+            //GlobalValue.QiPan[x0, y0] = -1;
             //yuanweizhi.setpoint(x0, y0);
             //yuanweizhi.Show;
             GlobalValue.QiZiArray[QiZi].Setposition(m, n);
-            GlobalValue.QiPan[m, n] = QiZi;
+            //GlobalValue.QiPan[m, n] = QiZi;
             //xianweizhi.setpoint(m, n);
             //xianweizhi.Show;
             if (DieQz != -1)

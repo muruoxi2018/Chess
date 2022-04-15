@@ -5,7 +5,8 @@ namespace Chess
 {
     public class SqliteHelper
     {
-        private static readonly string str = @"data source=E:\source\repos\Chess\DB\KaiJuKu.db";
+        private static readonly string str = @"data source=D:\CSHARP\Chess\DB\KaiJuKu.db";
+        //private static readonly string str = @"data source=E:\source\repos\Chess\DB\KaiJuKu.db";
         public static int ExecuteSql(string sql)
         {
             using (SQLiteConnection con = new SQLiteConnection(str))
@@ -67,7 +68,7 @@ namespace Chess
                         con.Open();
                         return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
                     }
-                    catch (System.Exception ex)
+                    catch (System.Exception)
                     {
                         con.Close();
                         con.Dispose();
