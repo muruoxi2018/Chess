@@ -66,5 +66,6 @@ namespace Chess
         /// 阿拉伯数字0-9，对应的中文数字
         /// </summary>
         public static string[] CnNumber = { "", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+
     }
 }

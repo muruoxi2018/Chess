@@ -106,18 +106,9 @@ namespace Chess
         /// <param name="e"></param>
         private void OnMouseup(object sender, MouseButtonEventArgs e)
         {
-            if (GlobalValue.QiPan[Col, Row] == -1)
-            {
-                // 当前有预选棋子时，将预选棋子运子到(m,n)位置================= 运子
-                QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, -1, true);
-            }
-            else
-            {
-                // 点击位置有棋子时，将预选棋子运子到(m,n)位置，并吃掉目标位置的对方棋子===== 吃子
-                int dieqz = GlobalValue.QiPan[Col, Row];
-                QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, dieqz, true);
-
-            }
+            // 当前有预选棋子时，将预选棋子运子到(m,n)位置================= 运子
+            QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, GlobalValue.QiPan[Col, Row], true);
+            // 点击位置有棋子时，将预选棋子运子到(m,n)位置，并吃掉目标位置的对方棋子===== 吃子
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
@@ -142,6 +133,7 @@ namespace Chess
             // 运子到(m,n)位置
             int x0 = GlobalValue.QiZiArray[QiZi].Col;
             int y0 = GlobalValue.QiZiArray[QiZi].Row;
+            Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 棋谱记录
 
             GlobalValue.QiPan[x0, y0] = -1;
             //yuanweizhi.setpoint(x0, y0);
