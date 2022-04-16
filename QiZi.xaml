@@ -15,8 +15,25 @@
         </TransformGroup>
     </UserControl.Resources>
     <Grid RenderTransform="{DynamicResource UserControlRenderTransform1}" x:Name="MaingGrid" MouseLeftButtonUp="Image_MouseLeftButtonUp">
-        <Image x:Name="image"  HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Stretch="None" Panel.ZIndex="5" RenderTransform="{DynamicResource UserControlRenderTransform1}"/>
-        <Image x:Name="yuxuankuang" HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Source="/picture/预选框.png" Panel.ZIndex="2" Stretch="None" RenderTransformOrigin="0.5,0.5" RenderTransform="{DynamicResource UserControlRenderTransform1}" Visibility="Hidden"/>
-        <Image x:Name="yuanweizhi" Stretch="None" Source="/picture/原位置.png" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" Visibility="Hidden"/>
+        <Image x:Name="image"  HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Stretch="Uniform" Panel.ZIndex="5" RenderTransform="{DynamicResource UserControlRenderTransform1}">
+            <Image.Effect>
+                <DropShadowEffect ShadowDepth="8" Opacity="0.6"/>
+            </Image.Effect>
+        </Image>
+        <Image x:Name="yuxuankuang" HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Source="/picture/预选框.png" Panel.ZIndex="2" Stretch="Uniform" RenderTransformOrigin="0.5,0.5" RenderTransform="{DynamicResource UserControlRenderTransform1}" Visibility="Hidden">
+            <Image.Effect>
+                <DropShadowEffect Opacity="0.6" ShadowDepth="5"/>
+            </Image.Effect>
+        </Image>
+        <Image x:Name="yuanweizhi" Stretch="Uniform" Source="/picture/原位置.png" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" Visibility="Hidden">
+            <Image.Effect>
+                <DropShadowEffect Opacity="0.4" ShadowDepth="5"/>
+            </Image.Effect>
+        </Image>
+        <d:Image HorizontalAlignment="Left" VerticalAlignment="Top" Source="/picture/红帅.png">
+            <Image.Effect>
+                <DropShadowEffect/>
+            </Image.Effect>
+        </d:Image>
     </Grid>
 </UserControl>
