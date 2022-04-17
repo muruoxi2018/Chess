@@ -15,9 +15,9 @@
         </TransformGroup>
     </UserControl.Resources>
     <Grid RenderTransform="{DynamicResource UserControlRenderTransform1}" x:Name="MaingGrid" MouseLeftButtonUp="Image_MouseLeftButtonUp">
-        <Image x:Name="image"  HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Stretch="Uniform" Panel.ZIndex="5" RenderTransform="{DynamicResource UserControlRenderTransform1}">
+        <Image x:Name="qzimage"  HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Stretch="Uniform" Panel.ZIndex="5" RenderTransform="{DynamicResource UserControlRenderTransform1}">
             <Image.Effect>
-                <DropShadowEffect ShadowDepth="8" Opacity="0.6"/>
+                <DropShadowEffect x:Name="qzShadow" ShadowDepth="8" BlurRadius="10" Opacity="0.6"/>
             </Image.Effect>
         </Image>
         <Image x:Name="yuxuankuang" HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="70" Source="/picture/预选框.png" Panel.ZIndex="2" Stretch="Uniform" RenderTransformOrigin="0.5,0.5" RenderTransform="{DynamicResource UserControlRenderTransform1}" Visibility="Hidden">

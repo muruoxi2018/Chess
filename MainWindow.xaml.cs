@@ -9,7 +9,7 @@ namespace Chess
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly Window_JiPu jipuwindow = new();
+        private static Window_JiPu jipuwindow;
         public MainWindow()
         {
             InitializeComponent();
@@ -141,11 +141,16 @@ namespace Chess
 
         private void OpenJiPuWindow(object sender, RoutedEventArgs e)
         {
-
+            if (jipuwindow != null)
+            {
+                jipuwindow.Close();
+            }
+            jipuwindow = new Window_JiPu();
             double value = MainWin.Left + MainWin.Width;
             jipuwindow.SetValue(LeftProperty, value);
             jipuwindow.SetValue(TopProperty, MainWin.Top);
             jipuwindow.Show();
+            
         }
 
         private void SetupOption(object sender, RoutedEventArgs e)
@@ -161,15 +166,16 @@ namespace Chess
                 return;
             }
 
-            Qipu.Step step = Qipu.QiPuList[^1].StepRecode;
-            GlobalValue.QiZiArray[step.QiZi].Setposition(step.x0, step.y0);
+            Qipu.Step step = Qipu.QiPuList[Qipu.QiPuList.Count - 1].StepRecode;
+            GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
+            GlobalValue.QiZiArray[step.QiZi].SetPosition(step.x0, step.y0);
             GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
             GlobalValue.QiZiArray[step.QiZi].Deselect();
 
             if (step.DieQz > -1)
             {
                 GlobalValue.QiZiArray[step.DieQz].Setlived();
-                GlobalValue.QiZiArray[step.DieQz].Setposition(step.x1, step.y1);
+                GlobalValue.QiZiArray[step.DieQz].SetPosition(step.x1, step.y1);
             }
             GlobalValue.QiPan[step.x0, step.y0] = step.QiZi;
             GlobalValue.QiPan[step.x1, step.y1] = step.DieQz;
@@ -180,7 +186,10 @@ namespace Chess
 
         private void OnMainWindowClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            jipuwindow.Close();
+            if (jipuwindow != null)
+            {
+                jipuwindow.Close();
+            }
         }
     }
 }

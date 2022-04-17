@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Chess
 {
@@ -19,9 +20,20 @@ namespace Chess
     /// </summary>
     public partial class Window_JiPu : Window
     {
+        private DispatcherTimer timer = new DispatcherTimer();
         public Window_JiPu()
         {
             InitializeComponent();
+            timer.Tick += new EventHandler(Timer_tick);
+            timer.Interval = TimeSpan.FromSeconds(0.3);
+            //timer.Start();
+
+        }
+
+        private void Timer_tick(object sender, EventArgs e)
+        {
+            JiPuData.Items.Refresh();
+            
         }
 
         private void FormLoad(object sender, RoutedEventArgs e)
