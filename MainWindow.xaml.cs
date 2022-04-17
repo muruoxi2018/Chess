@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 
 namespace Chess
 {
@@ -144,14 +146,14 @@ namespace Chess
         {
             if (jipuwindow != null)
             {
-                jipuwindow.Close();
+                return;
             }
             jipuwindow = new Window_JiPu();
             double value = MainWin.Left + MainWin.Width;
             jipuwindow.SetValue(LeftProperty, value);
             jipuwindow.SetValue(TopProperty, MainWin.Top);
             jipuwindow.Show();
-            
+
         }
         private static SpyWindow Spy_window;
 
@@ -159,7 +161,7 @@ namespace Chess
         {
             if (Spy_window != null)
             {
-                Spy_window.Close();
+                return;
             }
             Spy_window = new SpyWindow();
             Spy_window.Show();
@@ -207,5 +209,6 @@ namespace Chess
                 Spy_window.Close();
             }
         }
+
     }
 }
