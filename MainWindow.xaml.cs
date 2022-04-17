@@ -9,7 +9,6 @@ namespace Chess
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static Window_JiPu jipuwindow;
         public MainWindow()
         {
             InitializeComponent();
@@ -139,6 +138,8 @@ namespace Chess
             }
         }
 
+        private static Window_JiPu jipuwindow;
+
         private void OpenJiPuWindow(object sender, RoutedEventArgs e)
         {
             if (jipuwindow != null)
@@ -151,6 +152,17 @@ namespace Chess
             jipuwindow.SetValue(TopProperty, MainWin.Top);
             jipuwindow.Show();
             
+        }
+        private static SpyWindow Spy_window;
+
+        private void OpenSpyWindow(object sender, RoutedEventArgs e)
+        {
+            if (Spy_window != null)
+            {
+                Spy_window.Close();
+            }
+            Spy_window = new SpyWindow();
+            Spy_window.Show();
         }
 
         private void SetupOption(object sender, RoutedEventArgs e)
@@ -189,6 +201,10 @@ namespace Chess
             if (jipuwindow != null)
             {
                 jipuwindow.Close();
+            }
+            if (Spy_window != null)
+            {
+                Spy_window.Close();
             }
         }
     }
