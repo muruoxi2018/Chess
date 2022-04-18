@@ -12,7 +12,7 @@
                 <Style/>
             </DataGrid.CellStyle>
         </DataGrid>
-        <Button Style="{StaticResource button}" Content="刷新" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="60" Margin="0,0,0,22" Click="DataRefresh" Background="#FFBAF3D8" BorderBrush="#FF3A3939" Foreground="Black"/>
+        <Button Style="{StaticResource button}" Content="刷新" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="60" Margin="0,0,0,22" Click="DataRefresh"/>
 
     </Grid>
 </Window>

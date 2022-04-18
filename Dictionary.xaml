@@ -1,22 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Chess">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="button" TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="#FF13495D"/>
         <Setter Property="BorderBrush" Value="#FF082949"/>
         <Setter Property="Height" Value="25"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <RadialGradientBrush>
-                    <GradientStop Color="#FFC17D07" Offset="1"/>
-                    <GradientStop Color="#FFF7F7F7" Offset="0"/>
-                </RadialGradientBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="#FF76C7F5"/>
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect Opacity="0.4" ShadowDepth="0" BlurRadius="70" Color="#FF09DDFF" RenderingBias="Performance"/>
             </Setter.Value>
         </Setter>
+        
     </Style>
 </ResourceDictionary>

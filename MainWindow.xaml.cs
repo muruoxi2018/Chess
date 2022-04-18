@@ -1,9 +1,7 @@
 ﻿using Chess.SuanFa;
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Effects;
 
 namespace Chess
 {
@@ -12,6 +10,8 @@ namespace Chess
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static Window_JiPu jipuwindow;  // 记谱窗口
+        private static SpyWindow Spy_window;    // 棋盘数据监视窗口
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +43,13 @@ namespace Chess
             GlobalValue.QiPanFanZhuan = false;
             QiPanChange(false);
             Reset();
+            jipuwindow = new Window_JiPu();
+            double value = MainWin.Left + MainWin.Width;
+            jipuwindow.SetValue(LeftProperty, value);
+            jipuwindow.SetValue(TopProperty, MainWin.Top);
+            jipuwindow.Hide();
+            Spy_window = new SpyWindow();
+            Spy_window.Hide();
         }
 
         /// <summary>
@@ -79,6 +86,9 @@ namespace Chess
         {
             Reset();
         }
+        /// <summary>
+        /// 初始化界面，棋盘设置为开局状态，但棋盘翻转状态不会重置
+        /// </summary>
         private static void Reset()
         {
             foreach (QiZi item in GlobalValue.QiZiArray)
@@ -141,39 +151,55 @@ namespace Chess
             }
         }
 
-        private static Window_JiPu jipuwindow;
 
+        /// <summary>
+        /// 打开或关闭记谱窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenJiPuWindow(object sender, RoutedEventArgs e)
         {
-            if (jipuwindow != null)
+            if (jipuwindow.IsVisible)
             {
-                return;
+                jipuwindow.Hide();
             }
-            jipuwindow = new Window_JiPu();
-            double value = MainWin.Left + MainWin.Width;
-            jipuwindow.SetValue(LeftProperty, value);
-            jipuwindow.SetValue(TopProperty, MainWin.Top);
-            jipuwindow.Show();
-
+            else
+            {
+                jipuwindow.Show();
+            }
         }
-        private static SpyWindow Spy_window;
 
+        /// <summary>
+        /// 打开或关闭棋盘数据监控窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenSpyWindow(object sender, RoutedEventArgs e)
         {
-            if (Spy_window != null)
+            if (Spy_window.IsVisible)
             {
-                return;
+                Spy_window.Hide();
             }
-            Spy_window = new SpyWindow();
-            Spy_window.Show();
+            else
+            {
+                Spy_window.Show();
+            }
         }
-
+        /// <summary>
+        /// 打开软件设置窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetupOption(object sender, RoutedEventArgs e)
         {
             SetupWindow sw = new();
             sw.Show();
         }
-
+        /// <summary>
+        /// 悔棋按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HuiQi(object sender, RoutedEventArgs e)
         {
             if (Qipu.QiPuList.Count < 1)
@@ -181,7 +207,7 @@ namespace Chess
                 return;
             }
 
-            Qipu.Step step = Qipu.QiPuList[Qipu.QiPuList.Count - 1].StepRecode;
+            Qipu.Step step = Qipu.QiPuList[^1].StepRecode; // ^1：索引运算符，表示倒数第一个
             GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
             GlobalValue.QiZiArray[step.QiZi].SetPosition(step.x0, step.y0);
             GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
@@ -198,17 +224,14 @@ namespace Chess
             GlobalValue.SideTag = !GlobalValue.SideTag;
 
         }
-
+        /// <summary>
+        /// 软件关闭退出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnMainWindowClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (jipuwindow != null)
-            {
-                jipuwindow.Close();
-            }
-            if (Spy_window != null)
-            {
-                Spy_window.Close();
-            }
+            Environment.Exit(0); // 关闭所有窗口，并释放所有资源，包括相关辅助窗口。
         }
 
     }
