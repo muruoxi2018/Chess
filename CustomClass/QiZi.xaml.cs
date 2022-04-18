@@ -49,12 +49,14 @@ namespace Chess
             string path = Environment.CurrentDirectory + "\\picture\\" + GlobalValue.QiZiImageFileName[QiziId] + ".png";
             BitmapImage bi = new(new Uri(path, UriKind.Absolute));
             bi.Freeze();
-            image.Source = bi;
+            qzimage.Source = bi;
             init_col = GlobalValue.QiZiInitPosition[id, 0];
             init_row = GlobalValue.QiZiInitPosition[id, 1];
-            Setposition(init_col, init_row);
+            SetPosition(init_col, init_row);
             SideColor = id >= 16;
-            yuxuankuang.Visibility = Visibility.Hidden;
+            Selected = false;
+            //yuxuankuang.Visibility = Visibility.Hidden;
+            //Scall(1);
         }
 
         /// <summary>
@@ -66,7 +68,9 @@ namespace Chess
         {
             foreach (QiZi item in GlobalValue.QiZiArray)
             {
-                item.Deselect();
+                item.Selected = false;
+                item.PutDown();
+                item.yuxuankuang.Visibility = Visibility.Hidden;
             }
             if (SideColor == GlobalValue.SideTag)
             {
@@ -79,8 +83,8 @@ namespace Chess
         /// </summary>
         public void Deselect()
         {
-            Selected = false;
             PutDown();
+            Selected = false;
             yuxuankuang.Visibility = Visibility.Hidden;
         }
         /// <summary>
@@ -89,16 +93,15 @@ namespace Chess
         public void Select()
         {
             Selected = true;
-            /*DoubleAnimation DA = new DoubleAnimation
+            DoubleAnimation DA = new DoubleAnimation
             {
                 From = 8.0,
-                To = 18.0,
-                //FillBehavior = FillBehavior.HoldEnd,
-                AutoReverse = true,
-                Duration = new Duration(TimeSpan.FromSeconds(2))
+                To = 25.0,
+                FillBehavior = FillBehavior.HoldEnd,
+                AutoReverse = false,
+                Duration = new Duration(TimeSpan.FromSeconds(0.05))
             };
-            image.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);*/
-            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 18, Opacity = 0.6 });
+            qzimage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
             yuxuankuang.Visibility = Visibility.Visible;
             GlobalValue.CurrentQiZi = GetId();
             //Scall(1.01);
@@ -110,7 +113,7 @@ namespace Chess
                     GlobalValue.PathPointImage[i, j].SetVisable();
                 }
             }
-            GlobalValue.YuanWeiZhi.Setposition(Col, Row);
+            GlobalValue.YuanWeiZhi.SetPosition(Col, Row);
             GlobalValue.YuanWeiZhi.ShowYuanWeiZhiImage();
         }
 
@@ -119,14 +122,7 @@ namespace Chess
         /// </summary>
         public void PutDown()
         {
-            //Thread.Sleep(100);
-            /*DoubleAnimation DA = new DoubleAnimation();
-            DA.From = 18.0;
-            DA.To = 8.0;
-            DA.Duration = new Duration(TimeSpan.FromSeconds(2));
-            DA.FillBehavior = FillBehavior.HoldEnd;
-            image.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);*/
-            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, Opacity = 0.6 });
+            qzimage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
             //Scall(1);
         }
 
@@ -144,12 +140,43 @@ namespace Chess
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void Setposition(int x, int y)
+        public void SetPosition(int x, int y)
         {
+            if (Visibility != Visibility.Visible) return;
             if (QiziId > -1) // 仅仅对棋子有效
             {
                 GlobalValue.QiPan[Col, Row] = -1;
                 GlobalValue.QiPan[x, y] = QiziId;
+
+                if (Selected)  // 移动时的动画
+                {
+                    int x0 = Col;
+                    int y0 = Row;
+                    DoubleAnimation PAx = new DoubleAnimation
+                    {
+                        From = GlobalValue.QiPanGrid_X[x0],
+                        To = GlobalValue.QiPanGrid_X[x],
+                        FillBehavior = FillBehavior.Stop,
+                        Duration = new Duration(TimeSpan.FromSeconds(0.15))
+                    };
+                    DoubleAnimation PAy = new DoubleAnimation
+                    {
+                        From = GlobalValue.QiPanGrid_Y[y0],
+                        To = GlobalValue.QiPanGrid_Y[y],
+                        FillBehavior = FillBehavior.Stop,
+                        Duration = new Duration(TimeSpan.FromSeconds(0.15))
+                    };
+
+                    if (GlobalValue.QiPanFanZhuan)
+                    {
+                        PAx.From = GlobalValue.QiPanGrid_X[8 - x0];
+                        PAx.To = GlobalValue.QiPanGrid_X[8 - x];
+                        PAy.From = GlobalValue.QiPanGrid_Y[9 - y0];
+                        PAy.To = GlobalValue.QiPanGrid_Y[9 - y];
+                    }
+                    BeginAnimation(Canvas.LeftProperty, PAx);
+                    BeginAnimation(Canvas.TopProperty, PAy);
+                }
             }
             Col = x;
             Row = y;
@@ -160,15 +187,16 @@ namespace Chess
             }
             SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x]);
             SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
-
+            PutDown();
         }
+
 
         /// <summary>
         /// 设置棋子到开局时的初始位置
         /// </summary>
         public void SetInitPosition()
         {
-            Setposition(init_col, init_row);
+            SetPosition(init_col, init_row);
             Deselect();
             Visibility = Visibility.Visible;
         }
@@ -180,7 +208,7 @@ namespace Chess
         {
             if (scaller is > 0 and < 10)
             {
-                TransformGroup group = image.FindResource("UserControlRenderTransform1") as TransformGroup;
+                TransformGroup group = qzimage.FindResource("UserControlRenderTransform1") as TransformGroup;
                 ScaleTransform scaler = group.Children[0] as ScaleTransform;
                 scaler.ScaleX = scaller;
                 scaler.ScaleY = scaller;
@@ -188,7 +216,7 @@ namespace Chess
         }
         public void FanZhuanPosition()
         {
-            Setposition(Col, Row);
+            SetPosition(Col, Row);
         }
         /// <summary>
         /// 棋子被杀死

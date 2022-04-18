@@ -17,8 +17,11 @@ namespace Chess
 
                 }
             }
-            _ = QzMoveCheck(thisqz);
-            GlobalValue.PathPointImage[GlobalValue.QiZiArray[thisqz].Col, GlobalValue.QiZiArray[thisqz].Row].HasPoint = false;
+            if (thisqz > -1)
+            {
+                _ = QzMoveCheck(thisqz);
+                GlobalValue.PathPointImage[GlobalValue.QiZiArray[thisqz].Col, GlobalValue.QiZiArray[thisqz].Row].HasPoint = false;
+            }
             return 0;
         }
 

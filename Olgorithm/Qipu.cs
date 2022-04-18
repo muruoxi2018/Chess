@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Chess
             
         }
 
-        public static List<QPStep> QiPuList = new(); // 棋谱步骤列表
+        public static ObservableCollection<QPStep> QiPuList = new(); // 棋谱步骤列表
 
         public static void AddItem(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
         {

@@ -9,39 +9,48 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="QiZi.xaml.cs">
+    <Compile Update="CustomClass\QiZi.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="PathPoint.xaml.cs">
+    <Compile Update="CustomClass\PathPoint.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="SetupWindow.xaml.cs">
+    <Compile Update="SubWindwos\SetupWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Window_JiPu.xaml.cs">
+    <Compile Update="SubWindwos\SpyWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Window_QiPu.xaml.cs">
+    <Compile Update="SubWindwos\Window_JiPu.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="SubWindwos\Window_QiPu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Dictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="QiZi.xaml">
+    <Page Update="CustomClass\QiZi.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="PathPoint.xaml">
+    <Page Update="CustomClass\PathPoint.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SetupWindow.xaml">
+    <Page Update="SubWindwos\SetupWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Window_JiPu.xaml">
+    <Page Update="SubWindwos\SpyWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Window_QiPu.xaml">
+    <Page Update="SubWindwos\Window_JiPu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SubWindwos\Window_QiPu.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

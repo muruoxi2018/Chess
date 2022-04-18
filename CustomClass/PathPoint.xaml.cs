@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 
 namespace Chess
@@ -135,20 +138,16 @@ namespace Chess
             int y0 = GlobalValue.QiZiArray[QiZi].Row;
             Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 棋谱记录
 
-            //GlobalValue.QiPan[x0, y0] = -1;
-            //yuanweizhi.setpoint(x0, y0);
-            //yuanweizhi.Show;
-            GlobalValue.QiZiArray[QiZi].Setposition(m, n);
-            //GlobalValue.QiPan[m, n] = QiZi;
-            //xianweizhi.setpoint(m, n);
-            //xianweizhi.Show;
+
+            GlobalValue.QiZiArray[QiZi].SetPosition(m, n);
+
             if (DieQz != -1)
             {
                 GlobalValue.QiZiArray[DieQz].SetDied();
                 if (sound)
                 {
                     /*Form2.mp1.FileName := 'sounds/eat.mp3';
-            Form2.mp1.Open;
+                    Form2.mp1.Open;
                     Form2.mp1.Play;*/
                 }
                 if (DieQz == 4)  // 黑将被吃，则红方胜
@@ -168,22 +167,19 @@ namespace Chess
                 if (sound)
                 {
                     /*Form2.mp1.FileName := 'sounds/go.wav';
-            Form2.mp1.Open;
+                    Form2.mp1.Open;
                     Form2.mp1.Play;*/
                 }
             }
             //checkjiangjun(QiZi);
 
-            //AddJilu(QiZi, x0, y0, m, n, DieQz);
-
             GlobalValue.SideTag = !GlobalValue.SideTag;  // 变换走棋方
-            GlobalValue.QiZiArray[QiZi].PutDown();
+            //GlobalValue.QiZiArray[QiZi].PutDown();
 
             GlobalValue.CurrentQiZi = 100;
             // 取消棋子预选状态
             //testbox1.Text = GlobalValue.sidetag.ToString();
 
         }
-
-    }
+   }
 }
