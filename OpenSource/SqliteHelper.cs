@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using System.Collections.Generic;
 using System.Data.SQLite;
-namespace Chess
+
+namespace Chess.OpenSource
 {
     public class SqliteHelper
     {
@@ -31,7 +32,7 @@ namespace Chess
                     }
                     return cmd.ExecuteNonQuery();
                 }
-            }           
+            }
         }
 
         public static string ExecuteScalar(string sql, params SQLiteParameter[] param)
@@ -66,7 +67,7 @@ namespace Chess
                     try
                     {
                         con.Open();
-                        return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+                        return cmd.ExecuteReader(CommandBehavior.CloseConnection);
                     }
                     catch (System.Exception)
                     {
@@ -84,7 +85,7 @@ namespace Chess
             try
             {
                 using (SQLiteDataAdapter sda = new SQLiteDataAdapter(sql, str))
-                {                    
+                {
                     sda.MissingSchemaAction = MissingSchemaAction.AddWithKey;
                     sda.Fill(dt);
                 }
@@ -110,7 +111,7 @@ namespace Chess
                     sda.Fill(dt);
                 }
             }
-            catch(System.Exception ex)
+            catch (System.Exception ex)
             {
                 string s = ex.Message;
             }
@@ -133,8 +134,8 @@ namespace Chess
             string sql = string.Format("SELECT {0} FROM `{1}` WHERE {2} {3} {4}", fields, tbName, where, orderBy, limit);
 
             //return sql;
-            return SqliteHelper.ExecuteTable(sql, param);
-        }      
+            return ExecuteTable(sql, param);
+        }
         public static int ExecuteInsert(string tbName, Dictionary<string, string> insertData)
         {
             string point = "";//分隔符号(,)
@@ -150,7 +151,7 @@ namespace Chess
             }
             string sql = string.Format("INSERT INTO `{0}`({1}) VALUES({2})", tbName, keyStr, valueStr);
             return ExecuteSql(sql, param.ToArray());
-        }       
+        }
         public static int ExecuteUpdate(string tbName, string where, Dictionary<string, string> insertData)
         {
             string point = "";//分隔符号(,)
