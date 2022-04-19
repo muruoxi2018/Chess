@@ -52,7 +52,8 @@ namespace Chess
             Spy_window = new SpyWindow();
             Spy_window.Hide();
             Window_Qi = new Window_QiPu();
-            Window_Qi.Show();
+            Window_Qi.Hide();
+            
         }
 
         /// <summary>
