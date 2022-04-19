@@ -12,6 +12,7 @@ namespace Chess
     {
         private static Window_JiPu jipuwindow;  // 记谱窗口
         private static SpyWindow Spy_window;    // 棋盘数据监视窗口
+        private static Window_QiPu Window_Qi;
         public MainWindow()
         {
             InitializeComponent();
@@ -50,6 +51,8 @@ namespace Chess
             jipuwindow.Hide();
             Spy_window = new SpyWindow();
             Spy_window.Hide();
+            Window_Qi = new Window_QiPu();
+            Window_Qi.Show();
         }
 
         /// <summary>
