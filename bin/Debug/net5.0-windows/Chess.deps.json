@@ -9,10 +9,28 @@
       "Chess/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.1",
-          "System.Data.SQLite.Core": "1.0.115.5"
+          "System.Data.SQLite.Core": "1.0.115.5",
+          "linq2db.SQLite": "3.7.0"
         },
         "runtime": {
           "Chess.dll": {}
+        }
+      },
+      "linq2db/3.7.0": {
+        "dependencies": {
+          "System.ComponentModel.Annotations": "4.7.0"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/linq2db.dll": {
+            "assemblyVersion": "3.7.0.0",
+            "fileVersion": "3.7.0.0"
+          }
+        }
+      },
+      "linq2db.SQLite/3.7.0": {
+        "dependencies": {
+          "System.Data.SQLite.Core": "1.0.115.5",
+          "linq2db": "3.7.0"
         }
       },
       "Newtonsoft.Json/13.0.1": {
@@ -53,6 +71,7 @@
           }
         }
       },
+      "System.ComponentModel.Annotations/4.7.0": {},
       "System.Data.SQLite.Core/1.0.115.5": {
         "dependencies": {
           "Stub.System.Data.SQLite.Core.NetStandard": "1.0.115.5"
@@ -65,6 +84,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "linq2db/3.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iDous2TbSchtALnTLNXQnprmNZF4GrXas0MBz6ZHWkSdilSJjcf26qFM7Qf98Mny0OXHEmNXG/jtIDhoVJ5KmQ==",
+      "path": "linq2db/3.7.0",
+      "hashPath": "linq2db.3.7.0.nupkg.sha512"
+    },
+    "linq2db.SQLite/3.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zSSmWOCyitd1KYSCgzRCFzbC9l5Okcs9mhHd2+BkoQsHrEVUxXwh6PdSUZ1809RFX6DgnPlO9VTTwnttYGyCGw==",
+      "path": "linq2db.sqlite/3.7.0",
+      "hashPath": "linq2db.sqlite.3.7.0.nupkg.sha512"
     },
     "Newtonsoft.Json/13.0.1": {
       "type": "package",
@@ -79,6 +112,13 @@
       "sha512": "sha512-WfrqQg6WL+r4H1sVKTenNj6ERLXUukUxqcjH1rqPqXadeIWccTVpydESieD7cZ/NWQVSKLYIHuoBX5du+BFhIQ==",
       "path": "stub.system.data.sqlite.core.netstandard/1.0.115.5",
       "hashPath": "stub.system.data.sqlite.core.netstandard.1.0.115.5.nupkg.sha512"
+    },
+    "System.ComponentModel.Annotations/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0YFqjhp/mYkDGpU0Ye1GjE53HMp9UVfGN7seGpAMttAC0C40v5gw598jCgpbBLMmCo0E5YRLBv5Z2doypO49ZQ==",
+      "path": "system.componentmodel.annotations/4.7.0",
+      "hashPath": "system.componentmodel.annotations.4.7.0.nupkg.sha512"
     },
     "System.Data.SQLite.Core/1.0.115.5": {
       "type": "package",
