@@ -14,10 +14,11 @@ namespace Chess
     /// </summary>
     public partial class PathPoint : UserControl
     {
+        private bool _haspoint = false;
         public bool HasPoint {
-            get { return HasPoint; } 
+            get { return _haspoint; } 
             set { 
-                HasPoint = value;
+                _haspoint = value;
                 if (value) Visibility = Visibility.Visible; 
                 else Visibility = Visibility.Hidden; 
             } 
@@ -69,26 +70,6 @@ namespace Chess
         {
             Setposition(Col, Row);
         }
-        /// <summary>
-        /// 隐藏标记
-        /// </summary>
-        public void SetHidden()
-        {
-            Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// 显示标记
-        /// 条件是此处为有效移动路径
-        /// </summary>
-        public void SetVisable()
-        {
-            if (!HasPoint)
-            {
-                return;
-            }
-            Visibility = Visibility.Visible;
-        }
 
         /// <summary>
         /// 当鼠标进入标记范围内时，显示阴影效果
@@ -124,7 +105,6 @@ namespace Chess
             {
                 for (int j = 0; j <= 9; j++)
                 {
-                    GlobalValue.PathPointImage[i, j].SetHidden();
                     GlobalValue.PathPointImage[i, j].HasPoint = false;
                 }
             }
@@ -141,6 +121,7 @@ namespace Chess
         /// <param name="sound">是否打开声音效果</param>
         private static void QiZiMoveTo(int QiZi, int m, int n, int DieQz, bool sound)  // 运子
         {
+            if (QiZi is < 0 or > 31) return;
             // 运子到(m,n)位置
             int x0 = GlobalValue.QiZiArray[QiZi].Col;
             int y0 = GlobalValue.QiZiArray[QiZi].Row;
@@ -158,17 +139,6 @@ namespace Chess
                     Form2.mp1.Open;
                     Form2.mp1.Play;*/
                 }
-                if (DieQz == 4)  // 黑将被吃，则红方胜
-                {
-                    GlobalValue.GameOver = true;
-                    //Form2.lbl3.Caption := '战斗结束！红方胜！！';
-                }
-                if (DieQz == 20)  // 红帅被吃，则黑方胜
-                {
-                    GlobalValue.GameOver = true;
-                    //Form2.lbl3.Caption := '战斗结束！黑方胜！！';
-                }
-
             }
             else
             {
@@ -179,15 +149,17 @@ namespace Chess
                     Form2.mp1.Play;*/
                 }
             }
-            //checkjiangjun(QiZi);
+            int jiangjun = JiangJun.isJiangJun(QiZi);
+            if (jiangjun ==0) {
+                MessageBox.Show("黑将----正在被将军！！", "提示",MessageBoxButton.OK,MessageBoxImage.Information); 
+            }
+            if (jiangjun == 16)
+            {
+                MessageBox.Show("红帅----正在被将军！！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
             GlobalValue.SideTag = !GlobalValue.SideTag;  // 变换走棋方
-            //GlobalValue.QiZiArray[QiZi].PutDown();
-
             GlobalValue.CurrentQiZi = 100;
-            // 取消棋子预选状态
-            //testbox1.Text = GlobalValue.sidetag.ToString();
-
         }
     }
 }

@@ -108,7 +108,6 @@ namespace Chess
                 for (int j = 0; j <= 9; j++)
                 {
                     GlobalValue.QiPan[i, j] = -1;
-                    GlobalValue.PathPointImage[i, j].SetHidden();
                     GlobalValue.PathPointImage[i, j].HasPoint = false;
                 }
             }

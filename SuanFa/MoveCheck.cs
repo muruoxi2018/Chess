@@ -5,7 +5,7 @@ namespace Chess.SuanFa
     public class MoveCheck
     {
         public static bool[,] PathBool = new bool[9,10];
-        public static void Getpath(int thisqz)   // 查找棋子可移动的路径，并标记
+        public static void GetAndShowPathPoints(int thisqz)   // 查找棋子可移动的路径，并标记
 
         {
             //GlobalValue.qzpath.Initialize();//  清除所有棋子路径数据
@@ -14,19 +14,25 @@ namespace Chess.SuanFa
                 for (int j = 0; j <= 9; j++)
                 {
                     GlobalValue.PathPointImage[i, j].HasPoint = false;
-                    GlobalValue.PathPointImage[i, j].SetHidden();
                     PathBool[i, j] = false;
                 }
             }
             if (thisqz > -1)
             {
-                QzMoveCheck(thisqz);
+                GetPathPoints(thisqz);
+                for (int i = 0; i <= 8; i++)
+                {
+                    for (int j = 0; j <= 9; j++)
+                    {
+                        GlobalValue.PathPointImage[i, j].HasPoint = PathBool[i, j];
+                    }
+                }
                 GlobalValue.PathPointImage[GlobalValue.QiZiArray[thisqz].Col, GlobalValue.QiZiArray[thisqz].Row].HasPoint = false;
             }
         }
 
         // 检查棋子移动目标位置的有效性
-        private static void QzMoveCheck(int MoveQiZi)
+        public static void GetPathPoints(int MoveQiZi)
         {
             if (MoveQiZi > 31)  // 如果没有预选棋子
             {
@@ -35,6 +41,13 @@ namespace Chess.SuanFa
             if (MoveQiZi < 0)
             {
                 return;
+            }
+            for (int i = 0; i <= 8; i++)
+            {
+                for (int j = 0; j <= 9; j++)
+                {
+                    PathBool[i, j] = false;
+                }
             }
             int MoveQiZi_Col = GlobalValue.QiZiArray[MoveQiZi].Col;
             int MoveQiZi_Row = GlobalValue.QiZiArray[MoveQiZi].Row;
@@ -53,13 +66,13 @@ namespace Chess.SuanFa
                         {
                             if (GlobalValue.QiPan[i, MoveQiZi_Row] == -1)
                             {
-                                GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                PathBool[i, MoveQiZi_Row] = true;
                             }
                             else
                             {
                                 if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[i, MoveQiZi_Row]))
                                 {
-                                    GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                    PathBool[i, MoveQiZi_Row] = true;
                                 }
                                 break;
                             }
@@ -68,13 +81,13 @@ namespace Chess.SuanFa
                         {
                             if (GlobalValue.QiPan[i, MoveQiZi_Row] == -1)
                             {
-                                GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                PathBool[i, MoveQiZi_Row] = true;
                             }
                             else
                             {
                                 if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[i, MoveQiZi_Row]))
                                 {
-                                    GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                    PathBool[i, MoveQiZi_Row] = true;
                                 }
                                 break;
                             }
@@ -84,13 +97,13 @@ namespace Chess.SuanFa
                     {
                         if (GlobalValue.QiPan[MoveQiZi_Col, i] == -1)
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                            PathBool[MoveQiZi_Col, i] = true;
                         }
                         else
                         {
                             if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, i]))
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                                PathBool[MoveQiZi_Col, i] = true;
                             }
                             break;
                         }
@@ -99,13 +112,13 @@ namespace Chess.SuanFa
                     {
                         if (GlobalValue.QiPan[MoveQiZi_Col, i] == -1)
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                            PathBool[MoveQiZi_Col, i] = true;
                         }
                         else
                         {
                             if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, i]))
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                                PathBool[MoveQiZi_Col, i] = true;
                             }
                             break;
                         }
@@ -126,11 +139,11 @@ namespace Chess.SuanFa
                     {
                         if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row - 2]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row - 2].HasPoint = true;
+                            PathBool[MoveQiZi_Col - 1, MoveQiZi_Row - 2] = true;
                         }
                         if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row - 2]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row - 2].HasPoint = true;
+                            PathBool[MoveQiZi_Col + 1, MoveQiZi_Row - 2] = true;
                         }
                     }
 
@@ -138,11 +151,11 @@ namespace Chess.SuanFa
                     {
                         if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row + 2]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row + 2].HasPoint = true;
+                            PathBool[MoveQiZi_Col - 1, MoveQiZi_Row + 2] = true;
                         }
                         if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row + 2]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row + 2].HasPoint = true;
+                            PathBool[MoveQiZi_Col + 1, MoveQiZi_Row + 2] = true;
                         }
                     }
 
@@ -150,11 +163,11 @@ namespace Chess.SuanFa
                     {
                         if (MoveQiZi_Row > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 2, MoveQiZi_Row - 1]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col - 2, MoveQiZi_Row - 1].HasPoint = true;
+                            PathBool[MoveQiZi_Col - 2, MoveQiZi_Row - 1] = true;
                         }
                         if (MoveQiZi_Row < 9 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 2, MoveQiZi_Row + 1]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col - 2, MoveQiZi_Row + 1].HasPoint = true;
+                            PathBool[MoveQiZi_Col - 2, MoveQiZi_Row + 1] = true;
                         }
                     }
 
@@ -162,11 +175,11 @@ namespace Chess.SuanFa
                     {
                         if (MoveQiZi_Row > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 2, MoveQiZi_Row - 1]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col + 2, MoveQiZi_Row - 1].HasPoint = true;
+                            PathBool[MoveQiZi_Col + 2, MoveQiZi_Row - 1] = true;
                         }
                         if (MoveQiZi_Row < 9 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 2, MoveQiZi_Row + 1]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col + 2, MoveQiZi_Row + 1].HasPoint = true;
+                            PathBool[MoveQiZi_Col + 2, MoveQiZi_Row + 1] = true;
                         }
                     }
                     break;
@@ -189,14 +202,14 @@ namespace Chess.SuanFa
                         {
                             if (GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row + 1] == -1 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 2, MoveQiZi_Row + 2])) // 左下方
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col - 2, MoveQiZi_Row + 2].HasPoint = true;
+                                PathBool[MoveQiZi_Col - 2, MoveQiZi_Row + 2] = true;
                             }
                         }
                         if (MoveQiZi_Col < 8)
                         {
                             if (GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row + 1] == -1 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 2, MoveQiZi_Row + 2])) // 右下方
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col + 2, MoveQiZi_Row + 2].HasPoint = true;
+                                PathBool[MoveQiZi_Col + 2, MoveQiZi_Row + 2] = true;
                             }
                         }
                     }
@@ -206,14 +219,14 @@ namespace Chess.SuanFa
                         {
                             if (GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row - 1] == -1 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 2, MoveQiZi_Row - 2])) // 左上方
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col - 2, MoveQiZi_Row - 2].HasPoint = true;
+                                PathBool[MoveQiZi_Col - 2, MoveQiZi_Row - 2] = true;
                             }
                         }
                         if (MoveQiZi_Col < 8)
                         {
                             if (GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row - 1] == -1 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 2, MoveQiZi_Row - 2])) // 右上方
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col + 2, MoveQiZi_Row - 2].HasPoint = true;
+                                PathBool[MoveQiZi_Col + 2, MoveQiZi_Row - 2] = true;
                             }
                         }
                     }
@@ -237,14 +250,14 @@ namespace Chess.SuanFa
                         {
                             if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row + 1])) // 左下方
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row + 1].HasPoint = true;
+                                PathBool[MoveQiZi_Col - 1, MoveQiZi_Row + 1] = true;
                             }
                         }
                         if (MoveQiZi_Col < 5)
                         {
                             if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row + 1])) // 右下方
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row + 1].HasPoint = true;
+                                PathBool[MoveQiZi_Col + 1, MoveQiZi_Row + 1] = true;
                             }
                         }
                     }
@@ -254,14 +267,14 @@ namespace Chess.SuanFa
                         {
                             if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row - 1]))// 左上方
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row - 1].HasPoint = true;
+                                PathBool[MoveQiZi_Col - 1, MoveQiZi_Row - 1] = true;
                             }
                         }
                         if (MoveQiZi_Col < 5)
                         {
                             if (!IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row - 1])) // 右上方
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row - 1].HasPoint = true;
+                                PathBool[MoveQiZi_Col + 1, MoveQiZi_Row - 1] = true;
                             }
                         }
                     }
@@ -279,7 +292,7 @@ namespace Chess.SuanFa
                         {
                             if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅横向不同线
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row + 1].HasPoint = true;
+                                PathBool[MoveQiZi_Col, MoveQiZi_Row + 1] = true;
                             }
                             else
                             {
@@ -289,14 +302,14 @@ namespace Chess.SuanFa
                                     {
                                         if (GlobalValue.QiPan[MoveQiZi_Col, i] != -1)
                                         {
-                                            GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row + 1].HasPoint = true;
+                                            PathBool[MoveQiZi_Col, MoveQiZi_Row + 1] = true;
                                             break;
                                         }
                                     }
                                 }
                                 if (MoveQiZi == 16)
                                 {
-                                    GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row + 1].HasPoint = true;
+                                    PathBool[MoveQiZi_Col, MoveQiZi_Row + 1] = true;
                                 }
                             }
                         }
@@ -307,13 +320,13 @@ namespace Chess.SuanFa
                         {
                             if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅横向不同线
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row - 1].HasPoint = true;
+                                PathBool[MoveQiZi_Col, MoveQiZi_Row - 1] = true;
                             }
                             else
                             {
                                 if (MoveQiZi == 0)
                                 {
-                                    GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row - 1].HasPoint = true;
+                                    PathBool[MoveQiZi_Col, MoveQiZi_Row - 1] = true;
                                 }
                                 if (MoveQiZi == 16)
                                 {
@@ -321,7 +334,7 @@ namespace Chess.SuanFa
                                     {
                                         if (GlobalValue.QiPan[MoveQiZi_Col, i] != -1)
                                         {
-                                            GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row - 1].HasPoint = true;
+                                            PathBool[MoveQiZi_Col, MoveQiZi_Row - 1] = true;
                                             break;
                                         }
                                     }
@@ -339,14 +352,14 @@ namespace Chess.SuanFa
                                 {
                                     if (GlobalValue.QiPan[MoveQiZi_Col - 1, i] != -1)
                                     {
-                                        GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row].HasPoint = true;
+                                        PathBool[MoveQiZi_Col - 1, MoveQiZi_Row] = true;
                                         break;
                                     }
                                 }
                             }
                             else
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row].HasPoint = true;
+                                PathBool[MoveQiZi_Col - 1, MoveQiZi_Row] = true;
                             }
                         }
 
@@ -361,14 +374,14 @@ namespace Chess.SuanFa
                                 {
                                     if (GlobalValue.QiPan[MoveQiZi_Col + 1, i] != -1)
                                     {
-                                        GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row].HasPoint = true;
+                                        PathBool[MoveQiZi_Col + 1, MoveQiZi_Row] = true;
                                         break;
                                     }
                                 }
                             }
                             else
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row].HasPoint = true;
+                                PathBool[MoveQiZi_Col + 1, MoveQiZi_Row] = true;
                             }
                         }
                     }
@@ -433,7 +446,7 @@ namespace Chess.SuanFa
                             {
                                 if (gezi == 0)
                                 {
-                                    GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                    PathBool[i, MoveQiZi_Row] = true;
                                 }
                             }
                             else
@@ -442,7 +455,7 @@ namespace Chess.SuanFa
                                 {
                                     if (gezi == 1)
                                     {
-                                        GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                        PathBool[i, MoveQiZi_Row] = true;
                                     }
                                 }
                                 gezi++;
@@ -455,7 +468,7 @@ namespace Chess.SuanFa
                             {
                                 if (gezi == 0)
                                 {
-                                    GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                    PathBool[i, MoveQiZi_Row] = true;
                                 }
                             }
                             else
@@ -464,7 +477,7 @@ namespace Chess.SuanFa
                                 {
                                     if (gezi == 1)
                                     {
-                                        GlobalValue.PathPointImage[i, MoveQiZi_Row].HasPoint = true;
+                                        PathBool[i, MoveQiZi_Row] = true;
                                     }
                                 }
                                 gezi++;
@@ -478,7 +491,7 @@ namespace Chess.SuanFa
                         {
                             if (gezi == 0)
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                                PathBool[MoveQiZi_Col, i] = true;
                             }
                         }
                         else
@@ -487,7 +500,7 @@ namespace Chess.SuanFa
                             {
                                 if (gezi == 1)
                                 {
-                                    GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                                    PathBool[MoveQiZi_Col, i] = true;
                                 }
                             }
                             gezi++;
@@ -500,7 +513,7 @@ namespace Chess.SuanFa
                         {
                             if (gezi == 0)
                             {
-                                GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                                PathBool[MoveQiZi_Col, i] = true;
                             }
                         }
                         else
@@ -509,7 +522,7 @@ namespace Chess.SuanFa
                             {
                                 if (gezi == 1)
                                 {
-                                    GlobalValue.PathPointImage[MoveQiZi_Col, i].HasPoint = true;
+                                    PathBool[MoveQiZi_Col, i] = true;
                                 }
                             }
                             gezi++;
@@ -523,18 +536,18 @@ namespace Chess.SuanFa
                 case 15: // 黑方卒的移动
                     if (MoveQiZi_Row < 9 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, MoveQiZi_Row + 1])) // 下方一格
                     {
-                        GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row + 1].HasPoint = true;
+                        PathBool[MoveQiZi_Col, MoveQiZi_Row + 1] = true;
                     }
                     if (!JustOneIsThis(MoveQiZi) && MoveQiZi_Row <= 9 && MoveQiZi_Row > 4) // 水平一格
                     {
                         if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row].HasPoint = true;
+                            PathBool[MoveQiZi_Col - 1, MoveQiZi_Row] = true;
                         }
 
                         if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row].HasPoint = true;
+                            PathBool[MoveQiZi_Col + 1, MoveQiZi_Row] = true;
                         }
                     }
                     break;
@@ -545,18 +558,18 @@ namespace Chess.SuanFa
                 case 31:// 红方兵的移动
                     if (MoveQiZi_Row > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col, MoveQiZi_Row - 1])) // 上方一格
                     {
-                        GlobalValue.PathPointImage[MoveQiZi_Col, MoveQiZi_Row - 1].HasPoint = true;
+                        PathBool[MoveQiZi_Col, MoveQiZi_Row - 1] = true;
                     }
                     if (!JustOneIsThis(MoveQiZi) && MoveQiZi_Row >= 0 && MoveQiZi_Row < 5) // 水平一格
                     {
                         if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col - 1, MoveQiZi_Row]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col - 1, MoveQiZi_Row].HasPoint = true;
+                            PathBool[MoveQiZi_Col - 1, MoveQiZi_Row] = true;
                         }
 
                         if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, GlobalValue.QiPan[MoveQiZi_Col + 1, MoveQiZi_Row]))
                         {
-                            GlobalValue.PathPointImage[MoveQiZi_Col + 1, MoveQiZi_Row].HasPoint = true;
+                            PathBool[MoveQiZi_Col + 1, MoveQiZi_Row] = true;
                         }
                     }
                     break;

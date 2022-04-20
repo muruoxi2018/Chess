@@ -9,34 +9,12 @@
       "Chess/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.1",
-<<<<<<< HEAD
-          "System.Data.SQLite.Core": "1.0.115.5",
-          "linq2db.SQLite": "3.7.0"
-=======
           "System.Data.SQLite": "1.0.115.5"
->>>>>>> 02d1807ab93149cd160cd5e4de17768b48362546
         },
         "runtime": {
           "Chess.dll": {}
         }
       },
-<<<<<<< HEAD
-      "linq2db/3.7.0": {
-        "dependencies": {
-          "System.ComponentModel.Annotations": "4.7.0"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/linq2db.dll": {
-            "assemblyVersion": "3.7.0.0",
-            "fileVersion": "3.7.0.0"
-          }
-        }
-      },
-      "linq2db.SQLite/3.7.0": {
-        "dependencies": {
-          "System.Data.SQLite.Core": "1.0.115.5",
-          "linq2db": "3.7.0"
-=======
       "EntityFramework/6.4.4": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
@@ -67,7 +45,6 @@
       "Microsoft.Win32.SystemEvents/4.7.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0"
->>>>>>> 02d1807ab93149cd160cd5e4de17768b48362546
         }
       },
       "Newtonsoft.Json/13.0.1": {
@@ -142,9 +119,6 @@
           }
         }
       },
-<<<<<<< HEAD
-      "System.ComponentModel.Annotations/4.7.0": {},
-=======
       "System.CodeDom/4.7.0": {},
       "System.ComponentModel.Annotations/4.7.0": {},
       "System.Configuration.ConfigurationManager/4.7.0": {
@@ -186,7 +160,6 @@
           "System.Data.SQLite.EF6": "1.0.115.5"
         }
       },
->>>>>>> 02d1807ab93149cd160cd5e4de17768b48362546
       "System.Data.SQLite.Core/1.0.115.5": {
         "dependencies": {
           "Stub.System.Data.SQLite.Core.NetStandard": "1.0.115.5"
@@ -236,21 +209,6 @@
       "serviceable": false,
       "sha512": ""
     },
-<<<<<<< HEAD
-    "linq2db/3.7.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-iDous2TbSchtALnTLNXQnprmNZF4GrXas0MBz6ZHWkSdilSJjcf26qFM7Qf98Mny0OXHEmNXG/jtIDhoVJ5KmQ==",
-      "path": "linq2db/3.7.0",
-      "hashPath": "linq2db.3.7.0.nupkg.sha512"
-    },
-    "linq2db.SQLite/3.7.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-zSSmWOCyitd1KYSCgzRCFzbC9l5Okcs9mhHd2+BkoQsHrEVUxXwh6PdSUZ1809RFX6DgnPlO9VTTwnttYGyCGw==",
-      "path": "linq2db.sqlite/3.7.0",
-      "hashPath": "linq2db.sqlite.3.7.0.nupkg.sha512"
-=======
     "EntityFramework/6.4.4": {
       "type": "package",
       "serviceable": true,
@@ -285,7 +243,6 @@
       "sha512": "sha512-mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
       "path": "microsoft.win32.systemevents/4.7.0",
       "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
->>>>>>> 02d1807ab93149cd160cd5e4de17768b48362546
     },
     "Newtonsoft.Json/13.0.1": {
       "type": "package",
@@ -329,8 +286,6 @@
       "path": "stub.system.data.sqlite.core.netstandard/1.0.115.5",
       "hashPath": "stub.system.data.sqlite.core.netstandard.1.0.115.5.nupkg.sha512"
     },
-<<<<<<< HEAD
-=======
     "System.CodeDom/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -338,7 +293,6 @@
       "path": "system.codedom/4.7.0",
       "hashPath": "system.codedom.4.7.0.nupkg.sha512"
     },
->>>>>>> 02d1807ab93149cd160cd5e4de17768b48362546
     "System.ComponentModel.Annotations/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -346,8 +300,6 @@
       "path": "system.componentmodel.annotations/4.7.0",
       "hashPath": "system.componentmodel.annotations.4.7.0.nupkg.sha512"
     },
-<<<<<<< HEAD
-=======
     "System.Configuration.ConfigurationManager/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -369,7 +321,6 @@
       "path": "system.data.sqlite/1.0.115.5",
       "hashPath": "system.data.sqlite.1.0.115.5.nupkg.sha512"
     },
->>>>>>> 02d1807ab93149cd160cd5e4de17768b48362546
     "System.Data.SQLite.Core/1.0.115.5": {
       "type": "package",
       "serviceable": true,
