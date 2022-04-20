@@ -4,7 +4,8 @@ namespace Chess.SuanFa
 {
     public class MoveCheck
     {
-        public static int Getpath(int thisqz)   // 查找棋子可移动的路径，并标记
+        public static bool[,] PathBool = new bool[9,10];
+        public static void Getpath(int thisqz)   // 查找棋子可移动的路径，并标记
 
         {
             //GlobalValue.qzpath.Initialize();//  清除所有棋子路径数据
@@ -14,27 +15,26 @@ namespace Chess.SuanFa
                 {
                     GlobalValue.PathPointImage[i, j].HasPoint = false;
                     GlobalValue.PathPointImage[i, j].SetHidden();
-
+                    PathBool[i, j] = false;
                 }
             }
             if (thisqz > -1)
             {
-                _ = QzMoveCheck(thisqz);
+                QzMoveCheck(thisqz);
                 GlobalValue.PathPointImage[GlobalValue.QiZiArray[thisqz].Col, GlobalValue.QiZiArray[thisqz].Row].HasPoint = false;
             }
-            return 0;
         }
 
         // 检查棋子移动目标位置的有效性
-        private static bool QzMoveCheck(int MoveQiZi)
+        private static void QzMoveCheck(int MoveQiZi)
         {
             if (MoveQiZi > 31)  // 如果没有预选棋子
             {
-                return false;
+                return;
             }
             if (MoveQiZi < 0)
             {
-                return false;
+                return;
             }
             int MoveQiZi_Col = GlobalValue.QiZiArray[MoveQiZi].Col;
             int MoveQiZi_Row = GlobalValue.QiZiArray[MoveQiZi].Row;
@@ -386,7 +386,7 @@ namespace Chess.SuanFa
                         }
                         if (j == 0)
                         {
-                            return false;
+                            return;
                         }
                         if (MoveQiZi == 4 && Math.Abs(GlobalValue.QiZiArray[0].Row - n) == 1)
                         {
@@ -400,7 +400,7 @@ namespace Chess.SuanFa
                             }
                             if (j == 0)
                             {
-                                return false;
+                                return;
                             }
                         }
                         if (MoveQiZi == 20 && Math.Abs(GlobalValue.QiZiArray[20].Row - n) == 1)
@@ -415,7 +415,7 @@ namespace Chess.SuanFa
                             }
                             if (j == 0)
                             {
-                                return false;
+                                return;
                             }
                         }
                     }
@@ -561,9 +561,9 @@ namespace Chess.SuanFa
                     }
                     break;
                 default:
-                    return false;
+                    return;
             }
-            return true;
+            return;
         }
 
         // 判断是不是同一方棋子

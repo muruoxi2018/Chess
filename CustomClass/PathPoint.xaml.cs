@@ -14,7 +14,14 @@ namespace Chess
     /// </summary>
     public partial class PathPoint : UserControl
     {
-        public bool HasPoint { get; set; }  // 是否是有效的走棋路径点
+        public bool HasPoint {
+            get { return HasPoint; } 
+            set { 
+                HasPoint = value;
+                if (value) Visibility = Visibility.Visible; 
+                else Visibility = Visibility.Hidden; 
+            } 
+        }  // 是否是有效的走棋路径点
         public int Col { get; set; }    // 路径点的列坐标
         public int Row { get; set; }    // 路径点的行坐标
 
@@ -182,5 +189,5 @@ namespace Chess
             //testbox1.Text = GlobalValue.sidetag.ToString();
 
         }
-   }
+    }
 }

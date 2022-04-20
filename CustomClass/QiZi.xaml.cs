@@ -105,7 +105,7 @@ namespace Chess
             yuxuankuang.Visibility = Visibility.Visible;
             GlobalValue.CurrentQiZi = GetId();
             //Scall(1.01);
-            _ = SuanFa.MoveCheck.Getpath(GlobalValue.CurrentQiZi);
+            SuanFa.MoveCheck.Getpath(GlobalValue.CurrentQiZi);
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
