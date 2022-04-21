@@ -1,5 +1,6 @@
 ﻿using Chess.SuanFa;
 using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -149,7 +150,8 @@ namespace Chess
                     Form2.mp1.Play;*/
                 }
             }
-            int jiangjun = JiangJun.isJiangJun(QiZi);
+            
+            int jiangjun = JiangJun.IsJiangJun(QiZi,m,n);
             if (jiangjun ==0) {
                 MessageBox.Show("黑将----正在被将军！！", "提示",MessageBoxButton.OK,MessageBoxImage.Information); 
             }

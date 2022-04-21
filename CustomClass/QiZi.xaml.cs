@@ -139,12 +139,14 @@ namespace Chess
             if (QiziId > -1) // 仅仅对棋子有效
             {
                 GlobalValue.QiPan[Col, Row] = -1;
+                int x0 = Col;
+                int y0 = Row;
+                Col = x;
+                Row = y;
                 GlobalValue.QiPan[x, y] = QiziId;
 
                 if (Selected)  // 移动时的动画
                 {
-                    int x0 = Col;
-                    int y0 = Row;
                     DoubleAnimation PAx = new DoubleAnimation
                     {
                         From = GlobalValue.QiPanGrid_X[x0],
@@ -171,8 +173,7 @@ namespace Chess
                     BeginAnimation(Canvas.TopProperty, PAy);
                 }
             }
-            Col = x;
-            Row = y;
+
             if (GlobalValue.QiPanFanZhuan)
             {
                 x = 8 - x;
