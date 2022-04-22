@@ -16,6 +16,7 @@ namespace Chess.SuanFa
         /// <returns> 0=黑将被将军，16=红帅被将军 </returns>
         public static int IsJiangJun(int thisQZ,int col,int row)
         {
+            
             if (thisQZ is < 0 or > 31) return -1;
             int[,] myqipan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
             for (int i = 0; i < 9; i++)
@@ -26,26 +27,28 @@ namespace Chess.SuanFa
             myqipan[col, row] = thisQZ;
             myqipan[GlobalValue.QiZiArray[thisQZ].Col, GlobalValue.QiZiArray[thisQZ].Row] = -1;
 
-            bool[,] thispoints=MoveCheck.GetPathPoints(thisQZ,myqipan);
+            bool[,] thispoints;
 
-
-
-            if (thisQZ >= 16)
+            if (thisQZ <= 15)
             {
-                int x = GlobalValue.QiZiArray[0].Col;
-                int y = GlobalValue.QiZiArray[0].Row;
-                if (thispoints[x, y] == true) return 0;
+                for (int qizi = 5; qizi <= 15; qizi++) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
+                {
+                    thispoints =MoveCheck.GetPathPoints(qizi, myqipan);
+                    int x = (thisQZ == 16) ? col : GlobalValue.QiZiArray[16].Col;
+                    int y = (thisQZ == 16) ? row : GlobalValue.QiZiArray[16].Row;
+                    if (thispoints[x, y] == true) return 16;
+                }
             }
-            if (thisQZ < 16)
+            if (thisQZ > 15)
             {
-                int x = GlobalValue.QiZiArray[16].Col;
-                int y = GlobalValue.QiZiArray[16].Row;
-                if (thispoints[x, y] == true) return 16;
+                for (int qizi = 21; qizi <= 31; qizi++) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
+                {
+                    thispoints = MoveCheck.GetPathPoints(qizi, myqipan);
+                    int x = (thisQZ == 0) ? col : GlobalValue.QiZiArray[0].Col;
+                    int y = (thisQZ == 0) ? row : GlobalValue.QiZiArray[0].Row;
+                    if (thispoints[x, y] == true) return 0;
+                }
             }
-
-
-
-
             return -1;
         }
         /// <summary>

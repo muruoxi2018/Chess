@@ -41,5 +41,18 @@
         <Button Content="设置" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="508,773,0,0" VerticalAlignment="Top" Click="SetupOption" Width="70" Height="25"/>
         <Button Content="悔棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="166,773,0,0" VerticalAlignment="Top" Width="70" Click="HuiQi" Height="25"/>
         <Button Content="棋盘数据监控" Style="{StaticResource button}" HorizontalAlignment="Left" Height="25" Margin="260,773,0,0" VerticalAlignment="Top" Width="100" Click="OpenSpyWindow"/>
+        <TextBlock x:Name="JianJuning" HorizontalAlignment="Center" TextWrapping="Wrap" Text="正在将军" VerticalAlignment="Center" FontSize="72" Margin="0,0,0,46" FontWeight="Bold" Width="333" TextAlignment="Center" Panel.ZIndex="1000" Visibility="Hidden">
+            <TextBlock.Effect>
+                <DropShadowEffect Opacity="1" BlurRadius="200" Color="#FF00FFF9" Direction="0" ShadowDepth="0"/>
+            </TextBlock.Effect>
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF5A0505" Offset="1"/>
+                    <GradientStop Color="#FFF1C807" Offset="0"/>
+                    <GradientStop Color="#FFE2200D" Offset="0.487"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+
     </Grid>
 </Window>

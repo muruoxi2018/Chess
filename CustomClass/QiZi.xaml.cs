@@ -133,9 +133,9 @@ namespace Chess
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void SetPosition(int x, int y)
+        public bool SetPosition(int x, int y)
         {
-            if (Visibility != Visibility.Visible) return;
+            if (Visibility != Visibility.Visible) return false;
             if (QiziId > -1) // 仅仅对棋子有效
             {
                 GlobalValue.QiPan[Col, Row] = -1;
@@ -182,6 +182,8 @@ namespace Chess
             SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x]);
             SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
             PutDown();
+            return true;
+        
         }
 
 

@@ -42,7 +42,7 @@ namespace Chess.SuanFa
                         {
                             for (int j = 0; j <= 9; j++)
                             {
-                                if (i!=col)
+                                if (i != col)
                                 {
                                     PathBool[i, j] = false;
                                 }
@@ -614,12 +614,12 @@ namespace Chess.SuanFa
         /// <summary>
         /// 在将帅的可移动路径中，排除对方车、马、炮、卒的可攻击点。
         /// </summary>
-        /// <param name="thisQZ">0=将，16=帅</param>
+        /// <param name="QZJiangShuai">0=将，16=帅</param>
         /// <param name="col">可移动点的列位置</param>
         /// <param name="row">可移动点的行位置</param>
         /// <param name="qipan">当前棋盘数据</param>
         /// <returns></returns>
-        private static bool IsKilledPoint(int thisQZ, int col, int row, int[,] qipan)
+        private static bool IsKilledPoint(int QZJiangShuai, int col, int row, int[,] qipan)
         {
             // 注意：数组作为参数传递时，不是传递的副本，而是直接数组本身。
             int[,] myqipan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
@@ -628,21 +628,21 @@ namespace Chess.SuanFa
                 {
                     myqipan[i, j] = qipan[i, j];
                 }
-            myqipan[col, row] = thisQZ;
-            myqipan[GlobalValue.QiZiArray[thisQZ].Col, GlobalValue.QiZiArray[thisQZ].Row] = -1;
+            myqipan[col, row] = QZJiangShuai;
+            myqipan[GlobalValue.QiZiArray[QZJiangShuai].Col, GlobalValue.QiZiArray[QZJiangShuai].Row] = -1;
 
             bool[,] thispoints;
-            if (thisQZ == 16)
+            if (QZJiangShuai == 16)
             {
-                for (int qizi = 5; qizi <= 15; qizi++) //车，马，炮，卒
+                for (int qizi = 5; qizi <= 15; qizi++) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
                 {
                     thispoints = GetPathPoints(qizi, myqipan);
                     if (thispoints[col, row]) return true;
                 }
             }
-            if (thisQZ == 0)
+            if (QZJiangShuai == 0)
             {
-                for (int qizi = 21; qizi <= 31; qizi++) //车，马，炮，卒
+                for (int qizi = 21; qizi <= 31; qizi++) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
                 {
                     thispoints = GetPathPoints(qizi, myqipan);
                     if (thispoints[col, row]) return true;
@@ -662,7 +662,7 @@ namespace Chess.SuanFa
             if (thisQZ <= 15)
                 if (GlobalValue.QiZiArray[thisQZ].Row != GlobalValue.QiZiArray[0].Row)
                 {
-                    return true; // 黑方棋子与黑将不在同一列时
+                    return true; // 黑方棋子与黑将不在同一列时，无需处理。
                 }
                 else
                 {
@@ -671,7 +671,7 @@ namespace Chess.SuanFa
             if (thisQZ > 15)
                 if (GlobalValue.QiZiArray[thisQZ].Row != GlobalValue.QiZiArray[0].Row)
                 {
-                    return true; // 红方棋子与红帅不在同一列时
+                    return true; // 红方棋子与红帅不在同一列时，无需处理。
                 }
                 else
                 {
@@ -708,6 +708,53 @@ namespace Chess.SuanFa
                     // 红方棋子与红帅在同一行时，则要进一步判断
                 }
             return true;
+        }
+
+        /// <summary>
+        /// 检查棋子移动后，本方是否被将军
+        /// 用于棋子移动前的检测，如果是移动后被将军，则不能允许移动。
+        /// </summary>
+        /// <param name="thisQz"></param>
+        /// <param name="x0"></param>
+        /// <param name="y0"></param>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="qipan"></param>
+        /// <returns> false=未将军，true=被将军 </returns>
+        public static bool AfterMoveWillJiangJun(int thisQz, int x0, int y0, int x1, int y1, int[,] qipan)
+        {
+            // 注意：数组作为参数传递时，不是传递的副本，而是直接数组本身。
+            int[,] myqipan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
+            for (int i = 0; i < 9; i++)
+                for (int j = 0; j < 10; j++)
+                {
+                    myqipan[i, j] = qipan[i, j];
+                }
+            myqipan[x1, y1] = thisQz;
+            myqipan[x0, y0] = -1;
+
+            bool[,] thispoints;
+            if (thisQz > 15)
+            {
+                for (int qizi = 5; qizi <= 15; qizi++) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
+                {
+                    thispoints = GetPathPoints(qizi, myqipan);
+                    int x = (thisQz==16)?x1: GlobalValue.QiZiArray[16].Col;
+                    int y = (thisQz == 16) ? y1 : GlobalValue.QiZiArray[16].Row;
+                    if (thispoints[x, y] == true) return true;
+                }
+            }
+            if (thisQz < 15)
+            {
+                for (int qizi = 21; qizi <= 31; qizi++) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
+                {
+                    thispoints = GetPathPoints(qizi, myqipan);
+                    int x = (thisQz == 0) ? x1 : GlobalValue.QiZiArray[0].Col;
+                    int y = (thisQz == 0) ? y1 : GlobalValue.QiZiArray[0].Row;
+                    if (thispoints[x, y] == true) return true;
+                }
+            }
+            return false;
         }
     }
 }
