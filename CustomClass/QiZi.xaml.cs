@@ -145,33 +145,30 @@ namespace Chess
                 Row = y;
                 GlobalValue.QiPan[x, y] = QiziId;
 
-                if (Selected)  // 移动时的动画
+                DoubleAnimation PAx = new DoubleAnimation
                 {
-                    DoubleAnimation PAx = new DoubleAnimation
-                    {
-                        From = GlobalValue.QiPanGrid_X[x0],
-                        To = GlobalValue.QiPanGrid_X[x],
-                        FillBehavior = FillBehavior.Stop,
-                        Duration = new Duration(TimeSpan.FromSeconds(0.15))
-                    };
-                    DoubleAnimation PAy = new DoubleAnimation
-                    {
-                        From = GlobalValue.QiPanGrid_Y[y0],
-                        To = GlobalValue.QiPanGrid_Y[y],
-                        FillBehavior = FillBehavior.Stop,
-                        Duration = new Duration(TimeSpan.FromSeconds(0.15))
-                    };
+                    From = GlobalValue.QiPanGrid_X[x0],
+                    To = GlobalValue.QiPanGrid_X[x],
+                    FillBehavior = FillBehavior.Stop,
+                    Duration = new Duration(TimeSpan.FromSeconds(0.15))
+                };
+                DoubleAnimation PAy = new DoubleAnimation
+                {
+                    From = GlobalValue.QiPanGrid_Y[y0],
+                    To = GlobalValue.QiPanGrid_Y[y],
+                    FillBehavior = FillBehavior.Stop,
+                    Duration = new Duration(TimeSpan.FromSeconds(0.15))
+                };
 
-                    if (GlobalValue.QiPanFanZhuan)
-                    {
-                        PAx.From = GlobalValue.QiPanGrid_X[8 - x0];
-                        PAx.To = GlobalValue.QiPanGrid_X[8 - x];
-                        PAy.From = GlobalValue.QiPanGrid_Y[9 - y0];
-                        PAy.To = GlobalValue.QiPanGrid_Y[9 - y];
-                    }
-                    BeginAnimation(Canvas.LeftProperty, PAx);
-                    BeginAnimation(Canvas.TopProperty, PAy);
+                if (GlobalValue.QiPanFanZhuan)
+                {
+                    PAx.From = GlobalValue.QiPanGrid_X[8 - x0];
+                    PAx.To = GlobalValue.QiPanGrid_X[8 - x];
+                    PAy.From = GlobalValue.QiPanGrid_Y[9 - y0];
+                    PAy.To = GlobalValue.QiPanGrid_Y[9 - y];
                 }
+                BeginAnimation(Canvas.LeftProperty, PAx);
+                BeginAnimation(Canvas.TopProperty, PAy);
             }
 
             if (GlobalValue.QiPanFanZhuan)
@@ -183,7 +180,7 @@ namespace Chess
             SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
             PutDown();
             return true;
-        
+
         }
 
 
