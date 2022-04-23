@@ -10,7 +10,7 @@ namespace Chess.SuanFa
     {
 
         /// <summary>
-        /// 检查本棋子是否对将帅构成将军
+        /// 检查本棋子是否对将帅构成将军，用于走棋之后判断
         /// </summary>
         /// <param name="qizi">棋子编号(0-31)</param>
         /// <returns> 0=黑将被将军，16=红帅被将军 </returns>
@@ -24,8 +24,6 @@ namespace Chess.SuanFa
                 {
                     myqipan[i, j] = GlobalValue.QiPan[i, j];
                 }
-            myqipan[col, row] = thisQZ;
-            myqipan[GlobalValue.QiZiArray[thisQZ].Col, GlobalValue.QiZiArray[thisQZ].Row] = -1;
 
             bool[,] thispoints;
 

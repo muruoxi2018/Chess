@@ -712,8 +712,10 @@ namespace Chess.SuanFa
         }
 
         /// <summary>
-        /// 检查棋子移动后，本方是否被将军
+        /// 
+        /// 检查棋子移动后，本方是否被将军。
         /// 用于棋子移动前的检测，如果是移动后被将军，则不能允许移动。
+        /// 
         /// </summary>
         /// <param name="thisQz"></param>
         /// <param name="x0"></param>
@@ -735,26 +737,31 @@ namespace Chess.SuanFa
             myqipan[x0, y0] = -1;
 
             bool[,] thispoints;
-            if (thisQz > 15)
-            {
-                for (int qizi = 5; qizi <= 15; qizi++) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
+            for (int i = 0; i < 9; i++)
+                for (int j = 0; j < 10; j++)
                 {
-                    thispoints = GetPathPoints(qizi, myqipan);
-                    int x = (thisQz==16)?x1: GlobalValue.QiZiArray[16].Col;
-                    int y = (thisQz == 16) ? y1 : GlobalValue.QiZiArray[16].Row;
-                    if (thispoints[x, y] == true) return true;
+                    int qizi = myqipan[i, j]; // 从棋盘副本上找棋子
+                    if (thisQz > 15)
+                    {
+                        if (qizi is >=5 and <=15) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
+                            {
+                                thispoints = GetPathPoints(qizi, myqipan);
+                                int x = (thisQz == 16) ? x1 : GlobalValue.QiZiArray[16].Col;
+                                int y = (thisQz == 16) ? y1 : GlobalValue.QiZiArray[16].Row;
+                                if (thispoints[x, y] == true) return true;
+                            }
+                    }
+                    if (thisQz < 15)
+                    {
+                        if (qizi is >=21 and <=31) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
+                         {
+                            thispoints = GetPathPoints(qizi, myqipan);
+                            int x = (thisQz == 0) ? x1 : GlobalValue.QiZiArray[0].Col;
+                            int y = (thisQz == 0) ? y1 : GlobalValue.QiZiArray[0].Row;
+                            if (thispoints[x, y] == true) return true;
+                        }
+                    }
                 }
-            }
-            if (thisQz < 15)
-            {
-                for (int qizi = 21; qizi <= 31; qizi++) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
-                {
-                    thispoints = GetPathPoints(qizi, myqipan);
-                    int x = (thisQz == 0) ? x1 : GlobalValue.QiZiArray[0].Col;
-                    int y = (thisQz == 0) ? y1 : GlobalValue.QiZiArray[0].Row;
-                    if (thispoints[x, y] == true) return true;
-                }
-            }
             return false;
         }
     }

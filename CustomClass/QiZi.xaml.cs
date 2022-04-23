@@ -167,17 +167,20 @@ namespace Chess
                     PAy.From = GlobalValue.QiPanGrid_Y[9 - y0];
                     PAy.To = GlobalValue.QiPanGrid_Y[9 - y];
                 }
-                BeginAnimation(Canvas.LeftProperty, PAx);
-                BeginAnimation(Canvas.TopProperty, PAy);
+                //BeginAnimation(Canvas.LeftProperty, PAx);
+                //BeginAnimation(Canvas.TopProperty, PAy);
             }
-
-            if (GlobalValue.QiPanFanZhuan)
+            else // else 有问题，棋子初始化不到初始位置
             {
-                x = 8 - x;
-                y = 9 - y;
+
+                if (GlobalValue.QiPanFanZhuan)
+                {
+                    x = 8 - x;
+                    y = 9 - y;
+                }
+                SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x]);
+                SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
             }
-            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x]);
-            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
             PutDown();
             return true;
 
@@ -216,7 +219,7 @@ namespace Chess
         /// </summary>
         public void SetDied()
         {
-            Visibility = Visibility.Collapsed;
+            Visibility = Visibility.Hidden;
             //yuxuankuang.Visibility = Visibility.Hidden;
         }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Chess
 {
@@ -56,13 +57,14 @@ namespace Chess
             Window_Qi = new Window_QiPu();
             Window_Qi.Hide();
 
-            GlobalValue.JianJunTiShi = new() { Content = "战况" };
-            GlobalValue.JianJunTiShi.SetValue(LeftProperty, 100.0);
-            GlobalValue.JianJunTiShi.SetValue(TopProperty, 15.0);
-            GlobalValue.JianJunTiShi.SetValue(HeightProperty, 30.0);
-            GlobalValue.JianJunTiShi.SetValue(MarginProperty,new Thickness(0,0,0,0));
-            
-            GlobalValue.JianJunTiShi.VerticalAlignment = VerticalAlignment.Top;
+            GlobalValue.JianJunTiShi = new() {
+                Content = "战况",
+                Height = 30.0,
+                Margin = new Thickness(100, 20, 0, 0),
+                Foreground = Brushes.White,
+                VerticalAlignment=VerticalAlignment.Top
+            };
+
             grid.Children.Add(GlobalValue.JianJunTiShi);
 
 

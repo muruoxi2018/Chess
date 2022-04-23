@@ -128,6 +128,9 @@ namespace Chess
             int y0 = GlobalValue.QiZiArray[QiZi].Row;
 
             if (MoveCheck.AfterMoveWillJiangJun(QiZi, x0, y0, m, n, GlobalValue.QiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
+            GlobalValue.QiZiArray[QiZi].SetPosition(m, n);
+            // 动画为异步运行，要注意系统数据的更新是否同步，可考虑将动画放在最后执行，避免所取数据出现错误。
+
 
             int jiangjun = JiangJun.IsJiangJun(QiZi, m, n);
             GlobalValue.JianJunTiShi.Content = "战况";
@@ -164,12 +167,37 @@ namespace Chess
                     Form2.mp1.Play;*/
                 }
             }
-
-            if (!GlobalValue.QiZiArray[QiZi].SetPosition(m, n)) return;
-            // 动画为异步运行，要注意系统数据的更新是否同步，可考虑将动画放在最后执行，避免所取数据出现错误。
-
+            AnimationMove(QiZi, x0, y0, m, n);
             GlobalValue.SideTag = !GlobalValue.SideTag;  // 变换走棋方
             GlobalValue.CurrentQiZi = 100;
+        }
+
+        private static void AnimationMove(int qizi,int x0,int y0,int x1,int y1)
+        {
+            DoubleAnimation PAx = new DoubleAnimation
+            {
+                From = GlobalValue.QiPanGrid_X[x0],
+                To = GlobalValue.QiPanGrid_X[x1],
+                FillBehavior = FillBehavior.Stop,
+                Duration = new Duration(TimeSpan.FromSeconds(0.15))
+            };
+            DoubleAnimation PAy = new DoubleAnimation
+            {
+                From = GlobalValue.QiPanGrid_Y[y0],
+                To = GlobalValue.QiPanGrid_Y[y1],
+                FillBehavior = FillBehavior.Stop,
+                Duration = new Duration(TimeSpan.FromSeconds(0.15))
+            };
+
+            if (GlobalValue.QiPanFanZhuan)
+            {
+                PAx.From = GlobalValue.QiPanGrid_X[8 - x0];
+                PAx.To = GlobalValue.QiPanGrid_X[8 - x1];
+                PAy.From = GlobalValue.QiPanGrid_Y[9 - y0];
+                PAy.To = GlobalValue.QiPanGrid_Y[9 - y1];
+            }
+            GlobalValue.QiZiArray[qizi].BeginAnimation(Canvas.LeftProperty, PAx);
+            GlobalValue.QiZiArray[qizi].BeginAnimation(Canvas.TopProperty, PAy);
         }
     }
 }
