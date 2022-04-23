@@ -96,6 +96,7 @@ namespace Chess.SuanFa
             {
                 return points;
             }
+            if (GlobalValue.QiZiArray[MoveQiZi].Visibility==System.Windows.Visibility.Hidden) return points;
             int MoveQiZi_Col = GlobalValue.QiZiArray[MoveQiZi].Col;
             int MoveQiZi_Row = GlobalValue.QiZiArray[MoveQiZi].Row;
             int side = 0;

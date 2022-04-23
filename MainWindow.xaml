@@ -53,6 +53,7 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
+        
 
     </Grid>
 </Window>

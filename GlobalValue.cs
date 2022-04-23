@@ -70,5 +70,7 @@ namespace Chess
 
         public static List<Qipu.QPStep> CnNumberList = new List<Qipu.QPStep>();
 
+        public static Label JianJunTiShi;
+
     }
 }

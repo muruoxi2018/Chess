@@ -130,16 +130,17 @@ namespace Chess
             if (MoveCheck.AfterMoveWillJiangJun(QiZi, x0, y0, m, n, GlobalValue.QiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
 
             int jiangjun = JiangJun.IsJiangJun(QiZi, m, n);
+            GlobalValue.JianJunTiShi.Content = "战况";
             if (jiangjun == 0)
             {
-                MessageBox.Show("黑将----正在被将军！！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                GlobalValue.JianJunTiShi.Content = "黑将----正在被将军！！";
+                //MessageBox.Show("黑将----正在被将军！！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             if (jiangjun == 16)
             {
-                MessageBox.Show("红帅----正在被将军！！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                GlobalValue.JianJunTiShi.Content = "红帅----正在被将军！！";
+                //MessageBox.Show("红帅----正在被将军！！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            if (!GlobalValue.QiZiArray[QiZi].SetPosition(m, n)) return; 
-            // 动画为异步运行，要注意系统数据的更新是否同步，可考虑将动画放在最后执行，避免所取数据出现错误。
 
             Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 棋谱记录
 
@@ -164,6 +165,8 @@ namespace Chess
                 }
             }
 
+            if (!GlobalValue.QiZiArray[QiZi].SetPosition(m, n)) return;
+            // 动画为异步运行，要注意系统数据的更新是否同步，可考虑将动画放在最后执行，避免所取数据出现错误。
 
             GlobalValue.SideTag = !GlobalValue.SideTag;  // 变换走棋方
             GlobalValue.CurrentQiZi = 100;
