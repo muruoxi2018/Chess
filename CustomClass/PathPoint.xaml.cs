@@ -16,13 +16,15 @@ namespace Chess
     public partial class PathPoint : UserControl
     {
         private bool _haspoint = false;
-        public bool HasPoint {
-            get { return _haspoint; } 
-            set { 
+        public bool HasPoint
+        {
+            get { return _haspoint; }
+            set
+            {
                 _haspoint = value;
-                if (value) Visibility = Visibility.Visible; 
-                else Visibility = Visibility.Hidden; 
-            } 
+                if (value) Visibility = Visibility.Visible;
+                else Visibility = Visibility.Hidden;
+            }
         }  // 是否是有效的走棋路径点
         public int Col { get; set; }    // 路径点的列坐标
         public int Row { get; set; }    // 路径点的行坐标
@@ -131,22 +133,9 @@ namespace Chess
             GlobalValue.QiZiArray[QiZi].SetPosition(m, n);
             // 动画为异步运行，要注意系统数据的更新是否同步，可考虑将动画放在最后执行，避免所取数据出现错误。
 
-
-            int jiangjun = JiangJun.IsJiangJun(QiZi, m, n);
-            GlobalValue.JianJunTiShi.Content = "战况";
-            if (jiangjun == 0)
-            {
-                GlobalValue.JianJunTiShi.Content = "黑将----正在被将军！！";
-                //MessageBox.Show("黑将----正在被将军！！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            if (jiangjun == 16)
-            {
-                GlobalValue.JianJunTiShi.Content = "红帅----正在被将军！！";
-                //MessageBox.Show("红帅----正在被将军！！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-
             Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 棋谱记录
 
+            JiangJun.IsJueSha(QiZi); // 检查是否绝杀
 
             if (DieQz != -1)
             {
@@ -172,7 +161,7 @@ namespace Chess
             GlobalValue.CurrentQiZi = 100;
         }
 
-        private static void AnimationMove(int qizi,int x0,int y0,int x1,int y1)
+        private static void AnimationMove(int qizi, int x0, int y0, int x1, int y1)
         {
             DoubleAnimation PAx = new DoubleAnimation
             {

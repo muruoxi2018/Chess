@@ -11,7 +11,8 @@ using System.Windows.Media.Animation;
 namespace Chess
 {
     /// <summary>
-    /// UserControl1.xaml 的交互逻辑
+    /// 棋子类
+    /// 主程序中有32个棋子实例
     /// </summary>
     public partial class QiZi : UserControl
     {
@@ -47,10 +48,10 @@ namespace Chess
             }
             QiziId = id;
             string path = Environment.CurrentDirectory + "\\picture\\" + GlobalValue.QiZiImageFileName[QiziId] + ".png";
-            BitmapImage bi = new(new Uri(path, UriKind.Absolute));
+            BitmapImage bi = new(new Uri(path, UriKind.Absolute)); // 载入棋子图片
             bi.Freeze();
             qzimage.Source = bi;
-            init_col = GlobalValue.QiZiInitPosition[id, 0];
+            init_col = GlobalValue.QiZiInitPosition[id, 0]; // 开局时，棋子的位置
             init_row = GlobalValue.QiZiInitPosition[id, 1];
             SetPosition(init_col, init_row);
             SideColor = id >= 16;
@@ -68,9 +69,10 @@ namespace Chess
         {
             foreach (QiZi item in GlobalValue.QiZiArray)
             {
-                item.Selected = false;
-                item.PutDown();
-                item.yuxuankuang.Visibility = Visibility.Hidden;
+                //item.Selected = false;
+                //item.PutDown();
+                //item.yuxuankuang.Visibility = Visibility.Hidden;
+                item.Deselect();
             }
             if (SideColor == GlobalValue.SideTag)
             {
@@ -83,9 +85,9 @@ namespace Chess
         /// </summary>
         public void Deselect()
         {
-            PutDown();
             Selected = false;
-            yuxuankuang.Visibility = Visibility.Hidden;
+            qzimage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
+            yuxuankuang.Visibility = Visibility.Hidden; // 本棋子的预先框隐藏
         }
         /// <summary>
         /// 选中时的处理
@@ -93,7 +95,7 @@ namespace Chess
         public void Select()
         {
             Selected = true;
-            DoubleAnimation DA = new DoubleAnimation
+            DoubleAnimation DA = new DoubleAnimation  // 阴影动画
             {
                 From = 8.0,
                 To = 25.0,
@@ -103,36 +105,19 @@ namespace Chess
             };
             qzimage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
             yuxuankuang.Visibility = Visibility.Visible;
-            GlobalValue.CurrentQiZi = GetId();
+            GlobalValue.CurrentQiZi = QiziId;
             //Scall(1.01);
-            SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi);
-            GlobalValue.YuanWeiZhi.SetPosition(Col, Row);
+            SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi); // 获取可移动路径，并显示在棋盘上
+            GlobalValue.YuanWeiZhi.SetPosition(Col, Row); // 棋子原位置标记，显示在当前位置
             GlobalValue.YuanWeiZhi.ShowYuanWeiZhiImage();
         }
 
         /// <summary>
-        /// 棋子放下时，去除阴影
+        /// 改变棋子的坐标位置
+        /// 棋盘上设置了9列10行的坐标系，左上角第一个位置坐标为（0，0），右下角最后一个位置坐标为（8，9）
         /// </summary>
-        public void PutDown()
-        {
-            qzimage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
-            //Scall(1);
-        }
-
-        /// <summary>
-        /// 获取本棋子编号
-        /// </summary>
-        /// <returns></returns>
-        public int GetId()
-        {
-            return QiziId;
-        }
-
-        /// <summary>
-        /// 设置本棋子的坐标位置
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">列坐标</param>
+        /// <param name="y">行坐标</param>
         public bool SetPosition(int x, int y)
         {
             if (Visibility != Visibility.Visible) return false;
@@ -144,44 +129,15 @@ namespace Chess
                 Col = x;
                 Row = y;
                 GlobalValue.QiPan[x, y] = QiziId;
-
-                DoubleAnimation PAx = new DoubleAnimation
-                {
-                    From = GlobalValue.QiPanGrid_X[x0],
-                    To = GlobalValue.QiPanGrid_X[x],
-                    FillBehavior = FillBehavior.Stop,
-                    Duration = new Duration(TimeSpan.FromSeconds(0.15))
-                };
-                DoubleAnimation PAy = new DoubleAnimation
-                {
-                    From = GlobalValue.QiPanGrid_Y[y0],
-                    To = GlobalValue.QiPanGrid_Y[y],
-                    FillBehavior = FillBehavior.Stop,
-                    Duration = new Duration(TimeSpan.FromSeconds(0.15))
-                };
-
-                if (GlobalValue.QiPanFanZhuan)
-                {
-                    PAx.From = GlobalValue.QiPanGrid_X[8 - x0];
-                    PAx.To = GlobalValue.QiPanGrid_X[8 - x];
-                    PAy.From = GlobalValue.QiPanGrid_Y[9 - y0];
-                    PAy.To = GlobalValue.QiPanGrid_Y[9 - y];
-                }
-                //BeginAnimation(Canvas.LeftProperty, PAx);
-                //BeginAnimation(Canvas.TopProperty, PAy);
             }
-            else // else 有问题，棋子初始化不到初始位置
+            if (GlobalValue.QiPanFanZhuan) // 如果棋盘翻转为上红下黑，则进行坐标转换
             {
-
-                if (GlobalValue.QiPanFanZhuan)
-                {
-                    x = 8 - x;
-                    y = 9 - y;
-                }
-                SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x]);
-                SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
+                x = 8 - x;
+                y = 9 - y;
             }
-            PutDown();
+            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x]);
+            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y]);
+            qzimage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
             return true;
 
         }
@@ -219,7 +175,7 @@ namespace Chess
         /// </summary>
         public void SetDied()
         {
-            Visibility = Visibility.Hidden;
+            Visibility = Visibility.Collapsed;
             //yuxuankuang.Visibility = Visibility.Hidden;
         }
 

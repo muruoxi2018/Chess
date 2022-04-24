@@ -620,7 +620,7 @@ namespace Chess.SuanFa
         /// <param name="row">可移动点的行位置</param>
         /// <param name="qipan">当前棋盘数据</param>
         /// <returns></returns>
-        private static bool IsKilledPoint(int QZJiangShuai, int col, int row, int[,] qipan)
+        public static bool IsKilledPoint(int QZJiangShuai, int col, int row, int[,] qipan)
         {
             // 注意：数组作为参数传递时，不是传递的副本，而是直接数组本身。
             int[,] myqipan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
@@ -635,7 +635,7 @@ namespace Chess.SuanFa
             bool[,] thispoints;
             if (QZJiangShuai == 16)
             {
-                for (int qizi = 5; qizi <= 15; qizi++) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
+                for (int qizi = 5; qizi <= 15; qizi++) //黑方：车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
                 {
                     thispoints = GetPathPoints(qizi, myqipan);
                     if (thispoints[col, row]) return true;
@@ -643,7 +643,7 @@ namespace Chess.SuanFa
             }
             if (QZJiangShuai == 0)
             {
-                for (int qizi = 21; qizi <= 31; qizi++) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
+                for (int qizi = 21; qizi <= 31; qizi++) //红方：车(23,24)，马(21,22)，炮(25,26)，兵(27,28,29,30,31)
                 {
                     thispoints = GetPathPoints(qizi, myqipan);
                     if (thispoints[col, row]) return true;
