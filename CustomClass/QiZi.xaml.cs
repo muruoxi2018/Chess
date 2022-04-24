@@ -120,7 +120,7 @@ namespace Chess
         /// <param name="y">行坐标</param>
         public bool SetPosition(int x, int y)
         {
-            if (Visibility != Visibility.Visible) return false;
+            //if (Visibility != Visibility.Visible) return false;
             if (QiziId > -1) // 仅仅对棋子有效
             {
                 GlobalValue.QiPan[Col, Row] = -1;
@@ -148,9 +148,9 @@ namespace Chess
         /// </summary>
         public void SetInitPosition()
         {
+            Visibility = Visibility.Visible;
             SetPosition(init_col, init_row);
             Deselect();
-            Visibility = Visibility.Visible;
         }
         /// <summary>
         /// 缩放

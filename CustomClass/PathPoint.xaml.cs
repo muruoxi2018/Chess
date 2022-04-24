@@ -135,7 +135,10 @@ namespace Chess
 
             Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 棋谱记录
 
-            JiangJun.IsJueSha(QiZi); // 检查是否绝杀
+            if (JiangJun.IsJueSha(QiZi)) // 检查是否绝杀
+            {
+                GlobalValue.jueShaImage.SetJueSha();
+            }
 
             if (DieQz != -1)
             {

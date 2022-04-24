@@ -67,7 +67,13 @@ namespace Chess
 
             grid.Children.Add(GlobalValue.JianJunTiShi);
 
-
+            GlobalValue.jueShaImage = new(){ 
+            Visibility=Visibility.Hidden,
+            Opacity=0.8,
+            IsHitTestVisible=false
+            };
+            //GlobalValue.jueShaImage.image.Visibility = Visibility.Hidden;
+            grid.Children.Add(GlobalValue.jueShaImage);
         }
 
         /// <summary>

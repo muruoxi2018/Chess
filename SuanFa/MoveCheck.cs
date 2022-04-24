@@ -20,52 +20,6 @@ namespace Chess.SuanFa
             if (thisqz > -1)
             {
                 PathBool = GetPathPoints(thisqz, GlobalValue.QiPan);
-                if (thisqz is 0 or 16)
-                {
-                    for (int i = 0; i <= 8; i++)
-                    {
-                        for (int j = 0; j <= 9; j++)
-                        {
-                            if (PathBool[i, j] == true && IsKilledPoint(thisqz, i, j, GlobalValue.QiPan) == true)
-                            {
-                                PathBool[i, j] = false;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (!CanMoveOutCol(thisqz, GlobalValue.QiPan))
-                    {
-                        int col = GlobalValue.QiZiArray[thisqz].Col;
-                        for (int i = 0; i <= 8; i++)
-                        {
-                            for (int j = 0; j <= 9; j++)
-                            {
-                                if (i != col)
-                                {
-                                    PathBool[i, j] = false;
-                                }
-                            }
-                        }
-                    }
-                    if (!CanMoveOutRow(thisqz, GlobalValue.QiPan))
-                    {
-                        int row = GlobalValue.QiZiArray[thisqz].Row;
-                        for (int i = 0; i <= 8; i++)
-                        {
-                            for (int j = 0; j <= 9; j++)
-                            {
-                                if (j != row)
-                                {
-                                    PathBool[i, j] = false;
-                                }
-                            }
-                        }
-                    }
-                }
-
-
                 for (int i = 0; i <= 8; i++)
                 {
                     for (int j = 0; j <= 9; j++)
@@ -96,7 +50,7 @@ namespace Chess.SuanFa
             {
                 return points;
             }
-            if (GlobalValue.QiZiArray[MoveQiZi].Visibility==System.Windows.Visibility.Hidden) return points;
+            if (GlobalValue.QiZiArray[MoveQiZi].Visibility == System.Windows.Visibility.Hidden) return points;
             int MoveQiZi_Col = GlobalValue.QiZiArray[MoveQiZi].Col;
             int MoveQiZi_Row = GlobalValue.QiZiArray[MoveQiZi].Row;
             int side = 0;
@@ -432,6 +386,16 @@ namespace Chess.SuanFa
                             }
                         }
                     }
+                    for (int i = 0; i <= 8; i++)
+                    {
+                        for (int j = 0; j <= 9; j++)
+                        {
+                            if (points[i, j] == true && IsKilledPoint(MoveQiZi, i, j, GlobalValue.QiPan) == true)
+                            {
+                                points[i, j] = false;
+                            }
+                        }
+                    }
 
 
                     break;
@@ -651,64 +615,11 @@ namespace Chess.SuanFa
             }
             return false;
         }
-        /// <summary>
-        /// 判断棋子是否可离开本列，如离开后本方将帅被将军，则不能离开。
-        /// </summary>
-        /// <param name="thisQZ"></param>
-        /// <param name="qipan"></param>
-        /// <returns></returns>
-        private static bool CanMoveOutCol(int thisQZ, int[,] qipan)
+        public static bool AfterMoveWillJiangJun(int thisQz, int x1, int y1, int[,] qipan)
         {
-            if (thisQZ is 0 or 16) return true;
-            if (thisQZ <= 15)
-                if (GlobalValue.QiZiArray[thisQZ].Row != GlobalValue.QiZiArray[0].Row)
-                {
-                    return true; // 黑方棋子与黑将不在同一列时，无需处理。
-                }
-                else
-                {
-                    // 黑方棋子与黑将在同一列时，则要进一步判断
-                }
-            if (thisQZ > 15)
-                if (GlobalValue.QiZiArray[thisQZ].Row != GlobalValue.QiZiArray[0].Row)
-                {
-                    return true; // 红方棋子与红帅不在同一列时，无需处理。
-                }
-                else
-                {
-                    // 红方棋子与红帅在同一列时，则要进一步判断
-                }
-            return true;
-
-        }
-        /// <summary>
-        /// 判断棋子是否可离开本行，如离开后本方将帅被将军，则不能离开。
-        /// </summary>
-        /// <param name="thisQZ"></param>
-        /// <param name="qipan"></param>
-        /// <returns></returns>
-        private static bool CanMoveOutRow(int thisQZ, int[,] qipan)
-        {
-            if (thisQZ is 0 or 16) return true;
-            if (thisQZ <= 15)
-                if (GlobalValue.QiZiArray[thisQZ].Row != GlobalValue.QiZiArray[0].Row)
-                {
-                    return true; // 黑方棋子与黑将不在同一行时
-                }
-                else
-                {
-                    // 黑方棋子与黑将在同一行时，则要进一步判断
-                }
-            if (thisQZ > 15)
-                if (GlobalValue.QiZiArray[thisQZ].Row != GlobalValue.QiZiArray[0].Row)
-                {
-                    return true; // 红方棋子与红帅不在同一行时
-                }
-                else
-                {
-                    // 红方棋子与红帅在同一行时，则要进一步判断
-                }
-            return true;
+            int x0 = GlobalValue.QiZiArray[thisQz].Col;
+            int y0 = GlobalValue.QiZiArray[thisQz].Row;
+            return AfterMoveWillJiangJun(thisQz, x0, y0, x1, y1, qipan);
         }
 
         /// <summary>
@@ -743,18 +654,18 @@ namespace Chess.SuanFa
                     int qizi = myqipan[i, j]; // 从棋盘副本上找棋子
                     if (thisQz > 15)
                     {
-                        if (qizi is >=5 and <=15) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
-                            {
-                                thispoints = GetPathPoints(qizi, myqipan);
-                                int x = (thisQz == 16) ? x1 : GlobalValue.QiZiArray[16].Col;
-                                int y = (thisQz == 16) ? y1 : GlobalValue.QiZiArray[16].Row;
-                                if (thispoints[x, y] == true) return true;
-                            }
+                        if (qizi is >= 5 and <= 15) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
+                        {
+                            thispoints = GetPathPoints(qizi, myqipan);
+                            int x = (thisQz == 16) ? x1 : GlobalValue.QiZiArray[16].Col;
+                            int y = (thisQz == 16) ? y1 : GlobalValue.QiZiArray[16].Row;
+                            if (thispoints[x, y] == true) return true;
+                        }
                     }
                     if (thisQz < 15)
                     {
-                        if (qizi is >=21 and <=31) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
-                         {
+                        if (qizi is >= 21 and <= 31) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
+                        {
                             thispoints = GetPathPoints(qizi, myqipan);
                             int x = (thisQz == 0) ? x1 : GlobalValue.QiZiArray[0].Col;
                             int y = (thisQz == 0) ? y1 : GlobalValue.QiZiArray[0].Row;

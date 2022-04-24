@@ -9,6 +9,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="CustomClass\JueSha.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CustomClass\QiZi.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -29,6 +32,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="CustomClass\JueSha.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Dictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
