@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  x:Class="Chess.Window_QiPu"
         mc:Ignorable="d"
-        Title="棋谱库列表" Height="450" Width="800" Loaded="WindowQiPu_Load" WindowState="Maximized">
+        Title="棋谱库列表" Height="450" Width="800" Loaded="WindowQiPu_Load" WindowState="Maximized" Icon="/picture/象128.png">
     <Grid>
         <DataGrid x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" >
             <DataGrid.Columns>

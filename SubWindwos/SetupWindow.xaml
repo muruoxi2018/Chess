@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="SetupWindow" Height="450" Width="800">
+        Title="SetupWindow" Height="450" Width="800" Icon="/picture/象128.png">
     <Grid>
         <CheckBox x:Name="QiPanTopBottom" Content="设置为棋盘上方为黑方，下方为红方。不选中，则相反。" HorizontalAlignment="Left" Margin="218,52,0,0" VerticalAlignment="Top" Background="{x:Null}"/>
         <ComboBox x:Name="QiPanBKColor" HorizontalAlignment="Left" Margin="305,89,0,0" VerticalAlignment="Top" Width="200" Background="Black" SelectionChanged="BkColorSelect">

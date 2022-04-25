@@ -102,7 +102,7 @@ namespace Chess.SuanFa
             if (jiangjun[2] != -1) GJqizi2 = "和" + GlobalValue.QiZiImageFileName[jiangjun[2]]; else GJqizi2 = "";
             if (jiangjun[0] == 0)
             {
-                GlobalValue.JianJunTiShi.Content = "黑将----正在被将军！！";
+                GlobalValue.JianJunTiShi.Content = "1、黑将--被将军！";
 
                 bool[,] points = MoveCheck.GetPathPoints(0, GlobalValue.QiPan);
                 bool test = false;
@@ -117,21 +117,21 @@ namespace Chess.SuanFa
                     }
                 if (test)
                 {
-                    GlobalValue.JianJunTiShi.Content += "黑将----正在被" + GJqizi1 + "将军！！黑将可自己移动解杀。";
+                    GlobalValue.JianJunTiShi.Content += " 2、黑将--被" + GJqizi1 + "将军！！黑将可自己移动解杀。";
                 }
                 else
                 {
                     if (jiangjun[2] != -1)
                     {
-                        GlobalValue.JianJunTiShi.Content += "黑将----无处可逃，被" + GJqizi1 + GJqizi2 + "双将绝杀！！！";
+                        GlobalValue.JianJunTiShi.Content += " 3、黑将--无处可逃，被" + GJqizi1 + GJqizi2 + "双将绝杀！";
                         return true;
                     }
                     else
                     {
-                        GlobalValue.JianJunTiShi.Content += "黑将----正在被" + GJqizi1 + "将军，困于老巢，请求外援。";
+                        GlobalValue.JianJunTiShi.Content += " 4、黑将--被" + GJqizi1 + "将军，困于老巢，请求外援。";
                         if (!NoJieSha(jiangjun[1]))
                         {
-                            GlobalValue.JianJunTiShi.Content += "黑将----被" + GJqizi1 + "绝杀！！！";
+                            GlobalValue.JianJunTiShi.Content += " 5、黑将--被" + GJqizi1 + "绝杀！";
                             return true;
                         };
                     }
@@ -139,7 +139,7 @@ namespace Chess.SuanFa
             }
             if (jiangjun[0] == 16)
             {
-                GlobalValue.JianJunTiShi.Content = "红帅----正在被" + GJqizi1 + "将军！！";
+                GlobalValue.JianJunTiShi.Content = " 2、红帅--被" + GJqizi1 + "将军！";
 
                 bool[,] points = MoveCheck.GetPathPoints(16, GlobalValue.QiPan);
                 bool test = false;
@@ -154,21 +154,21 @@ namespace Chess.SuanFa
                     }
                 if (test)
                 {
-                    GlobalValue.JianJunTiShi.Content = "红帅----正在被" + GJqizi1 + "将军！！红帅可自己移动解杀。";
+                    GlobalValue.JianJunTiShi.Content = " 3、红帅--被" + GJqizi1 + "将军！！红帅可自己移动解杀。";
                 }
                 else
                 {
                     if (jiangjun[2] != -1)
                     {
-                        GlobalValue.JianJunTiShi.Content = "红帅----无处可逃，被" + GJqizi1 + GJqizi2 + "双将绝杀！！！";
+                        GlobalValue.JianJunTiShi.Content = " 4、红帅--无处可逃，被" + GJqizi1 + GJqizi2 + "双将绝杀！";
                         return true;
                     }
                     else
                     {
-                        GlobalValue.JianJunTiShi.Content = "红帅----正在被" + GJqizi1 + "将军，困于老巢，请求外援。";
+                        GlobalValue.JianJunTiShi.Content = " 5、红帅--被" + GJqizi1 + "将军，困于老巢，请求外援。";
                         if (!NoJieSha(jiangjun[1]))
                         {
-                            GlobalValue.JianJunTiShi.Content = "红帅----被" + GJqizi1 + "绝杀！！！";
+                            GlobalValue.JianJunTiShi.Content = " 6、红帅--被" + GJqizi1 + "绝杀！";
                             return true;
                         };
                     }
@@ -196,73 +196,48 @@ namespace Chess.SuanFa
             int HongShuaiCol = GlobalValue.QiZiArray[16].Col;
             int HongShuaiRow = GlobalValue.QiZiArray[16].Row;
             ArrayList JieShaPoints = new ArrayList(); // 可解除攻击的点位
+
+            JieShaPoints.Add(new int[] { GJqiziCol, GJqiziRow }); // 把攻击棋子的位置先加进去
             //int[] jsPoint = new int[2];
             switch (GJqizi) // 根据发起将军棋子的位置，以及被将军的将帅的位置，计算或解除攻击的所有点位，存放到数组列表中
             {
                 case 5:
                 case 6:     //  攻击棋子为黑方马(5,6)
+
                     if (GJqiziRow - HongShuaiRow == 2) // 马从上方攻击
                     {
-                        int[] jsPoint = { -1, -1 };
-                        jsPoint[0] = GJqiziCol;
-                        jsPoint[1] = GJqiziRow + 1; //  别马腿位置
-                        JieShaPoints.Add(jsPoint);
+                        JieShaPoints.Add(new int[] { GJqiziCol, GJqiziRow + 1 }); //  别马腿位置
                     }
                     if (HongShuaiRow - GJqiziRow == 2) // 马从下方攻击
                     {
-                        int[] jsPoint = { -1, -1 };
-                        jsPoint[0] = GJqiziCol;
-                        jsPoint[1] = GJqiziRow - 1;
-                        JieShaPoints.Add(jsPoint);
+                        JieShaPoints.Add(new int[] { GJqiziCol, GJqiziRow - 1 }); //  别马腿位置
                     }
                     if (GJqiziCol - HongShuaiCol == 2) // 马从右方攻击
                     {
-                        int[] jsPoint = { -1, -1 };
-                        jsPoint[0] = GJqiziCol - 1;
-                        jsPoint[1] = GJqiziRow;
-                        JieShaPoints.Add(jsPoint);
+                        JieShaPoints.Add(new int[] { GJqiziCol - 1, GJqiziRow }); //  别马腿位置
                     }
                     if (HongShuaiCol - GJqiziCol == 2) // 马从左方攻击
                     {
-                        int[] jsPoint = { -1, -1 };
-                        jsPoint[0] = GJqiziCol + 1;
-                        jsPoint[1] = GJqiziRow;
-                        JieShaPoints.Add(jsPoint);
+                        JieShaPoints.Add(new int[] { GJqiziCol + 1, GJqiziRow }); //  别马腿位置
                     }
                     break;
                 case 21:
                 case 22:    //  攻击棋子为红方马(21,22)
                     if (GJqiziRow - HeiJiangRow == 2) // 马从上方攻击
                     {
-                        int[] jsPoint = { -1, -1 };
-                        jsPoint[0] = GJqiziCol;
-                        jsPoint[1] = GJqiziRow + 1; //  别马腿位置
-                        JieShaPoints.Add(jsPoint);
-
+                        JieShaPoints.Add(new int[] { GJqiziCol, GJqiziRow + 1 }); //  别马腿位置
                     }
                     if (HeiJiangRow - GJqiziRow == 2) // 马从下方攻击
                     {
-                        int[] jsPoint = { -1, -1 };
-                        jsPoint[0] = GJqiziCol;
-                        jsPoint[1] = GJqiziRow - 1;
-                        JieShaPoints.Add(jsPoint);
-
+                        JieShaPoints.Add(new int[] { GJqiziCol, GJqiziRow - 1 }); //  别马腿位置
                     }
                     if (GJqiziCol - HeiJiangCol == 2) // 马从右方攻击
                     {
-                        int[] jsPoint = { -1, -1 };
-                        jsPoint[0] = GJqiziCol - 1;
-                        jsPoint[1] = GJqiziRow;
-                        JieShaPoints.Add(jsPoint);
-
+                        JieShaPoints.Add(new int[] { GJqiziCol - 1, GJqiziRow }); //  别马腿位置
                     }
                     if (HeiJiangCol - GJqiziCol == 2) // 马从左方攻击
                     {
-                        int[] jsPoint = { -1, -1 };
-                        jsPoint[0] = GJqiziCol + 1;
-                        jsPoint[1] = GJqiziRow;
-                        JieShaPoints.Add(jsPoint);
-
+                        JieShaPoints.Add(new int[] { GJqiziCol + 1, GJqiziRow }); //  别马腿位置
                     }
                     break;
                 case 7:
@@ -273,22 +248,16 @@ namespace Chess.SuanFa
                     {
                         if (GJqiziRow < HongShuaiRow) // 从上方攻击
                         {
-                            for (int row = GJqiziRow; row < HongShuaiRow; row++)
+                            for (int row = GJqiziRow + 1; row < HongShuaiRow; row++)
                             {
-                                int[] jsPoint = { -1, -1 };
-                                jsPoint[0] = GJqiziCol;
-                                jsPoint[1] = row;
-                                JieShaPoints.Add(jsPoint);
+                                JieShaPoints.Add(new int[] { GJqiziCol, row });
                             }
                         }
                         else // 从下方攻击
                         {
-                            for (int row = HongShuaiRow + 1; row <= GJqiziRow; row++)
+                            for (int row = HongShuaiRow + 1; row < GJqiziRow; row++)
                             {
-                                int[] jsPoint = { -1, -1 };
-                                jsPoint[0] = GJqiziCol;
-                                jsPoint[1] = row;
-                                JieShaPoints.Add(jsPoint);
+                                JieShaPoints.Add(new int[] { GJqiziCol, row });
                             }
                         }
                     }
@@ -296,22 +265,16 @@ namespace Chess.SuanFa
                     {
                         if (GJqiziCol < HongShuaiCol) // 从左方攻击
                         {
-                            for (int col = GJqiziCol; col < HongShuaiCol; col++)
+                            for (int col = GJqiziCol + 1; col < HongShuaiCol; col++)
                             {
-                                int[] jsPoint = { -1, -1 };
-                                jsPoint[0] = col;
-                                jsPoint[1] = GJqiziRow;
-                                JieShaPoints.Add(jsPoint);
+                                JieShaPoints.Add(new int[] { col, GJqiziRow });
                             }
                         }
                         else // 从右方攻击
                         {
-                            for (int col = HongShuaiCol + 1; col <= GJqiziCol; col++)
+                            for (int col = HongShuaiCol + 1; col < GJqiziCol; col++)
                             {
-                                int[] jsPoint = { -1, -1 };
-                                jsPoint[0] = col;
-                                jsPoint[1] = GJqiziRow;
-                                JieShaPoints.Add(jsPoint);
+                                JieShaPoints.Add(new int[] { col, GJqiziRow });
                             }
                         }
                     }
@@ -324,22 +287,16 @@ namespace Chess.SuanFa
                     {
                         if (GJqiziRow < HeiJiangRow) // 从上方攻击
                         {
-                            for (int row = GJqiziRow; row < HeiJiangRow; row++)
+                            for (int row = GJqiziRow + 1; row < HeiJiangRow; row++)
                             {
-                                int[] jsPoint = { -1, -1 };
-                                jsPoint[0] = GJqiziCol;
-                                jsPoint[1] = row;
-                                JieShaPoints.Add(jsPoint);
+                                JieShaPoints.Add(new int[] { GJqiziCol, row });
                             }
                         }
                         else // 从下方攻击
                         {
-                            for (int row = HeiJiangRow + 1; row <= GJqiziRow; row++)
+                            for (int row = HeiJiangRow + 1; row < GJqiziRow; row++)
                             {
-                                int[] jsPoint = { -1, -1 };
-                                jsPoint[0] = GJqiziCol;
-                                jsPoint[1] = row;
-                                JieShaPoints.Add(jsPoint);
+                                JieShaPoints.Add(new int[] { GJqiziCol, row });
                             }
                         }
                     }
@@ -347,34 +304,24 @@ namespace Chess.SuanFa
                     {
                         if (GJqiziCol < HeiJiangCol) // 从左方攻击
                         {
-                            for (int col = GJqiziCol; col < HeiJiangCol; col++)
+                            for (int col = GJqiziCol + 1; col < HeiJiangCol; col++)
                             {
-                                int[] jsPoint = { -1, -1 };
-                                jsPoint[0] = col;
-                                jsPoint[1] = GJqiziRow;
-                                JieShaPoints.Add(jsPoint);
+                                JieShaPoints.Add(new int[] { col, GJqiziRow });
                             }
                         }
                         else // 从右方攻击
                         {
-                            for (int col = HeiJiangCol + 1; col <= GJqiziCol; col++)
+                            for (int col = HeiJiangCol + 1; col < GJqiziCol; col++)
                             {
-                                int[] jsPoint = { -1, -1 };
-                                jsPoint[0] = col;
-                                jsPoint[1] = GJqiziRow;
-                                JieShaPoints.Add(jsPoint);
+                                JieShaPoints.Add(new int[] { col, GJqiziRow });
                             }
                         }
                     }
                     break;
                 default:
                     break;
-
             }
-
-
-            if (JieShaPoints.Count == 0) return false;  // 没有可以解除攻击的点位，估计不存在这个情况。
-
+            //if (JieShaPoints.Count == 0) return false;  // 没有可以解除攻击的点位，估计不存在这个情况。
             bool[,] thispoints;
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)
@@ -388,7 +335,7 @@ namespace Chess.SuanFa
                             if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
                             {
                                 if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
-                                    return true;
+                                    return true;  // false=没有被绝杀
                             }
                         }
                     }
@@ -400,7 +347,7 @@ namespace Chess.SuanFa
                             if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
                             {
                                 if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
-                                    return true;
+                                    return true;  // false=没有被绝杀
                             }
                         }
                     }

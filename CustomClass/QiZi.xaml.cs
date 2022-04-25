@@ -47,7 +47,8 @@ namespace Chess
                 return;
             }
             QiziId = id;
-            string path = Environment.CurrentDirectory + "\\picture\\" + GlobalValue.QiZiImageFileName[QiziId] + ".png";
+            string path = Environment.CurrentDirectory + @"\picture\" + GlobalValue.QiZiImageFileName[QiziId] + ".png";
+            //string path = @"pack://application:,,,/picture/" + GlobalValue.QiZiImageFileName[QiziId] + ".png";
             BitmapImage bi = new(new Uri(path, UriKind.Absolute)); // 载入棋子图片
             bi.Freeze();
             qzimage.Source = bi;
@@ -121,15 +122,14 @@ namespace Chess
         public bool SetPosition(int x, int y)
         {
             //if (Visibility != Visibility.Visible) return false;
+
             if (QiziId > -1) // 仅仅对棋子有效
             {
                 GlobalValue.QiPan[Col, Row] = -1;
-                int x0 = Col;
-                int y0 = Row;
-                Col = x;
-                Row = y;
                 GlobalValue.QiPan[x, y] = QiziId;
             }
+            Col = x;
+            Row = y;
             if (GlobalValue.QiPanFanZhuan) // 如果棋盘翻转为上红下黑，则进行坐标转换
             {
                 x = 8 - x;

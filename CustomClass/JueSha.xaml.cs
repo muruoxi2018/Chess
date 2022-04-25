@@ -24,6 +24,9 @@ namespace Chess.CustomClass
         public JueSha()
         {
             InitializeComponent();
+            Visibility = Visibility.Hidden;
+            Opacity = 0.8;
+            IsHitTestVisible = false;
         }
 
         public void SetJueSha()
@@ -39,7 +42,6 @@ namespace Chess.CustomClass
                 Duration = new Duration(TimeSpan.FromSeconds(3))
             };
             image.BeginAnimation(OpacityProperty, PAx);
-
         }
     }
 }

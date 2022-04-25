@@ -46,33 +46,28 @@ namespace Chess
             GlobalValue.QiPanFanZhuan = false;
             QiPanChange(false);
             Reset();
-            jipuwindow = new Window_JiPu();
+            jipuwindow = new Window_JiPu(); // 棋谱记录窗口
             double value = MainWin.Left + MainWin.Width;
             jipuwindow.SetValue(LeftProperty, value);
             jipuwindow.SetValue(TopProperty, MainWin.Top);
             jipuwindow.Hide();
-            Spy_window = new SpyWindow();
+            Spy_window = new SpyWindow(); // 棋盘数据监视窗口
             Spy_window.Hide();
 
-            Window_Qi = new Window_QiPu();
+            Window_Qi = new Window_QiPu(); // 棋谱库浏览窗口
             Window_Qi.Hide();
 
             GlobalValue.JianJunTiShi = new() {
                 Content = "战况",
                 Height = 30.0,
-                Margin = new Thickness(100, 20, 0, 0),
                 Foreground = Brushes.White,
-                VerticalAlignment=VerticalAlignment.Top
+                Margin = new Thickness(100, 20, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top
             };
 
             grid.Children.Add(GlobalValue.JianJunTiShi);
 
-            GlobalValue.jueShaImage = new(){ 
-            Visibility=Visibility.Hidden,
-            Opacity=0.8,
-            IsHitTestVisible=false
-            };
-            //GlobalValue.jueShaImage.image.Visibility = Visibility.Hidden;
+            GlobalValue.jueShaImage = new();
             grid.Children.Add(GlobalValue.jueShaImage);
         }
 

@@ -6,7 +6,7 @@
     <UseWPF>true</UseWPF>
     <StartupObject>Chess.App</StartupObject>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <ApplicationIcon />
+    <ApplicationIcon>picture\象.ico</ApplicationIcon>
     <Win32Resource />
   </PropertyGroup>
 
@@ -15,12 +15,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\**" />
     <Compile Remove="DataModels\**" />
     <Compile Remove="Web\**" />
+    <EmbeddedResource Remove="bin\**" />
     <EmbeddedResource Remove="DataModels\**" />
     <EmbeddedResource Remove="Web\**" />
+    <None Remove="bin\**" />
     <None Remove="DataModels\**" />
     <None Remove="Web\**" />
+    <Page Remove="bin\**" />
     <Page Remove="DataModels\**" />
     <Page Remove="Web\**" />
   </ItemGroup>
@@ -33,7 +37,7 @@
   <ItemGroup>
     <None Remove="DB\KaiJuKu.db" />
     <None Remove="KaiJuKu.db" />
-    <None Remove="picture\juesha.png" />
+    <None Remove="picture\break_roleH_10zhanghan.png" />
     <None Remove="picture\juesha_0.png" />
     <None Remove="picture\原位置.png" />
     <None Remove="picture\将军.png" />
@@ -47,6 +51,9 @@
     <None Remove="picture\红相.png" />
     <None Remove="picture\红车.png" />
     <None Remove="picture\红马.png" />
+    <None Remove="picture\象.ico" />
+    <None Remove="picture\象.jpeg" />
+    <None Remove="picture\象128.png" />
     <None Remove="picture\象棋棋子阴影.png" />
     <None Remove="picture\路径点.png" />
     <None Remove="picture\预选框.png" />
@@ -57,6 +64,8 @@
     <None Remove="picture\黑象.png" />
     <None Remove="picture\黑车.png" />
     <None Remove="picture\黑马.png" />
+    <None Remove="SubWindwos\象.jpeg" />
+    <None Remove="象.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,26 +73,14 @@
   </ItemGroup>
 
   <ItemGroup>
-
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="system.data.sqlite" Version="1.0.115.5" />
-
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="picture\juesha.png">
+    <Content Include="DB\KaiJuKu.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
+    <Content Include="picture\象.ico" />
     <Resource Include="picture\juesha_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="picture\原位置.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\将军.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\棋盘1覆膜.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="picture\棋盘（红上）.png">
@@ -92,28 +89,34 @@
     <Resource Include="picture\棋盘（黑上）.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="picture\红仕.png">
+    <Content Include="picture\红仕.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="picture\红兵.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="picture\红帅.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="picture\红炮.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="picture\红相.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="picture\红车.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="picture\红马.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="picture\象.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="picture\红兵.png">
+    <Resource Include="picture\象.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="picture\红帅.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\红炮.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\红相.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\红车.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\红马.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\象棋棋子阴影.png">
+    <Resource Include="picture\象128.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="picture\路径点.png">
@@ -122,27 +125,36 @@
     <Resource Include="picture\预选框.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="picture\黑卒.png">
+    <Resource Include="SubWindwos\象.jpeg" />
+    <Resource Include="象.jpeg" />
+    <Content Include="picture\黑卒.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\黑士.png">
+    </Content>
+    <Content Include="picture\黑士.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\黑将.png">
+    </Content>
+    <Content Include="picture\黑将.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\黑炮.png">
+    </Content>
+    <Content Include="picture\黑炮.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\黑象.png">
+    </Content>
+    <Content Include="picture\黑象.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\黑车.png">
+    </Content>
+    <Content Include="picture\黑车.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\黑马.png">
+    </Content>
+    <Content Include="picture\黑马.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="system.data.sqlite" Version="1.0.115.5" />
+
   </ItemGroup>
 
   <ItemGroup>
