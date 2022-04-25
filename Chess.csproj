@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <None Remove="DB\KaiJuKu.db" />
+    <None Remove="juesha.png" />
     <None Remove="KaiJuKu.db" />
     <None Remove="picture\break_roleH_10zhanghan.png" />
     <None Remove="picture\juesha_0.png" />
@@ -64,7 +65,6 @@
     <None Remove="picture\黑象.png" />
     <None Remove="picture\黑车.png" />
     <None Remove="picture\黑马.png" />
-    <None Remove="SubWindwos\象.jpeg" />
     <None Remove="象.jpeg" />
   </ItemGroup>
 
@@ -125,8 +125,6 @@
     <Resource Include="picture\预选框.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="SubWindwos\象.jpeg" />
-    <Resource Include="象.jpeg" />
     <Content Include="picture\黑卒.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

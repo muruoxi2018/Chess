@@ -40,9 +40,6 @@ namespace Chess
 
             qplst.Text = JsonConvert.SerializeObject(Qipu.QiPuList);
 
-            
-
-
         }
     }
 }
