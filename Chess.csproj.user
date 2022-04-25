@@ -19,16 +19,16 @@
     <Compile Update="CustomClass\PathPoint.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="SubWindwos\SetupWindow.xaml.cs">
+    <Compile Update="SubWindow\SetupWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="SubWindwos\SpyWindow.xaml.cs">
+    <Compile Update="SubWindow\SpyWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="SubWindwos\Window_JiPu.xaml.cs">
+    <Compile Update="SubWindow\Window_JiPu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="SubWindwos\Window_QiPu.xaml.cs">
+    <Compile Update="SubWindow\Window_QiPu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -48,16 +48,16 @@
     <Page Update="CustomClass\PathPoint.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SubWindwos\SetupWindow.xaml">
+    <Page Update="SubWindow\SetupWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SubWindwos\SpyWindow.xaml">
+    <Page Update="SubWindow\SpyWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SubWindwos\Window_JiPu.xaml">
+    <Page Update="SubWindow\Window_JiPu.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SubWindwos\Window_QiPu.xaml">
+    <Page Update="SubWindow\Window_QiPu.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
