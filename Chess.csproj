@@ -6,8 +6,9 @@
     <UseWPF>true</UseWPF>
     <StartupObject>Chess.App</StartupObject>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <ApplicationIcon>picture\象.ico</ApplicationIcon>
+    <ApplicationIcon>picture\象128.ico</ApplicationIcon>
     <Win32Resource />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
