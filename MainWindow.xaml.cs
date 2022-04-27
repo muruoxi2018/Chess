@@ -56,7 +56,7 @@ namespace Chess
             Spy_window.Hide();
 
             Window_Qi = new Window_QiPu(); // 棋谱库浏览窗口
-            Window_Qi.Show();
+            Window_Qi.Hide();
 
             GlobalValue.JianJunTiShi = new() {
                 Content = "战况",
@@ -253,5 +253,10 @@ namespace Chess
             Environment.Exit(0); // 关闭所有窗口，并释放所有资源，包括相关辅助窗口。
         }
 
+        private void SaveQiPu(object sender, RoutedEventArgs e)
+        {
+            SubWindow.Save_Window window=new();
+            window.ShowDialog();
+        }
     }
 }

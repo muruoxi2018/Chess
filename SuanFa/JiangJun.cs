@@ -5,16 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 
-namespace Chess.SuanFa
+namespace Chess.SuanFa // 算法
 {
-    class JiangJun
+    class JiangJun  // 将军
     {
 
         /// <summary>
         /// 检查本棋子是否对将帅构成将军，用于走棋之后判断
         /// </summary>
         /// <param name="JiangOrShuai"> 0：黑将，16：红帅 </param>
-        /// <returns>一维数组，其中有三个数据
+        /// <returns>
+        /// 返回一维数组，其中有三个数据
         /// int[0]==-1: 没有发生将军
         /// int[0]==0: 黑将被将军
         /// int[0]==16: 红帅被将军 
@@ -89,14 +90,15 @@ namespace Chess.SuanFa
         /// 棋子移动后，判断对方是否被绝杀
         /// </summary>
         /// <param name="MoveQizi">最后移动的棋子</param>
-        /// <returns></returns>
+        /// <returns>true=已被绝杀</returns>
         public static bool IsJueSha(int MoveQizi)
         {
 
             int[] jiangjun = { -1, -1, -1 };
-            if (MoveQizi < 16) jiangjun = IsJiangJun(16); // 检查红帅是否被将军
+            if (MoveQizi < 16) jiangjun = IsJiangJun(16); // 检查红帅是否被将军。
             if (MoveQizi >= 16) jiangjun = IsJiangJun(0); // 检查黑将是否被将军
             GlobalValue.JianJunTiShi.Content = "战况"; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
+            if (jiangjun[0]==-1) return false;  // 没有被将军时，则不需检测是否绝杀
             string GJqizi1; // 第一个攻击棋子的名字
             if (jiangjun[1] != -1) GJqizi1 = GlobalValue.QiZiImageFileName[jiangjun[1]]; else GJqizi1 = "";
             string GJqizi2; // 第二个攻击棋子的名字
@@ -130,7 +132,7 @@ namespace Chess.SuanFa
                     else // 如果不是双将
                     {
                         GlobalValue.JianJunTiShi.Content += " 4、黑将--被" + GJqizi1 + "将军，困于老巢，请求外援。";
-                        if (!NoJieSha(jiangjun[1])) // 绝杀判断
+                        if (!JieSha(jiangjun[1])) // 本方其他棋子解杀不成
                         {
                             GlobalValue.JianJunTiShi.Content += " 5、黑将--被" + GJqizi1 + "绝杀！";
                             return true;
@@ -167,7 +169,7 @@ namespace Chess.SuanFa
                     else
                     {
                         GlobalValue.JianJunTiShi.Content = " 5、红帅--被" + GJqizi1 + "将军，困于老巢，请求外援。";
-                        if (!NoJieSha(jiangjun[1]))
+                        if (!JieSha(jiangjun[1]))
                         {
                             GlobalValue.JianJunTiShi.Content = " 6、红帅--被" + GJqizi1 + "绝杀！";
                             return true;
@@ -180,11 +182,11 @@ namespace Chess.SuanFa
         }
 
         /// <summary>
-        /// 被将军是，判断是否已被绝杀
+        /// 被将军时，在老将不能动的情况下，判断本方其他棋子能否解杀
         /// </summary>
         /// <param name="GJqizi">发起将军的棋子</param>
-        /// <returns>true=未被绝杀，false=被绝杀</returns>
-        private static bool NoJieSha(int GJqizi)
+        /// <returns>true=能解杀，false=不能解杀</returns>
+        private static bool JieSha(int GJqizi)
         {
             //黑方：车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
             //红方：车(23,24)，马(21,22)，炮(25,26)，兵(27,28,29,30,31)
@@ -325,7 +327,7 @@ namespace Chess.SuanFa
             }
             #endregion
             
-            //if (JieShaPoints.Count == 0) return false;  // 没有可以解除攻击的点位，估计不存在这个情况。
+            //if (JieShaPoints.Count == 0) return false;  // 不存在可以解除攻击的点位，则不能解杀。估计不存在这个情况。
             bool[,] thispoints;
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)
@@ -339,7 +341,7 @@ namespace Chess.SuanFa
                             if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
                             {
                                 if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
-                                    return true;  // false=没有被绝杀
+                                    return true;  // true=能够解杀
                             }
                         }
                     }
@@ -351,12 +353,12 @@ namespace Chess.SuanFa
                             if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
                             {
                                 if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
-                                    return true;  // false=没有被绝杀
+                                    return true;  // true=能够解杀
                             }
                         }
                     }
                 }
-            return false;  // false=被绝杀
+            return false;  // false=不能解杀
         }
     }
 

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Chess.SuanFa
+namespace Chess.SuanFa // 算法
 {
-    public class MoveCheck
+    public class MoveCheck  // 走棋规则检查
     {
         public static bool[,] PathBool = new bool[9, 10];
         /// <summary>
@@ -587,7 +587,7 @@ namespace Chess.SuanFa
         }
 
         /// <summary>
-        /// 在将帅的可移动路径中，排除对方车、马、炮、卒的可攻击点。
+        /// 在将帅的可移动路径中，排除对方车、马、炮、卒的攻击点。
         /// </summary>
         /// <param name="QZJiangShuai">0=将，16=帅</param>
         /// <param name="col">可移动点的列位置</param>
@@ -654,7 +654,7 @@ namespace Chess.SuanFa
         /// <returns> false=未将军，true=被将军 </returns>
         public static bool AfterMoveWillJiangJun(int thisQz, int x0, int y0, int x1, int y1, int[,] qipan)
         {
-            // 注意：数组作为参数传递时，不是传递的副本，而是直接数组本身。
+            // 注意：数组作为参数传递时，不是传递参数的副本，而是传递数组本身的地址，是传址而非传参。所以不要直接修改。
             int[,] myqipan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)

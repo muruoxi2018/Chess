@@ -5,21 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Width="804" Height="913" Loaded="MainFormLoaded" Background="#FF08313E" Closing="OnMainWindowClose" Icon="/picture/象128.png">
-    <Grid x:Name="grid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="767" Height="842">
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Background="#FF08313E" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="767" MinHeight="900" MaxWidth="1024" MaxHeight="1000" SizeToContent="WidthAndHeight">
+    <Grid x:Name="grid" VerticalAlignment="Center" HorizontalAlignment="Center">
         <Border BorderThickness="1"/>
-        <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseUp="QiPanMouseUp" Visibility="Visible">
+        <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" MouseUp="QiPanMouseUp" Visibility="Visible">
             <Image.Effect>
                 <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="10"/>
             </Image.Effect>
         </Image>
-        <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" >
+        <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" >
             <Image.Effect>
                 <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="10"/>
             </Image.Effect>
         </Image>
 
-        <Canvas x:Name="qiziCanvas">
+        <Canvas x:Name="qiziCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <d:Image x:Name="qizi0" Source="/picture/红兵.png" Stretch="Uniform" Cursor="Hand" Panel.ZIndex="1" Width="70" Height="70" Visibility="Visible" Uid="1" RenderTransformOrigin="0.5,0.5" Canvas.Left="212" Canvas.Top="266">
                 <Image.Effect>
                     <DropShadowEffect Opacity="0.6" ShadowDepth="8" BlurRadius="10"/>
@@ -38,7 +38,7 @@
         <Button x:Name="ResetBtn" Style="{StaticResource button}" Content="开局" HorizontalAlignment="Left" Margin="77,773,0,0" VerticalAlignment="Top" Width="70" Panel.ZIndex="102" Click="ResetBtnClick" Height="25"/>
         <Button Content="翻转棋盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="614,773,0,0" VerticalAlignment="Top" Width="70" Click="OnFanZhuanQiPan" Height="25"/>
         <Button Content="棋谱库" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="384,773,0,0" VerticalAlignment="Top" Click="OpenJiPuWindow" Width="70" Height="25"/>
-        <Button Content="设置" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="508,773,0,0" VerticalAlignment="Top" Click="SetupOption" Width="70" Height="25"/>
+        <Button Content="设置" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="533,773,0,0" VerticalAlignment="Top" Click="SetupOption" Width="70" Height="25"/>
         <Button Content="悔棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="166,773,0,0" VerticalAlignment="Top" Width="70" Click="HuiQi" Height="25"/>
         <Button Content="棋盘数据监控" Style="{StaticResource button}" HorizontalAlignment="Left" Height="25" Margin="260,773,0,0" VerticalAlignment="Top" Width="100" Click="OpenSpyWindow"/>
         <TextBlock x:Name="JianJuning" HorizontalAlignment="Center" TextWrapping="Wrap" Text="将" VerticalAlignment="Center" FontSize="72" Margin="0,0,0,46" FontWeight="Bold" Width="333" TextAlignment="Center" Panel.ZIndex="1000" Visibility="Hidden" IsHitTestVisible="False">
@@ -53,7 +53,8 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
-        
+        <Button Content="保存棋谱" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="457,773,0,0" VerticalAlignment="Top" Click="SaveQiPu" Width="70" Height="25"/>
+
 
     </Grid>
 </Window>

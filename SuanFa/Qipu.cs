@@ -4,37 +4,44 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
+using Newtonsoft.Json;
 
 namespace Chess.SuanFa
 {
-    public static class Qipu
+    public static class Qipu  // 棋谱类
     {
         public class QPStep // 棋谱步骤
         {
-            public int id { get; set; }
+            public int id { get; set; } // 步数
             public string Nm { get; set; } // 数字代码
             public string Cn { get; set; } // 中文代码
-            public Step StepRecode { get; set; }
+            public Step StepRecode { get; set; } // 棋谱记录
             public List<QPStep> qPSteps { get; set; } = new List<QPStep>();   // 棋谱变化
 
         }
-        public class Step
+        public class Step // 棋谱记录
         {
-            public int QiZi { get; set; }
-            public int x0 { get; set; }
+            public int QiZi { get; set; } // 棋子编号
+            public int x0 { get; set; } // 移动前位置
             public int y0 { get; set; }
-            public int x1 { get; set; }
+            public int x1 { get; set; } // 移动后位置
             public int y1 { get; set; }
-            public int DieQz { get; set; }
-
-        }
-        public static void SetStepRecode(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
-        {
+            public int DieQz { get; set; } // 移动后杀死的棋子
 
         }
 
         public static ObservableCollection<QPStep> QiPuList = new(); // 棋谱步骤列表
 
+        /// <summary>
+        /// 添加一条棋谱记录
+        /// </summary>
+        /// <param name="QiZi"></param>
+        /// <param name="x0"></param>
+        /// <param name="y0"></param>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="DieQz"></param>
         public static void AddItem(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
         {
             string char1 = GlobalValue.QiZiCnName[QiZi];
@@ -77,6 +84,33 @@ namespace Chess.SuanFa
                 StepRecode = new Step() { QiZi = QiZi, DieQz = DieQz, x0 = x0, y0 = y0, x1 = x1, y1 = y1, }
             });
 
+        }
+        public static string NmToJson()
+        {
+            ArrayList recode=new();
+            foreach(QPStep p in QiPuList)
+            {
+                recode.Add(p.Nm);
+            }
+            return JsonConvert.SerializeObject(recode);
+        }
+        public static string CnToJson()
+        {
+            ArrayList recode = new();
+            foreach (QPStep p in QiPuList)
+            {
+                recode.Add(p.Cn);
+            }
+            return JsonConvert.SerializeObject(recode);
+        }
+        public static string CnToString()
+        {
+            string recode="";
+            foreach (QPStep p in QiPuList)
+            {
+                recode += p.Cn+" ";
+            }
+            return recode;
         }
     }
 }

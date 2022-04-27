@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 using Chess.SuanFa;
 using Chess.OpenSource;
 using System.Text.Json;
-
+using System.IO;
 
 namespace Chess
 {
@@ -39,15 +39,20 @@ namespace Chess
             System.Data.DataTable sr =OpenSource.SqliteHelper.ExecuteTable("select rowid,* from mybook");
             datagrid.ItemsSource = sr.DefaultView;
 
-            //qplst.Text = JsonConvert.SerializeObject(Qipu.QiPuList);
-            //qplst.Text =JsonSerializer.Serialize(Qipu.QiPuList);
+            //qplst.Text = JsonConvert.SerializeObject(Qipu.QiPuList); // Newtonsoft.Json
+            //qplst.Text =JsonSerializer.Serialize(Qipu.QiPuList);  // System.Text.Json
 
         }
 
         private void qipuListRefresh(object sender, RoutedEventArgs e)
         {
             //qplst.Text = JsonSerializer.Serialize(Qipu.QiPuList);
-            qplst.Text = JsonConvert.SerializeObject(Qipu.QiPuList);
+            string jsonstr = JsonConvert.SerializeObject(Qipu.QiPuList);
+            //qplst.Text = Qipu.NmToJson();
+            string filename = System.Environment.CurrentDirectory + @"\DB\" + DateTime.Now.ToFileTimeUtc().ToString()+".txt";
+            File.WriteAllText(filename, jsonstr);
+
+            qplst.Text=filename+File.ReadAllText(filename);
         }
     }
 }
