@@ -7,8 +7,8 @@ namespace Chess.OpenSource
     public class SqliteHelper
     {
         //private static readonly string str = @"data source=D:\CSHARP\Chess\DB\KaiJuKu.db";
-        //private static readonly string str = @"data source=E:\source\repos\Chess\DB\KaiJuKu.db";
-        private static readonly string str = "data source="+System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db";
+        private static readonly string str = @"data source=E:\source\repos\Chess\DB\KaiJuKu.db"; // 调试时使用
+        //private static readonly string str = "data source=" + System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db"; // 发行版使用此路径
         public static int ExecuteSql(string sql)
         {
             using (SQLiteConnection con = new SQLiteConnection(str))
