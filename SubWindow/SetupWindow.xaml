@@ -1,0 +1,31 @@
+﻿<Window x:Name="SetupWindow1" x:Class="Chess.SetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chess"
+        mc:Ignorable="d"
+        Title="SetupWindow" Height="450" Width="800" Icon="/picture/象128.png">
+    <Grid>
+        <CheckBox x:Name="QiPanTopBottom" Content="设置为棋盘上方为黑方，下方为红方。不选中，则相反。" HorizontalAlignment="Left" Margin="218,52,0,0" VerticalAlignment="Top" Background="{x:Null}"/>
+        <ComboBox x:Name="QiPanBKColor" HorizontalAlignment="Left" Margin="305,89,0,0" VerticalAlignment="Top" Width="200" Background="Black" SelectionChanged="BkColorSelect">
+            <Rectangle Width="180" Height="25">
+                <Rectangle.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FF1886DA"/>
+                        <GradientStop Color="#FF14505B" Offset="1"/>
+                    </RadialGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle Fill="#FF498015" Width="180" Height="25"/>
+            <Rectangle Fill="#FF900C0C" Width="180" Height="25"/>
+            <Rectangle Fill="#FF89900C" Width="180" Height="25"/>
+            <Rectangle Fill="#FF120A79" Width="180" Height="25"/>
+            <Rectangle Fill="#FF520D8E" Width="180" Height="25"/>
+            <Rectangle Width="180" Height="25" Fill="#FF520D8E"/>
+        </ComboBox>
+        <Label Content="棋盘背景色：" HorizontalAlignment="Left" Margin="218,85,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textb1" HorizontalAlignment="Left" Margin="106,328,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="399" Height="38"/>
+
+    </Grid>
+</Window>

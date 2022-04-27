@@ -1,0 +1,59 @@
+﻿<Window x:Name="MainWin" x:Class="Chess.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chess"
+        mc:Ignorable="d"
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Width="804" Height="913" Loaded="MainFormLoaded" Background="#FF08313E" Closing="OnMainWindowClose" Icon="/picture/象128.png">
+    <Grid x:Name="grid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="767" Height="842">
+        <Border BorderThickness="1"/>
+        <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseUp="QiPanMouseUp" Visibility="Visible">
+            <Image.Effect>
+                <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="10"/>
+            </Image.Effect>
+        </Image>
+        <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" >
+            <Image.Effect>
+                <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="10"/>
+            </Image.Effect>
+        </Image>
+
+        <Canvas x:Name="qiziCanvas">
+            <d:Image x:Name="qizi0" Source="/picture/红兵.png" Stretch="Uniform" Cursor="Hand" Panel.ZIndex="1" Width="70" Height="70" Visibility="Visible" Uid="1" RenderTransformOrigin="0.5,0.5" Canvas.Left="212" Canvas.Top="266">
+                <Image.Effect>
+                    <DropShadowEffect Opacity="0.6" ShadowDepth="8" BlurRadius="10"/>
+                </Image.Effect>
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0" Y="0"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </d:Image>
+        </Canvas>
+
+        <Button x:Name="ResetBtn" Style="{StaticResource button}" Content="开局" HorizontalAlignment="Left" Margin="77,773,0,0" VerticalAlignment="Top" Width="70" Panel.ZIndex="102" Click="ResetBtnClick" Height="25"/>
+        <Button Content="翻转棋盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="614,773,0,0" VerticalAlignment="Top" Width="70" Click="OnFanZhuanQiPan" Height="25"/>
+        <Button Content="棋谱库" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="384,773,0,0" VerticalAlignment="Top" Click="OpenJiPuWindow" Width="70" Height="25"/>
+        <Button Content="设置" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="508,773,0,0" VerticalAlignment="Top" Click="SetupOption" Width="70" Height="25"/>
+        <Button Content="悔棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="166,773,0,0" VerticalAlignment="Top" Width="70" Click="HuiQi" Height="25"/>
+        <Button Content="棋盘数据监控" Style="{StaticResource button}" HorizontalAlignment="Left" Height="25" Margin="260,773,0,0" VerticalAlignment="Top" Width="100" Click="OpenSpyWindow"/>
+        <TextBlock x:Name="JianJuning" HorizontalAlignment="Center" TextWrapping="Wrap" Text="将" VerticalAlignment="Center" FontSize="72" Margin="0,0,0,46" FontWeight="Bold" Width="333" TextAlignment="Center" Panel.ZIndex="1000" Visibility="Hidden" IsHitTestVisible="False">
+            <TextBlock.Effect>
+                <DropShadowEffect Opacity="1" BlurRadius="200" Color="#FF00FFF9" Direction="0" ShadowDepth="0"/>
+            </TextBlock.Effect>
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF5A0505" Offset="1"/>
+                    <GradientStop Color="#FFF1C807" Offset="0"/>
+                    <GradientStop Color="#FFE2200D" Offset="0.487"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+        
+
+    </Grid>
+</Window>
