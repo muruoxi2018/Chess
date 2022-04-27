@@ -15,6 +15,7 @@ using System.Data.SQLite;
 using Newtonsoft.Json;
 using Chess.SuanFa;
 using Chess.OpenSource;
+using System.Text.Json;
 
 
 namespace Chess
@@ -35,11 +36,18 @@ namespace Chess
         /// <param name="e"></param>
         private void WindowQiPu_Load(object sender, RoutedEventArgs e)
         {
-            System.Data.DataTable sr = SqliteHelper.ExecuteTable("select rowid,* from mybook");
+            System.Data.DataTable sr =OpenSource.SqliteHelper.ExecuteTable("select rowid,* from mybook");
             datagrid.ItemsSource = sr.DefaultView;
 
-            qplst.Text = JsonConvert.SerializeObject(Qipu.QiPuList);
+            //qplst.Text = JsonConvert.SerializeObject(Qipu.QiPuList);
+            //qplst.Text =JsonSerializer.Serialize(Qipu.QiPuList);
 
+        }
+
+        private void qipuListRefresh(object sender, RoutedEventArgs e)
+        {
+            //qplst.Text = JsonSerializer.Serialize(Qipu.QiPuList);
+            qplst.Text = JsonConvert.SerializeObject(Qipu.QiPuList);
         }
     }
 }

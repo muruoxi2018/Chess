@@ -5,10 +5,13 @@ namespace Chess.SuanFa
     public class MoveCheck
     {
         public static bool[,] PathBool = new bool[9, 10];
-        public static void GetAndShowPathPoints(int thisqz)   // 查找棋子可移动的路径，并标记
+        /// <summary>
+        /// 获取棋子可移动路径，并在棋盘上显示标记
+        /// </summary>
+        /// <param name="thisqz"></param>
+        public static void GetAndShowPathPoints(int thisqz)
 
         {
-            //GlobalValue.qzpath.Initialize();//  清除所有棋子路径数据
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
@@ -31,7 +34,12 @@ namespace Chess.SuanFa
             }
         }
 
-        // 检查棋子移动目标位置的有效性
+        /// <summary>
+        /// 计算棋子可移动的目标位置
+        /// </summary>
+        /// <param name="MoveQiZi">棋子编号</param>
+        /// <param name="qipan">当前棋盘数据</param>
+        /// <returns>返回bool二维数组，对应棋盘上的每一点位</returns>
         public static bool[,] GetPathPoints(int MoveQiZi, int[,] qipan)
         {
             bool[,] points = new bool[9, 10];
@@ -54,7 +62,7 @@ namespace Chess.SuanFa
             int MoveQiZi_Col = GlobalValue.QiZiArray[MoveQiZi].Col;
             int MoveQiZi_Row = GlobalValue.QiZiArray[MoveQiZi].Row;
             int side = 0;
-
+            #region 棋子可移动路径的计算
             switch (MoveQiZi)
             {
                 case 7:
@@ -542,6 +550,7 @@ namespace Chess.SuanFa
                 default:
                     return points;
             }
+            #endregion
             return points;
         }
 
@@ -576,6 +585,7 @@ namespace Chess.SuanFa
             }
             return count == 1;
         }
+
         /// <summary>
         /// 在将帅的可移动路径中，排除对方车、马、炮、卒的可攻击点。
         /// </summary>
@@ -615,6 +625,15 @@ namespace Chess.SuanFa
             }
             return false;
         }
+
+        /// <summary>
+        /// 棋子移动到指定位置后，是否还是被将军
+        /// </summary>
+        /// <param name="thisQz">棋子编号</param>
+        /// <param name="x1">将要移动的列位置</param>
+        /// <param name="y1">将要移动的行位置</param>
+        /// <param name="qipan">当前棋盘数据</param>
+        /// <returns></returns>
         public static bool AfterMoveWillJiangJun(int thisQz, int x1, int y1, int[,] qipan)
         {
             int x0 = GlobalValue.QiZiArray[thisQz].Col;
@@ -623,10 +642,8 @@ namespace Chess.SuanFa
         }
 
         /// <summary>
-        /// 
         /// 检查棋子移动后，本方是否被将军。
         /// 用于棋子移动前的检测，如果是移动后被将军，则不能允许移动。
-        /// 
         /// </summary>
         /// <param name="thisQz"></param>
         /// <param name="x0"></param>
@@ -673,7 +690,7 @@ namespace Chess.SuanFa
                         }
                     }
                 }
-            return false;
+            return false; // false=未被将军
         }
     }
 }

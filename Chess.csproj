@@ -6,7 +6,7 @@
     <UseWPF>true</UseWPF>
     <StartupObject>Chess.App</StartupObject>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <ApplicationIcon>picture\象.ico</ApplicationIcon>
+    <ApplicationIcon>picture\象128.ico</ApplicationIcon>
     <Win32Resource />
   </PropertyGroup>
 
@@ -76,7 +76,7 @@
     <Content Include="DB\KaiJuKu.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="picture\象.ico" />
+    <Content Include="picture\象128.ico" />
     <Resource Include="picture\juesha_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -152,6 +152,7 @@
 
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="system.data.sqlite" Version="1.0.115.5" />
+    <PackageReference Include="System.Text.Json" Version="6.0.3" />
 
   </ItemGroup>
 

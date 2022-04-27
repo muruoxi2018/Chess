@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
+
 namespace Chess
 {
     /// <summary>
@@ -55,7 +56,7 @@ namespace Chess
             Spy_window.Hide();
 
             Window_Qi = new Window_QiPu(); // 棋谱库浏览窗口
-            Window_Qi.Hide();
+            Window_Qi.Show();
 
             GlobalValue.JianJunTiShi = new() {
                 Content = "战况",

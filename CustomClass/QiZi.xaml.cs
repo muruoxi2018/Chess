@@ -34,6 +34,7 @@ namespace Chess
             InitializeComponent();
             QiziId = -1;
         }
+
         /// <summary>
         /// 棋子类构造函数
         /// 根据棋子编号，载入对应的棋子图像，设定在棋盘的初始位置
@@ -90,6 +91,7 @@ namespace Chess
             qzimage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
             yuxuankuang.Visibility = Visibility.Hidden; // 本棋子的预先框隐藏
         }
+
         /// <summary>
         /// 选中时的处理
         /// </summary>
@@ -142,7 +144,6 @@ namespace Chess
 
         }
 
-
         /// <summary>
         /// 设置棋子到开局时的初始位置
         /// </summary>
@@ -152,6 +153,7 @@ namespace Chess
             SetPosition(init_col, init_row);
             Deselect();
         }
+
         /// <summary>
         /// 缩放
         /// </summary>
@@ -166,10 +168,15 @@ namespace Chess
                 scaler.ScaleY = scaller;
             }
         }
+        
+        /// <summary>
+        /// 上下翻转棋子位置
+        /// </summary>
         public void FanZhuanPosition()
         {
             SetPosition(Col, Row);
         }
+
         /// <summary>
         /// 棋子被杀死
         /// </summary>
@@ -187,10 +194,17 @@ namespace Chess
             Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// 显示预选框
+        /// </summary>
         public void ShowYuanWeiZhiImage()
         {
             yuanweizhi.Visibility = Visibility.Visible;
         }
+
+        /// <summary>
+        /// 隐藏预选框
+        /// </summary>
         public void HiddenYuanWeiZhiImage()
         {
             yuanweizhi.Visibility = Visibility.Hidden;

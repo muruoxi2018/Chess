@@ -21,5 +21,6 @@
             <d:TabItem/>
         </DataGrid>
         <TextBlock x:Name="qplst" HorizontalAlignment="Stretch" Margin="18,0,474,59" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="34,335,0,0" VerticalAlignment="Top" Click="qipuListRefresh"/>
     </Grid>
 </Window>

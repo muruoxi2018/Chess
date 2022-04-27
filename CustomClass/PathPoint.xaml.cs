@@ -111,7 +111,6 @@ namespace Chess
                     GlobalValue.PathPointImage[i, j].HasPoint = false;
                 }
             }
-
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace Chess.SuanFa
 
             int[] vs = { -1, -1, -1 };
             if (JiangOrShuai != 0 && JiangOrShuai != 16) return vs;
-            int[,] myqipan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
+            int[,] myqipan = new int[9, 10]; // 复制一份棋盘副本，防止破坏原棋盘数组的数据
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)
                 {
@@ -35,12 +35,12 @@ namespace Chess.SuanFa
 
             bool[,] thispoints;
 
-            if (JiangOrShuai == 16)
+            if (JiangOrShuai == 16) // 被将军的是红帅
             {
                 vs[0] = vs[1] = vs[2] = -1;
                 for (int qizi = 5; qizi <= 15; qizi++) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
                 {
-                    if (GlobalValue.QiZiArray[qizi].Visibility != System.Windows.Visibility.Visible) continue;
+                    if (GlobalValue.QiZiArray[qizi].Visibility != System.Windows.Visibility.Visible) continue; // 已死的棋子排除
                     thispoints = MoveCheck.GetPathPoints(qizi, myqipan);
                     int x = GlobalValue.QiZiArray[16].Col;
                     int y = GlobalValue.QiZiArray[16].Row;
@@ -59,12 +59,12 @@ namespace Chess.SuanFa
                     }
                 }
             }
-            if (JiangOrShuai == 0)
+            if (JiangOrShuai == 0) // 被将军的是黑将
             {
                 vs[0] = vs[1] = vs[2] = -1;
                 for (int qizi = 21; qizi <= 31; qizi++) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
                 {
-                    if (GlobalValue.QiZiArray[qizi].Visibility != System.Windows.Visibility.Visible) continue;
+                    if (GlobalValue.QiZiArray[qizi].Visibility != System.Windows.Visibility.Visible) continue; // 已死的棋子排除
                     thispoints = MoveCheck.GetPathPoints(qizi, myqipan);
                     int x = GlobalValue.QiZiArray[0].Col;
                     int y = GlobalValue.QiZiArray[0].Row;
@@ -94,42 +94,43 @@ namespace Chess.SuanFa
         {
 
             int[] jiangjun = { -1, -1, -1 };
-            if (MoveQizi < 16) jiangjun = IsJiangJun(16);
-            if (MoveQizi >= 16) jiangjun = IsJiangJun(0);
-            GlobalValue.JianJunTiShi.Content = "战况";
-            string GJqizi1, GJqizi2 = "";
+            if (MoveQizi < 16) jiangjun = IsJiangJun(16); // 检查红帅是否被将军
+            if (MoveQizi >= 16) jiangjun = IsJiangJun(0); // 检查黑将是否被将军
+            GlobalValue.JianJunTiShi.Content = "战况"; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
+            string GJqizi1; // 第一个攻击棋子的名字
             if (jiangjun[1] != -1) GJqizi1 = GlobalValue.QiZiImageFileName[jiangjun[1]]; else GJqizi1 = "";
+            string GJqizi2; // 第二个攻击棋子的名字
             if (jiangjun[2] != -1) GJqizi2 = "和" + GlobalValue.QiZiImageFileName[jiangjun[2]]; else GJqizi2 = "";
-            if (jiangjun[0] == 0)
+            if (jiangjun[0] == 0) // 被将军的是黑将
             {
                 GlobalValue.JianJunTiShi.Content = "1、黑将--被将军！";
 
-                bool[,] points = MoveCheck.GetPathPoints(0, GlobalValue.QiPan);
-                bool test = false;
+                bool[,] points = MoveCheck.GetPathPoints(0, GlobalValue.QiPan); // 获取黑将的可移动路径
+                bool selfCanMove = false;
                 for (int i = 3; i <= 5; i++)
                     for (int j = 0; j <= 2; j++)
                     {
-                        if (points[i, j] == true && !MoveCheck.IsKilledPoint(0, i, j, GlobalValue.QiPan))
+                        if (points[i, j] == true && !MoveCheck.IsKilledPoint(0, i, j, GlobalValue.QiPan)) // 检查可移动路径是否是对方的攻击点
                         {
-                            test = true;
+                            selfCanMove = true; // 如果不是对方的攻击点，则可移动到请该点。
                             break;
                         }
                     }
-                if (test)
+                if (selfCanMove)
                 {
                     GlobalValue.JianJunTiShi.Content += " 2、黑将--被" + GJqizi1 + "将军！！黑将可自己移动解杀。";
                 }
                 else
                 {
-                    if (jiangjun[2] != -1)
+                    if (jiangjun[2] != -1) // 如果是双将
                     {
                         GlobalValue.JianJunTiShi.Content += " 3、黑将--无处可逃，被" + GJqizi1 + GJqizi2 + "双将绝杀！";
                         return true;
                     }
-                    else
+                    else // 如果不是双将
                     {
                         GlobalValue.JianJunTiShi.Content += " 4、黑将--被" + GJqizi1 + "将军，困于老巢，请求外援。";
-                        if (!NoJieSha(jiangjun[1]))
+                        if (!NoJieSha(jiangjun[1])) // 绝杀判断
                         {
                             GlobalValue.JianJunTiShi.Content += " 5、黑将--被" + GJqizi1 + "绝杀！";
                             return true;
@@ -137,22 +138,22 @@ namespace Chess.SuanFa
                     }
                 }
             }
-            if (jiangjun[0] == 16)
+            if (jiangjun[0] == 16) // 被将军的是红帅
             {
                 GlobalValue.JianJunTiShi.Content = " 2、红帅--被" + GJqizi1 + "将军！";
 
                 bool[,] points = MoveCheck.GetPathPoints(16, GlobalValue.QiPan);
-                bool test = false;
+                bool selfCanMove = false;
                 for (int i = 3; i <= 5; i++)
                     for (int j = 7; j <= 9; j++)
                     {
                         if (points[i, j] == true && !MoveCheck.IsKilledPoint(16, i, j, GlobalValue.QiPan))
                         {
-                            test = true;
+                            selfCanMove = true;
                             break;
                         }
                     }
-                if (test)
+                if (selfCanMove)
                 {
                     GlobalValue.JianJunTiShi.Content = " 3、红帅--被" + GJqizi1 + "将军！！红帅可自己移动解杀。";
                 }
@@ -197,9 +198,10 @@ namespace Chess.SuanFa
             int HongShuaiRow = GlobalValue.QiZiArray[16].Row;
             ArrayList JieShaPoints = new ArrayList(); // 可解除攻击的点位
 
+            #region  根据发起将军棋子的位置，以及被将军的将帅的位置，计算所有可解除将军的点位，存放到数组列表JieShaPoints中，以备进一步分析
             JieShaPoints.Add(new int[] { GJqiziCol, GJqiziRow }); // 把攻击棋子的位置先加进去
             //int[] jsPoint = new int[2];
-            switch (GJqizi) // 根据发起将军棋子的位置，以及被将军的将帅的位置，计算或解除攻击的所有点位，存放到数组列表中
+            switch (GJqizi) // 根据发起将军棋子的位置，以及被将军的将帅的位置，计算或解除将军的所有点位，存放到数组列表中
             {
                 case 5:
                 case 6:     //  攻击棋子为黑方马(5,6)
@@ -321,6 +323,8 @@ namespace Chess.SuanFa
                 default:
                     break;
             }
+            #endregion
+            
             //if (JieShaPoints.Count == 0) return false;  // 没有可以解除攻击的点位，估计不存在这个情况。
             bool[,] thispoints;
             for (int i = 0; i < 9; i++)
