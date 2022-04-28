@@ -24,6 +24,7 @@
 
             <TextBox x:Name="jsontext" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" MinHeight="100"/>
             <Button Content="刷  新" HorizontalAlignment="Left" Margin="10,0,0,0" Click="qipuListRefresh" Width="89"/>
+            <TreeView x:Name="jsonTree" Height="100"/>
         </StackPanel>
     </Grid>
 </Window>

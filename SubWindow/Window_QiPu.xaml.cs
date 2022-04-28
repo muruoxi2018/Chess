@@ -18,6 +18,8 @@ using Chess.OpenSource;
 using System.Text.Json;
 using System.IO;
 using System.Data;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Chess
 {
@@ -65,6 +67,8 @@ namespace Chess
             string jsonstr=((DataRowView)datagrid.SelectedItem).Row["jsonrecord"].ToString();
             //qplst.Text=jsonstr;
             jsontext.Text = jsonstr;
+            //jsonTree.Background = null;
+            Qipu.QiPuListOld = JsonConvert.DeserializeObject(jsonstr) as ObservableCollection<Qipu.QPStep>;
         }
     }
 }

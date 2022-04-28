@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using Newtonsoft.Json;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Chess.SuanFa
 {
@@ -18,6 +20,28 @@ namespace Chess.SuanFa
             public string Cn { get; set; } // 中文代码
             public Step StepRecode { get; set; } // 棋谱记录
             public List<QPStep> qPSteps { get; set; } = new List<QPStep>();   // 棋谱变化
+            public TreeViewItem toTreeNode()
+            {
+                var tree = new TreeViewItem();
+                tree.Header = id;
+                tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "Nm"
+                }.Items.Add(Nm));
+                tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "Cn"
+                }.Items.Add(Cn));
+                tree.Items.Add(StepRecode.TreeViewItem());
+                if (qPSteps != null)
+                {
+                    foreach (var qps in qPSteps)
+                    {
+                        tree.Items.Add(qps.toTreeNode());
+                    }
+                }
+                return tree;
+            }
 
         }
         public class Step // 棋谱记录
@@ -28,11 +52,44 @@ namespace Chess.SuanFa
             public int x1 { get; set; } // 移动后位置
             public int y1 { get; set; }
             public int DieQz { get; set; } // 移动后杀死的棋子
+            public TreeViewItem TreeViewItem()
+            {
+                var tree = new TreeViewItem()
+                {
+                    Header = "Step",
+                };
+                tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "QiZi"
+                }.Items.Add(QiZi));
+                tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "x0"
+                }.Items.Add(x0));
+                tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "y0"
+                }.Items.Add(y0));
+                tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "x1"
+                }.Items.Add(x1));
+                tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "y1"
+                }.Items.Add(y1));
+                tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "DieQz"
+                }.Items.Add(DieQz));
+
+                return tree;
+            }
 
         }
 
         public static ObservableCollection<QPStep> QiPuList = new(); // 棋谱步骤列表
-
+        public static ObservableCollection<QPStep> QiPuListOld = new(); // 棋谱步骤列表
         /// <summary>
         /// 添加一条棋谱记录
         /// </summary>
@@ -91,8 +148,8 @@ namespace Chess.SuanFa
         /// <returns></returns>
         public static string NmToJson()
         {
-            ArrayList recode=new();
-            foreach(QPStep p in QiPuList)
+            ArrayList recode = new();
+            foreach (QPStep p in QiPuList)
             {
                 recode.Add(p.Nm);
             }
@@ -117,12 +174,14 @@ namespace Chess.SuanFa
         /// <returns></returns>
         public static string CnToString()
         {
-            string recode="";
+            string recode = "";
             foreach (QPStep p in QiPuList)
             {
-                recode += p.Cn+" ";
+                recode += p.Cn + " ";
             }
             return recode;
         }
+
+
     }
 }
