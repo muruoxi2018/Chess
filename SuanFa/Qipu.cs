@@ -26,12 +26,12 @@ namespace Chess.SuanFa
                 tree.Header = id;
                 tree.Items.Add(new TreeViewItem()
                 {
-                    Header = "Nm"
-                }.Items.Add(Nm));
+                    Header = "数字编码: "+ Nm
+                });
                 tree.Items.Add(new TreeViewItem()
                 {
-                    Header = "Cn"
-                }.Items.Add(Cn));
+                    Header = "中文编码: "+ Cn
+                });
                 tree.Items.Add(StepRecode.TreeViewItem());
                 if (qPSteps != null)
                 {
@@ -56,32 +56,32 @@ namespace Chess.SuanFa
             {
                 var tree = new TreeViewItem()
                 {
-                    Header = "Step",
+                    Header = "走棋参数",
                 };
                 tree.Items.Add(new TreeViewItem()
                 {
-                    Header = "QiZi"
-                }.Items.Add(QiZi));
+                    Header = "棋子: " + QiZi
+                }); 
                 tree.Items.Add(new TreeViewItem()
                 {
-                    Header = "x0"
-                }.Items.Add(x0));
+                    Header = "x0: " + x0
+                });
                 tree.Items.Add(new TreeViewItem()
                 {
-                    Header = "y0"
-                }.Items.Add(y0));
+                    Header = "y0: " + y0
+                });
                 tree.Items.Add(new TreeViewItem()
                 {
-                    Header = "x1"
-                }.Items.Add(x1));
+                    Header = "x1: " + x1
+                });
                 tree.Items.Add(new TreeViewItem()
                 {
-                    Header = "y1"
-                }.Items.Add(y1));
+                    Header = "y1: " + y1
+                });
                 tree.Items.Add(new TreeViewItem()
                 {
-                    Header = "DieQz"
-                }.Items.Add(DieQz));
+                    Header = "杀死棋子: " + ((DieQz > -1) ? DieQz : "无")
+                }) ;
 
                 return tree;
             }

@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data.SQLite;
 using Newtonsoft.Json;
 using Chess.SuanFa;
-using Chess.OpenSource;
-using System.Text.Json;
-using System.IO;
 using System.Data;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace Chess
 {
@@ -68,7 +54,18 @@ namespace Chess
             //qplst.Text=jsonstr;
             jsontext.Text = jsonstr;
             //jsonTree.Background = null;
-            Qipu.QiPuListOld = JsonConvert.DeserializeObject(jsonstr) as ObservableCollection<Qipu.QPStep>;
+            var ql =  JsonConvert.DeserializeObject<List<Qipu.QPStep>>(jsonstr);
+            /*var tree = new TreeViewItem();
+            tree.Header = "root";
+
+            foreach(Qipu.QPStep qp in ql)
+            {
+                tree.Items.Add(qp.toTreeNode());
+            }
+            jsonTree.Items.Clear();
+            jsonTree.Items.Add(tree);*/
+            jsonTree.ItemsSource = ql;
+            
         }
     }
 }
