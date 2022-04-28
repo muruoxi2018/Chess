@@ -85,6 +85,10 @@ namespace Chess.SuanFa
             });
 
         }
+        /// <summary>
+        /// 将棋谱数字代码转化为JSON字符串
+        /// </summary>
+        /// <returns></returns>
         public static string NmToJson()
         {
             ArrayList recode=new();
@@ -94,6 +98,10 @@ namespace Chess.SuanFa
             }
             return JsonConvert.SerializeObject(recode);
         }
+        /// <summary>
+        /// 将棋谱中文代码转化为JSON字符串
+        /// </summary>
+        /// <returns></returns>
         public static string CnToJson()
         {
             ArrayList recode = new();
@@ -103,6 +111,10 @@ namespace Chess.SuanFa
             }
             return JsonConvert.SerializeObject(recode);
         }
+        /// <summary>
+        /// 将棋谱中文代码转化为长字符串
+        /// </summary>
+        /// <returns></returns>
         public static string CnToString()
         {
             string recode="";

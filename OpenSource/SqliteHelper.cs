@@ -6,8 +6,8 @@ namespace Chess.OpenSource
 {
     public class SqliteHelper
     {
-        //private static readonly string str = @"data source=D:\CSHARP\Chess\DB\KaiJuKu.db";
-        private static readonly string str = @"data source=E:\source\repos\Chess\DB\KaiJuKu.db"; // 调试时使用
+        private static readonly string str = @"data source=D:\CSHARP\Chess\DB\KaiJuKu.db";
+        //private static readonly string str = @"data source=E:\source\repos\Chess\DB\KaiJuKu.db"; // 调试时使用
         //private static readonly string str = "data source=" + System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db"; // 发行版使用此路径
         public static int ExecuteSql(string sql)
         {
@@ -137,7 +137,7 @@ namespace Chess.OpenSource
             //return sql;
             return ExecuteTable(sql, param);
         }
-        public static int ExecuteInsert(string tbName, Dictionary<string, string> insertData)
+        public static int ExecuteInsert(string tbName, Dictionary<string, object> insertData)
         {
             string point = "";//分隔符号(,)
             string keyStr = "";//字段名拼接字符串
@@ -153,7 +153,7 @@ namespace Chess.OpenSource
             string sql = string.Format("INSERT INTO `{0}`({1}) VALUES({2})", tbName, keyStr, valueStr);
             return ExecuteSql(sql, param.ToArray());
         }
-        public static int ExecuteUpdate(string tbName, string where, Dictionary<string, string> insertData)
+        public static int ExecuteUpdate(string tbName, string where, Dictionary<string, object> insertData)
         {
             string point = "";//分隔符号(,)
             string kvStr = "";//键值对拼接字符串(Id=@Id)

@@ -5,22 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  x:Class="Chess.Window_QiPu"
         mc:Ignorable="d"
         Title="棋谱库列表" Height="450" Width="800" Loaded="WindowQiPu_Load" WindowState="Maximized" Icon="/picture/象128.png">
-    <Grid>
-        <DataGrid x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding rowid}" Header="编号"/>
-                <DataGridTextColumn Binding="{Binding date}" Header="日期"/>
-                <DataGridTextColumn Binding="{Binding author}" Header="作者"/>
-                <DataGridTextColumn Binding="{Binding title}" Header="标题" />
-                <DataGridTextColumn Binding="{Binding type}" Header="类型" />
-                <DataGridTextColumn Binding="{Binding video}" Header="视频" />
-                <DataGridTextColumn Binding="{Binding record}" Header="棋谱" >
+    <Grid VerticalAlignment="Stretch">
+        <StackPanel>
+            <DataGrid x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" MouseLeftButtonUp="onMouseLeftButtonUP" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding rowid}" Header="编号"/>
+                    <DataGridTextColumn Binding="{Binding date}" Header="日期"/>
+                    <DataGridTextColumn Binding="{Binding author}" Header="作者"/>
+                    <DataGridTextColumn Binding="{Binding title}" Header="标题" />
+                    <DataGridTextColumn Binding="{Binding type}" Header="类型" />
+                    <DataGridTextColumn Binding="{Binding video}" Header="视频" />
+                    <DataGridTextColumn Binding="{Binding record}" Header="棋谱" >
 
-                </DataGridTextColumn>
-            </DataGrid.Columns>
-            <d:TabItem/>
-        </DataGrid>
-        <TextBlock x:Name="qplst" Margin="18,0,21,10" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="64"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="18,0,0,79" VerticalAlignment="Bottom" Click="qipuListRefresh"/>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+                <d:TabItem/>
+            </DataGrid>
+
+            <TextBox x:Name="jsontext" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" MinHeight="100"/>
+            <Button Content="刷  新" HorizontalAlignment="Left" Margin="10,0,0,0" Click="qipuListRefresh" Width="89"/>
+        </StackPanel>
     </Grid>
 </Window>

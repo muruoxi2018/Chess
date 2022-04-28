@@ -17,6 +17,7 @@ using Chess.SuanFa;
 using Chess.OpenSource;
 using System.Text.Json;
 using System.IO;
+using System.Data;
 
 namespace Chess
 {
@@ -37,7 +38,7 @@ namespace Chess
         private void WindowQiPu_Load(object sender, RoutedEventArgs e)
         {
             //System.Data.DataTable sr =OpenSource.SqliteHelper.ExecuteTable("select rowid,* from mybook");
-            System.Data.DataTable sr = OpenSource.SqliteHelper.QueryTable("mybook");
+            System.Data.DataTable sr = OpenSource.SqliteHelper.QueryTable("mybook", "rowid,*");
             datagrid.ItemsSource = sr.DefaultView;
 
             //qplst.Text = JsonConvert.SerializeObject(Qipu.QiPuList); // Newtonsoft.Json
@@ -45,7 +46,7 @@ namespace Chess
 
         }
 
-        private void qipuListRefresh(object sender, RoutedEventArgs e)
+        public void qipuListRefresh(object sender, RoutedEventArgs e)
         {
             //qplst.Text = JsonSerializer.Serialize(Qipu.QiPuList);
             string jsonstr = JsonConvert.SerializeObject(Qipu.QiPuList);
@@ -54,8 +55,16 @@ namespace Chess
             //File.WriteAllText(filename, jsonstr);
 
             //qplst.Text=filename+File.ReadAllText(filename);
-            System.Data.DataTable sr = OpenSource.SqliteHelper.QueryTable("mybook");
+            System.Data.DataTable sr = OpenSource.SqliteHelper.QueryTable("mybook","rowid,*");
             datagrid.ItemsSource = sr.DefaultView;
+        }
+
+        private void onMouseLeftButtonUP(object sender, MouseButtonEventArgs e)
+        {
+            //int index=datagrid.SelectedIndex;
+            string jsonstr=((DataRowView)datagrid.SelectedItem).Row["jsonrecord"].ToString();
+            //qplst.Text=jsonstr;
+            jsontext.Text = jsonstr;
         }
     }
 }

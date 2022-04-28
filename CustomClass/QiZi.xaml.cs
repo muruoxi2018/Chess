@@ -148,7 +148,7 @@ namespace Chess
         /// </summary>
         public void SetInitPosition()
         {
-            Visibility = Visibility.Visible;
+            Visibility = Visibility.Visible;  // 棋子复活
             SetPosition(init_col, init_row);
             Deselect();
         }

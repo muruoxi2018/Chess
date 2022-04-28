@@ -72,9 +72,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="DB\KaiJuKu.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="picture\juesha_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -87,6 +84,9 @@
     <Resource Include="picture\棋盘（黑上）.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Content Include="DB\KaiJuKu.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="picture\红仕.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
