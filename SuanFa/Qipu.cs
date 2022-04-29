@@ -23,16 +23,16 @@ namespace Chess.SuanFa
             public TreeViewItem toTreeNode()
             {
                 var tree = new TreeViewItem();
-                tree.Header = id;
+                tree.Header =string.Format("{0:D2} {1}",id,Cn);
                 tree.Items.Add(new TreeViewItem()
                 {
                     Header = "数字编码: "+ Nm
                 });
-                tree.Items.Add(new TreeViewItem()
+                var list = StepRecode.TreeViewItem();
+                foreach (var item in list)
                 {
-                    Header = "中文编码: "+ Cn
-                });
-                tree.Items.Add(StepRecode.TreeViewItem());
+                    tree.Items.Add(item);
+                }
                 if (qPSteps != null)
                 {
                     foreach (var qps in qPSteps)
@@ -52,33 +52,19 @@ namespace Chess.SuanFa
             public int x1 { get; set; } // 移动后位置
             public int y1 { get; set; }
             public int DieQz { get; set; } // 移动后杀死的棋子
-            public TreeViewItem TreeViewItem()
+            public List<TreeViewItem> TreeViewItem()
             {
-                var tree = new TreeViewItem()
+                var tree = new List<TreeViewItem>();
+                tree.Add(new TreeViewItem()
                 {
-                    Header = "走棋参数",
-                };
-                tree.Items.Add(new TreeViewItem()
-                {
-                    Header = "棋子: " + QiZi
-                }); 
-                tree.Items.Add(new TreeViewItem()
-                {
-                    Header = "x0: " + x0
+                    Header = "棋子编号: " + QiZi
                 });
-                tree.Items.Add(new TreeViewItem()
+
+                tree.Add(new TreeViewItem()
                 {
-                    Header = "y0: " + y0
+                    Header = string.Format("从(x0={0:D},y0={1:D})走到(x1={2:D},y1={3:D})", x0,y0,x1,y1)
                 });
-                tree.Items.Add(new TreeViewItem()
-                {
-                    Header = "x1: " + x1
-                });
-                tree.Items.Add(new TreeViewItem()
-                {
-                    Header = "y1: " + y1
-                });
-                tree.Items.Add(new TreeViewItem()
+                tree.Add(new TreeViewItem()
                 {
                     Header = "杀死棋子: " + ((DieQz > -1) ? DieQz : "无")
                 }) ;
