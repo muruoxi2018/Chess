@@ -58,7 +58,8 @@ namespace Chess
             Window_Qi = new Window_QiPu(); // 棋谱库浏览窗口
             Window_Qi.Show();
 
-            GlobalValue.JianJunTiShi = new() {
+            GlobalValue.JianJunTiShi = new()
+            {
                 Content = "战况",
                 Height = 30.0,
                 Foreground = Brushes.White,
@@ -66,10 +67,10 @@ namespace Chess
                 VerticalAlignment = VerticalAlignment.Top
             };
 
-            grid.Children.Add(GlobalValue.JianJunTiShi);
+            _ = grid.Children.Add(GlobalValue.JianJunTiShi);
 
             GlobalValue.jueShaImage = new();
-            grid.Children.Add(GlobalValue.jueShaImage);
+            _ = grid.Children.Add(GlobalValue.jueShaImage);
         }
 
         /// <summary>
@@ -226,19 +227,19 @@ namespace Chess
                 return;
             }
 
-            Qipu.Step step = Qipu.QiPuList[^1].StepRecode; // ^1：索引运算符，表示倒数第一个
+            Qipu.StepCode step = Qipu.QiPuList[^1].StepRecode; // ^1：索引运算符，表示倒数第一个
             GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
-            GlobalValue.QiZiArray[step.QiZi].SetPosition(step.x0, step.y0);
+            _ = GlobalValue.QiZiArray[step.QiZi].SetPosition(step.X0, step.Y0);
             GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
             GlobalValue.QiZiArray[step.QiZi].Deselect();
 
             if (step.DieQz > -1)
             {
                 GlobalValue.QiZiArray[step.DieQz].Setlived();
-                GlobalValue.QiZiArray[step.DieQz].SetPosition(step.x1, step.y1);
+                _ = GlobalValue.QiZiArray[step.DieQz].SetPosition(step.X1, step.Y1);
             }
-            GlobalValue.QiPan[step.x0, step.y0] = step.QiZi;
-            GlobalValue.QiPan[step.x1, step.y1] = step.DieQz;
+            GlobalValue.QiPan[step.X0, step.Y0] = step.QiZi;
+            GlobalValue.QiPan[step.X1, step.Y1] = step.DieQz;
             Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count - 1);
             GlobalValue.SideTag = !GlobalValue.SideTag;
 
@@ -255,8 +256,8 @@ namespace Chess
 
         private void SaveQiPu(object sender, RoutedEventArgs e)
         {
-            SubWindow.Save_Window window=new();
-            window.ShowDialog();
+            SubWindow.Save_Window window = new();
+            _ = window.ShowDialog();
         }
     }
 }

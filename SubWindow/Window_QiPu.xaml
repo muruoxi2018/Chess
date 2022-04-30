@@ -6,8 +6,8 @@
         mc:Ignorable="d"
         Title="棋谱库列表" Height="450" Width="800" Loaded="WindowQiPu_Load" WindowState="Maximized" Icon="/picture/象128.png">
     <Grid VerticalAlignment="Stretch">
-        <StackPanel>
-            <DataGrid x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" MouseLeftButtonUp="onMouseLeftButtonUP" >
+        <StackPanel x:Name="scrolls" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10,0,10,10">
+            <DataGrid x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" MouseLeftButtonUp="OnMouseLeftButtonUP" MouseRightButtonUp="OnMouseRightButtonUp" CanUserAddRows="False" CanUserDeleteRows="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding rowid}" Header="编号"/>
                     <DataGridTextColumn Binding="{Binding date}" Header="日期"/>
@@ -16,15 +16,25 @@
                     <DataGridTextColumn Binding="{Binding type}" Header="类型" />
                     <DataGridTextColumn Binding="{Binding video}" Header="视频" />
                     <DataGridTextColumn Binding="{Binding record}" Header="棋谱" >
-
                     </DataGridTextColumn>
                 </DataGrid.Columns>
                 <d:TabItem/>
+                <d:TabItem/>
+                <d:TabItem/>
+                <d:TabItem/>
+                <DataGrid.ContextMenu>
+                    <ContextMenu Name="menu">
+                        <MenuItem Name="refresh" Header="刷新" Click="QipuListRefresh"/>
+                        <Separator/>
+                        <MenuItem Name="delete" Header="删除" Click="DeleteRowData"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
 
-            <TextBox x:Name="jsontext" HorizontalAlignment="Stretch" Margin="10,10,10,10" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" MinHeight="100"/>
-            <Button Content="刷  新" HorizontalAlignment="Left" Margin="10,0,0,0" Click="qipuListRefresh" Width="89"/>
-            <TreeView x:Name="jsonTree" MinHeight="100"/>
+            <TextBox x:Name="jsontext" HorizontalAlignment="Stretch" Margin="0,10,0,10" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" MinHeight="100" MaxHeight="100" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+            <TreeView x:Name="jsonTree" MinHeight="100" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="500"/>
+
+            <TextBox x:Name="memostr" HorizontalAlignment="Stretch" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,10,0,0" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
         </StackPanel>
     </Grid>
 </Window>

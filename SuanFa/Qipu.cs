@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections;
 using Newtonsoft.Json;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace Chess.SuanFa
@@ -15,46 +11,58 @@ namespace Chess.SuanFa
     {
         public class QPStep // 棋谱步骤
         {
-            public int id { get; set; } // 步数
+            public int Id { get; set; } // 步数
             public string Nm { get; set; } // 数字代码
             public string Cn { get; set; } // 中文代码
-            public Step StepRecode { get; set; } // 棋谱记录
-            public List<QPStep> qPSteps { get; set; } = new List<QPStep>();   // 棋谱变化
-            public TreeViewItem toTreeNode()
+            public StepCode StepRecode { get; set; } // 棋谱记录
+            public List<QPStep> QPSteps { get; set; } = new List<QPStep>();   // 棋谱变化
+            public TreeViewItem ToTreeNode()
             {
-                var tree = new TreeViewItem();
-                tree.Header =string.Format("{0:D2} {1}",id,Cn);
-                tree.Items.Add(new TreeViewItem()
+                TreeViewItem tree = new()
                 {
-                    Header = "数字编码: "+ Nm
+                    Header = $"{Id:D2} {Cn}"
+                };
+                _ = tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "数字编码: " + Nm
                 });
-                var list = StepRecode.TreeViewItem();
-                foreach (var item in list)
+                List<TreeViewItem> list = StepRecode.TreeViewItem();
+                foreach (TreeViewItem item in list)
                 {
-                    tree.Items.Add(item);
+                    _ = tree.Items.Add(item);
                 }
-                if (qPSteps != null)
+                if (QPSteps != null)
                 {
-                    foreach (var qps in qPSteps)
+                    foreach (QPStep qps in QPSteps)
                     {
-                        tree.Items.Add(qps.toTreeNode());
+                        _ = tree.Items.Add(qps.ToTreeNode());
                     }
                 }
                 return tree;
             }
 
         }
-        public class Step // 棋谱记录
+        public class StepCode // 棋谱记录
         {
+            public StepCode(int qiZi, int x0, int y0, int x1, int y1, int dieQz)
+            {
+                QiZi = qiZi;
+                X0 = x0;
+                Y0 = y0;
+                X1 = x1;
+                Y1 = y1;
+                DieQz = dieQz;
+            }
+
             public int QiZi { get; set; } // 棋子编号
-            public int x0 { get; set; } // 移动前位置
-            public int y0 { get; set; }
-            public int x1 { get; set; } // 移动后位置
-            public int y1 { get; set; }
+            public int X0 { get; set; } // 移动前位置
+            public int Y0 { get; set; }
+            public int X1 { get; set; } // 移动后位置
+            public int Y1 { get; set; }
             public int DieQz { get; set; } // 移动后杀死的棋子
             public List<TreeViewItem> TreeViewItem()
             {
-                var tree = new List<TreeViewItem>();
+                List<TreeViewItem> tree = new();
                 tree.Add(new TreeViewItem()
                 {
                     Header = "棋子编号: " + QiZi
@@ -62,12 +70,12 @@ namespace Chess.SuanFa
 
                 tree.Add(new TreeViewItem()
                 {
-                    Header = string.Format("从(x0={0:D},y0={1:D})走到(x1={2:D},y1={3:D})", x0,y0,x1,y1)
+                    Header = $"从({X0:D},{Y0:D})走到({X1:D},{Y1:D})"
                 });
                 tree.Add(new TreeViewItem()
                 {
                     Header = "杀死棋子: " + ((DieQz > -1) ? DieQz : "无")
-                }) ;
+                });
 
                 return tree;
             }
@@ -75,7 +83,6 @@ namespace Chess.SuanFa
         }
 
         public static ObservableCollection<QPStep> QiPuList = new(); // 棋谱步骤列表
-        public static ObservableCollection<QPStep> QiPuListOld = new(); // 棋谱步骤列表
         /// <summary>
         /// 添加一条棋谱记录
         /// </summary>
@@ -121,10 +128,10 @@ namespace Chess.SuanFa
             }
             QiPuList.Add(new QPStep()
             {
-                id = QiPuList.Count() + 1,
-                Nm = string.Format("{0:d2} {1:d} {2:d} {3:d} {4:d} {5:d}", QiZi, x0, y0, x1, y1, DieQz),
+                Id = QiPuList.Count + 1,
+                Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}",
                 Cn = char1 + char2 + char3 + char4,
-                StepRecode = new Step() { QiZi = QiZi, DieQz = DieQz, x0 = x0, y0 = y0, x1 = x1, y1 = y1, }
+                StepRecode = new StepCode(QiZi, x0, y0, x1, y1, DieQz)
             });
 
         }
@@ -137,7 +144,7 @@ namespace Chess.SuanFa
             ArrayList recode = new();
             foreach (QPStep p in QiPuList)
             {
-                recode.Add(p.Nm);
+                _ = recode.Add(p.Nm);
             }
             return JsonConvert.SerializeObject(recode);
         }
@@ -150,7 +157,7 @@ namespace Chess.SuanFa
             ArrayList recode = new();
             foreach (QPStep p in QiPuList)
             {
-                recode.Add(p.Cn);
+                _ = recode.Add(p.Cn);
             }
             return JsonConvert.SerializeObject(recode);
         }
@@ -160,12 +167,18 @@ namespace Chess.SuanFa
         /// <returns></returns>
         public static string CnToString()
         {
+            int maxLen = 20;
             string recode = "";
             foreach (QPStep p in QiPuList)
             {
                 recode += p.Cn + " ";
             }
-            return recode;
+            string substr = recode;
+            if (recode.Length > maxLen)
+            {
+                substr = recode.Substring(0, maxLen) + " ...";
+            }
+            return $"{substr} (共{QiPuList.Count}步)";
         }
 
 

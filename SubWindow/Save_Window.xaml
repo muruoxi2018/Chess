@@ -21,7 +21,7 @@
                 <DropShadowEffect Opacity="0.3" ShadowDepth="5" BlurRadius="10"/>
             </TextBox.Effect>
         </TextBox>
-        <Button Content="保  存" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="100" Height="25" Click="saveButtonClick"/>
+        <Button Content="保  存" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="100" Height="25" Click="SaveButtonClick"/>
         <Label Content="棋谱记录：" HorizontalAlignment="Left" Margin="0,128,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="qipustr" HorizontalAlignment="Left" Margin="77,130,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="319" IsReadOnly="True" MinLines="2" MaxLines="2" Height="35" MaxHeight="35"/>
 
