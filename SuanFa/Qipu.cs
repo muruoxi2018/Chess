@@ -9,11 +9,14 @@ namespace Chess.SuanFa
 {
     public static class Qipu  // 棋谱类
     {
+        
+        public static ObservableCollection<QPStep> QiPuList = new(); // 棋谱步骤列表
         public class QPStep // 棋谱步骤
         {
             public int Id { get; set; } // 步数
             public string Nm { get; set; } // 数字代码
             public string Cn { get; set; } // 中文代码
+            public string Memo { get; set; } // 备注
             public StepCode StepRecode { get; set; } // 棋谱记录
             public List<QPStep> QPSteps { get; set; } = new List<QPStep>();   // 棋谱变化
             public TreeViewItem ToTreeNode()
@@ -25,6 +28,10 @@ namespace Chess.SuanFa
                 _ = tree.Items.Add(new TreeViewItem()
                 {
                     Header = "数字编码: " + Nm
+                });
+                _ = tree.Items.Add(new TreeViewItem()
+                {
+                    Header = "备注: " + Memo
                 });
                 List<TreeViewItem> list = StepRecode.TreeViewItem();
                 foreach (TreeViewItem item in list)
@@ -82,7 +89,6 @@ namespace Chess.SuanFa
 
         }
 
-        public static ObservableCollection<QPStep> QiPuList = new(); // 棋谱步骤列表
         /// <summary>
         /// 添加一条棋谱记录
         /// </summary>
@@ -131,6 +137,7 @@ namespace Chess.SuanFa
                 Id = QiPuList.Count + 1,
                 Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}",
                 Cn = char1 + char2 + char3 + char4,
+                Memo="",
                 StepRecode = new StepCode(QiZi, x0, y0, x1, y1, DieQz)
             });
 

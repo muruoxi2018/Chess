@@ -16,6 +16,7 @@ namespace Chess
         private static SpyWindow Spy_window;    // 棋盘数据监视窗口
 
         private static Window_QiPu Window_Qi;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -46,11 +47,11 @@ namespace Chess
             }
             GlobalValue.QiPanFanZhuan = false;
             QiPanChange(false);
-            Reset();
+            GlobalValue.Reset();
             jipuwindow = new Window_JiPu(); // 棋谱记录窗口
-            double value = MainWin.Left + MainWin.Width;
-            jipuwindow.SetValue(LeftProperty, value);
-            jipuwindow.SetValue(TopProperty, MainWin.Top);
+            jipuwindow.SetValue(LeftProperty, SystemParameters.WorkArea.Width - 600);
+            jipuwindow.SetValue(TopProperty, SystemParameters.WorkArea.Top);
+            jipuwindow.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
             jipuwindow.Hide();
             Spy_window = new SpyWindow(); // 棋盘数据监视窗口
             Spy_window.Hide();
@@ -58,7 +59,7 @@ namespace Chess
             Window_Qi = new Window_QiPu(); // 棋谱库浏览窗口
             Window_Qi.Show();
 
-            GlobalValue.JianJunTiShi = new()
+            GlobalValue.JiangJunTiShi = new()
             {
                 Content = "战况",
                 Height = 30.0,
@@ -67,7 +68,7 @@ namespace Chess
                 VerticalAlignment = VerticalAlignment.Top
             };
 
-            _ = grid.Children.Add(GlobalValue.JianJunTiShi);
+            _ = grid.Children.Add(GlobalValue.JiangJunTiShi);
 
             GlobalValue.jueShaImage = new();
             _ = grid.Children.Add(GlobalValue.jueShaImage);
@@ -105,32 +106,9 @@ namespace Chess
         /// <param name="e"></param>
         private void ResetBtnClick(object sender, RoutedEventArgs e)
         {
-            Reset();
+            GlobalValue.Reset();
         }
-        /// <summary>
-        /// 初始化界面，棋盘设置为开局状态，但棋盘翻转状态不会重置
-        /// </summary>
-        private static void Reset()
-        {
-            foreach (QiZi item in GlobalValue.QiZiArray)
-            {
-                item.SetInitPosition();
-            }
-            GlobalValue.SideTag = GlobalValue.REDSIDE;
-            for (int i = 0; i <= 8; i++)
-            {
-                for (int j = 0; j <= 9; j++)
-                {
-                    GlobalValue.QiPan[i, j] = -1;
-                    GlobalValue.PathPointImage[i, j].HasPoint = false;
-                }
-            }
-            for (int i = 0; i < 32; i++)
-            {
-                GlobalValue.QiPan[GlobalValue.QiZiArray[i].Col, GlobalValue.QiZiArray[i].Row] = i;
-            }
-            GlobalValue.YuanWeiZhi.HiddenYuanWeiZhiImage();
-        }
+
         /// <summary>
         /// 点击“棋盘翻转”button时
         /// </summary>
@@ -215,35 +193,7 @@ namespace Chess
             SetupWindow sw = new();
             sw.Show();
         }
-        /// <summary>
-        /// 悔棋按钮
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HuiQi(object sender, RoutedEventArgs e)
-        {
-            if (Qipu.QiPuList.Count < 1)
-            {
-                return;
-            }
 
-            Qipu.StepCode step = Qipu.QiPuList[^1].StepRecode; // ^1：索引运算符，表示倒数第一个
-            GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
-            _ = GlobalValue.QiZiArray[step.QiZi].SetPosition(step.X0, step.Y0);
-            GlobalValue.QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
-            GlobalValue.QiZiArray[step.QiZi].Deselect();
-
-            if (step.DieQz > -1)
-            {
-                GlobalValue.QiZiArray[step.DieQz].Setlived();
-                _ = GlobalValue.QiZiArray[step.DieQz].SetPosition(step.X1, step.Y1);
-            }
-            GlobalValue.QiPan[step.X0, step.Y0] = step.QiZi;
-            GlobalValue.QiPan[step.X1, step.Y1] = step.DieQz;
-            Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count - 1);
-            GlobalValue.SideTag = !GlobalValue.SideTag;
-
-        }
         /// <summary>
         /// 软件关闭退出
         /// </summary>
@@ -258,6 +208,11 @@ namespace Chess
         {
             SubWindow.Save_Window window = new();
             _ = window.ShowDialog();
+        }
+
+        private void HuiQiButton(object sender, RoutedEventArgs e)
+        {
+            GlobalValue.HuiQi();
         }
     }
 }

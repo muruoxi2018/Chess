@@ -97,7 +97,7 @@ namespace Chess.SuanFa // 算法
             int[] jiangjun = { -1, -1, -1 };
             if (MoveQizi < 16) jiangjun = IsJiangJun(16); // 检查红帅是否被将军。
             if (MoveQizi >= 16) jiangjun = IsJiangJun(0); // 检查黑将是否被将军
-            GlobalValue.JianJunTiShi.Content = "战况"; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
+            GlobalValue.JiangJunTiShi.Content = "战况"; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
             if (jiangjun[0]==-1) return false;  // 没有被将军时，则不需检测是否绝杀
             string GJqizi1; // 第一个攻击棋子的名字
             if (jiangjun[1] != -1) GJqizi1 = GlobalValue.QiZiImageFileName[jiangjun[1]]; else GJqizi1 = "";
@@ -105,7 +105,7 @@ namespace Chess.SuanFa // 算法
             if (jiangjun[2] != -1) GJqizi2 = "和" + GlobalValue.QiZiImageFileName[jiangjun[2]]; else GJqizi2 = "";
             if (jiangjun[0] == 0) // 被将军的是黑将
             {
-                GlobalValue.JianJunTiShi.Content = "1、黑将--被将军！";
+                GlobalValue.JiangJunTiShi.Content = "1、黑将--被将军！";
 
                 bool[,] points = MoveCheck.GetPathPoints(0, GlobalValue.QiPan); // 获取黑将的可移动路径
                 bool selfCanMove = false;
@@ -120,21 +120,21 @@ namespace Chess.SuanFa // 算法
                     }
                 if (selfCanMove)
                 {
-                    GlobalValue.JianJunTiShi.Content += " 2、黑将--被" + GJqizi1 + "将军！！黑将可自己移动解杀。";
+                    GlobalValue.JiangJunTiShi.Content += " 2、黑将--被" + GJqizi1 + "将军！！黑将可自己移动解杀。";
                 }
                 else
                 {
                     if (jiangjun[2] != -1) // 如果是双将
                     {
-                        GlobalValue.JianJunTiShi.Content += " 3、黑将--无处可逃，被" + GJqizi1 + GJqizi2 + "双将绝杀！";
+                        GlobalValue.JiangJunTiShi.Content += " 3、黑将--无处可逃，被" + GJqizi1 + GJqizi2 + "双将绝杀！";
                         return true;
                     }
                     else // 如果不是双将
                     {
-                        GlobalValue.JianJunTiShi.Content += " 4、黑将--被" + GJqizi1 + "将军，困于老巢，请求外援。";
+                        GlobalValue.JiangJunTiShi.Content += " 4、黑将--被" + GJqizi1 + "将军，困于老巢，请求外援。";
                         if (!JieSha(jiangjun[1])) // 本方其他棋子解杀不成
                         {
-                            GlobalValue.JianJunTiShi.Content += " 5、黑将--被" + GJqizi1 + "绝杀！";
+                            GlobalValue.JiangJunTiShi.Content += " 5、黑将--被" + GJqizi1 + "绝杀！";
                             return true;
                         };
                     }
@@ -142,7 +142,7 @@ namespace Chess.SuanFa // 算法
             }
             if (jiangjun[0] == 16) // 被将军的是红帅
             {
-                GlobalValue.JianJunTiShi.Content = " 2、红帅--被" + GJqizi1 + "将军！";
+                GlobalValue.JiangJunTiShi.Content = " 2、红帅--被" + GJqizi1 + "将军！";
 
                 bool[,] points = MoveCheck.GetPathPoints(16, GlobalValue.QiPan);
                 bool selfCanMove = false;
@@ -157,21 +157,21 @@ namespace Chess.SuanFa // 算法
                     }
                 if (selfCanMove)
                 {
-                    GlobalValue.JianJunTiShi.Content = " 3、红帅--被" + GJqizi1 + "将军！！红帅可自己移动解杀。";
+                    GlobalValue.JiangJunTiShi.Content = " 3、红帅--被" + GJqizi1 + "将军！！红帅可自己移动解杀。";
                 }
                 else
                 {
                     if (jiangjun[2] != -1)
                     {
-                        GlobalValue.JianJunTiShi.Content = " 4、红帅--无处可逃，被" + GJqizi1 + GJqizi2 + "双将绝杀！";
+                        GlobalValue.JiangJunTiShi.Content = " 4、红帅--无处可逃，被" + GJqizi1 + GJqizi2 + "双将绝杀！";
                         return true;
                     }
                     else
                     {
-                        GlobalValue.JianJunTiShi.Content = " 5、红帅--被" + GJqizi1 + "将军，困于老巢，请求外援。";
+                        GlobalValue.JiangJunTiShi.Content = " 5、红帅--被" + GJqizi1 + "将军，困于老巢，请求外援。";
                         if (!JieSha(jiangjun[1]))
                         {
-                            GlobalValue.JianJunTiShi.Content = " 6、红帅--被" + GJqizi1 + "绝杀！";
+                            GlobalValue.JiangJunTiShi.Content = " 6、红帅--被" + GJqizi1 + "绝杀！";
                             return true;
                         };
                     }

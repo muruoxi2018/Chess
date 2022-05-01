@@ -13,9 +13,13 @@ namespace Chess
     /// </summary>
     public partial class Window_QiPu : Window
     {
+        private static SubWindow.FuPan_Window FuPanWidow;
         public Window_QiPu()
         {
             InitializeComponent();
+            FuPanWidow = new SubWindow.FuPan_Window(); // 复盘窗口
+            FuPanWidow.Hide();
+
         }
         /// <summary>
         /// 窗口打开时，显示棋谱库列表，以及走棋记录
@@ -41,17 +45,23 @@ namespace Chess
             TreeViewItem tree = new();
             tree.Header = "root";
             tree.IsExpanded = true;
+            string memostrs = "";
             if (jsonstr.Length > 5)
             {
                 ObservableCollection<Qipu.QPStep> ql = JsonConvert.DeserializeObject<ObservableCollection<Qipu.QPStep>>(jsonstr);  // 反序列化为对象
                 foreach (Qipu.QPStep qp in ql)
                 {
                     _ = tree.Items.Add(qp.ToTreeNode());
+                    if (!string.IsNullOrEmpty(qp.Memo))
+                    {
+                        memostrs += System.Environment.NewLine + $"第{qp.Id}步：{qp.Memo}";
+                    }
                 }
+                SubWindow.FuPan_Window.QiPuFuPanList = JsonConvert.DeserializeObject<ObservableCollection<Qipu.QPStep>>(jsonstr);
             }
             jsonTree.Items.Clear();
             _ = jsonTree.Items.Add(tree);
-            memostr.Text = ((DataRowView)datagrid.SelectedItem).Row["memo"].ToString();
+            memostr.Text = ((DataRowView)datagrid.SelectedItem).Row["memo"].ToString() + memostrs;
         }
 
         private void OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -67,6 +77,16 @@ namespace Chess
                 _ = OpenSource.SqliteHelper.Delete("mybook", "rowid=" + rowid);
                 QipuListRefresh(sender, e);
             }
+        }
+        private void FuPan(object sender, RoutedEventArgs e)
+        {
+
+            if (FuPanWidow != null)
+            {
+                FuPanWidow.Close();
+            }
+            FuPanWidow = new SubWindow.FuPan_Window();
+            FuPanWidow.Show();
         }
     }
 }

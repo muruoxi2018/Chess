@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="记谱" Height="913" Width="439" Loaded="FormLoad" Icon="/picture/象128.png">
+        Title="记谱" Height="913" Width="600" Loaded="FormLoad" Icon="/picture/象128.png">
     <Grid>
-        <DataGrid x:Name="JiPuData" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True">
+        <DataGrid x:Name="JiPuData" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Margin="10,10,10,10" VerticalAlignment="Top" CanUserResizeRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding id}" Header="步" Width="30"/>
-                <DataGridTextColumn Binding="{Binding Nm}" Header="代码" Width="200"/>
-                <DataGridTextColumn Binding="{Binding Cn}" Header="棋谱" Width="200"/>
+                <DataGridTextColumn Binding="{Binding Id}" Header="步" Width="30"/>
+                <DataGridTextColumn Binding="{Binding Nm}" Header="代码" MinWidth="100"/>
+                <DataGridTextColumn Binding="{Binding Cn}" Header="棋谱" MinWidth="100" />
+                <DataGridTextColumn Binding="{Binding Memo}" Header="备注" MinWidth="200"/>
             </DataGrid.Columns>
             <d:TabItem/>
         </DataGrid>

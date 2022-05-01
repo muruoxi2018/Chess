@@ -39,7 +39,7 @@
         <Button Content="翻转棋盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="614,773,0,0" VerticalAlignment="Top" Width="70" Click="OnFanZhuanQiPan" Height="25"/>
         <Button Content="记谱" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="384,773,0,0" VerticalAlignment="Top" Click="OpenJiPuWindow" Width="70" Height="25"/>
         <Button Content="设置" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="533,773,0,0" VerticalAlignment="Top" Click="SetupOption" Width="70" Height="25"/>
-        <Button Content="悔棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="166,773,0,0" VerticalAlignment="Top" Width="70" Click="HuiQi" Height="25"/>
+        <Button Content="悔棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="166,773,0,0" VerticalAlignment="Top" Width="70" Click="HuiQiButton" Height="25"/>
         <Button Content="棋盘数据监控" Style="{StaticResource button}" HorizontalAlignment="Left" Height="25" Margin="260,773,0,0" VerticalAlignment="Top" Width="100" Click="OpenSpyWindow"/>
         <TextBlock x:Name="JianJuning" HorizontalAlignment="Center" TextWrapping="Wrap" Text="将" VerticalAlignment="Center" FontSize="72" Margin="0,0,0,46" FontWeight="Bold" Width="333" TextAlignment="Center" Panel.ZIndex="1000" Visibility="Hidden" IsHitTestVisible="False">
             <TextBlock.Effect>
