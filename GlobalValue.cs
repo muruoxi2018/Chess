@@ -1,10 +1,11 @@
 ﻿using Chess.SuanFa;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-
+using static Chess.SuanFa.Qipu;
 
 namespace Chess
 {
@@ -21,7 +22,9 @@ namespace Chess
         public const bool REDSIDE = true;
         public static bool SideTag, GameOver;
         public const float GRID_WIDTH = 67.5f;   //棋盘格为 67.5*67.5
-        
+
+        public static ObservableCollection<QPStep> QiPuFuPanList = new(); // 复盘棋谱步骤列表
+
         /// <summary>
         /// 棋子编号0-31，分别对应的图像文件名
         /// </summary>
@@ -71,6 +74,8 @@ namespace Chess
 
         public static Label JiangJunTiShi;
         public static CustomClass.JueSha jueShaImage;
+
+        public static Window_QiPu Window_Qi; // 棋谱库窗口
 
         /// <summary>
         /// 棋子移动的处理

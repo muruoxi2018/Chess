@@ -15,6 +15,14 @@
                 <DataGridTextColumn Binding="{Binding Memo}" Header="备注" MinWidth="200"/>
             </DataGrid.Columns>
             <d:TabItem/>
+            <DataGrid.ContextMenu>
+                <ContextMenu Name="menu">
+                    <MenuItem Header="保存到复盘棋谱" Click="Save_Click">
+                        
+                    </MenuItem>
+                    
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
     </Grid>
 </Window>

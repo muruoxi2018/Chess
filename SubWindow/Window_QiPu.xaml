@@ -4,10 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  x:Class="Chess.Window_QiPu"
         mc:Ignorable="d"
-        Title="棋谱库列表" Loaded="WindowQiPu_Load" WindowState="Normal" Icon="/picture/象128.png" Width="500">
-    <Grid VerticalAlignment="Stretch">
-        <StackPanel x:Name="scrolls" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10,0,10,10">
-            <DataGrid x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" MouseLeftButtonUp="OnMouseLeftButtonUP" MouseRightButtonUp="OnMouseRightButtonUp" CanUserAddRows="False" CanUserDeleteRows="False" >
+        Title="棋谱库列表" Loaded="WindowQiPu_Load" WindowState="Normal" Icon="/picture/象128.png" Width="500" Height="941">
+    <Grid Margin="0,0,0,10" VerticalAlignment="Stretch" ShowGridLines="True">
+        <Grid x:Name="scrolls" VerticalAlignment="Stretch" Margin="10,0,10,30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <DataGrid x:Name="datagrid" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" MouseLeftButtonUp="OnMouseLeftButtonUP" MouseRightButtonUp="OnMouseRightButtonUp" CanUserAddRows="False" CanUserDeleteRows="False" Height="130" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding rowid}" Header="编号"/>
                     <DataGridTextColumn Binding="{Binding date}" Header="日期"/>
@@ -20,8 +26,6 @@
                 </DataGrid.Columns>
                 <d:TabItem/>
                 <d:TabItem/>
-                <d:TabItem/>
-                <d:TabItem/>
                 <DataGrid.ContextMenu>
                     <ContextMenu Name="menu">
                         <MenuItem Name="refresh" Header="刷新" Click="QipuListRefresh"/>
@@ -32,11 +36,39 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>
+            <TextBox x:Name="memostr" Grid.Row="1" HorizontalAlignment="Stretch" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" MinHeight="100" MaxHeight="100" VerticalScrollBarVisibility="Auto" IsReadOnly="True" MinLines="5" HorizontalContentAlignment="Stretch" Padding="0,0,0,21" Margin="0,10,0,0"/>
+            <Grid Grid.Row="2"  Margin="0,10,0,0">
+                <TextBox x:Name="videoUrl" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto" IsReadOnly="True" Margin="0,0,80,0" MinWidth="200"/>
+                <Button Content="打开视频" Width="70" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" Click="OpenVideo"></Button>
+            </Grid>
 
-            <TextBox x:Name="jsontext" HorizontalAlignment="Stretch" Margin="0,10,0,10" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" MinHeight="100" MaxHeight="100" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
-            <TreeView x:Name="jsonTree" MinHeight="100" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="500"/>
+            <Grid Grid.Row="3" Margin="0,10,0,0" VerticalAlignment="Stretch">
+                    <DataGrid x:Name="FuPanDataGrid" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" MouseLeftButtonUp="OnFuPanDataGridClick" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MinHeight="500" HorizontalAlignment="Left" MinWidth="250" MaxWidth="250" ScrollViewer.CanContentScroll="False" VerticalContentAlignment="Stretch">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Id}" Header="步" Width="30"/>
+                            <DataGridTextColumn Binding="{Binding Cn}" Header="棋谱" MinWidth="100" />
+                            <DataGridTextColumn Binding="{Binding Memo}" Header="备注" MinWidth="100"/>
+                        </DataGrid.Columns>
+                        <d:TabItem/>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="Blue"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                    </DataGrid>
 
-            <TextBox x:Name="memostr" HorizontalAlignment="Stretch" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,10,0,0" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" IsReadOnly="True" MinLines="5"/>
-        </StackPanel>
+                    <TreeView x:Name="jsonTree" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" AllowDrop="True" MinHeight="500" Margin="260,0,0,0"/>
+            </Grid>
+        </Grid>
+
+        <Button x:Name="updateQipu" Content="保存到现有棋谱" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120" Height="25" Click="UpdateButtonClick" Margin="10,0,0,0"/>
+        <Button x:Name="preStep" Content="上一步" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="60" Height="25" Click="PreStep" Margin="0,0,90,0"/>
+
+        <Button x:Name="nextStep" Content="下一步" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="60" Height="25" Click="NextStep" Margin="0,0,10,0"/>
+        <TextBlock x:Name="RowIdText" HorizontalAlignment="Left" Margin="153,0,0,6" Text="棋谱编号：" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120"/>
     </Grid>
 </Window>

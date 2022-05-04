@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Remove="GlobalValueBase.cs" />
     <Compile Remove="MyQiZi.cs" />
+    <Compile Remove="SubWindow\Web_Window.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -69,6 +70,7 @@
 
   <ItemGroup>
     <Page Remove="Dictionary1.xaml" />
+    <Page Remove="SubWindow\Web_Window.xaml" />
   </ItemGroup>
 
   <ItemGroup>

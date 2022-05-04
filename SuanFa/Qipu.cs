@@ -9,7 +9,7 @@ namespace Chess.SuanFa
 {
     public static class Qipu  // 棋谱类
     {
-        
+
         public static ObservableCollection<QPStep> QiPuList = new(); // 棋谱步骤列表
         public class QPStep // 棋谱步骤
         {
@@ -18,31 +18,43 @@ namespace Chess.SuanFa
             public string Cn { get; set; } // 中文代码
             public string Memo { get; set; } // 备注
             public StepCode StepRecode { get; set; } // 棋谱记录
-            public List<QPStep> QPSteps { get; set; } = new List<QPStep>();   // 棋谱变化
+            public List<List<QPStep>> ChildSteps { get; set; }   // 棋谱变化
+            public QPStep()
+            {
+                ChildSteps = new List<List<QPStep>>();
+            }
             public TreeViewItem ToTreeNode()
             {
+                string childSTR = ChildSteps.Count < 1 ? "" : $" -->({ChildSteps.Count})";
+
                 TreeViewItem tree = new()
                 {
-                    Header = $"{Id:D2} {Cn}"
+                    Header = $"{Id:D2} {Cn}{childSTR}"
                 };
-                _ = tree.Items.Add(new TreeViewItem()
+                /*_ = tree.Items.Add(new TreeViewItem()
                 {
                     Header = "数字编码: " + Nm
                 });
                 _ = tree.Items.Add(new TreeViewItem()
                 {
                     Header = "备注: " + Memo
-                });
+                });*/
                 List<TreeViewItem> list = StepRecode.TreeViewItem();
                 foreach (TreeViewItem item in list)
                 {
-                    _ = tree.Items.Add(item);
+                    //_ = tree.Items.Add(item);
                 }
-                if (QPSteps != null)
+                if (ChildSteps != null)
                 {
-                    foreach (QPStep qps in QPSteps)
+                    foreach (List<QPStep> qps in ChildSteps)
                     {
-                        _ = tree.Items.Add(qps.ToTreeNode());
+                        TreeViewItem childItem = new();
+                        childItem.Header = $"变招: {ChildSteps.IndexOf(qps) + 1}";
+                        foreach (QPStep qp in qps)
+                        {
+                            childItem.Items.Add(qp.ToTreeNode());
+                        }
+                        _ = tree.Items.Add(childItem);
                     }
                 }
                 return tree;
@@ -137,7 +149,7 @@ namespace Chess.SuanFa
                 Id = QiPuList.Count + 1,
                 Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}",
                 Cn = char1 + char2 + char3 + char4,
-                Memo="",
+                Memo = "",
                 StepRecode = new StepCode(QiZi, x0, y0, x1, y1, DieQz)
             });
 

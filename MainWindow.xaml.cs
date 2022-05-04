@@ -3,7 +3,8 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using Chess;
+using System.Windows.Shapes;
 
 namespace Chess
 {
@@ -14,9 +15,6 @@ namespace Chess
     {
         private static Window_JiPu jipuwindow;  // 记谱窗口
         private static SpyWindow Spy_window;    // 棋盘数据监视窗口
-
-        private static Window_QiPu Window_Qi;
-        
         public MainWindow()
         {
             InitializeComponent();
@@ -56,8 +54,11 @@ namespace Chess
             Spy_window = new SpyWindow(); // 棋盘数据监视窗口
             Spy_window.Hide();
 
-            Window_Qi = new Window_QiPu(); // 棋谱库浏览窗口
-            Window_Qi.Show();
+            GlobalValue.Window_Qi = new Window_QiPu(); // 棋谱库浏览窗口
+            GlobalValue.Window_Qi.SetValue(LeftProperty, SystemParameters.WorkArea.Left);
+            GlobalValue.Window_Qi.SetValue(TopProperty, SystemParameters.WorkArea.Top);
+            GlobalValue.Window_Qi.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
+            GlobalValue.Window_Qi.Show();
 
             GlobalValue.JiangJunTiShi = new()
             {
@@ -72,6 +73,12 @@ namespace Chess
 
             GlobalValue.jueShaImage = new();
             _ = grid.Children.Add(GlobalValue.jueShaImage);
+            Path path = new();
+            
+            path.Fill = Brushes.Blue;
+            path.SnapsToDevicePixels = false;
+            path.Data = Geometry.Parse("M 100,100 L 100,110 L 300,110 L 280,120 L 350,105 L 280,90 L 300,100 Z");
+            DrawGrid.Children.Add(path);
         }
 
         /// <summary>
@@ -213,6 +220,11 @@ namespace Chess
         private void HuiQiButton(object sender, RoutedEventArgs e)
         {
             GlobalValue.HuiQi();
+        }
+
+        private void SaveJiPuToBuffer(object sender, RoutedEventArgs e)
+        {
+            jipuwindow.Save_jipu();
         }
     }
 }

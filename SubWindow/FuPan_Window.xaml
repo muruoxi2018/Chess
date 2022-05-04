@@ -1,0 +1,27 @@
+﻿<Window x:Class="Chess.SubWindow.FuPan_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chess.SubWindow"
+        mc:Ignorable="d"
+        Title="复盘" Height="450" Width="476">
+    <Grid>
+        <DataGrid x:Name="FuPanDataGrid" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" MouseRightButtonUp="OnMouseRightButtonUp" MouseLeftButtonUp="OnMouseLeftButtonUp" VerticalAlignment="Top" Margin="0,0,0,40">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="步" Width="30"/>
+                <DataGridTextColumn Binding="{Binding Cn}" Header="棋谱" MinWidth="100" />
+                <DataGridTextColumn Binding="{Binding Memo}" Header="备注" MinWidth="200"/>
+            </DataGrid.Columns>
+            <d:TabItem/>
+            <DataGrid.ContextMenu>
+                <ContextMenu Name="menu">
+                    <MenuItem Name="nextChange" Header="下变" Click="NextChange"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <Button Content="上一步" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="80" Height="25" Margin="0,0,100,10" Click="PreStep"/>
+        <Button Content="下一步" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="80" Height="25" Margin="100,0,0,10" Click="NextStep"/>
+        <Button Content="重新开始" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="80" Height="25" Margin="300,0,0,10" Click="ReStart"/>
+    </Grid>
+</Window>
