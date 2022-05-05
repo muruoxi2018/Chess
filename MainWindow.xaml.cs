@@ -1,10 +1,7 @@
-﻿using Chess.SuanFa;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using Chess;
-using System.Windows.Shapes;
 
 namespace Chess
 {
@@ -79,6 +76,7 @@ namespace Chess
             System.Drawing.Point point1 = new System.Drawing.Point(6, 6);
             mg.SetPathData(0, point0, point1);
             mg.SetPathData(1, point0, new System.Drawing.Point(8,3));
+            mg.SetPathData(2, new System.Drawing.Point(3,9), new System.Drawing.Point(4,8));
             DrawGrid.Children.Add(mg.grid);
         }
 
