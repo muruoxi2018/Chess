@@ -73,12 +73,13 @@ namespace Chess
 
             GlobalValue.jueShaImage = new();
             _ = grid.Children.Add(GlobalValue.jueShaImage);
-            Path path = new();
-            
-            path.Fill = Brushes.Blue;
-            path.SnapsToDevicePixels = false;
-            path.Data = Geometry.Parse("M 100,100 L 100,110 L 300,110 L 280,120 L 350,105 L 280,90 L 300,100 Z");
-            DrawGrid.Children.Add(path);
+
+            CustomClass.MyGraphics mg = new();
+            System.Drawing.Point point0 = new System.Drawing.Point(2, 0);
+            System.Drawing.Point point1 = new System.Drawing.Point(6, 6);
+            mg.SetPathData(0, point0, point1);
+            mg.SetPathData(1, point0, new System.Drawing.Point(8,3));
+            DrawGrid.Children.Add(mg.grid);
         }
 
         /// <summary>

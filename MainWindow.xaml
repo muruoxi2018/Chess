@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
         Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Background="#FF08313E" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="767" MinHeight="900" MaxWidth="1024" MaxHeight="1000" SizeToContent="WidthAndHeight" Height="968">
-    <Grid x:Name="grid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767">
+    <Grid x:Name="grid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842">
         <Border BorderThickness="1"/>
         <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" MouseUp="QiPanMouseUp" Visibility="Visible">
             <Image.Effect>
@@ -35,40 +35,6 @@
             </d:Image>
         </Canvas>
         <Grid x:Name="DrawGrid" IsHitTestVisible="False" Opacity="0.6" RenderTransformOrigin="0.5,0.5">
-            <Grid.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Grid.RenderTransform>
-            <Rectangle RadiusX="5" RadiusY="5" Stroke="#FF15057E" StrokeThickness="3" Margin="10,10,707,792">
-                <Rectangle.Fill>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFBBE3F5" Offset="0"/>
-                        <GradientStop Color="#FF059999" Offset="1"/>
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
-            <Path Data="M 100,100 L 100,110 L 300,110 L 280,120 L 350,105 L 280,90 L 300,100 Z" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top" Height="72" Stretch="Fill" Width="526">
-                <Path.Effect>
-                    <DropShadowEffect Color="#FF9B9494" ShadowDepth="6" RenderingBias="Quality" Opacity="0.75" BlurRadius="10" Direction="315"/>
-                </Path.Effect>
-                <Path.Fill>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF1B2E03" Offset="0.613"/>
-                        <GradientStop Color="#FF90FF0B"/>
-                        <GradientStop Color="#FF98FF1B" Offset="0.339"/>
-                    </LinearGradientBrush>
-                </Path.Fill>
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <TranslateTransform Y="530"/>
-                    </TransformGroup>
-                </Path.RenderTransform>
-
-            </Path>
         </Grid>
         <Button x:Name="ResetBtn" Style="{StaticResource button}" Content="开局" HorizontalAlignment="Left" Margin="77,773,0,0" VerticalAlignment="Top" Width="70" Panel.ZIndex="102" Click="ResetBtnClick" Height="25"/>
         <Button Content="翻转棋盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="614,773,0,0" VerticalAlignment="Top" Width="70" Click="OnFanZhuanQiPan" Height="25"/>
