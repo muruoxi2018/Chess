@@ -66,8 +66,8 @@ namespace Chess
                 x = 8 - x;
                 y = 9 - y;
             }
-            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x] + 5.0);
-            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] + 5.0);
+            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x] - GlobalValue.GRID_WIDTH / 2 + 5.0);
+            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] - GlobalValue.GRID_WIDTH / 2 + 5.0);
         }
         public void FanZhuPosition()
         {

@@ -51,19 +51,21 @@ namespace Chess
             {1, 7},{7, 7},
             {0, 6},{2, 6},{4, 6},{6, 6},{8, 6}
         };
+        const int gw = 35;
         /// <summary>
         /// 棋盘每一格的列坐标
         /// </summary>
+        /// 
         public static readonly double[] QiPanGrid_X = new double[9]
         {
-            75.0, 143.0, 211.0, 278.0, 346.0, 413.0, 480.0, 548.0, 616.0
+            75.0 + gw, 143.0 + gw, 211.0 + gw, 278.0 + gw, 346.0 + gw, 413.0 + gw, 480.0 + gw, 548.0 + gw, 616.0 + gw
         };
         /// <summary>
         /// 棋盘每一格的行坐标
         /// </summary>
         public static readonly double[] QiPanGrid_Y = new double[10]
         {
-            61.0, 130.0, 197.0, 264.0, 332.0, 400.0, 467.0, 535.0, 603.0, 669.0
+            61.0 + gw, 130.0 + gw, 197.0 + gw, 264.0 + gw, 332.0 + gw, 400.0 + gw, 467.0 + gw, 535.0 + gw, 603.0 + gw, 669.0 + gw
         };
         /// <summary>
         /// 阿拉伯数字0-9，对应的中文数字
@@ -76,6 +78,8 @@ namespace Chess
         public static CustomClass.JueSha jueShaImage;
 
         public static Window_QiPu Window_Qi; // 棋谱库窗口
+
+        public static CustomClass.MyGraphics Arrows = new();
 
         /// <summary>
         /// 棋子移动的处理
@@ -94,9 +98,15 @@ namespace Chess
 
             if (MoveCheck.AfterMoveWillJiangJun(QiZi, x0, y0, m, n, QiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
             _ = QiZiArray[QiZi].SetPosition(m, n);
-            // 动画为异步运行，要注意系统数据的更新是否同步，可考虑将动画放在最后执行，避免所取数据出现错误。
-
-            Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 棋谱记录
+            Arrows.HideAllPath();  // 隐藏提示箭头
+            Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 增加一行棋谱记录
+            for (int i = 0; i <= 8; i++)
+            {
+                for (int j = 0; j <= 9; j++)
+                {
+                    PathPointImage[i, j].HasPoint = false;
+                }
+            }
 
             if (JiangJun.IsJueSha(QiZi)) // 检查是否绝杀
             {
@@ -122,16 +132,10 @@ namespace Chess
                     Form2.mp1.Play;*/
                 }
             }
-            AnimationMove(QiZi, x0, y0, m, n);
+            AnimationMove(QiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
+
             SideTag = !SideTag;  // 变换走棋方
             CurrentQiZi = 100;
-            for (int i = 0; i <= 8; i++)
-            {
-                for (int j = 0; j <= 9; j++)
-                {
-                    PathPointImage[i, j].HasPoint = false;
-                }
-            }
 
         }
 
@@ -139,25 +143,25 @@ namespace Chess
         {
             DoubleAnimation PAx = new()
             {
-                From = QiPanGrid_X[x0],
-                To = QiPanGrid_X[x1],
+                From = QiPanGrid_X[x0] - GlobalValue.GRID_WIDTH / 2,
+                To = QiPanGrid_X[x1] - GlobalValue.GRID_WIDTH / 2,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.15))
+                Duration = new Duration(TimeSpan.FromSeconds(0.2))
             };
             DoubleAnimation PAy = new()
             {
-                From = QiPanGrid_Y[y0],
-                To = QiPanGrid_Y[y1],
+                From = QiPanGrid_Y[y0] - GlobalValue.GRID_WIDTH / 2,
+                To = QiPanGrid_Y[y1] - GlobalValue.GRID_WIDTH / 2,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.15))
+                Duration = new Duration(TimeSpan.FromSeconds(0.2))
             };
 
             if (QiPanFanZhuan)
             {
-                PAx.From = QiPanGrid_X[8 - x0];
-                PAx.To = QiPanGrid_X[8 - x1];
-                PAy.From = QiPanGrid_Y[9 - y0];
-                PAy.To = QiPanGrid_Y[9 - y1];
+                PAx.From = QiPanGrid_X[8 - x0] - GlobalValue.GRID_WIDTH / 2;
+                PAx.To = QiPanGrid_X[8 - x1] - GlobalValue.GRID_WIDTH / 2;
+                PAy.From = QiPanGrid_Y[9 - y0] - GlobalValue.GRID_WIDTH / 2;
+                PAy.To = QiPanGrid_Y[9 - y1] - GlobalValue.GRID_WIDTH / 2;
             }
             QiZiArray[qizi].BeginAnimation(Canvas.LeftProperty, PAx);
             QiZiArray[qizi].BeginAnimation(Canvas.TopProperty, PAy);

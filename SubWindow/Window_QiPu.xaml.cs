@@ -158,7 +158,13 @@ namespace Chess
                 qpIndex++;
                 StepCode step = qPSteps[qpIndex].StepRecode;
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
-
+                if (qpIndex < qPSteps.Length - 2)
+                {
+                    StepCode nextstep = qPSteps[qpIndex + 1].StepRecode;
+                    GlobalValue.Arrows.SetPathDataAndShow(0,
+                        new System.Drawing.Point(nextstep.X0,nextstep.Y0),
+                        new System.Drawing.Point(nextstep.X1,nextstep.Y1));
+                }
             }
         }
 
