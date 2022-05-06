@@ -199,6 +199,19 @@ namespace Chess.SuanFa
             }
             return $"{substr} (共{QiPuList.Count}步)";
         }
+        public static List<List<System.Drawing.Point>> GetListPoint(QPStep qPStep)
+        {
+            List<List<System.Drawing.Point>> pp=new List<List<System.Drawing.Point>>();
+            foreach(var lp in qPStep.ChildSteps)
+            {
+                QPStep qs = lp[0];
+                List<System.Drawing.Point> pt = new List<System.Drawing.Point>();
+                pt.Add(new System.Drawing.Point(qs.StepRecode.X0, qs.StepRecode.Y0));
+                pt.Add(new System.Drawing.Point(qs.StepRecode.X1, qs.StepRecode.Y1));
+                pp.Add(pt);
+            }
+            return pp;
+        }
 
 
     }
