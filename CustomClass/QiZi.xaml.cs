@@ -135,8 +135,8 @@ namespace Chess
                 x = 8 - x;
                 y = 9 - y;
             }
-            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x] - GlobalValue.GRID_WIDTH / 2);
-            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] - GlobalValue.GRID_WIDTH / 2);
+            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x] - 33);
+            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] - 33);
             qzimage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
             return true;
 

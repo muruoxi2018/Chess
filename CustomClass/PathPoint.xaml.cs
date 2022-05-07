@@ -66,8 +66,8 @@ namespace Chess
                 x = 8 - x;
                 y = 9 - y;
             }
-            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x] - GlobalValue.GRID_WIDTH / 2 + 5.0);
-            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] - GlobalValue.GRID_WIDTH / 2 + 5.0);
+            SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x] - 30);
+            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] - 30);
         }
         public void FanZhuPosition()
         {
@@ -81,7 +81,7 @@ namespace Chess
         /// <param name="e"></param>
         private void OnMouseEnter(object sender, MouseEventArgs e)
         {
-            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 3, Opacity = 0.7 });
+            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 4, Opacity = 0.7 });
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Chess
         /// <param name="e"></param>
         private void OnMouseLeave(object sender, MouseEventArgs e)
         {
-            image.SetValue(EffectProperty, null);
+            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 2, Opacity = 0.7 });
         }
 
         /// <summary>

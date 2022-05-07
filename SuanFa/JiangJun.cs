@@ -98,7 +98,7 @@ namespace Chess.SuanFa // 算法
             if (MoveQizi < 16) jiangjun = IsJiangJun(16); // 检查红帅是否被将军。
             if (MoveQizi >= 16) jiangjun = IsJiangJun(0); // 检查黑将是否被将军
             GlobalValue.JiangJunTiShi.Content = "战况"; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
-            if (jiangjun[0]==-1) return false;  // 没有被将军时，则不需检测是否绝杀
+            if (jiangjun[0] == -1) return false;  // 没有被将军时，则不需检测是否绝杀
             string GJqizi1; // 第一个攻击棋子的名字
             if (jiangjun[1] != -1) GJqizi1 = GlobalValue.QiZiImageFileName[jiangjun[1]]; else GJqizi1 = "";
             string GJqizi2; // 第二个攻击棋子的名字
@@ -198,6 +198,174 @@ namespace Chess.SuanFa // 算法
             int HeiJiangRow = GlobalValue.QiZiArray[0].Row;
             int HongShuaiCol = GlobalValue.QiZiArray[16].Col;
             int HongShuaiRow = GlobalValue.QiZiArray[16].Row;
+
+            #region 如果是炮将军时，查找炮与将帅之间的被将军方的棋子，如可移开，则解杀
+            switch (GJqizi)  // 如果是炮将军时，查找炮与将帅之间的被将军方的棋子，如可移开，则解杀
+            {
+                case 9:
+                case 10: // 攻击棋子为黑方炮(9,10)，查找黑炮与红帅之间的红方棋子，如可移开，则解杀
+                    int findCol = -1;
+                    int findRow = -1;
+                    if (GJqiziCol == HongShuaiCol) // 攻击方向为纵向
+                    {
+                        if (GJqiziRow < HongShuaiRow) // 从上方攻击
+                        {
+                            for (int row = GJqiziRow + 1; row < HongShuaiRow; row++)
+                            {
+                                if (GlobalValue.QiPan[GJqiziCol, row] is > 16 and < 32)
+                                {
+                                    findCol = GJqiziCol;
+                                    findRow = row;
+                                    break;
+                                }
+                            }
+                        }
+                        else // 从下方攻击
+                        {
+                            for (int row = HongShuaiRow + 1; row < GJqiziRow; row++)
+                            {
+                                if (GlobalValue.QiPan[GJqiziCol, row] is > 16 and < 32)
+                                {
+                                    findCol = GJqiziCol;
+                                    findRow = row;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (findCol == -1 || findRow == -1) break;
+                    bool[,] points = MoveCheck.GetPathPoints(GlobalValue.QiPan[findCol, findRow], GlobalValue.QiPan);
+                    for (int i = 0; i < 9; i++)
+                    {
+                        for (int j = 0; j < 10; j++)
+                        {
+                            if (points[i, j] == true && i != GJqiziCol) return true; // 如果本方棋子可从对方炮的攻击线路上移开，则解杀
+                        }
+                    }
+                    findCol = -1;
+                    findRow = -1;
+                    if (GJqiziRow == HongShuaiRow) // 攻击方向为横向
+                    {
+                        if (GJqiziCol < HongShuaiCol) // 从左方攻击
+                        {
+                            for (int col = GJqiziCol + 1; col < HongShuaiCol; col++)
+                            {
+                                if (GlobalValue.QiPan[col, GJqiziRow] is > 16 and < 32)
+                                {
+                                    findCol = col;
+                                    findRow = GJqiziRow;
+                                    break;
+                                }
+                            }
+                        }
+                        else // 从右方攻击
+                        {
+                            for (int col = HongShuaiCol + 1; col < GJqiziCol; col++)
+                            {
+                                if (GlobalValue.QiPan[col, GJqiziRow] is > 16 and < 32)
+                                {
+                                    findCol = col;
+                                    findRow = GJqiziRow;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (findCol == -1 || findRow == -1) break;
+                    points = MoveCheck.GetPathPoints(GlobalValue.QiPan[findCol, findRow], GlobalValue.QiPan);
+                    for (int i = 0; i < 9; i++)
+                    {
+                        for (int j = 0; j < 10; j++)
+                        {
+                            if (points[i, j] == true && j != GJqiziRow) return true;
+                        }
+                    }
+                    break;
+                    
+                case 25:
+                case 26:    //  攻击棋子为红方炮(25,26)，查找红炮与黑将之间的黑方棋子，如可移开，则解杀
+                    findCol = -1;
+                    findRow = -1;
+                    if (GJqiziCol == HeiJiangCol) // 攻击方向为纵向
+                    {
+                        if (GJqiziRow < HeiJiangRow) // 从上方攻击
+                        {
+                            for (int row = GJqiziRow + 1; row < HeiJiangRow; row++)
+                            {
+                                if (GlobalValue.QiPan[GJqiziCol, row] is > 0 and < 16)
+                                {
+                                    findCol = GJqiziCol;
+                                    findRow = row;
+                                    break;
+                                }
+                            }
+                        }
+                        else // 从下方攻击
+                        {
+                            for (int row = HeiJiangRow + 1; row < GJqiziRow; row++)
+                            {
+                                if (GlobalValue.QiPan[GJqiziCol, row] is > 0 and < 16)
+                                {
+                                    findCol = GJqiziCol;
+                                    findRow = row;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (findCol == -1 || findRow == -1) break;
+                    points = MoveCheck.GetPathPoints(GlobalValue.QiPan[findCol, findRow], GlobalValue.QiPan);
+                    for (int i = 0; i < 9; i++)
+                    {
+                        for (int j = 0; j < 10; j++)
+                        {
+                            if (points[i, j] == true && i != GJqiziCol) return true;
+                        }
+                    }
+                    findCol = -1;
+                    findRow = -1;
+                    if (GJqiziRow == HeiJiangRow) // 攻击方向为横向
+                    {
+                        if (GJqiziCol < HeiJiangCol) // 从左方攻击
+                        {
+                            for (int col = GJqiziCol + 1; col < HeiJiangCol; col++)
+                            {
+                                if (GlobalValue.QiPan[col, GJqiziRow] is > 0 and < 16)
+                                {
+                                    findCol = col;
+                                    findRow = GJqiziRow;
+                                    break;
+                                }
+                            }
+                        }
+                        else // 从右方攻击
+                        {
+                            for (int col = HeiJiangCol + 1; col < GJqiziCol; col++)
+                            {
+                                if (GlobalValue.QiPan[col, GJqiziRow] is > 0 and < 16)
+                                {
+                                    findCol = col;
+                                    findRow = GJqiziRow;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (findCol == -1 || findRow == -1) break;
+                    points = MoveCheck.GetPathPoints(GlobalValue.QiPan[findCol, findRow], GlobalValue.QiPan);
+                    for (int i = 0; i < 9; i++)
+                    {
+                        for (int j = 0; j < 10; j++)
+                        {
+                            if (points[i, j] == true && j != GJqiziRow) return true;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            #endregion
+
             ArrayList JieShaPoints = new ArrayList(); // 可解除攻击的点位
 
             #region  根据发起将军棋子的位置，以及被将军的将帅的位置，计算所有可解除将军的点位，存放到数组列表JieShaPoints中，以备进一步分析
@@ -326,7 +494,7 @@ namespace Chess.SuanFa // 算法
                     break;
             }
             #endregion
-            
+
             //if (JieShaPoints.Count == 0) return false;  // 不存在可以解除攻击的点位，则不能解杀。估计不存在这个情况。
             bool[,] thispoints;
             for (int i = 0; i < 9; i++)

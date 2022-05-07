@@ -58,7 +58,7 @@ namespace Chess.SuanFa // 算法
             {
                 return points;
             }
-            if (GlobalValue.QiZiArray[MoveQiZi].Visibility == System.Windows.Visibility.Hidden) return points;
+            if (GlobalValue.QiZiArray[MoveQiZi].Visibility != System.Windows.Visibility.Visible) return points;
             int MoveQiZi_Col = GlobalValue.QiZiArray[MoveQiZi].Col;
             int MoveQiZi_Row = GlobalValue.QiZiArray[MoveQiZi].Row;
             int side = 0;
