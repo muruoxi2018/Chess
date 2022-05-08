@@ -130,6 +130,7 @@ namespace Chess
                     GlobalValue.PathPointImage[i, j].FanZhuPosition();
                 }
             }
+            GlobalValue.Arrows.HideAllPath();
         }
         /// <summary>
         /// 棋盘图像的更换

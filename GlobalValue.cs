@@ -190,6 +190,9 @@ namespace Chess
             }
             YuanWeiZhi.HiddenYuanWeiZhiImage();
             Qipu.QiPuList.Clear();
+            Window_QiPu.ReStart();
+            Arrows.HideAllPath();  // 隐藏提示箭头
+
         }
         /// <summary>
         /// 悔棋按钮

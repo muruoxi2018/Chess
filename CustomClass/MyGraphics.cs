@@ -111,6 +111,14 @@ namespace Chess.CustomClass
             x1 = GlobalValue.QiPanGrid_X[point1.X];
             y1 = GlobalValue.QiPanGrid_Y[point1.Y];
 
+            if (GlobalValue.QiPanFanZhuan)
+            {
+                x0 = GlobalValue.QiPanGrid_X[8-point0.X];
+                y0 = GlobalValue.QiPanGrid_Y[9-point0.Y];
+                x1 = GlobalValue.QiPanGrid_X[8-point1.X];
+                y1 = GlobalValue.QiPanGrid_Y[9-point1.Y];
+            }
+
             List<PointF> pointFs = new List<PointF>();
 
             double angle = Math.Atan2(y1 - y0, x1 - x0); //箭杆的角度
