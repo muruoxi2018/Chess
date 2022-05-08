@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Background="#FF08313E" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="767" MinHeight="900" MaxWidth="1024" MaxHeight="1000" SizeToContent="WidthAndHeight" Height="968">
-    <Grid x:Name="grid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842">
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Background="#FF08313E" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="767" MinHeight="900" MaxWidth="767" MaxHeight="900" SizeToContent="WidthAndHeight" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+    <Grid x:Name="grid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842">
         <Border BorderThickness="1"/>
         <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" MouseUp="QiPanMouseUp" Visibility="Visible">
             <Image.Effect>
@@ -34,8 +34,7 @@
                 </Image.RenderTransform>
             </d:Image>
         </Canvas>
-        <Grid x:Name="DrawGrid" IsHitTestVisible="False" Opacity="0.6" RenderTransformOrigin="0.5,0.5">
-        </Grid>
+        <Grid x:Name="DrawGrid" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5"/>
         <Button x:Name="ResetBtn" Style="{StaticResource button}" Content="开局" HorizontalAlignment="Left" Margin="77,773,0,0" VerticalAlignment="Top" Width="70" Panel.ZIndex="102" Click="ResetBtnClick" Height="25"/>
         <Button Content="翻转棋盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="614,773,0,0" VerticalAlignment="Top" Width="70" Click="OnFanZhuanQiPan" Height="25"/>
         <Button Content="记谱窗口" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="384,773,0,0" VerticalAlignment="Top" Click="OpenJiPuWindow" Width="70" Height="25"/>

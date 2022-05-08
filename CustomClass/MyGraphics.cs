@@ -32,9 +32,10 @@ namespace Chess.CustomClass
                 path[i] = new Path
                 {
                     Stroke = Brushes.ForestGreen,
-                    Fill = Brushes.ForestGreen,
+                    Fill = Brushes.GreenYellow,
                     SnapsToDevicePixels = false,
                     StrokeThickness = 1,
+                    Opacity = 0.8,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Visibility = Visibility.Hidden
@@ -151,8 +152,8 @@ namespace Chess.CustomClass
             path[ind].Visibility = Visibility.Visible;
 
             // 计算圆圈的位置，其中心设置在箭杆的中心线上
-            circleX = Math.Floor(x1 - (arrowLong * 1.75 * Math.Cos(angle))) - 10; // 10是圆圈的半径。计算结果为圆心位置，而margin是从其边界计算，因此需用半径修正数据。
-            circleY = Math.Floor(y1 - (arrowLong * 1.75 * Math.Sin(angle))) - 10;
+            circleX = Math.Floor(x1 + (1  * Math.Cos(angle))) - 10; // 10是圆圈的半径。计算结果为圆心位置，而margin是从其边界计算，因此需用半径修正数据。
+            circleY = Math.Floor(y1 + (1  * Math.Sin(angle))) - 10;
 
             ellipses[ind].Margin = new Thickness(circleX, circleY, 0, 0);
             ellipses[ind].Visibility = Visibility.Visible;
