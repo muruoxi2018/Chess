@@ -22,8 +22,8 @@
 
 #### 软件架构
 
-编程环境：Visual Studio 2019/2021
-C#，NET5.0，WPF，SQLite3.0
+编程环境：Visual Studio 2019/2022
+C#，NET5.0/6.0，WPF，SQLite3.0
 
 #### 安装教程
 

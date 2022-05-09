@@ -51,22 +51,22 @@ namespace Chess
             Spy_window = new SpyWindow(); // 棋盘数据监视窗口
             Spy_window.Hide();
 
-            GlobalValue.Window_Qi = new Window_QiPu(); // 棋谱库浏览窗口
-            GlobalValue.Window_Qi.SetValue(LeftProperty, SystemParameters.WorkArea.Left);
-            GlobalValue.Window_Qi.SetValue(TopProperty, SystemParameters.WorkArea.Top);
-            GlobalValue.Window_Qi.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
-            GlobalValue.Window_Qi.Show();
+            GlobalValue.Window_QiPuKun = new Window_QiPu(); // 棋谱库浏览窗口
+            GlobalValue.Window_QiPuKun.SetValue(LeftProperty, SystemParameters.WorkArea.Left);
+            GlobalValue.Window_QiPuKun.SetValue(TopProperty, SystemParameters.WorkArea.Top);
+            GlobalValue.Window_QiPuKun.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
+            GlobalValue.Window_QiPuKun.Hide();
 
             GlobalValue.JiangJunTiShi = new()
             {
                 Content = "战况",
                 Height = 30.0,
-                Foreground = Brushes.White,
+                Foreground =Brushes.Goldenrod,
                 Margin = new Thickness(100, 20, 0, 0),
-                VerticalAlignment = VerticalAlignment.Top
+                VerticalAlignment = VerticalAlignment.Center
             };
 
-            _ = grid.Children.Add(GlobalValue.JiangJunTiShi);
+            _ = JiangJunTiShi.Children.Add(GlobalValue.JiangJunTiShi);
 
             GlobalValue.jueShaImage = new();
             _ = grid.Children.Add(GlobalValue.jueShaImage);
@@ -219,6 +219,18 @@ namespace Chess
         private void SaveJiPuToBuffer(object sender, RoutedEventArgs e)
         {
             jipuwindow.Save_jipu();
+        }
+
+        private void OpenFuPanWindow(object sender, RoutedEventArgs e)
+        {
+            if (GlobalValue.Window_QiPuKun.IsVisible)
+            {
+                GlobalValue.Window_QiPuKun.Hide();
+            }
+            else
+            {
+                GlobalValue.Window_QiPuKun.Show();
+            }
         }
     }
 }

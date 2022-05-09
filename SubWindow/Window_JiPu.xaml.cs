@@ -51,7 +51,7 @@ namespace Chess
             {
                 GlobalValue.QiPuFuPanList.Add(qp);
             }
-            GlobalValue.Window_Qi.DrawTree(GlobalValue.QiPuFuPanList);
+            GlobalValue.Window_QiPuKun.DrawTree(GlobalValue.QiPuFuPanList);
         }
         /// <summary>
         /// 递归查找变招位置，并将变招存入相应分支

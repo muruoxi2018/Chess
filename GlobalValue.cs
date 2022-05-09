@@ -77,7 +77,7 @@ namespace Chess
         public static Label JiangJunTiShi;
         public static CustomClass.JueSha jueShaImage;
 
-        public static Window_QiPu Window_Qi; // 棋谱库窗口
+        public static Window_QiPu Window_QiPuKun; // 棋谱库窗口
 
         public static CustomClass.MyGraphics Arrows = new();
 

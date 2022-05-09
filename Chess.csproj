@@ -40,6 +40,7 @@
     <None Remove="DB\KaiJuKu.db" />
     <None Remove="juesha.png" />
     <None Remove="KaiJuKu.db" />
+    <None Remove="picture\background.jpg" />
     <None Remove="picture\break_roleH_10zhanghan.png" />
     <None Remove="picture\juesha_0.png" />
     <None Remove="picture\原位置.png" />
@@ -74,6 +75,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="picture\background.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="picture\juesha_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

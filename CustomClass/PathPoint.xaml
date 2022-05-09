@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="60">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="60">
-        <Image x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Panel.ZIndex="5" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" RenderTransformOrigin="0.5,0.5" MouseUp="OnMouseup" Source="/picture/路径点.png">
+        <Image x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Panel.ZIndex="5" MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave" RenderTransformOrigin="0.5,0.5" MouseUp="OnMouseup" Source="/picture/路径点.png" Cursor="Hand">
             <Image.Effect>
                 <DropShadowEffect ShadowDepth="2" BlurRadius="2" Opacity="0.7" Color="#FF3C3C3C"/>
             </Image.Effect>
