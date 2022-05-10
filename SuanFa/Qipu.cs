@@ -65,24 +65,24 @@ namespace Chess.SuanFa
         {
             private QiPuRecord ParentNode { get; set; } // 父结点
             public List<QiPuRecord> ChildNode { get; set; }  // 子结点
-            public QiPuRecord CurrentRecord { get; set; }  // 当前结点指针，仅对根结点有效
+            public QiPuRecord Cursor { get; set; }  // 当前结点游标指针，仅根结点游标有用
             public int Id { get; set; } // 步数
             public string Nm { get; set; } // 数字代码
             public string Cn { get; set; } // 中文代码
             public string Memo { get; set; } // 备注
-            public StepCode StepRecode { get; set; } // 棋谱记录
+            public StepCode StepData { get; set; } // 棋谱记录
             public QiPuRecord()
             {
                 ParentNode = null;
                 ChildNode = new List<QiPuRecord>();
-                CurrentRecord = this;
+                Cursor = this;
             }
             public QiPuRecord(QiPuRecord recordNode)
             {
                 ParentNode = recordNode;
                 recordNode.ChildNode.Add(this);
                 ChildNode = new List<QiPuRecord>();
-                CurrentRecord = null;
+                Cursor = null;
             }
             public QiPuRecord AddChild(QiPuRecord child)
             {
@@ -119,6 +119,11 @@ namespace Chess.SuanFa
             {
                 return ParentNode;
             }
+            public void SetRecordData(StepCode code)
+            {
+                if (code == null) return;
+                SetRecordData(code.QiZi, code.X0, code.Y0, code.X1, code.Y1, code.DieQz);
+            }
             /// <summary>
             /// 添加一条棋谱记录
             /// </summary>
@@ -134,7 +139,7 @@ namespace Chess.SuanFa
                 string char2 = QiZi is > 0 and < 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
                 string char3 = "";
                 string char4;
-
+                #region 棋谱翻译为中文
                 int m = Math.Abs(y1 - y0);
                 // 进退平
                 if (y0 == y1)
@@ -162,11 +167,11 @@ namespace Chess.SuanFa
                     };
 
                 }
-                
+                #endregion
                 Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}";
                 Cn = char1 + char2 + char3 + char4;
                 Memo = "";
-                StepRecode = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
+                StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
 
                 //QiPuList.Add(this);
             }
@@ -196,8 +201,30 @@ namespace Chess.SuanFa
                 return tree;
             }
         }
+        public class QiPuSimpleRecord
+        {
+            public List<QiPuSimpleRecord> Child { get; set; }  // 子结点
+            public StepCode Data { get; set; } // 棋谱记录
+            public QiPuSimpleRecord()
+            {
+                Child = new List<QiPuSimpleRecord>();
+             }
+            public void CopyDataFromStep(StepCode code)
+            {
+                if (code == null) return;
+                Data = new StepCode(code.QiZi, code.X0, code.Y0, code.X1, code.Y1, code.DieQz);
+            }
+        }
+
         public class StepCode // 棋谱记录
         {
+
+            public int QiZi { get; set; } // 棋子编号
+            public int X0 { get; set; } // 移动前位置
+            public int Y0 { get; set; }
+            public int X1 { get; set; } // 移动后位置
+            public int Y1 { get; set; }
+            public int DieQz { get; set; } // 移动后杀死的棋子
             public StepCode(int qiZi, int x0, int y0, int x1, int y1, int dieQz)
             {
                 QiZi = qiZi;
@@ -207,13 +234,6 @@ namespace Chess.SuanFa
                 Y1 = y1;
                 DieQz = dieQz;
             }
-
-            public int QiZi { get; set; } // 棋子编号
-            public int X0 { get; set; } // 移动前位置
-            public int Y0 { get; set; }
-            public int X1 { get; set; } // 移动后位置
-            public int Y1 { get; set; }
-            public int DieQz { get; set; } // 移动后杀死的棋子
             public List<TreeViewItem> TreeViewItem()
             {
                 List<TreeViewItem> tree = new();
@@ -251,7 +271,7 @@ namespace Chess.SuanFa
             string char2 = QiZi is > 0 and < 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
             string char3 = "";
             string char4;
-
+            #region 棋谱翻译为中文
             int m = Math.Abs(y1 - y0);
             // 进退平
             if (y0 == y1)
@@ -279,6 +299,7 @@ namespace Chess.SuanFa
                 };
 
             }
+            #endregion
             QiPuList.Add(new QPStep()
             {
                 Id = QiPuList.Count + 1,

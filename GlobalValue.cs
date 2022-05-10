@@ -1,4 +1,5 @@
 ﻿using Chess.SuanFa;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,6 +27,7 @@ namespace Chess
         public static ObservableCollection<QPStep> QiPuFuPanList = new(); // 复盘棋谱步骤列表
 
         public static QiPuRecord QiPuRecordRoot = new();
+        public static QiPuSimpleRecord QiPuSimpleRecordRoot = new();
 
         /// <summary>
         /// 棋子编号0-31，分别对应的图像文件名
@@ -84,7 +86,7 @@ namespace Chess
         public static CustomClass.MyGraphics Arrows = new();
 
         /// <summary>
-        /// 棋子移动的处理
+        /// 棋子移动的处理，如果棋子移动后配方被将军，则不能移动。
         /// </summary>
         /// <param name="QiZi">棋子编号</param>
         /// <param name="m">目的地的列</param>
@@ -105,11 +107,14 @@ namespace Chess
 
             QiPuRecord QRecord = new();
             QRecord.SetRecordData(QiZi, x0, y0, m, n, DieQz);
-            QiPuRecordRoot.CurrentRecord = QiPuRecordRoot.CurrentRecord.AddChild(QRecord);
+            QiPuRecordRoot.Cursor = QiPuRecordRoot.Cursor.AddChild(QRecord);
 
             TreeViewItem treeitem = QiPuRecordRoot.GetTree();
             Window_QiPuKun.jsonTree.Items.Clear();
             Window_QiPuKun.jsonTree.Items.Add(treeitem);
+
+            QiPuSimpleRecordRoot = CopyQiPuToSimple(QiPuRecordRoot);
+            Window_QiPuKun.memostr.Text = JsonConvert.SerializeObject(QiPuSimpleRecordRoot);
 
 
             for (int i = 0; i <= 8; i++)
@@ -150,9 +155,17 @@ namespace Chess
             CurrentQiZi = 100;
 
         }
-
+        /// <summary>
+        /// 走棋动画
+        /// </summary>
+        /// <param name="qizi"></param>
+        /// <param name="x0"></param>
+        /// <param name="y0"></param>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
         private static void AnimationMove(int qizi, int x0, int y0, int x1, int y1)
         {
+            #region 动画参数设置
             DoubleAnimation PAx = new()
             {
                 From = QiPanGrid_X[x0] - GlobalValue.GRID_WIDTH / 2,
@@ -175,6 +188,7 @@ namespace Chess
                 PAy.From = QiPanGrid_Y[9 - y0] - GlobalValue.GRID_WIDTH / 2;
                 PAy.To = QiPanGrid_Y[9 - y1] - GlobalValue.GRID_WIDTH / 2;
             }
+            #endregion
             QiZiArray[qizi].BeginAnimation(Canvas.LeftProperty, PAx);
             QiZiArray[qizi].BeginAnimation(Canvas.TopProperty, PAy);
         }
@@ -205,7 +219,7 @@ namespace Chess
             Window_QiPu.ReStart();
             Arrows.HideAllPath();  // 隐藏提示箭头
 
-            QiPuRecordRoot.CurrentRecord = QiPuRecordRoot;  // 回到根部
+            QiPuRecordRoot.Cursor = QiPuRecordRoot;  // 回到根部
             QiPuRecordRoot.DeleteChildNode();
             if (Window_QiPuKun!=null)
             {
@@ -242,10 +256,43 @@ namespace Chess
             Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count - 1);
             SideTag = !SideTag;
 
-            if (QiPuRecordRoot.CurrentRecord.GetParent() != null)
+            if (QiPuRecordRoot.Cursor.GetParent() != null)
             {
-                QiPuRecordRoot.CurrentRecord=QiPuRecordRoot.CurrentRecord.GetParent();
+                QiPuRecordRoot.Cursor=QiPuRecordRoot.Cursor.GetParent();
             }
+        }
+        /// <summary>
+        /// 将全记录棋谱转化为简易记录棋谱，经JsonConvert.SerializeObject,存入数据库。目的是压缩数据量。
+        /// </summary>
+        /// <param name="FullQipu">全局变量QiPuRecordRoot</param>
+        /// <returns>简易记录棋谱</returns>
+        public static QiPuSimpleRecord CopyQiPuToSimple(QiPuRecord FullQipu)
+        {
+            QiPuSimpleRecord SimpleQipu = new();
+            SimpleQipu.CopyDataFromStep(FullQipu.StepData);
+            foreach (QiPuRecord Recode in FullQipu.ChildNode)
+            {
+                QiPuSimpleRecord childRecode=CopyQiPuToSimple(Recode);
+                SimpleQipu.Child.Add(childRecode);
+            }
+            return SimpleQipu;
+
+        }
+        /// <summary>
+        /// 将简易记录棋谱转化为全记录棋谱。用于从数据库读取数据后，经JsonConvert.DeserializeObject，存入全局变量QiPuRecordRoot
+        /// </summary>
+        /// <param name="SimpleQipu">全局变量QiPuSimpleRecordRoot</param>
+        /// <returns>全记录棋谱</returns>
+        public static QiPuRecord CopyQiPuFromSimple(QiPuSimpleRecord SimpleQipu)
+        {
+            QiPuRecord Qipu = new();
+            Qipu.SetRecordData(SimpleQipu.Data);
+            foreach (QiPuSimpleRecord Recode in SimpleQipu.Child)
+            {
+                QiPuRecord childRecode = CopyQiPuFromSimple(Recode);
+                Qipu.ChildNode.Add(childRecode);
+            }
+            return Qipu;
         }
     }
 }
