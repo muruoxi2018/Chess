@@ -61,6 +61,141 @@ namespace Chess.SuanFa
             }
 
         }
+        public class QiPuRecord
+        {
+            private QiPuRecord ParentNode { get; set; } // 父结点
+            public List<QiPuRecord> ChildNode { get; set; }  // 子结点
+            public QiPuRecord CurrentRecord { get; set; }  // 当前结点指针，仅对根结点有效
+            public int Id { get; set; } // 步数
+            public string Nm { get; set; } // 数字代码
+            public string Cn { get; set; } // 中文代码
+            public string Memo { get; set; } // 备注
+            public StepCode StepRecode { get; set; } // 棋谱记录
+            public QiPuRecord()
+            {
+                ParentNode = null;
+                ChildNode = new List<QiPuRecord>();
+                CurrentRecord = this;
+            }
+            public QiPuRecord(QiPuRecord recordNode)
+            {
+                ParentNode = recordNode;
+                recordNode.ChildNode.Add(this);
+                ChildNode = new List<QiPuRecord>();
+                CurrentRecord = null;
+            }
+            public QiPuRecord AddChild(QiPuRecord child)
+            {
+                foreach (var item in ChildNode)
+                {
+                    if (string.Equals(item.Cn, child.Cn, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return item;
+                    }
+                }
+                //child.CurrentRecord = null;
+                child.ParentNode = this;
+                child.Id = getDepth();
+                ChildNode.Add(child);
+                return child;
+            }
+            public void DeleteChildNode()
+            {
+                ChildNode = new List<QiPuRecord>();
+            }
+            public bool IsRoot()
+            {
+                return ParentNode == null;
+            }
+            public bool IsLeaf()
+            {
+                return ChildNode.Count == 0;
+            }
+            public void SetParent(QiPuRecord parent)
+            {
+                this.ParentNode = parent;
+            }
+            public QiPuRecord GetParent()
+            {
+                return ParentNode;
+            }
+            /// <summary>
+            /// 添加一条棋谱记录
+            /// </summary>
+            /// <param name="QiZi"></param>
+            /// <param name="x0"></param>
+            /// <param name="y0"></param>
+            /// <param name="x1"></param>
+            /// <param name="y1"></param>
+            /// <param name="DieQz"></param>
+            public void SetRecordData(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
+            {
+                string char1 = GlobalValue.QiZiCnName[QiZi];
+                string char2 = QiZi is > 0 and < 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
+                string char3 = "";
+                string char4;
+
+                int m = Math.Abs(y1 - y0);
+                // 进退平
+                if (y0 == y1)
+                {
+                    char3 = "平";
+                    char4 = QiZi is >= 0 and <= 15 ? (x1 + 1).ToString() : GlobalValue.CnNumber[9 - x1];
+                }
+                else
+                {
+                    if (QiZi is >= 0 and <= 15)
+                    {
+                        char3 = y1 > y0 ? "进" : "退";
+                    }
+                    if (QiZi is >= 16 and <= 31)
+                    {
+                        char3 = y1 > y0 ? "退" : "进";
+                    }
+
+                    char4 = QiZi switch
+                    {
+                        1 or 2 or 3 or 4 or 5 or 6 => (x1 + 1).ToString(),
+                        17 or 18 or 19 or 20 or 21 or 22 => GlobalValue.CnNumber[9 - x1],
+                        // 其他所有可以直走的棋子
+                        _ => QiZi is > 0 and < 15 ? m.ToString() : GlobalValue.CnNumber[m],
+                    };
+
+                }
+                
+                Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}";
+                Cn = char1 + char2 + char3 + char4;
+                Memo = "";
+                StepRecode = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
+
+                //QiPuList.Add(this);
+            }
+            private int getDepth()
+            {
+                int depth = 1;
+                QiPuRecord point = this;
+                while (!point.IsRoot())
+                {
+                    depth++;
+                    point = point.GetParent();
+                }
+                return depth;
+            }
+            public TreeViewItem GetTree()
+            {
+                var tree = new TreeViewItem();
+                tree.Header = $"{Id}. {Cn}";
+                tree.IsExpanded = true;
+                if (!IsLeaf())
+                {
+                    foreach (var item in ChildNode)
+                    {
+                        tree.Items.Add(item.GetTree());
+                    }
+                }
+                return tree;
+            }
+        }
         public class StepCode // 棋谱记录
         {
             public StepCode(int qiZi, int x0, int y0, int x1, int y1, int dieQz)
@@ -201,8 +336,8 @@ namespace Chess.SuanFa
         }
         public static List<List<System.Drawing.Point>> GetListPoint(QPStep qPStep)
         {
-            List<List<System.Drawing.Point>> pp=new List<List<System.Drawing.Point>>();
-            foreach(var lp in qPStep.ChildSteps)
+            List<List<System.Drawing.Point>> pp = new List<List<System.Drawing.Point>>();
+            foreach (var lp in qPStep.ChildSteps)
             {
                 QPStep qs = lp[0];
                 List<System.Drawing.Point> pt = new List<System.Drawing.Point>();

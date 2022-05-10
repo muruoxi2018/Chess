@@ -43,11 +43,11 @@ namespace Chess
         }
         public void Save_jipu()
         {
-            List<List<Qipu.QPStep>> llq = new();
-            llq.Add(GlobalValue.QiPuFuPanList.ToList());
-            ReBuildQipuList(llq, Qipu.QiPuList.ToList());
+            List<List<Qipu.QPStep>> listlistQipu = new();
+            listlistQipu.Add(GlobalValue.QiPuFuPanList.ToList());
+            ReBuildQipuList(listlistQipu, Qipu.QiPuList.ToList());
             GlobalValue.QiPuFuPanList.Clear();
-            foreach (Qipu.QPStep qp in llq[0])
+            foreach (Qipu.QPStep qp in listlistQipu[0])
             {
                 GlobalValue.QiPuFuPanList.Add(qp);
             }

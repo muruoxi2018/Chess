@@ -25,6 +25,8 @@ namespace Chess
 
         public static ObservableCollection<QPStep> QiPuFuPanList = new(); // 复盘棋谱步骤列表
 
+        public static QiPuRecord QiPuRecordRoot = new();
+
         /// <summary>
         /// 棋子编号0-31，分别对应的图像文件名
         /// </summary>
@@ -100,6 +102,16 @@ namespace Chess
             _ = QiZiArray[QiZi].SetPosition(m, n);
             Arrows.HideAllPath();  // 隐藏提示箭头
             Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 增加一行棋谱记录
+
+            QiPuRecord QRecord = new();
+            QRecord.SetRecordData(QiZi, x0, y0, m, n, DieQz);
+            QiPuRecordRoot.CurrentRecord = QiPuRecordRoot.CurrentRecord.AddChild(QRecord);
+
+            TreeViewItem treeitem = QiPuRecordRoot.GetTree();
+            Window_QiPuKun.jsonTree.Items.Clear();
+            Window_QiPuKun.jsonTree.Items.Add(treeitem);
+
+
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
@@ -193,6 +205,13 @@ namespace Chess
             Window_QiPu.ReStart();
             Arrows.HideAllPath();  // 隐藏提示箭头
 
+            QiPuRecordRoot.CurrentRecord = QiPuRecordRoot;  // 回到根部
+            QiPuRecordRoot.DeleteChildNode();
+            if (Window_QiPuKun!=null)
+            {
+                Window_QiPuKun.jsonTree.Items.Clear();
+            }
+
         }
         /// <summary>
         /// 悔棋按钮
@@ -223,6 +242,10 @@ namespace Chess
             Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count - 1);
             SideTag = !SideTag;
 
+            if (QiPuRecordRoot.CurrentRecord.GetParent() != null)
+            {
+                QiPuRecordRoot.CurrentRecord=QiPuRecordRoot.CurrentRecord.GetParent();
+            }
         }
     }
 }
