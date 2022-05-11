@@ -117,7 +117,7 @@ namespace Chess
             //Window_QiPuKun.jsonTree.Items.Clear();
             //Window_QiPuKun.jsonTree.Items.Add(treeitem);
 
-            QiPuSimpleRecordRoot = CopyQiPuToSimple(QiPuRecordRoot);
+            QiPuSimpleRecordRoot = ConvertQiPuToSimple(QiPuRecordRoot);
             Window_QiPuKu.memostr.Text = JsonConvert.SerializeObject(QiPuSimpleRecordRoot);
 
 
@@ -266,35 +266,36 @@ namespace Chess
                 QiPuRecordRoot.Cursor.IsSelected = true;
             }
         }
+
         /// <summary>
         /// 将全记录棋谱转化为简易记录棋谱，经JsonConvert.SerializeObject,存入数据库。目的是压缩数据量。
         /// </summary>
         /// <param name="FullQipu">全局变量QiPuRecordRoot</param>
         /// <returns>简易记录棋谱</returns>
-        public static QiPuSimpleRecord CopyQiPuToSimple(QiPuRecord FullQipu)
+        public static QiPuSimpleRecord ConvertQiPuToSimple(QiPuRecord FullQipu)
         {
             QiPuSimpleRecord SimpleQipu = new();
             SimpleQipu.CopyDataFromStep(FullQipu.StepData);
             foreach (QiPuRecord Recode in FullQipu.ChildNode)
             {
-                QiPuSimpleRecord childRecode=CopyQiPuToSimple(Recode);
+                QiPuSimpleRecord childRecode=ConvertQiPuToSimple(Recode);
                 SimpleQipu.Child.Add(childRecode);
             }
             return SimpleQipu;
-
         }
+
         /// <summary>
         /// 将简易记录棋谱转化为全记录棋谱。用于从数据库读取数据后，经JsonConvert.DeserializeObject，存入全局变量QiPuRecordRoot
         /// </summary>
         /// <param name="SimpleQipu">全局变量QiPuSimpleRecordRoot</param>
         /// <returns>全记录棋谱</returns>
-        public static QiPuRecord CopyQiPuFromSimple(QiPuSimpleRecord SimpleQipu)
+        public static QiPuRecord ConvertQiPuToFull(QiPuSimpleRecord SimpleQipu)
         {
             QiPuRecord Qipu = new();
             Qipu.SetRecordData(SimpleQipu.Data);
             foreach (QiPuSimpleRecord Recode in SimpleQipu.Child)
             {
-                QiPuRecord childRecode = CopyQiPuFromSimple(Recode);
+                QiPuRecord childRecode = ConvertQiPuToFull(Recode);
                 Qipu.ChildNode.Add(childRecode);
             }
             return Qipu;
