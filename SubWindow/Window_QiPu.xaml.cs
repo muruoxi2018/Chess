@@ -11,6 +11,7 @@ using static Chess.SuanFa.Qipu;
 using System.Linq;
 using System.Diagnostics;
 
+
 namespace Chess
 {
     /// <summary>
@@ -42,6 +43,7 @@ namespace Chess
             DataTable sr = OpenSource.SqliteHelper.Select("mybook", "rowid,*");
             if (sr == null) return;
             DbDataGrid.ItemsSource = sr.DefaultView;
+            jsonTree.ItemsSource=GlobalValue.QiPuRecordRoot.ChildNode;
         }
         /// <summary>
         /// 重新入棋谱库

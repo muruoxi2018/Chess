@@ -14,21 +14,23 @@ namespace Chess
     {
         public static bool QiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
         public static int[,] QiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
-        public static PathPoint[,] PathPointImage = new PathPoint[9, 10];
-        public static QiZi[] QiZiArray = new QiZi[32];
-        public static QiZi YuanWeiZhi;
-        public static string qipustr;
-        public static int CurrentQiZi;
-        public const bool BLACKSIDE = false;
-        public const bool REDSIDE = true;
+        public static PathPoint[,] PathPointImage = new PathPoint[9, 10];  // 棋子可走路径的圆点标记
+        public static QiZi[] QiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
+        public static QiZi YuanWeiZhi;  // 棋子走动后在原位置显示圆圈
+        public static string qipustr;   // 棋谱转换后的字符串
+        public static int CurrentQiZi;  // 当前选定的棋子
+        public const bool BLACKSIDE = false;  // 黑方
+        public const bool REDSIDE = true;   //红方
         public static bool SideTag, GameOver;
         public const float GRID_WIDTH = 67.5f;   //棋盘格为 67.5*67.5
 
         public static ObservableCollection<QPStep> QiPuFuPanList = new(); // 复盘棋谱步骤列表
 
-        public static QiPuRecord QiPuRecordRoot = new();
-        public static QiPuSimpleRecord QiPuSimpleRecordRoot = new();
+        public static QiPuRecord QiPuRecordRoot = new(); // 棋谱树型数据结构
 
+        public static QiPuSimpleRecord QiPuSimpleRecordRoot = new(); // 棋谱树型数据结构的精简版
+
+        #region 棋子及棋盘基础数据
         /// <summary>
         /// 棋子编号0-31，分别对应的图像文件名
         /// </summary>
@@ -75,15 +77,17 @@ namespace Chess
         /// 阿拉伯数字0-9，对应的中文数字
         /// </summary>
         public static readonly string[] CnNumber = { "", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+        #endregion
 
-        public static List<Qipu.QPStep> CnNumberList = new();
+        public static List<Qipu.QPStep> CnNumberList = new();  // 棋谱中文步骤列表
 
-        public static Label JiangJunTiShi;
-        public static CustomClass.JueSha jueShaImage;
+        public static Label JiangJunTiShi; // 将军时的文字提示
 
-        public static Window_QiPu Window_QiPuKun; // 棋谱库窗口
+        public static CustomClass.JueSha jueShaImage; // 绝杀时显示图片
 
-        public static CustomClass.MyGraphics Arrows = new();
+        public static Window_QiPu Window_QiPuKu; // 棋谱库窗口
+
+        public static CustomClass.MyGraphics Arrows = new(); // 走棋指示箭头
 
         /// <summary>
         /// 棋子移动的处理，如果棋子移动后配方被将军，则不能移动。
@@ -108,13 +112,13 @@ namespace Chess
             QiPuRecord QRecord = new();
             QRecord.SetRecordData(QiZi, x0, y0, m, n, DieQz);
             QiPuRecordRoot.Cursor = QiPuRecordRoot.Cursor.AddChild(QRecord);
-
-            TreeViewItem treeitem = QiPuRecordRoot.GetTree();
-            Window_QiPuKun.jsonTree.Items.Clear();
-            Window_QiPuKun.jsonTree.Items.Add(treeitem);
+            QiPuRecordRoot.Cursor.IsSelected = true;
+            //TreeViewItem treeitem = QiPuRecordRoot.GetTree();
+            //Window_QiPuKun.jsonTree.Items.Clear();
+            //Window_QiPuKun.jsonTree.Items.Add(treeitem);
 
             QiPuSimpleRecordRoot = CopyQiPuToSimple(QiPuRecordRoot);
-            Window_QiPuKun.memostr.Text = JsonConvert.SerializeObject(QiPuSimpleRecordRoot);
+            Window_QiPuKu.memostr.Text = JsonConvert.SerializeObject(QiPuSimpleRecordRoot);
 
 
             for (int i = 0; i <= 8; i++)
@@ -221,9 +225,9 @@ namespace Chess
 
             QiPuRecordRoot.Cursor = QiPuRecordRoot;  // 回到根部
             QiPuRecordRoot.DeleteChildNode();
-            if (Window_QiPuKun!=null)
+            if (Window_QiPuKu!=null)
             {
-                Window_QiPuKun.jsonTree.Items.Clear();
+                Window_QiPuKu.jsonTree.Items.Clear();
             }
 
         }
@@ -259,6 +263,7 @@ namespace Chess
             if (QiPuRecordRoot.Cursor.GetParent() != null)
             {
                 QiPuRecordRoot.Cursor=QiPuRecordRoot.Cursor.GetParent();
+                QiPuRecordRoot.Cursor.IsSelected = true;
             }
         }
         /// <summary>

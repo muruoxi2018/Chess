@@ -51,11 +51,11 @@ namespace Chess
             Spy_window = new SpyWindow(); // 棋盘数据监视窗口
             Spy_window.Hide();
 
-            GlobalValue.Window_QiPuKun = new Window_QiPu(); // 棋谱库浏览窗口
-            GlobalValue.Window_QiPuKun.SetValue(LeftProperty, SystemParameters.WorkArea.Left);
-            GlobalValue.Window_QiPuKun.SetValue(TopProperty, SystemParameters.WorkArea.Top);
-            GlobalValue.Window_QiPuKun.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
-            GlobalValue.Window_QiPuKun.Hide();
+            GlobalValue.Window_QiPuKu = new Window_QiPu(); // 棋谱库浏览窗口
+            GlobalValue.Window_QiPuKu.SetValue(LeftProperty, SystemParameters.WorkArea.Left);
+            GlobalValue.Window_QiPuKu.SetValue(TopProperty, SystemParameters.WorkArea.Top);
+            GlobalValue.Window_QiPuKu.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
+            GlobalValue.Window_QiPuKu.Hide();
 
             GlobalValue.JiangJunTiShi = new()
             {
@@ -72,6 +72,7 @@ namespace Chess
             _ = grid.Children.Add(GlobalValue.jueShaImage);
             
             DrawGrid.Children.Add(GlobalValue.Arrows.grid); // 走棋提示箭头
+            
         }
 
         /// <summary>
@@ -223,13 +224,13 @@ namespace Chess
 
         private void OpenFuPanWindow(object sender, RoutedEventArgs e)
         {
-            if (GlobalValue.Window_QiPuKun.IsVisible)
+            if (GlobalValue.Window_QiPuKu.IsVisible)
             {
-                GlobalValue.Window_QiPuKun.Hide();
+                GlobalValue.Window_QiPuKu.Hide();
             }
             else
             {
-                GlobalValue.Window_QiPuKun.Show();
+                GlobalValue.Window_QiPuKu.Show();
             }
         }
     }

@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Collections;
 using Newtonsoft.Json;
 using System.Windows.Controls;
+using System.Drawing;
+using System.ComponentModel;
 
 namespace Chess.SuanFa
 {
@@ -61,29 +63,50 @@ namespace Chess.SuanFa
             }
 
         }
-        public class QiPuRecord
+        public class QiPuRecord: INotifyPropertyChanged
         {
             private QiPuRecord ParentNode { get; set; } // 父结点
-            public List<QiPuRecord> ChildNode { get; set; }  // 子结点
+            public ObservableCollection<QiPuRecord> ChildNode { get; set; }  // 子结点
             public QiPuRecord Cursor { get; set; }  // 当前结点游标指针，仅根结点游标有用
             public int Id { get; set; } // 步数
             public string Nm { get; set; } // 数字代码
             public string Cn { get; set; } // 中文代码
             public string Memo { get; set; } // 备注
             public StepCode StepData { get; set; } // 棋谱记录
+            public string SideColor { get; set; }  // RED=红方，BLACK=黑方
+            private bool _isSelected;
+            public bool IsSelected { 
+                get { return _isSelected; }
+                set 
+                {
+                    _isSelected=value;
+                    INotifyPropertyChanged("IsSelected");
+                } }    // 是否选中
+
+            private void INotifyPropertyChanged(string v)
+            {
+                if (this.PropertyChanged != null)
+                    this.PropertyChanged(this, new PropertyChangedEventArgs(v));
+            }
+
             public QiPuRecord()
             {
                 ParentNode = null;
-                ChildNode = new List<QiPuRecord>();
+                ChildNode = new ObservableCollection<QiPuRecord>();
                 Cursor = this;
+                SideColor = "Red";
+                IsSelected = false;
             }
             public QiPuRecord(QiPuRecord recordNode)
             {
                 ParentNode = recordNode;
                 recordNode.ChildNode.Add(this);
-                ChildNode = new List<QiPuRecord>();
+                ChildNode = new ObservableCollection<QiPuRecord>();
                 Cursor = null;
             }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
             public QiPuRecord AddChild(QiPuRecord child)
             {
                 foreach (var item in ChildNode)
@@ -101,7 +124,7 @@ namespace Chess.SuanFa
             }
             public void DeleteChildNode()
             {
-                ChildNode = new List<QiPuRecord>();
+                ChildNode = new ObservableCollection<QiPuRecord>();
             }
             public bool IsRoot()
             {
@@ -172,7 +195,7 @@ namespace Chess.SuanFa
                 Cn = char1 + char2 + char3 + char4;
                 Memo = "";
                 StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
-
+                SideColor = QiZi is > 0 and < 15 ? "Black" : "Red";
                 //QiPuList.Add(this);
             }
             private int getDepth()
@@ -208,7 +231,7 @@ namespace Chess.SuanFa
             public QiPuSimpleRecord()
             {
                 Child = new List<QiPuSimpleRecord>();
-             }
+            }
             public void CopyDataFromStep(StepCode code)
             {
                 if (code == null) return;

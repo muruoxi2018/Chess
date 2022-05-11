@@ -12,10 +12,11 @@ namespace Chess.OpenSource
     /// </summary>
     public class SqliteHelper
     {
-        //private static readonly string DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";  //  数据库绝对路径
-        private static readonly string DbFile = @"E:\source\repos\Chess\DB\KaiJuKu.db";  //  数据库绝对路径
+        private static readonly string DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";  //  数据库绝对路径
+        //private static readonly string DbFile = @"E:\source\repos\Chess\DB\KaiJuKu.db";  //  数据库绝对路径
         //private static readonly string DbFile = System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db"; // 软件发布时使用此设置
         private static readonly string DbSourcePath = @"data source="+ DbFile;
+
         /// <summary>
         /// 检查数据库文件是否存在
         /// </summary>
