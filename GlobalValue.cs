@@ -3,32 +3,47 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using static Chess.SuanFa.Qipu;
+using Chess.CustomClass;
+using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace Chess
 {
     public static class GlobalValue
     {
+        public const float GRID_WIDTH = 67.5f;   //棋盘格大小为 67.5*67.5
+        public const bool BLACKSIDE = false;  // 黑方
+        public const bool REDSIDE = true;   //红方
+        public static bool SideTag;  // 当前走棋方
+        public static bool GameOver; // 游戏结束
         public static bool QiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
+        public static string qipustr;   // 棋谱转换后的字符串
+        public static int CurrentQiZi;  // 当前选定的棋子
         public static int[,] QiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
+        
+        #region // 用户界面元素
         public static PathPoint[,] PathPointImage = new PathPoint[9, 10];  // 棋子可走路径的圆点标记
         public static QiZi[] QiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
         public static QiZi YuanWeiZhi;  // 棋子走动后在原位置显示圆圈
-        public static string qipustr;   // 棋谱转换后的字符串
-        public static int CurrentQiZi;  // 当前选定的棋子
-        public const bool BLACKSIDE = false;  // 黑方
-        public const bool REDSIDE = true;   //红方
-        public static bool SideTag, GameOver;
-        public const float GRID_WIDTH = 67.5f;   //棋盘格为 67.5*67.5
+        public static Label JiangJunTiShi; // 将军时的文字提示
+        public static JueSha jueShaImage; // 绝杀时显示图片
+        public static Window_QiPu Window_QiPuKu; // 棋谱库窗口
+        public static MyGraphics Arrows = new(); // 走棋指示箭头
+        public static Ellipse RedSideRect = new();  // 红方走棋提示灯
+        public static Ellipse BlackSideRect = new();  // 黑方走棋提示灯
+        #endregion
 
-        public static ObservableCollection<QPStep> QiPuFuPanList = new(); // 复盘棋谱步骤列表
-
+        #region 数据存储
+        public static ObservableCollection<QPStep> QiPuFuPanList = new(); // 复盘棋谱步骤列表，后期将弃用本变量
         public static QiPuRecord QiPuRecordRoot = new(); // 棋谱树型数据结构
-
         public static QiPuSimpleRecord QiPuSimpleRecordRoot = new(); // 棋谱树型数据结构的精简版
+        public static List<Qipu.QPStep> CnNumberList = new();  // 棋谱中文步骤列表
+        #endregion
 
         #region 棋子及棋盘基础数据
         /// <summary>
@@ -79,15 +94,6 @@ namespace Chess
         public static readonly string[] CnNumber = { "", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
         #endregion
 
-        public static List<Qipu.QPStep> CnNumberList = new();  // 棋谱中文步骤列表
-
-        public static Label JiangJunTiShi; // 将军时的文字提示
-
-        public static CustomClass.JueSha jueShaImage; // 绝杀时显示图片
-
-        public static Window_QiPu Window_QiPuKu; // 棋谱库窗口
-
-        public static CustomClass.MyGraphics Arrows = new(); // 走棋指示箭头
 
         /// <summary>
         /// 棋子移动的处理，如果棋子移动后配方被将军，则不能移动。
@@ -111,13 +117,13 @@ namespace Chess
 
             QiPuRecord QRecord = new();
             QRecord.SetRecordData(QiZi, x0, y0, m, n, DieQz);
-            QiPuRecordRoot.Cursor = QiPuRecordRoot.Cursor.AddChild(QRecord);
+            QiPuRecordRoot.Cursor = QiPuRecordRoot.Cursor.AddChild(QRecord);  // 棋谱增加新的节点，指针更新为该节点
             QiPuRecordRoot.Cursor.IsSelected = true;
             //TreeViewItem treeitem = QiPuRecordRoot.GetTree();
             //Window_QiPuKun.jsonTree.Items.Clear();
             //Window_QiPuKun.jsonTree.Items.Add(treeitem);
 
-            QiPuSimpleRecordRoot = ConvertQiPuToSimple(QiPuRecordRoot);
+            QiPuSimpleRecordRoot = ConvertQiPuToSimple(QiPuRecordRoot);  // 更新简易棋谱记录
             Window_QiPuKu.memostr.Text = JsonConvert.SerializeObject(QiPuSimpleRecordRoot);
 
 
@@ -125,18 +131,18 @@ namespace Chess
             {
                 for (int j = 0; j <= 9; j++)
                 {
-                    PathPointImage[i, j].HasPoint = false;
+                    PathPointImage[i, j].HasPoint = false; // 走棋后，隐藏走棋路径
                 }
             }
 
             if (JiangJun.IsJueSha(QiZi)) // 检查是否绝杀
             {
-                jueShaImage.SetJueSha();
+                jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
             }
 
-            if (DieQz != -1)
+            if (DieQz != -1) // 如果杀死了棋子
             {
-                QiZiArray[DieQz].SetDied();
+                QiZiArray[DieQz].SetDied(); 
                 if (sound)
                 {
                     /*Form2.mp1.FileName := 'sounds/eat.mp3';
@@ -153,10 +159,22 @@ namespace Chess
                     Form2.mp1.Play;*/
                 }
             }
-            AnimationMove(QiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
 
             SideTag = !SideTag;  // 变换走棋方
-            CurrentQiZi = 100;
+            if (SideTag==BLACKSIDE)
+            {
+                // 黑方走棋指示
+                BlackSideRect.Fill=Brushes.LightGoldenrodYellow;
+                RedSideRect.Fill=Brushes.Gray;
+            }
+            else
+            {
+                // 红方走棋指示
+                BlackSideRect.Fill = Brushes.Gray;
+                RedSideRect.Fill = Brushes.LightGoldenrodYellow;
+            }
+            CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
+            AnimationMove(QiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
 
         }
         /// <summary>
@@ -195,6 +213,27 @@ namespace Chess
             #endregion
             QiZiArray[qizi].BeginAnimation(Canvas.LeftProperty, PAx);
             QiZiArray[qizi].BeginAnimation(Canvas.TopProperty, PAy);
+
+            DoubleAnimation DAscale = new()
+            {
+                From = 1,
+                To = 2,
+                FillBehavior = FillBehavior.Stop,
+                Duration = new Duration(TimeSpan.FromSeconds(0.2))
+            };
+            ScaleTransform scale = new();
+            if (SideTag == REDSIDE)
+            {
+                RedSideRect.RenderTransform = scale;
+                RedSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
+            }
+            if (SideTag == BLACKSIDE)
+            {
+                BlackSideRect.RenderTransform = scale;
+                BlackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
+            }
+            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale);
+            scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale);
         }
         /// <summary>
         /// 初始化界面，棋盘设置为开局状态，但棋盘翻转状态不会重置
@@ -229,6 +268,9 @@ namespace Chess
             {
                 Window_QiPuKu.jsonTree.Items.Clear();
             }
+            BlackSideRect.Fill = Brushes.Gray;
+            RedSideRect.Fill = Brushes.LightGoldenrodYellow;
+
 
         }
         /// <summary>

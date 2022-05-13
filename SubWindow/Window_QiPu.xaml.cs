@@ -201,7 +201,7 @@ namespace Chess
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
                 if (qpIndex <= qPSteps.Length - 2)
                 {
-                    QPStep nextstep = GlobalValue.QiPuFuPanList[qpIndex + 1];
+                    QPStep nextstep = GlobalValue.QiPuFuPanList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
                     GlobalValue.Arrows.SetPathDataAndShow(0,
                         new System.Drawing.Point(nextstep.StepRecode.X0,nextstep.StepRecode.Y0),
                         new System.Drawing.Point(nextstep.StepRecode.X1,nextstep.StepRecode.Y1));

@@ -29,7 +29,7 @@ namespace Chess.CustomClass
             IsHitTestVisible = false;
         }
 
-        public void SetJueSha()
+        public void ShowJueShaImage()
         {
             Visibility = Visibility.Visible;
             image.Visibility = Visibility.Visible;

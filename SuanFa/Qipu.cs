@@ -106,7 +106,11 @@ namespace Chess.SuanFa
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
-
+            /// <summary>
+            /// 棋谱增加子节点
+            /// </summary>
+            /// <param name="child"></param>
+            /// <returns>返回增加的节点</returns>
             public QiPuRecord AddChild(QiPuRecord child)
             {
                 foreach (var item in ChildNode)
@@ -142,13 +146,17 @@ namespace Chess.SuanFa
             {
                 return ParentNode;
             }
+            /// <summary>
+            /// 设置棋谱记录数据
+            /// </summary>
+            /// <param name="code">已有的记录</param>
             public void SetRecordData(StepCode code)
             {
                 if (code == null) return;
                 SetRecordData(code.QiZi, code.X0, code.Y0, code.X1, code.Y1, code.DieQz);
             }
             /// <summary>
-            /// 添加一条棋谱记录
+            /// 设置棋谱记录数据
             /// </summary>
             /// <param name="QiZi"></param>
             /// <param name="x0"></param>

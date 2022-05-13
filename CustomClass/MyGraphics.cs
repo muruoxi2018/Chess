@@ -20,9 +20,9 @@ namespace Chess.CustomClass
     {
         private readonly static int _maxNum = 9; //提示箭头数量上限为9个，对应变招数量，所以多了也没用。
         public Grid grid = new(); // 绘图板，承载所有绘图元素
-        private readonly Path[] path = new Path[_maxNum];  // 箭头本体。
-        private readonly TextBlock[] textBlocks = new TextBlock[_maxNum];  // 箭头上标识的数字
-        private readonly Ellipse[] ellipses = new Ellipse[_maxNum];    // 数字标识的背景圆圈
+        private readonly Path[] ArrowPath = new Path[_maxNum];  // 箭头本体。
+        private readonly TextBlock[] ArrowText = new TextBlock[_maxNum];  // 箭头上标识的数字
+        private readonly Ellipse[] ArrowEllipses = new Ellipse[_maxNum];    // 数字标识的背景圆圈
         private static readonly int arrowAngle = 160; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowAngle1 = 170; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowLong = 30; // 箭头斜边的长度
@@ -35,9 +35,9 @@ namespace Chess.CustomClass
             grid.Opacity = 1;
             grid.HorizontalAlignment = HorizontalAlignment.Stretch;
             grid.VerticalAlignment = VerticalAlignment.Stretch;
-            for (int i = 0; i < path.Length; i++)
+            for (int i = 0; i < ArrowPath.Length; i++)
             {
-                path[i] = new Path // 箭头本体
+                ArrowPath[i] = new Path // 箭头本体
                 {
                     Stroke = Brushes.ForestGreen,
                     Fill = Brushes.GreenYellow,
@@ -49,9 +49,9 @@ namespace Chess.CustomClass
                     Visibility = Visibility.Hidden
                 };
             }
-            for (int i = 0; i < textBlocks.Length; i++)
+            for (int i = 0; i < ArrowText.Length; i++)
             {
-                textBlocks[i] = new TextBlock  // 箭头上标识的数字
+                ArrowText[i] = new TextBlock  // 箭头上标识的数字
                 {
                     Text = (i + 1).ToString(),
                     FontSize = 16,
@@ -62,9 +62,9 @@ namespace Chess.CustomClass
                     Foreground = Brushes.Black
                 };
             }
-            for (int i = 0; i < ellipses.Length; i++)
+            for (int i = 0; i < ArrowEllipses.Length; i++)
             {
-                ellipses[i] = new Ellipse  // 数字标识的背景圆圈
+                ArrowEllipses[i] = new Ellipse  // 数字标识的背景圆圈
                 {
                     Width = 20,
                     Height = 20,
@@ -76,15 +76,15 @@ namespace Chess.CustomClass
                 };
             }
 
-            foreach (Path item in path)
+            foreach (Path item in ArrowPath)
             {
                 _ = grid.Children.Add(item);
             }
-            foreach (Ellipse item in ellipses)
+            foreach (Ellipse item in ArrowEllipses)
             {
                 _ = grid.Children.Add(item);
             }
-            foreach (TextBlock item in textBlocks)
+            foreach (TextBlock item in ArrowText)
             {
                 _ = grid.Children.Add(item);
             }
@@ -94,15 +94,15 @@ namespace Chess.CustomClass
         /// </summary>
         public void HideAllPath()
         {
-            foreach (Path item in path)
+            foreach (Path item in ArrowPath)
             {
                 item.Visibility = Visibility.Hidden;
             }
-            foreach (Ellipse item in ellipses)
+            foreach (Ellipse item in ArrowEllipses)
             {
                 item.Visibility = Visibility.Hidden;
             }
-            foreach (TextBlock item in textBlocks)
+            foreach (TextBlock item in ArrowText)
             {
                 item.Visibility = Visibility.Hidden;
             }
@@ -170,8 +170,8 @@ namespace Chess.CustomClass
             yn = (float)Math.Floor(ym + (arrowLong * 2 / 3 * Math.Sin(angle1)));
             pointFs.Add(new PointF((float)xn, (float)yn));  // 存入第六个点
 
-            path[ind].Data = Geometry.Parse(MakePathData(pointFs));
-            path[ind].Visibility = Visibility.Visible;
+            ArrowPath[ind].Data = Geometry.Parse(MakePathData(pointFs));
+            ArrowPath[ind].Visibility = Visibility.Visible;
 
             double circleX, circleY;
             double cirlcePos;
@@ -180,11 +180,11 @@ namespace Chess.CustomClass
             circleX = Math.Floor(x1 + (cirlcePos * Math.Cos(angle))) - 10; // 10是圆圈的半径。计算结果为圆心位置，而margin是从其边界计算，因此需用半径修正数据。
             circleY = Math.Floor(y1 + (cirlcePos * Math.Sin(angle))) - 10;
 
-            ellipses[ind].Margin = new Thickness(circleX, circleY, 0, 0);
-            ellipses[ind].Visibility = Visibility.Visible;
+            ArrowEllipses[ind].Margin = new Thickness(circleX, circleY, 0, 0);
+            ArrowEllipses[ind].Visibility = Visibility.Visible;
 
-            textBlocks[ind].Margin = new Thickness(circleX + 5, circleY, 0, 0); // 5是经验数据，用于修正文字的偏移。文字的字体大小为16时，在+5后，文字正好在圆圈中心。如果字体大小有改变，需修正此数据。
-            textBlocks[ind].Visibility = Visibility.Visible;
+            ArrowText[ind].Margin = new Thickness(circleX + 5, circleY, 0, 0); // 5是经验数据，用于修正文字的偏移。文字的字体大小为16时，在+5后，文字正好在圆圈中心。如果字体大小有改变，需修正此数据。
+            ArrowText[ind].Visibility = Visibility.Visible;
 
         }
         /// <summary>
