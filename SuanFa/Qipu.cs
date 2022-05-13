@@ -128,7 +128,8 @@ namespace Chess.SuanFa
             }
             public void DeleteChildNode()
             {
-                ChildNode = new ObservableCollection<QiPuRecord>();
+                ChildNode.Clear();
+                //ChildNode = new ObservableCollection<QiPuRecord>();
             }
             public bool IsRoot()
             {
@@ -167,7 +168,7 @@ namespace Chess.SuanFa
             public void SetRecordData(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
             {
                 string char1 = GlobalValue.QiZiCnName[QiZi];
-                string char2 = QiZi is > 0 and < 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
+                string char2 = QiZi is >= 0 and <= 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
                 string char3 = "";
                 string char4;
                 #region 棋谱翻译为中文
@@ -194,7 +195,7 @@ namespace Chess.SuanFa
                         1 or 2 or 3 or 4 or 5 or 6 => (x1 + 1).ToString(),
                         17 or 18 or 19 or 20 or 21 or 22 => GlobalValue.CnNumber[9 - x1],
                         // 其他所有可以直走的棋子
-                        _ => QiZi is > 0 and < 15 ? m.ToString() : GlobalValue.CnNumber[m],
+                        _ => QiZi is >=0 and <= 15 ? m.ToString() : GlobalValue.CnNumber[m],
                     };
 
                 }
@@ -203,7 +204,7 @@ namespace Chess.SuanFa
                 Cn = char1 + char2 + char3 + char4;
                 Memo = "";
                 StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
-                SideColor = QiZi is > 0 and < 15 ? "Black" : "Red";
+                SideColor = QiZi is >= 0 and <= 15 ? "Black" : "Red";
                 //QiPuList.Add(this);
             }
             private int getDepth()

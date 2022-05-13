@@ -217,9 +217,9 @@ namespace Chess
             DoubleAnimation DAscale = new()
             {
                 From = 1,
-                To = 2,
+                To = 1.5,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.2))
+                Duration = new Duration(TimeSpan.FromSeconds(0.1))
             };
             ScaleTransform scale = new();
             if (SideTag == REDSIDE)
@@ -264,14 +264,10 @@ namespace Chess
 
             QiPuRecordRoot.Cursor = QiPuRecordRoot;  // 回到根部
             QiPuRecordRoot.DeleteChildNode();
-            if (Window_QiPuKu!=null)
-            {
-                Window_QiPuKu.jsonTree.Items.Clear();
-            }
+            
             BlackSideRect.Fill = Brushes.Gray;
             RedSideRect.Fill = Brushes.LightGoldenrodYellow;
-
-
+            
         }
         /// <summary>
         /// 悔棋按钮
