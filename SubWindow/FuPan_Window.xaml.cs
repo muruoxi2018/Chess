@@ -17,9 +17,9 @@ namespace Chess.SubWindow
         public FuPan_Window()
         {
             InitializeComponent();
-            FuPanDataGrid.ItemsSource = GlobalValue.QiPuFuPanList;
+            FuPanDataGrid.ItemsSource = GlobalValue.FuPanDataList;
             GlobalValue.Reset();
-            qPSteps = GlobalValue.QiPuFuPanList.ToArray();
+            qPSteps = GlobalValue.FuPanDataList.ToArray();
             qpIndex = -1;
 
 
@@ -77,7 +77,7 @@ namespace Chess.SubWindow
             }
             for (int i = 0; i < Qipu.QiPuList.Count; i++)
             {
-                QiPuList[i].Memo = GlobalValue.QiPuFuPanList[i].Memo;
+                QiPuList[i].Memo = GlobalValue.FuPanDataList[i].Memo;
             }
         }
     }

@@ -29,7 +29,7 @@ namespace Chess
 
         private void FormLoad(object sender, RoutedEventArgs e)
         {
-            JiPuData.ItemsSource = Qipu.QiPuList;
+            JiPuDataGrid.ItemsSource = Qipu.QiPuList;
 
         }
         /// <summary>
@@ -44,14 +44,14 @@ namespace Chess
         public void Save_jipu()
         {
             List<List<Qipu.QPStep>> listlistQipu = new();
-            listlistQipu.Add(GlobalValue.QiPuFuPanList.ToList());
+            listlistQipu.Add(GlobalValue.FuPanDataList.ToList());
             ReBuildQipuList(listlistQipu, Qipu.QiPuList.ToList());
-            GlobalValue.QiPuFuPanList.Clear();
+            GlobalValue.FuPanDataList.Clear();
             foreach (Qipu.QPStep qp in listlistQipu[0])
             {
-                GlobalValue.QiPuFuPanList.Add(qp);
+                GlobalValue.FuPanDataList.Add(qp);
             }
-            GlobalValue.Window_QiPuKu.DrawTree(GlobalValue.QiPuFuPanList);
+            GlobalValue.Window_QiPuKu.GetMemo(GlobalValue.FuPanDataList);
         }
         /// <summary>
         /// 递归查找变招位置，并将变招存入相应分支

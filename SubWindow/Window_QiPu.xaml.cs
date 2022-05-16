@@ -30,7 +30,8 @@ namespace Chess
             InitializeComponent();
             //FuPanWidow = new SubWindow.FuPan_Window(); // 复盘窗口。调试用，暂不删除。
             //FuPanWidow.Hide();
-            FuPanDataGrid.ItemsSource = GlobalValue.QiPuFuPanList;
+            FuPanDataGrid.ItemsSource = GlobalValue.FuPanDataList;
+            TrueTree.ItemsSource = GlobalValue.QiPuRecordRoot.ChildNode;
 
         }
         /// <summary>
@@ -43,7 +44,7 @@ namespace Chess
             DataTable sr = OpenSource.SqliteHelper.Select("mybook", "rowid,*");
             if (sr == null) return;
             DbDataGrid.ItemsSource = sr.DefaultView;
-            jsonTree.ItemsSource=GlobalValue.QiPuRecordRoot.ChildNode;
+            
         }
         /// <summary>
         /// 重新入棋谱库
@@ -63,40 +64,32 @@ namespace Chess
         /// <param name="e"></param>
         private void OnMouseLeftButtonUP(object sender, MouseButtonEventArgs e)
         {
-            if (DbDataGrid.Items.Count == 0) return;   
-            string jsonstr = ((DataRowView)DbDataGrid.SelectedItem).Row["jsonrecord"].ToString(); // 获得点击行的数据
-            ObservableCollection<Qipu.QPStep> ql = JsonConvert.DeserializeObject<ObservableCollection<Qipu.QPStep>>(jsonstr);
-            GlobalValue.QiPuFuPanList = ql;
-            videoUrl.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["video"].ToString();
-            memostr.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString() + DrawTree(ql);
+            if (DbDataGrid.Items.Count == 0) return;
             rowid = ((DataRowView)DbDataGrid.SelectedItem).Row["rowid"].ToString();
             RowIdText.Text = $"棋谱编号：{rowid}";
-            qPSteps = GlobalValue.QiPuFuPanList.ToArray();
-            FuPanDataGrid.ItemsSource = GlobalValue.QiPuFuPanList;
+            videoUrl.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["video"].ToString();
+
+            string jsonstr = ((DataRowView)DbDataGrid.SelectedItem).Row["jsonrecord"].ToString(); // 获得点击行的数据
+            GlobalValue.FuPanDataList = JsonConvert.DeserializeObject<ObservableCollection<Qipu.QPStep>>(jsonstr);
+            memostr.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString() + GetMemo(GlobalValue.FuPanDataList);
+            qPSteps = GlobalValue.FuPanDataList.ToArray();
+            FuPanDataGrid.ItemsSource = GlobalValue.FuPanDataList;
         }
         /// <summary>
-        /// 绘制树形棋谱
+        /// 棋谱中的所有注释
         /// </summary>
         /// <param name="QpList">走棋步骤列表</param>
         /// <returns>棋谱中的全部说明文字</returns>
-        public string DrawTree(ObservableCollection<Qipu.QPStep> QpList)
+        public string GetMemo(ObservableCollection<Qipu.QPStep> QpList)
         {
-
-            TreeViewItem tree = new();
-            tree.Header = "root";
-            tree.IsExpanded = true;
             string memostrs = "";
-
             foreach (Qipu.QPStep qp in QpList)
             {
-                _ = tree.Items.Add(qp.ToTreeNode());
                 if (!string.IsNullOrEmpty(qp.Memo))
                 {
                     memostrs += System.Environment.NewLine + $"第{qp.Id}步：{qp.Memo}";
                 }
             }
-            jsonTree.Items.Clear();
-            _ = jsonTree.Items.Add(tree);
             return memostrs;
         }
 
@@ -135,9 +128,9 @@ namespace Chess
         /// <param name="e"></param>
         private void UpdateButtonClick(object sender, RoutedEventArgs e)
         {
-            if (GlobalValue.QiPuFuPanList.Count < 1) return;
+            if (GlobalValue.FuPanDataList.Count < 1) return;
             System.Collections.Generic.Dictionary<string, object> dic = new();
-            dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.QiPuFuPanList));
+            dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.FuPanDataList));
             if (SqliteHelper.Update("mybook", $"rowid={rowid}", dic) > 0)
             {
                 MessageBox.Show("数据保存成功！", "提示");
@@ -154,7 +147,7 @@ namespace Chess
         /// <param name="e"></param>
         private void OnFuPanDataGridClick(object sender, MouseButtonEventArgs e)
         {
-            if (GlobalValue.QiPuFuPanList.Count < 1) return;
+            if (GlobalValue.FuPanDataList.Count < 1) return;
             GlobalValue.Reset();
             qpIndex = -1;
 
@@ -167,7 +160,7 @@ namespace Chess
             }
             for (int i = 0; i < Qipu.QiPuList.Count; i++)
             {
-                QiPuList[i].Memo = GlobalValue.QiPuFuPanList[i].Memo;
+                QiPuList[i].Memo = GlobalValue.FuPanDataList[i].Memo;
             }
 
         }
@@ -193,7 +186,7 @@ namespace Chess
         /// <param name="e"></param>
         private void NextStep(object sender, RoutedEventArgs e)
         {
-            if (GlobalValue.QiPuFuPanList.Count < 1) return;
+            if (GlobalValue.FuPanDataList.Count < 1) return;
             if (qpIndex < qPSteps.Length - 1)
             {
                 qpIndex++;
@@ -201,11 +194,11 @@ namespace Chess
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
                 if (qpIndex <= qPSteps.Length - 2)
                 {
-                    QPStep nextstep = GlobalValue.QiPuFuPanList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
+                    QPStep nextstep = GlobalValue.FuPanDataList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
                     GlobalValue.Arrows.SetPathDataAndShow(0,
                         new System.Drawing.Point(nextstep.StepRecode.X0,nextstep.StepRecode.Y0),
                         new System.Drawing.Point(nextstep.StepRecode.X1,nextstep.StepRecode.Y1));
-                    var points = Qipu.GetListPoint(GlobalValue.QiPuFuPanList[qpIndex]);
+                    var points = Qipu.GetListPoint(GlobalValue.FuPanDataList[qpIndex]);
                     int index = 1;
                     foreach (var point in points)
                     {
@@ -222,7 +215,7 @@ namespace Chess
         /// <param name="e"></param>
         private void PreStep(object sender, RoutedEventArgs e)
         {
-            if (GlobalValue.QiPuFuPanList.Count < 1) return;
+            if (GlobalValue.FuPanDataList.Count < 1) return;
             if (qpIndex > -1)
             {
                 GlobalValue.HuiQi();

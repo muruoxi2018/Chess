@@ -25,43 +25,6 @@ namespace Chess.SuanFa
             {
                 ChildSteps = new List<List<QPStep>>();
             }
-            public TreeViewItem ToTreeNode()
-            {
-                string childSTR = ChildSteps.Count < 1 ? "" : $" -->({ChildSteps.Count})";
-
-                TreeViewItem tree = new()
-                {
-                    Header = $"{Id:D2} {Cn}{childSTR}"
-                };
-                /*_ = tree.Items.Add(new TreeViewItem()
-                {
-                    Header = "数字编码: " + Nm
-                });
-                _ = tree.Items.Add(new TreeViewItem()
-                {
-                    Header = "备注: " + Memo
-                });*/
-                List<TreeViewItem> list = StepRecode.TreeViewItem();
-                foreach (TreeViewItem item in list)
-                {
-                    //_ = tree.Items.Add(item);
-                }
-                if (ChildSteps != null)
-                {
-                    foreach (List<QPStep> qps in ChildSteps)
-                    {
-                        TreeViewItem childItem = new();
-                        childItem.Header = $"变招: {ChildSteps.IndexOf(qps) + 1}";
-                        foreach (QPStep qp in qps)
-                        {
-                            childItem.Items.Add(qp.ToTreeNode());
-                        }
-                        _ = tree.Items.Add(childItem);
-                    }
-                }
-                return tree;
-            }
-
         }
         public class QiPuRecord: INotifyPropertyChanged
         {
@@ -237,6 +200,8 @@ namespace Chess.SuanFa
         {
             public List<QiPuSimpleRecord> Child { get; set; }  // 子结点
             public StepCode Data { get; set; } // 棋谱记录
+            public string Memo { get; set; } // 备注
+
             public QiPuSimpleRecord()
             {
                 Child = new List<QiPuSimpleRecord>();

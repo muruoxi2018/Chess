@@ -39,7 +39,7 @@ namespace Chess
         #endregion
 
         #region 数据存储
-        public static ObservableCollection<QPStep> QiPuFuPanList = new(); // 复盘棋谱步骤列表，后期将弃用本变量
+        public static ObservableCollection<QPStep> FuPanDataList = new(); // 复盘棋谱步骤列表，后期将弃用本变量
         public static QiPuRecord QiPuRecordRoot = new(); // 棋谱树型数据结构
         public static QiPuSimpleRecord QiPuSimpleRecordRoot = new(); // 棋谱树型数据结构的精简版
         public static List<Qipu.QPStep> CnNumberList = new();  // 棋谱中文步骤列表
@@ -219,7 +219,7 @@ namespace Chess
                 From = 1,
                 To = 1.5,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.1))
+                Duration = new Duration(TimeSpan.FromSeconds(0.2))
             };
             ScaleTransform scale = new();
             if (SideTag == REDSIDE)
@@ -313,6 +313,7 @@ namespace Chess
         public static QiPuSimpleRecord ConvertQiPuToSimple(QiPuRecord FullQipu)
         {
             QiPuSimpleRecord SimpleQipu = new();
+            SimpleQipu.Memo = FullQipu.Memo;
             SimpleQipu.CopyDataFromStep(FullQipu.StepData);
             foreach (QiPuRecord Recode in FullQipu.ChildNode)
             {
@@ -330,6 +331,7 @@ namespace Chess
         public static QiPuRecord ConvertQiPuToFull(QiPuSimpleRecord SimpleQipu)
         {
             QiPuRecord Qipu = new();
+            Qipu.Memo=SimpleQipu.Memo;
             Qipu.SetRecordData(SimpleQipu.Data);
             foreach (QiPuSimpleRecord Recode in SimpleQipu.Child)
             {
