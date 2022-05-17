@@ -64,24 +64,14 @@
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding ChildNode}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Rectangle
-                                    Width="12" 
-                                    Height="12" 
-                                    Fill="{Binding SideColor}"/>
                                     <TextBlock Text=" "/>
-                                    <TextBlock Text="{Binding Id}" Foreground="{Binding SideColor}"/>
-                                    <TextBlock Text=". "  Foreground="{Binding SideColor}"/>
-                                    <TextBlock Text="{Binding Cn}" Foreground="{Binding SideColor}"/>
+                                    <TextBlock Text="{Binding Id}"/>
+                                    <TextBlock Text=". "/>
+                                    <TextBlock Text="{Binding Cn}"/>
                                 </StackPanel>
                             </HierarchicalDataTemplate>
 
                         </TreeView.ItemTemplate>
-                        <TreeView.ItemContainerStyle>
-                            <Style TargetType="TreeViewItem">
-                                <Setter Property="IsExpanded" Value="true"/>
-                                <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
-                            </Style>
-                        </TreeView.ItemContainerStyle>
                         <TreeView.Resources>
                             <!--选择时的背景色-->
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Green"/>

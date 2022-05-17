@@ -13,6 +13,7 @@ namespace Chess.SuanFa
     {
 
         public static ObservableCollection<QPStep> QiPuList = new(); // 棋谱步骤列表
+        public static QPStep CompressQiPu = new();
         public class QPStep // 棋谱步骤
         {
             public int Id { get; set; } // 步数
@@ -20,13 +21,41 @@ namespace Chess.SuanFa
             public string Cn { get; set; } // 中文代码
             public string Memo { get; set; } // 备注
             public StepCode StepRecode { get; set; } // 棋谱记录
-            public List<List<QPStep>> ChildSteps { get; set; }   // 棋谱变化
+            public ObservableCollection<ObservableCollection<QPStep>> ChildSteps { get; set; }   // 棋谱变化
             public QPStep()
             {
-                ChildSteps = new List<List<QPStep>>();
+                ChildSteps = new ObservableCollection<ObservableCollection<QPStep>>();
+            }
+            public void ConvertFromQiPuRecord(QiPuRecord qrecord)
+            {
+                ChildSteps.Clear();
+                ChildSteps.Add(ConvertData(qrecord));
+            }
+            private ObservableCollection<QPStep> ConvertData(QiPuRecord qrcd)
+            {
+                ObservableCollection<QPStep> qproot = new ObservableCollection<QPStep>();
+                QiPuRecord qrcd1 = qrcd;
+                do
+                {
+                    if (!qrcd1.IsLeaf()) qrcd1 = qrcd1.ChildNode[0];
+                    QPStep qp0 = new QPStep();
+                    qp0.CopyDataFromQiPuRecord(qrcd1);
+                    qproot.Add(qp0);
+                    
+                } while (!qrcd1.IsLeaf());
+
+                return qproot;
+
+            }
+            private void CopyDataFromQiPuRecord(QiPuRecord qrecord)
+            {
+                Id = qrecord.Id;
+                Nm = qrecord.Nm;
+                Cn = qrecord.Cn;
+                Memo = qrecord.Memo;
             }
         }
-        public class QiPuRecord: INotifyPropertyChanged
+        public class QiPuRecord : INotifyPropertyChanged
         {
             private QiPuRecord ParentNode { get; set; } // 父结点
             public ObservableCollection<QiPuRecord> ChildNode { get; set; }  // 子结点
@@ -38,13 +67,15 @@ namespace Chess.SuanFa
             public StepCode StepData { get; set; } // 棋谱记录
             public string SideColor { get; set; }  // RED=红方，BLACK=黑方
             private bool _isSelected;
-            public bool IsSelected { 
+            public bool IsSelected
+            {
                 get { return _isSelected; }
-                set 
+                set
                 {
-                    _isSelected=value;
+                    _isSelected = value;
                     INotifyPropertyChanged("IsSelected");
-                } }    // 是否选中
+                }
+            }    // 是否选中
 
             private void INotifyPropertyChanged(string v)
             {
@@ -158,7 +189,7 @@ namespace Chess.SuanFa
                         1 or 2 or 3 or 4 or 5 or 6 => (x1 + 1).ToString(),
                         17 or 18 or 19 or 20 or 21 or 22 => GlobalValue.CnNumber[9 - x1],
                         // 其他所有可以直走的棋子
-                        _ => QiZi is >=0 and <= 15 ? m.ToString() : GlobalValue.CnNumber[m],
+                        _ => QiZi is >= 0 and <= 15 ? m.ToString() : GlobalValue.CnNumber[m],
                     };
 
                 }
@@ -231,26 +262,6 @@ namespace Chess.SuanFa
                 Y1 = y1;
                 DieQz = dieQz;
             }
-            public List<TreeViewItem> TreeViewItem()
-            {
-                List<TreeViewItem> tree = new();
-                tree.Add(new TreeViewItem()
-                {
-                    Header = "棋子编号: " + QiZi
-                });
-
-                tree.Add(new TreeViewItem()
-                {
-                    Header = $"从({X0:D},{Y0:D})走到({X1:D},{Y1:D})"
-                });
-                tree.Add(new TreeViewItem()
-                {
-                    Header = "杀死棋子: " + ((DieQz > -1) ? DieQz : "无")
-                });
-
-                return tree;
-            }
-
         }
 
         /// <summary>
@@ -306,6 +317,17 @@ namespace Chess.SuanFa
                 StepRecode = new StepCode(QiZi, x0, y0, x1, y1, DieQz)
             });
 
+
+            QiPuRecord QRecord = new();
+            QRecord.SetRecordData(QiZi, x0, y0, x1, y1, DieQz);
+            GlobalValue.QiPuRecordRoot.Cursor = GlobalValue.QiPuRecordRoot.Cursor.AddChild(QRecord);  // 棋谱增加新的节点，指针更新为该节点
+            GlobalValue.QiPuRecordRoot.Cursor.IsSelected = true;
+
+            GlobalValue.QiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.QiPuRecordRoot);  // 更新简易棋谱记录
+            GlobalValue.Window_QiPuKu.memostr.Text = JsonConvert.SerializeObject(GlobalValue.QiPuSimpleRecordRoot);
+
+            Qipu.CompressQiPu.ConvertFromQiPuRecord(GlobalValue.QiPuRecordRoot);
+            
         }
         /// <summary>
         /// 将棋谱数字代码转化为JSON字符串

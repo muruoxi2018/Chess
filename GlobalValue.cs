@@ -115,16 +115,6 @@ namespace Chess
             Arrows.HideAllPath();  // 隐藏提示箭头
             Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 增加一行棋谱记录
 
-            QiPuRecord QRecord = new();
-            QRecord.SetRecordData(QiZi, x0, y0, m, n, DieQz);
-            QiPuRecordRoot.Cursor = QiPuRecordRoot.Cursor.AddChild(QRecord);  // 棋谱增加新的节点，指针更新为该节点
-            QiPuRecordRoot.Cursor.IsSelected = true;
-            //TreeViewItem treeitem = QiPuRecordRoot.GetTree();
-            //Window_QiPuKun.jsonTree.Items.Clear();
-            //Window_QiPuKun.jsonTree.Items.Add(treeitem);
-
-            QiPuSimpleRecordRoot = ConvertQiPuToSimple(QiPuRecordRoot);  // 更新简易棋谱记录
-            Window_QiPuKu.memostr.Text = JsonConvert.SerializeObject(QiPuSimpleRecordRoot);
 
 
             for (int i = 0; i <= 8; i++)

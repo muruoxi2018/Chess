@@ -32,6 +32,7 @@ namespace Chess
             //FuPanWidow.Hide();
             FuPanDataGrid.ItemsSource = GlobalValue.FuPanDataList;
             TrueTree.ItemsSource = GlobalValue.QiPuRecordRoot.ChildNode;
+            CompressTree.ItemsSource = Qipu.CompressQiPu.ChildSteps;
 
         }
         /// <summary>
@@ -173,9 +174,9 @@ namespace Chess
         {
             Process proc = new();
             proc.StartInfo.UseShellExecute = true;
-            // 在 .Net Core 中，为了保证跨平台性，
-            // 需要委托 Windows Shell 来实现的一些事情
-            // 需要使用 Process.StartUseShellExecute=true 来显式的声明
+            // 在 .Net中，为了保证跨平台性，
+            // 需要委托 Windows Shell 做一些事情时，
+            // 需要显式声明 Process.StartUseShellExecute=true
             proc.StartInfo.FileName = videoUrl.Text;
             _ = proc.Start();
         }

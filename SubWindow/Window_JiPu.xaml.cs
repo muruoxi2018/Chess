@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Collections.ObjectModel;
 
 namespace Chess
 {
@@ -43,9 +44,9 @@ namespace Chess
         }
         public void Save_jipu()
         {
-            List<List<Qipu.QPStep>> listlistQipu = new();
-            listlistQipu.Add(GlobalValue.FuPanDataList.ToList());
-            ReBuildQipuList(listlistQipu, Qipu.QiPuList.ToList());
+            ObservableCollection<ObservableCollection<Qipu.QPStep>> listlistQipu = new();
+            //listlistQipu.Add(GlobalValue.FuPanDataList.ToList());
+            //ReBuildQipuList(listlistQipu, Qipu.QiPuList.ToList());
             GlobalValue.FuPanDataList.Clear();
             foreach (Qipu.QPStep qp in listlistQipu[0])
             {
@@ -58,10 +59,10 @@ namespace Chess
         /// </summary>
         /// <param name="OldQiPu">老谱</param>
         /// <param name="NewQiPu">新谱</param>
-        private void ReBuildQipuList(List<List<Qipu.QPStep>> OldQiPu, List<Qipu.QPStep> NewQiPu)
+        private void ReBuildQipuList(ObservableCollection<ObservableCollection<Qipu.QPStep>> OldQiPu, ObservableCollection<Qipu.QPStep> NewQiPu)
         {
             bool findExist = false;
-            foreach (List<Qipu.QPStep> oldqp in OldQiPu)
+            foreach (ObservableCollection<Qipu.QPStep> oldqp in OldQiPu)
             {
                 if (string.Equals(NewQiPu[0].Cn, oldqp[0].Cn, StringComparison.Ordinal))
                 {
@@ -96,7 +97,7 @@ namespace Chess
                             if (!string.Equals(NewQiPu[i].Cn, OldQiPu[listIndex][i].Cn, StringComparison.Ordinal))
                             {
                                 // 找到变招位置后
-                                List<Qipu.QPStep> subNew = new();
+                                ObservableCollection<Qipu.QPStep> subNew = new();
                                 for (int j = i; j < NewQiPu.Count; j++)
                                 {
                                     subNew.Add(NewQiPu[j]); // 删除相同的招数
