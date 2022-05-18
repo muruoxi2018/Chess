@@ -62,7 +62,7 @@
                 <Grid Background="#FFFFFFFF">
                     <TreeView x:Name="CompressTree" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" AllowDrop="True" MinHeight="500" Margin="0,0,2,0">
                         <TreeView.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding ChildNode}">
+                            <HierarchicalDataTemplate ItemsSource="{Binding ChildSteps}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text=" "/>
                                     <TextBlock Text="{Binding Id}"/>
@@ -72,9 +72,14 @@
                             </HierarchicalDataTemplate>
 
                         </TreeView.ItemTemplate>
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="TreeViewItem">
+                                <Setter Property="IsExpanded" Value="true"/>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
                         <TreeView.Resources>
                             <!--选择时的背景色-->
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Green"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Yellow"/>
                         </TreeView.Resources>
                     </TreeView>
                 </Grid>
@@ -105,7 +110,7 @@
                         </TreeView.ItemContainerStyle>
                         <TreeView.Resources>
                             <!--选择时的背景色-->
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Green"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Yellow"/>
                         </TreeView.Resources>
                     </TreeView>
                 </Grid>

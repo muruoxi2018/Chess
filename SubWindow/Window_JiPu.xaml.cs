@@ -44,11 +44,11 @@ namespace Chess
         }
         public void Save_jipu()
         {
-            ObservableCollection<ObservableCollection<Qipu.QPStep>> listlistQipu = new();
+            ObservableCollection<ObservableCollection<Qipu.ContractQPClass>> listlistQipu = new();
             //listlistQipu.Add(GlobalValue.FuPanDataList.ToList());
             //ReBuildQipuList(listlistQipu, Qipu.QiPuList.ToList());
             GlobalValue.FuPanDataList.Clear();
-            foreach (Qipu.QPStep qp in listlistQipu[0])
+            foreach (Qipu.ContractQPClass qp in listlistQipu[0])
             {
                 GlobalValue.FuPanDataList.Add(qp);
             }
@@ -59,10 +59,10 @@ namespace Chess
         /// </summary>
         /// <param name="OldQiPu">老谱</param>
         /// <param name="NewQiPu">新谱</param>
-        private void ReBuildQipuList(ObservableCollection<ObservableCollection<Qipu.QPStep>> OldQiPu, ObservableCollection<Qipu.QPStep> NewQiPu)
+        private void ReBuildQipuList(ObservableCollection<ObservableCollection<Qipu.ContractQPClass>> OldQiPu, ObservableCollection<Qipu.ContractQPClass> NewQiPu)
         {
             bool findExist = false;
-            foreach (ObservableCollection<Qipu.QPStep> oldqp in OldQiPu)
+            foreach (ObservableCollection<Qipu.ContractQPClass> oldqp in OldQiPu)
             {
                 if (string.Equals(NewQiPu[0].Cn, oldqp[0].Cn, StringComparison.Ordinal))
                 {
@@ -97,7 +97,7 @@ namespace Chess
                             if (!string.Equals(NewQiPu[i].Cn, OldQiPu[listIndex][i].Cn, StringComparison.Ordinal))
                             {
                                 // 找到变招位置后
-                                ObservableCollection<Qipu.QPStep> subNew = new();
+                                ObservableCollection<Qipu.ContractQPClass> subNew = new();
                                 for (int j = i; j < NewQiPu.Count; j++)
                                 {
                                     subNew.Add(NewQiPu[j]); // 删除相同的招数

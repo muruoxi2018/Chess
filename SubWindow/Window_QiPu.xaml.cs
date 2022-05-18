@@ -21,7 +21,7 @@ namespace Chess
     {
         private static string rowid;
         private static int qpIndex = -1;
-        private static QPStep[] qPSteps;
+        private static ContractQPClass[] qPSteps;
         /// <summary>
         /// 棋谱库窗口
         /// </summary>
@@ -32,7 +32,7 @@ namespace Chess
             //FuPanWidow.Hide();
             FuPanDataGrid.ItemsSource = GlobalValue.FuPanDataList;
             TrueTree.ItemsSource = GlobalValue.QiPuRecordRoot.ChildNode;
-            CompressTree.ItemsSource = Qipu.CompressQiPu.ChildSteps;
+            CompressTree.ItemsSource = Qipu.ContractQiPu.ChildSteps;
 
         }
         /// <summary>
@@ -71,7 +71,7 @@ namespace Chess
             videoUrl.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["video"].ToString();
 
             string jsonstr = ((DataRowView)DbDataGrid.SelectedItem).Row["jsonrecord"].ToString(); // 获得点击行的数据
-            GlobalValue.FuPanDataList = JsonConvert.DeserializeObject<ObservableCollection<Qipu.QPStep>>(jsonstr);
+            GlobalValue.FuPanDataList = JsonConvert.DeserializeObject<ObservableCollection<Qipu.ContractQPClass>>(jsonstr);
             memostr.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString() + GetMemo(GlobalValue.FuPanDataList);
             qPSteps = GlobalValue.FuPanDataList.ToArray();
             FuPanDataGrid.ItemsSource = GlobalValue.FuPanDataList;
@@ -81,14 +81,14 @@ namespace Chess
         /// </summary>
         /// <param name="QpList">走棋步骤列表</param>
         /// <returns>棋谱中的全部说明文字</returns>
-        public string GetMemo(ObservableCollection<Qipu.QPStep> QpList)
+        public string GetMemo(ObservableCollection<Qipu.ContractQPClass> QpList)
         {
             string memostrs = "";
-            foreach (Qipu.QPStep qp in QpList)
+            foreach (Qipu.ContractQPClass qp in QpList)
             {
-                if (!string.IsNullOrEmpty(qp.Memo))
+                if (!string.IsNullOrEmpty(qp.Remarks))
                 {
-                    memostrs += System.Environment.NewLine + $"第{qp.Id}步：{qp.Memo}";
+                    memostrs += System.Environment.NewLine + $"第{qp.Id}步：{qp.Remarks}";
                 }
             }
             return memostrs;
@@ -156,12 +156,12 @@ namespace Chess
             while (qpIndex < index)
             {
                 qpIndex++;
-                StepCode step = qPSteps[qpIndex].StepRecode;
+                StepCode step = qPSteps[qpIndex].StepData;
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
             }
             for (int i = 0; i < Qipu.QiPuList.Count; i++)
             {
-                QiPuList[i].Memo = GlobalValue.FuPanDataList[i].Memo;
+                QiPuList[i].Remarks = GlobalValue.FuPanDataList[i].Remarks;
             }
 
         }
@@ -191,14 +191,14 @@ namespace Chess
             if (qpIndex < qPSteps.Length - 1)
             {
                 qpIndex++;
-                StepCode step = qPSteps[qpIndex].StepRecode;
+                StepCode step = qPSteps[qpIndex].StepData;
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
                 if (qpIndex <= qPSteps.Length - 2)
                 {
-                    QPStep nextstep = GlobalValue.FuPanDataList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
+                    ContractQPClass nextstep = GlobalValue.FuPanDataList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
                     GlobalValue.Arrows.SetPathDataAndShow(0,
-                        new System.Drawing.Point(nextstep.StepRecode.X0,nextstep.StepRecode.Y0),
-                        new System.Drawing.Point(nextstep.StepRecode.X1,nextstep.StepRecode.Y1));
+                        new System.Drawing.Point(nextstep.StepData.X0,nextstep.StepData.Y0),
+                        new System.Drawing.Point(nextstep.StepData.X1,nextstep.StepData.Y1));
                     var points = Qipu.GetListPoint(GlobalValue.FuPanDataList[qpIndex]);
                     int index = 1;
                     foreach (var point in points)

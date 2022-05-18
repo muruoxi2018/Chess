@@ -39,10 +39,10 @@ namespace Chess
         #endregion
 
         #region 数据存储
-        public static ObservableCollection<QPStep> FuPanDataList = new(); // 复盘棋谱步骤列表，后期将弃用本变量
+        public static ObservableCollection<ContractQPClass> FuPanDataList = new(); // 复盘棋谱步骤列表，后期将弃用本变量
         public static QiPuRecord QiPuRecordRoot = new(); // 棋谱树型数据结构
         public static QiPuSimpleRecord QiPuSimpleRecordRoot = new(); // 棋谱树型数据结构的精简版
-        public static List<Qipu.QPStep> CnNumberList = new();  // 棋谱中文步骤列表
+        public static List<Qipu.ContractQPClass> CnNumberList = new();  // 棋谱中文步骤列表
         #endregion
 
         #region 棋子及棋盘基础数据
@@ -271,7 +271,7 @@ namespace Chess
                 return;
             }
 
-            Qipu.StepCode step = Qipu.QiPuList[^1].StepRecode; // ^1：索引运算符，表示倒数第一个
+            Qipu.StepCode step = Qipu.QiPuList[^1].StepData; // ^1：索引运算符，表示倒数第一个
             QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
             _ = QiZiArray[step.QiZi].SetPosition(step.X0, step.Y0);
             AnimationMove(step.QiZi, step.X1, step.Y1, step.X0, step.Y0);
@@ -303,7 +303,7 @@ namespace Chess
         public static QiPuSimpleRecord ConvertQiPuToSimple(QiPuRecord FullQipu)
         {
             QiPuSimpleRecord SimpleQipu = new();
-            SimpleQipu.Memo = FullQipu.Memo;
+            SimpleQipu.Memo = FullQipu.Remarks;
             SimpleQipu.CopyDataFromStep(FullQipu.StepData);
             foreach (QiPuRecord Recode in FullQipu.ChildNode)
             {
@@ -321,7 +321,7 @@ namespace Chess
         public static QiPuRecord ConvertQiPuToFull(QiPuSimpleRecord SimpleQipu)
         {
             QiPuRecord Qipu = new();
-            Qipu.Memo=SimpleQipu.Memo;
+            Qipu.Remarks=SimpleQipu.Memo;
             Qipu.SetRecordData(SimpleQipu.Data);
             foreach (QiPuSimpleRecord Recode in SimpleQipu.Child)
             {

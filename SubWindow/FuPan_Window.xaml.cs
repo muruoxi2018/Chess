@@ -12,7 +12,7 @@ namespace Chess.SubWindow
     public partial class FuPan_Window : Window
     {
 
-        private static QPStep[] qPSteps;
+        private static ContractQPClass[] qPSteps;
         private static int qpIndex = -1;
         public FuPan_Window()
         {
@@ -40,7 +40,7 @@ namespace Chess.SubWindow
             if (qpIndex < qPSteps.Length - 1)
             {
                 qpIndex++;
-                StepCode step = qPSteps[qpIndex].StepRecode;
+                StepCode step = qPSteps[qpIndex].StepData;
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
 
             }
@@ -72,12 +72,12 @@ namespace Chess.SubWindow
             while (qpIndex < index)
             {
                 qpIndex++;
-                StepCode step = qPSteps[qpIndex].StepRecode;
+                StepCode step = qPSteps[qpIndex].StepData;
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
             }
             for (int i = 0; i < Qipu.QiPuList.Count; i++)
             {
-                QiPuList[i].Memo = GlobalValue.FuPanDataList[i].Memo;
+                QiPuList[i].Remarks = GlobalValue.FuPanDataList[i].Remarks;
             }
         }
     }

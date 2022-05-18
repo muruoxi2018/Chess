@@ -12,59 +12,133 @@ namespace Chess.SuanFa
     public static class Qipu  // 棋谱类
     {
 
-        public static ObservableCollection<QPStep> QiPuList = new(); // 棋谱步骤列表
-        public static QPStep CompressQiPu = new();
-        public class QPStep // 棋谱步骤
+        public static ObservableCollection<ContractQPClass> QiPuList = new(); // 棋谱步骤列表
+        public static ContractQPClass ContractQiPu = new(); // 收缩树
+        /// <summary>
+        /// 走棋数据指令类
+        /// </summary>
+        public class StepCode // 棋谱记录
         {
+            #region 棋谱数据
+            public int QiZi { get; set; } // 棋子编号
+            public int X0 { get; set; } // 移动前位置
+            public int Y0 { get; set; }
+            public int X1 { get; set; } // 移动后位置
+            public int Y1 { get; set; }
+            public int DieQz { get; set; } // 移动后杀死的棋子
+            public StepCode(int qiZi, int x0, int y0, int x1, int y1, int dieQz)
+            {
+                QiZi = qiZi;
+                X0 = x0;
+                Y0 = y0;
+                X1 = x1;
+                Y1 = y1;
+                DieQz = dieQz;
+            }
+            #endregion
+        }
+        /// <summary>
+        /// 棋谱基类
+        /// 包含棋谱步数、走棋数字代码（用于数据库存储）、走棋中文代码（用于列表或树显示）等
+        /// </summary>
+        public class QPBase
+        {
+            #region 棋谱数字代码、中文代码、备注
             public int Id { get; set; } // 步数
             public string Nm { get; set; } // 数字代码
             public string Cn { get; set; } // 中文代码
-            public string Memo { get; set; } // 备注
-            public StepCode StepRecode { get; set; } // 棋谱记录
-            public ObservableCollection<ObservableCollection<QPStep>> ChildSteps { get; set; }   // 棋谱变化
-            public QPStep()
+            public string Remarks { get; set; } // 备注
+            public StepCode StepData { get; set; } // 棋谱记录
+            #endregion
+        }
+        /// <summary>
+        /// 收缩树存储类，用于更直观的查看棋谱内容。
+        /// 每个节点有多个兄弟节点，也可以有多个子节点，但只有一个父节点。
+        /// 收缩树系从完整树转换而来。
+        /// 转换时，通过递归，将完整树的每个节点的第一子节点，变为兄弟节点。
+        /// </summary>
+        public class ContractQPClass : QPBase
+        {
+            public ObservableCollection<ObservableCollection<ContractQPClass>> ChildSteps { get; set; }   // 棋谱变化
+            public ContractQPClass()
             {
-                ChildSteps = new ObservableCollection<ObservableCollection<QPStep>>();
+                ChildSteps = new ObservableCollection<ObservableCollection<ContractQPClass>>();
             }
+            /// <summary>
+            /// 棋谱完整树，转换为收缩树
+            /// </summary>
+            /// <param name="qrecord">棋谱完整树</param>
             public void ConvertFromQiPuRecord(QiPuRecord qrecord)
             {
                 ChildSteps.Clear();
-                ChildSteps.Add(ConvertData(qrecord));
-            }
-            private ObservableCollection<QPStep> ConvertData(QiPuRecord qrcd)
-            {
-                ObservableCollection<QPStep> qproot = new ObservableCollection<QPStep>();
-                QiPuRecord qrcd1 = qrcd;
-                do
+                var obobstep = ConvertData(qrecord);
+                foreach (var step in obobstep)
                 {
-                    if (!qrcd1.IsLeaf()) qrcd1 = qrcd1.ChildNode[0];
-                    QPStep qp0 = new QPStep();
-                    qp0.CopyDataFromQiPuRecord(qrcd1);
-                    qproot.Add(qp0);
-                    
-                } while (!qrcd1.IsLeaf());
+                    ChildSteps.Add(step);
+                }
+                //ChildSteps.Add(obobstep);
+            }
+            /// <summary>
+            /// 递归转换完整树
+            /// </summary>
+            /// <param name="qrcd"></param>
+            /// <returns></returns>
+            private static ObservableCollection<ObservableCollection<ContractQPClass>> ConvertData(QiPuRecord qrcd)
+            {
+                ObservableCollection<ObservableCollection<ContractQPClass>> qproot = new();
+                QiPuRecord CurQp = qrcd;
+                while (!CurQp.IsLeaf())
+                {
+                    ContractQPClass qp0 = new ContractQPClass();
+                    qp0.CopyDataFromQiPuRecord(CurQp);
+                    ObservableCollection<ContractQPClass> qplist = new();
+                    qplist.Add(qp0);
+                    qproot.Add(qplist);
+
+                    for (int i = 1; i < CurQp.ChildNode.Count; i++)
+                    {
+                        var steps = ConvertData(CurQp.ChildNode[i]);
+                        foreach (var step in steps)
+                        {
+                            qp0.ChildSteps.Add(step);
+                        }
+                    }
+                    CurQp = CurQp.ChildNode[0];
+                }
+                if (CurQp.IsLeaf())
+                {
+                    ContractQPClass qp0 = new ContractQPClass();
+                    qp0.CopyDataFromQiPuRecord(CurQp);
+                    ObservableCollection<ContractQPClass> qplist = new();
+                    qplist.Add(qp0);
+                    qproot.Add(qplist);
+                }
 
                 return qproot;
 
             }
+            /// <summary>
+            /// 复制走棋指令数据
+            /// </summary>
+            /// <param name="qrecord"></param>
             private void CopyDataFromQiPuRecord(QiPuRecord qrecord)
             {
                 Id = qrecord.Id;
                 Nm = qrecord.Nm;
                 Cn = qrecord.Cn;
-                Memo = qrecord.Memo;
+                Remarks = qrecord.Remarks;
             }
         }
-        public class QiPuRecord : INotifyPropertyChanged
+        /// <summary>
+        /// 棋谱完整树数据存储结构
+        /// 每个结点可以有多个子结点，但没有兄弟节点，且只有一个父结点。
+        /// 用于保存每一步走棋信息。
+        /// </summary>
+        public class QiPuRecord : QPBase, INotifyPropertyChanged
         {
             private QiPuRecord ParentNode { get; set; } // 父结点
             public ObservableCollection<QiPuRecord> ChildNode { get; set; }  // 子结点
             public QiPuRecord Cursor { get; set; }  // 当前结点游标指针，仅根结点游标有用
-            public int Id { get; set; } // 步数
-            public string Nm { get; set; } // 数字代码
-            public string Cn { get; set; } // 中文代码
-            public string Memo { get; set; } // 备注
-            public StepCode StepData { get; set; } // 棋谱记录
             public string SideColor { get; set; }  // RED=红方，BLACK=黑方
             private bool _isSelected;
             public bool IsSelected
@@ -125,10 +199,18 @@ namespace Chess.SuanFa
                 ChildNode.Clear();
                 //ChildNode = new ObservableCollection<QiPuRecord>();
             }
+            /// <summary>
+            /// 是否为根节点
+            /// </summary>
+            /// <returns>true=是根节点</returns>
             public bool IsRoot()
             {
                 return ParentNode == null;
             }
+            /// <summary>
+            /// 是否为叶子节点
+            /// </summary>
+            /// <returns>true=是叶子节点</returns>
             public bool IsLeaf()
             {
                 return ChildNode.Count == 0;
@@ -137,6 +219,10 @@ namespace Chess.SuanFa
             {
                 this.ParentNode = parent;
             }
+            /// <summary>
+            /// 获取父节点
+            /// </summary>
+            /// <returns>父节点</returns>
             public QiPuRecord GetParent()
             {
                 return ParentNode;
@@ -196,11 +282,15 @@ namespace Chess.SuanFa
                 #endregion
                 Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}";
                 Cn = char1 + char2 + char3 + char4;
-                Memo = "";
+                Remarks = "";
                 StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
                 SideColor = QiZi is >= 0 and <= 15 ? "Black" : "Red";
                 //QiPuList.Add(this);
             }
+            /// <summary>
+            /// 获取当前节点的深度
+            /// </summary>
+            /// <returns></returns>
             private int getDepth()
             {
                 int depth = 1;
@@ -212,21 +302,11 @@ namespace Chess.SuanFa
                 }
                 return depth;
             }
-            public TreeViewItem GetTree()
-            {
-                var tree = new TreeViewItem();
-                tree.Header = $"{Id}. {Cn}";
-                tree.IsExpanded = true;
-                if (!IsLeaf())
-                {
-                    foreach (var item in ChildNode)
-                    {
-                        tree.Items.Add(item.GetTree());
-                    }
-                }
-                return tree;
-            }
         }
+        /// <summary>
+        /// 棋谱简易记录类
+        /// 用于数据库存储
+        /// </summary>
         public class QiPuSimpleRecord
         {
             public List<QiPuSimpleRecord> Child { get; set; }  // 子结点
@@ -244,25 +324,6 @@ namespace Chess.SuanFa
             }
         }
 
-        public class StepCode // 棋谱记录
-        {
-
-            public int QiZi { get; set; } // 棋子编号
-            public int X0 { get; set; } // 移动前位置
-            public int Y0 { get; set; }
-            public int X1 { get; set; } // 移动后位置
-            public int Y1 { get; set; }
-            public int DieQz { get; set; } // 移动后杀死的棋子
-            public StepCode(int qiZi, int x0, int y0, int x1, int y1, int dieQz)
-            {
-                QiZi = qiZi;
-                X0 = x0;
-                Y0 = y0;
-                X1 = x1;
-                Y1 = y1;
-                DieQz = dieQz;
-            }
-        }
 
         /// <summary>
         /// 添加一条棋谱记录
@@ -308,13 +369,13 @@ namespace Chess.SuanFa
 
             }
             #endregion
-            QiPuList.Add(new QPStep()
+            QiPuList.Add(new ContractQPClass()
             {
                 Id = QiPuList.Count + 1,
                 Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}",
                 Cn = char1 + char2 + char3 + char4,
-                Memo = "",
-                StepRecode = new StepCode(QiZi, x0, y0, x1, y1, DieQz)
+                Remarks = "",
+                StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz)
             });
 
 
@@ -326,8 +387,8 @@ namespace Chess.SuanFa
             GlobalValue.QiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.QiPuRecordRoot);  // 更新简易棋谱记录
             GlobalValue.Window_QiPuKu.memostr.Text = JsonConvert.SerializeObject(GlobalValue.QiPuSimpleRecordRoot);
 
-            Qipu.CompressQiPu.ConvertFromQiPuRecord(GlobalValue.QiPuRecordRoot);
-            
+            Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.QiPuRecordRoot);
+            //x0 = 100;
         }
         /// <summary>
         /// 将棋谱数字代码转化为JSON字符串
@@ -336,7 +397,7 @@ namespace Chess.SuanFa
         public static string NmToJson()
         {
             ArrayList recode = new();
-            foreach (QPStep p in QiPuList)
+            foreach (ContractQPClass p in QiPuList)
             {
                 _ = recode.Add(p.Nm);
             }
@@ -349,7 +410,7 @@ namespace Chess.SuanFa
         public static string CnToJson()
         {
             ArrayList recode = new();
-            foreach (QPStep p in QiPuList)
+            foreach (ContractQPClass p in QiPuList)
             {
                 _ = recode.Add(p.Cn);
             }
@@ -363,7 +424,7 @@ namespace Chess.SuanFa
         {
             int maxLen = 20;
             string recode = "";
-            foreach (QPStep p in QiPuList)
+            foreach (ContractQPClass p in QiPuList)
             {
                 recode += p.Cn + " ";
             }
@@ -374,15 +435,20 @@ namespace Chess.SuanFa
             }
             return $"{substr} (共{QiPuList.Count}步)";
         }
-        public static List<List<System.Drawing.Point>> GetListPoint(QPStep qPStep)
+        /// <summary>
+        /// 根据子节点数量，编制每个走棋提示箭头的坐标数据
+        /// </summary>
+        /// <param name="qPStep">棋谱节点</param>
+        /// <returns>坐标数据列表</returns>
+        public static List<List<System.Drawing.Point>> GetListPoint(ContractQPClass qPStep)
         {
             List<List<System.Drawing.Point>> pp = new List<List<System.Drawing.Point>>();
             foreach (var lp in qPStep.ChildSteps)
             {
-                QPStep qs = lp[0];
+                ContractQPClass qs = lp[0];
                 List<System.Drawing.Point> pt = new List<System.Drawing.Point>();
-                pt.Add(new System.Drawing.Point(qs.StepRecode.X0, qs.StepRecode.Y0));
-                pt.Add(new System.Drawing.Point(qs.StepRecode.X1, qs.StepRecode.Y1));
+                pt.Add(new System.Drawing.Point(qs.StepData.X0, qs.StepData.Y0));
+                pt.Add(new System.Drawing.Point(qs.StepData.X1, qs.StepData.Y1));
                 pp.Add(pt);
             }
             return pp;
