@@ -45,7 +45,7 @@ namespace Chess
             DataTable sr = OpenSource.SqliteHelper.Select("mybook", "rowid,*");
             if (sr == null) return;
             DbDataGrid.ItemsSource = sr.DefaultView;
-            
+
         }
         /// <summary>
         /// 重新入棋谱库
@@ -70,11 +70,25 @@ namespace Chess
             RowIdText.Text = $"棋谱编号：{rowid}";
             videoUrl.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["video"].ToString();
 
-            string jsonstr = ((DataRowView)DbDataGrid.SelectedItem).Row["jsonrecord"].ToString(); // 获得点击行的数据
-            GlobalValue.FuPanDataList = JsonConvert.DeserializeObject<ObservableCollection<Qipu.ContractQPClass>>(jsonstr);
+            string jsonstr = ((DataRowView)DbDataGrid.SelectedItem).Row["jsonrecord"].ToString(); // 获得点击行的棋谱数据
+            int maxDepth = 1000;
+            var simpleRecord = JsonConvert.DeserializeObject<Qipu.QiPuSimpleRecord>(jsonstr, new JsonSerializerSettings
+            {
+                //  MaxDepth默认值为64，此处加大该值
+                TypeNameHandling = TypeNameHandling.None,
+                MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+                MaxDepth = maxDepth
+            }); // 反序列化 
+            GlobalValue.QiPuRecordRoot = GlobalValue.ConvertQiPuToFull(simpleRecord); // 转换为完全树数据结构
+            Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.QiPuRecordRoot); // 转换为收缩树数据结构
+
+            GlobalValue.FuPanDataList.Add(Qipu.ContractQiPu);
+
             memostr.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString() + GetMemo(GlobalValue.FuPanDataList);
             qPSteps = GlobalValue.FuPanDataList.ToArray();
-            FuPanDataGrid.ItemsSource = GlobalValue.FuPanDataList;
+            FuPanDataGrid.ItemsSource = Qipu.ContractQiPu.ChildSteps;
+            TrueTree.ItemsSource = GlobalValue.QiPuRecordRoot.ChildNode;
+            CompressTree.ItemsSource = Qipu.ContractQiPu.ChildSteps;
         }
         /// <summary>
         /// 棋谱中的所有注释
@@ -197,13 +211,13 @@ namespace Chess
                 {
                     ContractQPClass nextstep = GlobalValue.FuPanDataList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
                     GlobalValue.Arrows.SetPathDataAndShow(0,
-                        new System.Drawing.Point(nextstep.StepData.X0,nextstep.StepData.Y0),
-                        new System.Drawing.Point(nextstep.StepData.X1,nextstep.StepData.Y1));
+                        new System.Drawing.Point(nextstep.StepData.X0, nextstep.StepData.Y0),
+                        new System.Drawing.Point(nextstep.StepData.X1, nextstep.StepData.Y1));
                     var points = Qipu.GetListPoint(GlobalValue.FuPanDataList[qpIndex]);
                     int index = 1;
                     foreach (var point in points)
                     {
-                        GlobalValue.Arrows.SetPathDataAndShow(index,point[0],point[1]);
+                        GlobalValue.Arrows.SetPathDataAndShow(index, point[0], point[1]);
                         index++;
                     }
                 }

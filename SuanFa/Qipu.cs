@@ -190,7 +190,7 @@ namespace Chess.SuanFa
                 }
                 //child.CurrentRecord = null;
                 child.ParentNode = this;
-                child.Id = getDepth();
+                child.Id = this.Id+1;
                 ChildNode.Add(child);
                 return child;
             }
@@ -309,9 +309,10 @@ namespace Chess.SuanFa
         /// </summary>
         public class QiPuSimpleRecord
         {
+            public int Id { get; set; } // 步数
             public List<QiPuSimpleRecord> Child { get; set; }  // 子结点
             public StepCode Data { get; set; } // 棋谱记录
-            public string Memo { get; set; } // 备注
+            public string Remarks { get; set; } // 备注
 
             public QiPuSimpleRecord()
             {

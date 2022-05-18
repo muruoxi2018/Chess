@@ -43,14 +43,14 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Id}" Header="步" Width="30"/>
                             <DataGridTextColumn Binding="{Binding Cn}" Header="棋谱" MinWidth="100" />
-                            <DataGridTextColumn Binding="{Binding Memo}" Header="备注" MinWidth="100"/>
+                            <DataGridTextColumn Binding="{Binding Remarks}" Header="备注" MinWidth="100"/>
                         </DataGrid.Columns>
                         <d:TabItem/>
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
                                 <Style.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="Background" Value="Blue"/>
+                                        <Setter Property="Background" Value="Yellow"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -60,7 +60,7 @@
             </TabItem>
             <TabItem HorizontalAlignment="Center" Height="19" Header="压缩树" VerticalAlignment="Center" Width="59">
                 <Grid Background="#FFFFFFFF">
-                    <TreeView x:Name="CompressTree" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" AllowDrop="True" MinHeight="500" Margin="0,0,2,0">
+                    <TreeView x:Name="CompressTree" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" AllowDrop="True" MinHeight="500" Margin="0,0,0,-4">
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding ChildSteps}">
                                 <StackPanel Orientation="Horizontal">
@@ -86,7 +86,7 @@
             </TabItem>
             <TabItem HorizontalAlignment="Center" Height="19" Header="真实树" VerticalAlignment="Center" Width="59">
                 <Grid Background="#FFFFFFFF">
-                    <TreeView x:Name="TrueTree" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" AllowDrop="True" MinHeight="500" Margin="0,0,2,0">
+                    <TreeView x:Name="TrueTree" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" AllowDrop="True" MinHeight="500">
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding ChildNode}">
                                 <StackPanel Orientation="Horizontal">

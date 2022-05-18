@@ -12,10 +12,10 @@ namespace Chess.OpenSource
     /// </summary>
     public class SqliteHelper
     {
-        private static readonly string DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";  //  数据库绝对路径
-        //private static readonly string DbFile = @"E:\source\repos\Chess\DB\KaiJuKu.db";  //  数据库绝对路径
+        private static string DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";  //  数据库绝对路径
+        //private static string DbFile = @"E:\source\repos\Chess\DB\KaiJuKu.db";  //  数据库绝对路径
         //private static readonly string DbFile = System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db"; // 软件发布时使用此设置
-        private static readonly string DbSourcePath = @"data source="+ DbFile;
+        private static string DbSourcePath = @"data source="+ DbFile;
 
         /// <summary>
         /// 检查数据库文件是否存在
@@ -23,9 +23,18 @@ namespace Chess.OpenSource
         /// <returns>true=文件存在；false=文件不存在</returns>
         private static bool DbFileExist()
         {
-            if (System.IO.File.Exists(DbFile)) return true;
-            System.Windows.MessageBox.Show("数据库文件未找到，请检查文件路径。","错误提示");
-            return false;
+            DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";
+            if (!System.IO.File.Exists(DbFile))
+            {
+                DbFile = @"E:\source\repos\Chess\DB\KaiJuKu.db";
+                if (!System.IO.File.Exists(DbFile))
+                {
+                    System.Windows.MessageBox.Show("数据库文件未找到，请检查文件路径。", "错误提示");
+                    return false;
+                }
+            }
+            DbSourcePath = @"data source=" + DbFile;
+            return true;
         }
         /// <summary>
         /// 执行sql字符串

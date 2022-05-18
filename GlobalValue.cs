@@ -303,7 +303,8 @@ namespace Chess
         public static QiPuSimpleRecord ConvertQiPuToSimple(QiPuRecord FullQipu)
         {
             QiPuSimpleRecord SimpleQipu = new();
-            SimpleQipu.Memo = FullQipu.Remarks;
+            SimpleQipu.Id = FullQipu.Id;
+            SimpleQipu.Remarks = FullQipu.Remarks;
             SimpleQipu.CopyDataFromStep(FullQipu.StepData);
             foreach (QiPuRecord Recode in FullQipu.ChildNode)
             {
@@ -321,12 +322,14 @@ namespace Chess
         public static QiPuRecord ConvertQiPuToFull(QiPuSimpleRecord SimpleQipu)
         {
             QiPuRecord Qipu = new();
-            Qipu.Remarks=SimpleQipu.Memo;
+            Qipu.Id=SimpleQipu.Id;
+            Qipu.Remarks=SimpleQipu.Remarks;
             Qipu.SetRecordData(SimpleQipu.Data);
             foreach (QiPuSimpleRecord Recode in SimpleQipu.Child)
             {
                 QiPuRecord childRecode = ConvertQiPuToFull(Recode);
-                Qipu.ChildNode.Add(childRecode);
+                Qipu.AddChild(childRecode);
+                
             }
             return Qipu;
         }
