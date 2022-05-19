@@ -19,9 +19,9 @@ namespace Chess
     /// </summary>
     public partial class Window_QiPu : Window
     {
-        private static string rowid;
+        private static string rowId;
         private static int qpIndex = -1;
-        private static ContractQPClass[] qPSteps;
+        private static ContractQPClass[] qiPuSteps;
         /// <summary>
         /// 棋谱库窗口
         /// </summary>
@@ -66,13 +66,13 @@ namespace Chess
         private void OnMouseLeftButtonUP(object sender, MouseButtonEventArgs e)
         {
             if (DbDataGrid.Items.Count == 0) return;
-            rowid = ((DataRowView)DbDataGrid.SelectedItem).Row["rowid"].ToString();
-            RowIdText.Text = $"棋谱编号：{rowid}";
+            rowId = ((DataRowView)DbDataGrid.SelectedItem).Row["rowid"].ToString();
+            RowIdText.Text = $"棋谱编号：{rowId}";
             videoUrl.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["video"].ToString();
 
-            string jsonstr = ((DataRowView)DbDataGrid.SelectedItem).Row["jsonrecord"].ToString(); // 获得点击行的棋谱数据
+            string jsonStr = ((DataRowView)DbDataGrid.SelectedItem).Row["jsonrecord"].ToString(); // 获得点击行的棋谱数据
             int maxDepth = 1000;
-            var simpleRecord = JsonConvert.DeserializeObject<Qipu.QiPuSimpleRecord>(jsonstr, new JsonSerializerSettings
+            var simpleRecord = JsonConvert.DeserializeObject<Qipu.QiPuSimpleRecord>(jsonStr, new JsonSerializerSettings
             {
                 //  MaxDepth默认值为64，此处加大该值
                 TypeNameHandling = TypeNameHandling.None,
@@ -84,8 +84,8 @@ namespace Chess
 
             GlobalValue.FuPanDataList.Add(Qipu.ContractQiPu);
 
-            memostr.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString() + GetMemo(GlobalValue.FuPanDataList);
-            qPSteps = GlobalValue.FuPanDataList.ToArray();
+            remarksTextBlock.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString() + GetRemarks(GlobalValue.FuPanDataList);
+            qiPuSteps = GlobalValue.FuPanDataList.ToArray();
             FuPanDataGrid.ItemsSource = Qipu.ContractQiPu.ChildSteps;
             TrueTree.ItemsSource = GlobalValue.QiPuRecordRoot.ChildNode;
             CompressTree.ItemsSource = Qipu.ContractQiPu.ChildSteps;
@@ -93,19 +93,19 @@ namespace Chess
         /// <summary>
         /// 棋谱中的所有注释
         /// </summary>
-        /// <param name="QpList">走棋步骤列表</param>
+        /// <param name="qiPuLst">走棋步骤列表</param>
         /// <returns>棋谱中的全部说明文字</returns>
-        public string GetMemo(ObservableCollection<Qipu.ContractQPClass> QpList)
+        public static string GetRemarks(ObservableCollection<Qipu.ContractQPClass> qiPuLst)
         {
-            string memostrs = "";
-            foreach (Qipu.ContractQPClass qp in QpList)
+            string memoStrs = "";
+            foreach (Qipu.ContractQPClass qp in qiPuLst)
             {
                 if (!string.IsNullOrEmpty(qp.Remarks))
                 {
-                    memostrs += System.Environment.NewLine + $"第{qp.Id}步：{qp.Remarks}";
+                    memoStrs += System.Environment.NewLine + $"第{qp.Id}步：{qp.Remarks}";
                 }
             }
-            return memostrs;
+            return memoStrs;
         }
 
         private void OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -121,8 +121,8 @@ namespace Chess
         {
             if (DbDataGrid.SelectedIndex > -1)
             {
-                string rowid = ((DataRowView)DbDataGrid.SelectedItem).Row["rowid"].ToString();
-                _ = OpenSource.SqliteHelper.Delete("mybook", $"rowid={rowid}");
+                string rowId = ((DataRowView)DbDataGrid.SelectedItem).Row["rowid"].ToString();
+                _ = OpenSource.SqliteHelper.Delete("mybook", $"rowid={rowId}");
                 QipuListRefresh(sender, e);
             }
         }
@@ -146,7 +146,7 @@ namespace Chess
             if (GlobalValue.FuPanDataList.Count < 1) return;
             System.Collections.Generic.Dictionary<string, object> dic = new();
             dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.FuPanDataList));
-            if (SqliteHelper.Update("mybook", $"rowid={rowid}", dic) > 0)
+            if (SqliteHelper.Update("mybook", $"rowid={rowId}", dic) > 0)
             {
                 MessageBox.Show("数据保存成功！", "提示");
             }
@@ -170,7 +170,7 @@ namespace Chess
             while (qpIndex < index)
             {
                 qpIndex++;
-                StepCode step = qPSteps[qpIndex].StepData;
+                StepCode step = qiPuSteps[qpIndex].StepData;
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
             }
             for (int i = 0; i < Qipu.QiPuList.Count; i++)
@@ -202,12 +202,12 @@ namespace Chess
         private void NextStep(object sender, RoutedEventArgs e)
         {
             if (GlobalValue.FuPanDataList.Count < 1) return;
-            if (qpIndex < qPSteps.Length - 1)
+            if (qpIndex < qiPuSteps.Length - 1)
             {
                 qpIndex++;
-                StepCode step = qPSteps[qpIndex].StepData;
+                StepCode step = qiPuSteps[qpIndex].StepData;
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
-                if (qpIndex <= qPSteps.Length - 2)
+                if (qpIndex <= qiPuSteps.Length - 2)
                 {
                     ContractQPClass nextstep = GlobalValue.FuPanDataList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
                     GlobalValue.Arrows.SetPathDataAndShow(0,

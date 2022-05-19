@@ -110,14 +110,14 @@ namespace Chess.CustomClass
         /// <summary>
         /// 根据箭头起始点，计算绘制箭头的各项数据，并显示到界面
         /// </summary>
-        /// <param name="ind">箭头的编号，0-4 </param>
+        /// <param name="arrowId">箭头的编号，0-4 </param>
         /// <param name="point0">起始点</param>
         /// <param name="point1">终点</param>
-        public void SetPathDataAndShow(int ind, System.Drawing.Point point0, System.Drawing.Point point1)
+        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1)
         {
-            if (ind > _maxNum - 1) return; // 箭头从0开始编号，数量不能超过上限（_maxNum）
+            if (arrowId > _maxNum - 1) return; // 箭头从0开始编号，数量不能超过上限（_maxNum）
             int haveQizi = GlobalValue.QiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
-            if (GlobalValue.QiPanFanZhuan)
+            if (GlobalValue.isQiPanFanZhuan)
             {
                 point0.X = 8 - point1.X;
                 point0.Y = 9 - point1.Y;
@@ -170,8 +170,8 @@ namespace Chess.CustomClass
             yn = (float)Math.Floor(ym + (arrowLong * 2 / 3 * Math.Sin(angle1)));
             pointFs.Add(new PointF((float)xn, (float)yn));  // 存入第六个点
 
-            ArrowPath[ind].Data = Geometry.Parse(MakePathData(pointFs));
-            ArrowPath[ind].Visibility = Visibility.Visible;
+            ArrowPath[arrowId].Data = Geometry.Parse(MakePathData(pointFs));
+            ArrowPath[arrowId].Visibility = Visibility.Visible;
 
             double circleX, circleY;
             double cirlcePos;
@@ -180,11 +180,11 @@ namespace Chess.CustomClass
             circleX = Math.Floor(x1 + (cirlcePos * Math.Cos(angle))) - 10; // 10是圆圈的半径。计算结果为圆心位置，而margin是从其边界计算，因此需用半径修正数据。
             circleY = Math.Floor(y1 + (cirlcePos * Math.Sin(angle))) - 10;
 
-            ArrowEllipses[ind].Margin = new Thickness(circleX, circleY, 0, 0);
-            ArrowEllipses[ind].Visibility = Visibility.Visible;
+            ArrowEllipses[arrowId].Margin = new Thickness(circleX, circleY, 0, 0);
+            ArrowEllipses[arrowId].Visibility = Visibility.Visible;
 
-            ArrowText[ind].Margin = new Thickness(circleX + 5, circleY, 0, 0); // 5是经验数据，用于修正文字的偏移。文字的字体大小为16时，在+5后，文字正好在圆圈中心。如果字体大小有改变，需修正此数据。
-            ArrowText[ind].Visibility = Visibility.Visible;
+            ArrowText[arrowId].Margin = new Thickness(circleX + 5, circleY, 0, 0); // 5是经验数据，用于修正文字的偏移。文字的字体大小为16时，在+5后，文字正好在圆圈中心。如果字体大小有改变，需修正此数据。
+            ArrowText[arrowId].Visibility = Visibility.Visible;
 
         }
         /// <summary>
@@ -199,12 +199,12 @@ namespace Chess.CustomClass
         /// <summary>
         /// 根据路径点，转换为路径绘图指令
         /// </summary>
-        /// <param name="pointFs">路径点列表</param>
+        /// <param name="pointFList">路径点列表</param>
         /// <returns>路径绘图指令字符串</returns>
-        private static string MakePathData(List<PointF> pointFs)
+        private static string MakePathData(List<PointF> pointFList)
         {
-            string path = $"M {pointFs[0].X}, {pointFs[0].Y} ";
-            foreach (PointF point in pointFs)
+            string path = $"M {pointFList[0].X}, {pointFList[0].Y} ";
+            foreach (PointF point in pointFList)
             {
                 path += $"L {point.X} , {point.Y} ";
             }

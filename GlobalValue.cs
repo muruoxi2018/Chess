@@ -1,9 +1,7 @@
 ﻿using Chess.SuanFa;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -19,11 +17,11 @@ namespace Chess
         public const float GRID_WIDTH = 67.5f;   //棋盘格大小为 67.5*67.5
         public const bool BLACKSIDE = false;  // 黑方
         public const bool REDSIDE = true;   //红方
-        public static bool SideTag;  // 当前走棋方
-        public static bool GameOver; // 游戏结束
-        public static bool QiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
+        public static bool sideTag;  // 当前走棋方
+        public static bool isGameOver; // 游戏结束
+        public static bool isQiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
         public static string qipustr;   // 棋谱转换后的字符串
-        public static int CurrentQiZi;  // 当前选定的棋子
+        public static int currentQiZi;  // 当前选定的棋子
         public static int[,] QiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
         
         #region // 用户界面元素
@@ -31,7 +29,7 @@ namespace Chess
         public static QiZi[] QiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
         public static QiZi YuanWeiZhi;  // 棋子走动后在原位置显示圆圈
         public static Label JiangJunTiShi; // 将军时的文字提示
-        public static JueSha jueShaImage; // 绝杀时显示图片
+        public static JueSha JueShaImage; // 绝杀时显示图片
         public static Window_QiPu Window_QiPuKu; // 棋谱库窗口
         public static MyGraphics Arrows = new(); // 走棋指示箭头
         public static Ellipse RedSideRect = new();  // 红方走棋提示灯
@@ -94,26 +92,25 @@ namespace Chess
         public static readonly string[] CnNumber = { "", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
         #endregion
 
-
         /// <summary>
         /// 棋子移动的处理，如果棋子移动后配方被将军，则不能移动。
         /// </summary>
-        /// <param name="QiZi">棋子编号</param>
+        /// <param name="qiZi">棋子编号</param>
         /// <param name="m">目的地的列</param>
         /// <param name="n">目的地的行</param>
-        /// <param name="DieQz">所杀死的棋子的编号，-1表示没有杀死棋子</param>
+        /// <param name="dieQiZi">所杀死的棋子的编号，-1表示没有杀死棋子</param>
         /// <param name="sound">是否打开声音效果</param>
-        public static void QiZiMoveTo(int QiZi, int m, int n, int DieQz, bool sound)  // 运子
+        public static void QiZiMoveTo(int qiZi, int m, int n, int dieQiZi, bool sound)  // 运子
         {
-            if (QiZi is < 0 or > 31) return;
+            if (qiZi is < 0 or > 31) return;
             // 运子到(m,n)位置
-            int x0 = QiZiArray[QiZi].Col;
-            int y0 = QiZiArray[QiZi].Row;
+            int x0 = QiZiArray[qiZi].Col;
+            int y0 = QiZiArray[qiZi].Row;
 
-            if (MoveCheck.AfterMoveWillJiangJun(QiZi, x0, y0, m, n, QiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
-            _ = QiZiArray[QiZi].SetPosition(m, n);
+            if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, QiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
+            _ = QiZiArray[qiZi].SetPosition(m, n);
             Arrows.HideAllPath();  // 隐藏提示箭头
-            Qipu.AddItem(QiZi, x0, y0, m, n, DieQz); // 增加一行棋谱记录
+            Qipu.AddItem(qiZi, x0, y0, m, n, dieQiZi); // 增加一行棋谱记录
 
 
 
@@ -125,14 +122,14 @@ namespace Chess
                 }
             }
 
-            if (JiangJun.IsJueSha(QiZi)) // 检查是否绝杀
+            if (JiangJun.IsJueSha(qiZi)) // 检查是否绝杀
             {
-                jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+                JueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
             }
 
-            if (DieQz != -1) // 如果杀死了棋子
+            if (dieQiZi != -1) // 如果杀死了棋子
             {
-                QiZiArray[DieQz].SetDied(); 
+                QiZiArray[dieQiZi].SetDied(); 
                 if (sound)
                 {
                     /*Form2.mp1.FileName := 'sounds/eat.mp3';
@@ -150,8 +147,8 @@ namespace Chess
                 }
             }
 
-            SideTag = !SideTag;  // 变换走棋方
-            if (SideTag==BLACKSIDE)
+            sideTag = !sideTag;  // 变换走棋方
+            if (sideTag==BLACKSIDE)
             {
                 // 黑方走棋指示
                 BlackSideRect.Fill=Brushes.LightGoldenrodYellow;
@@ -163,19 +160,20 @@ namespace Chess
                 BlackSideRect.Fill = Brushes.Gray;
                 RedSideRect.Fill = Brushes.LightGoldenrodYellow;
             }
-            CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
-            AnimationMove(QiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
+            currentQiZi = 100;  //  当前预选棋子设为无效棋子
+            AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
 
         }
+
         /// <summary>
         /// 走棋动画
         /// </summary>
-        /// <param name="qizi"></param>
+        /// <param name="qiZi"></param>
         /// <param name="x0"></param>
         /// <param name="y0"></param>
         /// <param name="x1"></param>
         /// <param name="y1"></param>
-        private static void AnimationMove(int qizi, int x0, int y0, int x1, int y1)
+        private static void AnimationMove(int qiZi, int x0, int y0, int x1, int y1)
         {
             #region 动画参数设置
             DoubleAnimation PAx = new()
@@ -193,7 +191,7 @@ namespace Chess
                 Duration = new Duration(TimeSpan.FromSeconds(0.2))
             };
 
-            if (QiPanFanZhuan)
+            if (isQiPanFanZhuan)
             {
                 PAx.From = QiPanGrid_X[8 - x0] - GlobalValue.GRID_WIDTH / 2;
                 PAx.To = QiPanGrid_X[8 - x1] - GlobalValue.GRID_WIDTH / 2;
@@ -201,8 +199,8 @@ namespace Chess
                 PAy.To = QiPanGrid_Y[9 - y1] - GlobalValue.GRID_WIDTH / 2;
             }
             #endregion
-            QiZiArray[qizi].BeginAnimation(Canvas.LeftProperty, PAx);
-            QiZiArray[qizi].BeginAnimation(Canvas.TopProperty, PAy);
+            QiZiArray[qiZi].BeginAnimation(Canvas.LeftProperty, PAx);
+            QiZiArray[qiZi].BeginAnimation(Canvas.TopProperty, PAy);
 
             DoubleAnimation DAscale = new()
             {
@@ -212,12 +210,12 @@ namespace Chess
                 Duration = new Duration(TimeSpan.FromSeconds(0.2))
             };
             ScaleTransform scale = new();
-            if (SideTag == REDSIDE)
+            if (sideTag == REDSIDE)
             {
                 RedSideRect.RenderTransform = scale;
                 RedSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
             }
-            if (SideTag == BLACKSIDE)
+            if (sideTag == BLACKSIDE)
             {
                 BlackSideRect.RenderTransform = scale;
                 BlackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
@@ -225,6 +223,7 @@ namespace Chess
             scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale);
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale);
         }
+
         /// <summary>
         /// 初始化界面，棋盘设置为开局状态，但棋盘翻转状态不会重置
         /// </summary>
@@ -234,7 +233,7 @@ namespace Chess
             {
                 item.SetInitPosition();
             }
-            SideTag = REDSIDE;
+            sideTag = REDSIDE;
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
@@ -259,6 +258,7 @@ namespace Chess
             RedSideRect.Fill = Brushes.LightGoldenrodYellow;
             
         }
+
         /// <summary>
         /// 悔棋按钮
         /// </summary>
@@ -286,7 +286,7 @@ namespace Chess
             QiPan[step.X0, step.Y0] = step.QiZi;
             QiPan[step.X1, step.Y1] = step.DieQz;
             Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count - 1);
-            SideTag = !SideTag;
+            sideTag = !sideTag;
 
             if (QiPuRecordRoot.Cursor.GetParent() != null)
             {
@@ -298,40 +298,40 @@ namespace Chess
         /// <summary>
         /// 将全记录棋谱转化为简易记录棋谱，经JsonConvert.SerializeObject,存入数据库。目的是压缩数据量。
         /// </summary>
-        /// <param name="FullQipu">全局变量QiPuRecordRoot</param>
+        /// <param name="fullQiPu">全局变量QiPuRecordRoot</param>
         /// <returns>简易记录棋谱</returns>
-        public static QiPuSimpleRecord ConvertQiPuToSimple(QiPuRecord FullQipu)
+        public static QiPuSimpleRecord ConvertQiPuToSimple(QiPuRecord fullQiPu)
         {
-            QiPuSimpleRecord SimpleQipu = new();
-            SimpleQipu.Id = FullQipu.Id;
-            SimpleQipu.Remarks = FullQipu.Remarks;
-            SimpleQipu.CopyDataFromStep(FullQipu.StepData);
-            foreach (QiPuRecord Recode in FullQipu.ChildNode)
+            QiPuSimpleRecord simpleQiPu = new();
+            simpleQiPu.Id = fullQiPu.Id;
+            simpleQiPu.Remarks = fullQiPu.Remarks;
+            simpleQiPu.CopyDataFromStep(fullQiPu.StepData);
+            foreach (QiPuRecord Recode in fullQiPu.ChildNode)
             {
                 QiPuSimpleRecord childRecode=ConvertQiPuToSimple(Recode);
-                SimpleQipu.Child.Add(childRecode);
+                simpleQiPu.Child.Add(childRecode);
             }
-            return SimpleQipu;
+            return simpleQiPu;
         }
 
         /// <summary>
         /// 将简易记录棋谱转化为全记录棋谱。用于从数据库读取数据后，经JsonConvert.DeserializeObject，存入全局变量QiPuRecordRoot
         /// </summary>
-        /// <param name="SimpleQipu">全局变量QiPuSimpleRecordRoot</param>
+        /// <param name="simpleQiPu">全局变量QiPuSimpleRecordRoot</param>
         /// <returns>全记录棋谱</returns>
-        public static QiPuRecord ConvertQiPuToFull(QiPuSimpleRecord SimpleQipu)
+        public static QiPuRecord ConvertQiPuToFull(QiPuSimpleRecord simpleQiPu)
         {
-            QiPuRecord Qipu = new();
-            Qipu.Id=SimpleQipu.Id;
-            Qipu.Remarks=SimpleQipu.Remarks;
-            Qipu.SetRecordData(SimpleQipu.Data);
-            foreach (QiPuSimpleRecord Recode in SimpleQipu.Child)
+            QiPuRecord qiPu = new();
+            qiPu.Id=simpleQiPu.Id;
+            qiPu.Remarks=simpleQiPu.Remarks;
+            qiPu.SetRecordData(simpleQiPu.Data);
+            foreach (QiPuSimpleRecord Recode in simpleQiPu.Child)
             {
                 QiPuRecord childRecode = ConvertQiPuToFull(Recode);
-                Qipu.AddChild(childRecode);
+                qiPu.AddChild(childRecode);
                 
             }
-            return Qipu;
+            return qiPu;
         }
     }
 }

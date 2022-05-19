@@ -117,7 +117,7 @@
             </TabItem>
             <TabItem HorizontalAlignment="Center" Height="19" Header="棋谱说明" VerticalAlignment="Center" Width="59">
                 <Grid Background="#FFFFFFFF">
-                    <TextBox x:Name="memostr" HorizontalAlignment="Stretch" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" MinHeight="100" VerticalScrollBarVisibility="Auto" IsReadOnly="True" MinLines="5" HorizontalContentAlignment="Stretch" Padding="0,0,0,21"/>
+                    <TextBox x:Name="remarksTextBlock" HorizontalAlignment="Stretch" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" MinHeight="100" VerticalScrollBarVisibility="Auto" IsReadOnly="True" MinLines="5" HorizontalContentAlignment="Stretch" Padding="0,0,0,21"/>
                 </Grid>
             </TabItem>
             <TabItem HorizontalAlignment="Center" Height="19" Header="教学视频" VerticalAlignment="Center" Width="59">

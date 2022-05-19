@@ -10,8 +10,9 @@ namespace Chess
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static Window_JiPu jipuwindow;  // 记谱窗口
-        private static SpyWindow Spy_window;    // 棋盘数据监视窗口
+        private static Window_JiPu jipuWindow;  // 记谱窗口
+        private static SpyWindow spyWindow;    // 棋盘数据监视窗口
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,15 +41,15 @@ namespace Chess
                     _ = qiziCanvas.Children.Add(GlobalValue.PathPointImage[i, j]);
                 }
             }
-            GlobalValue.QiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
+            GlobalValue.isQiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
             QiPanChange(false);
-            jipuwindow = new Window_JiPu(); // 棋谱记录窗口
-            jipuwindow.SetValue(LeftProperty, SystemParameters.WorkArea.Width - 600);
-            jipuwindow.SetValue(TopProperty, SystemParameters.WorkArea.Top);
-            jipuwindow.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
-            jipuwindow.Hide();
-            Spy_window = new SpyWindow(); // 棋盘数据监视窗口
-            Spy_window.Hide();
+            jipuWindow = new Window_JiPu(); // 棋谱记录窗口
+            jipuWindow.SetValue(LeftProperty, SystemParameters.WorkArea.Width - 600);
+            jipuWindow.SetValue(TopProperty, SystemParameters.WorkArea.Top);
+            jipuWindow.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
+            jipuWindow.Hide();
+            spyWindow = new SpyWindow(); // 棋盘数据监视窗口
+            spyWindow.Hide();
 
             GlobalValue.Window_QiPuKu = new Window_QiPu(); // 棋谱库浏览窗口
             GlobalValue.Window_QiPuKu.SetValue(LeftProperty, SystemParameters.WorkArea.Left);
@@ -67,8 +68,8 @@ namespace Chess
 
             _ = JiangJunTiShi.Children.Add(GlobalValue.JiangJunTiShi);
 
-            GlobalValue.jueShaImage = new(); // 绝杀图片
-            _ = maingrid.Children.Add(GlobalValue.jueShaImage);
+            GlobalValue.JueShaImage = new(); // 绝杀图片
+            _ = maingrid.Children.Add(GlobalValue.JueShaImage);
             
             DrawGrid.Children.Add(GlobalValue.Arrows.grid); // 走棋提示箭头
 
@@ -116,8 +117,8 @@ namespace Chess
         /// <param name="e"></param>
         private void OnFanZhuanQiPan(object sender, RoutedEventArgs e)
         {
-            GlobalValue.QiPanFanZhuan = !GlobalValue.QiPanFanZhuan;
-            QiPanChange(GlobalValue.QiPanFanZhuan);  // 更换棋盘
+            GlobalValue.isQiPanFanZhuan = !GlobalValue.isQiPanFanZhuan;
+            QiPanChange(GlobalValue.isQiPanFanZhuan);  // 更换棋盘
             GlobalValue.YuanWeiZhi.FanZhuanPosition(); // 走棋原位置图片刷新
             foreach (QiZi item in GlobalValue.QiZiArray)
             {
@@ -132,13 +133,14 @@ namespace Chess
             }
             GlobalValue.Arrows.HideAllPath(); //  隐藏提示箭头
         }
+
         /// <summary>
-        /// 棋盘图像的更换
+        /// 棋盘翻转时更换棋盘
         /// </summary>
-        /// <param name="change">false=上黑下红，true=上红下黑</param>
-        private void QiPanChange(bool change)
+        /// <param name="isChange">false=上黑下红，true=上红下黑</param>
+        private void QiPanChange(bool isChange)
         {
-            if (change)
+            if (isChange)
             {
                 qipan_topBlack.Visibility = Visibility.Hidden;
                 qipan_topRed.Visibility = Visibility.Visible;
@@ -154,7 +156,6 @@ namespace Chess
             }
         }
 
-
         /// <summary>
         /// 打开或关闭记谱窗口
         /// </summary>
@@ -162,13 +163,13 @@ namespace Chess
         /// <param name="e"></param>
         private void OpenJiPuWindow(object sender, RoutedEventArgs e)
         {
-            if (jipuwindow.IsVisible)
+            if (jipuWindow.IsVisible)
             {
-                jipuwindow.Hide();
+                jipuWindow.Hide();
             }
             else
             {
-                jipuwindow.Show();
+                jipuWindow.Show();
             }
         }
 
@@ -179,15 +180,16 @@ namespace Chess
         /// <param name="e"></param>
         private void OpenSpyWindow(object sender, RoutedEventArgs e)
         {
-            if (Spy_window.IsVisible)
+            if (spyWindow.IsVisible)
             {
-                Spy_window.Hide();
+                spyWindow.Hide();
             }
             else
             {
-                Spy_window.Show();
+                spyWindow.Show();
             }
         }
+
         /// <summary>
         /// 打开软件设置窗口
         /// </summary>
@@ -208,6 +210,7 @@ namespace Chess
         {
             Environment.Exit(0); // 关闭所有窗口，并释放所有资源，包括相关辅助窗口。
         }
+
         /// <summary>
         /// 保存棋谱
         /// </summary>
@@ -218,6 +221,7 @@ namespace Chess
             SubWindow.Save_Window window = new();
             _ = window.ShowDialog();
         }
+
         /// <summary>
         /// 悔棋
         /// </summary>
@@ -230,8 +234,9 @@ namespace Chess
 
         private void SaveJiPuToBuffer(object sender, RoutedEventArgs e)
         {
-            jipuwindow.Save_jipu();
+            jipuWindow.Save_jipu();
         }
+
         /// <summary>
         /// 打开复盘窗口
         /// </summary>

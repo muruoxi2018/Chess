@@ -67,12 +67,12 @@ namespace Chess.SuanFa
             /// <summary>
             /// 棋谱完整树，转换为收缩树
             /// </summary>
-            /// <param name="qrecord">棋谱完整树</param>
-            public void ConvertFromQiPuRecord(QiPuRecord qrecord)
+            /// <param name="qiPuRecord">棋谱完整树</param>
+            public void ConvertFromQiPuRecord(QiPuRecord qiPuRecord)
             {
                 ChildSteps.Clear();
-                var obobstep = ConvertData(qrecord);
-                foreach (var step in obobstep)
+                var obobQiPu = ConvertData(qiPuRecord);
+                foreach (var step in obobQiPu)
                 {
                     ChildSteps.Add(step);
                 }
@@ -81,40 +81,40 @@ namespace Chess.SuanFa
             /// <summary>
             /// 递归转换完整树
             /// </summary>
-            /// <param name="qrcd"></param>
+            /// <param name="qiPuRecord"></param>
             /// <returns></returns>
-            private static ObservableCollection<ObservableCollection<ContractQPClass>> ConvertData(QiPuRecord qrcd)
+            private static ObservableCollection<ObservableCollection<ContractQPClass>> ConvertData(QiPuRecord qiPuRecord)
             {
-                ObservableCollection<ObservableCollection<ContractQPClass>> qproot = new();
-                QiPuRecord CurQp = qrcd;
-                while (!CurQp.IsLeaf())
+                ObservableCollection<ObservableCollection<ContractQPClass>> qpRoot = new();
+                QiPuRecord currStep = qiPuRecord;
+                while (!currStep.IsLeaf())
                 {
                     ContractQPClass qp0 = new ContractQPClass();
-                    qp0.CopyDataFromQiPuRecord(CurQp);
-                    ObservableCollection<ContractQPClass> qplist = new();
-                    qplist.Add(qp0);
-                    qproot.Add(qplist);
+                    qp0.CopyDataFromQiPuRecord(currStep);
+                    ObservableCollection<ContractQPClass> qpList = new();
+                    qpList.Add(qp0);
+                    qpRoot.Add(qpList);
 
-                    for (int i = 1; i < CurQp.ChildNode.Count; i++)
+                    for (int i = 1; i < currStep.ChildNode.Count; i++)
                     {
-                        var steps = ConvertData(CurQp.ChildNode[i]);
+                        var steps = ConvertData(currStep.ChildNode[i]);
                         foreach (var step in steps)
                         {
                             qp0.ChildSteps.Add(step);
                         }
                     }
-                    CurQp = CurQp.ChildNode[0];
+                    currStep = currStep.ChildNode[0];
                 }
-                if (CurQp.IsLeaf())
+                if (currStep.IsLeaf())
                 {
                     ContractQPClass qp0 = new ContractQPClass();
-                    qp0.CopyDataFromQiPuRecord(CurQp);
+                    qp0.CopyDataFromQiPuRecord(currStep);
                     ObservableCollection<ContractQPClass> qplist = new();
                     qplist.Add(qp0);
-                    qproot.Add(qplist);
+                    qpRoot.Add(qplist);
                 }
 
-                return qproot;
+                return qpRoot;
 
             }
             /// <summary>
@@ -386,7 +386,7 @@ namespace Chess.SuanFa
             GlobalValue.QiPuRecordRoot.Cursor.IsSelected = true;
 
             GlobalValue.QiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.QiPuRecordRoot);  // 更新简易棋谱记录
-            GlobalValue.Window_QiPuKu.memostr.Text = JsonConvert.SerializeObject(GlobalValue.QiPuSimpleRecordRoot);
+            GlobalValue.Window_QiPuKu.remarksTextBlock.Text = JsonConvert.SerializeObject(GlobalValue.QiPuSimpleRecordRoot);
 
             Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.QiPuRecordRoot);
             //x0 = 100;

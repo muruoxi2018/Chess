@@ -51,7 +51,7 @@ namespace Chess
             //string path = @"pack://application:,,,/picture/" + GlobalValue.QiZiImageFileName[QiziId] + ".png";
             BitmapImage bi = new(new Uri(path, UriKind.Absolute)); // 载入棋子图片
             bi.Freeze();
-            qzimage.Source = bi;
+            QiZiImage.Source = bi;
             init_col = GlobalValue.QiZiInitPosition[id, 0]; // 开局时，棋子的位置
             init_row = GlobalValue.QiZiInitPosition[id, 1];
             SetPosition(init_col, init_row);
@@ -75,7 +75,7 @@ namespace Chess
                 //item.yuxuankuang.Visibility = Visibility.Hidden;
                 item.Deselect();
             }
-            if (SideColor == GlobalValue.SideTag)
+            if (SideColor == GlobalValue.sideTag)
             {
                 Select();
             }
@@ -87,7 +87,7 @@ namespace Chess
         public void Deselect()
         {
             Selected = false;
-            qzimage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
+            QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
             yuxuankuang.Visibility = Visibility.Hidden; // 本棋子的预先框隐藏
         }
         /// <summary>
@@ -104,11 +104,11 @@ namespace Chess
                 AutoReverse = false,
                 Duration = new Duration(TimeSpan.FromSeconds(0.05))
             };
-            qzimage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
+            QiZiImage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
             yuxuankuang.Visibility = Visibility.Visible;
-            GlobalValue.CurrentQiZi = QiziId;
+            GlobalValue.currentQiZi = QiziId;
             //Scall(1.01);
-            SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi); // 获取可移动路径，并显示在棋盘上
+            SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.currentQiZi); // 获取可移动路径，并显示在棋盘上
             GlobalValue.YuanWeiZhi.SetPosition(Col, Row); // 棋子原位置标记，显示在当前位置
             GlobalValue.YuanWeiZhi.ShowYuanWeiZhiImage();
         }
@@ -130,14 +130,14 @@ namespace Chess
             }
             Col = x;
             Row = y;
-            if (GlobalValue.QiPanFanZhuan) // 如果棋盘翻转为上红下黑，则进行坐标转换
+            if (GlobalValue.isQiPanFanZhuan) // 如果棋盘翻转为上红下黑，则进行坐标转换
             {
                 x = 8 - x;
                 y = 9 - y;
             }
             SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x] - 33);
             SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] - 33);
-            qzimage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
+            QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
             return true;
 
         }
@@ -160,7 +160,7 @@ namespace Chess
         {
             if (scaller is > 0 and < 10)
             {
-                TransformGroup group = qzimage.FindResource("UserControlRenderTransform1") as TransformGroup;
+                TransformGroup group = QiZiImage.FindResource("UserControlRenderTransform1") as TransformGroup;
                 ScaleTransform scaler = group.Children[0] as ScaleTransform;
                 scaler.ScaleX = scaller;
                 scaler.ScaleY = scaller;

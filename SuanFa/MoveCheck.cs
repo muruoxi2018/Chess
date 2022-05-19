@@ -8,8 +8,8 @@ namespace Chess.SuanFa // 算法
         /// <summary>
         /// 获取棋子可移动路径，并在棋盘上显示标记
         /// </summary>
-        /// <param name="thisqz"></param>
-        public static void GetAndShowPathPoints(int thisqz)
+        /// <param name="qiZi"></param>
+        public static void GetAndShowPathPoints(int qiZi)
 
         {
             for (int i = 0; i <= 8; i++)
@@ -20,9 +20,9 @@ namespace Chess.SuanFa // 算法
                     PathBool[i, j] = false;
                 }
             }
-            if (thisqz > -1)
+            if (qiZi > -1)
             {
-                PathBool = GetPathPoints(thisqz, GlobalValue.QiPan);
+                PathBool = GetPathPoints(qiZi, GlobalValue.QiPan);
                 for (int i = 0; i <= 8; i++)
                 {
                     for (int j = 0; j <= 9; j++)
@@ -30,17 +30,17 @@ namespace Chess.SuanFa // 算法
                         GlobalValue.PathPointImage[i, j].HasPoint = PathBool[i, j];
                     }
                 }
-                GlobalValue.PathPointImage[GlobalValue.QiZiArray[thisqz].Col, GlobalValue.QiZiArray[thisqz].Row].HasPoint = false;
+                GlobalValue.PathPointImage[GlobalValue.QiZiArray[qiZi].Col, GlobalValue.QiZiArray[qiZi].Row].HasPoint = false;
             }
         }
 
         /// <summary>
         /// 计算棋子可移动的目标位置
         /// </summary>
-        /// <param name="MoveQiZi">棋子编号</param>
-        /// <param name="qipan">当前棋盘数据</param>
+        /// <param name="moveQiZi">棋子编号</param>
+        /// <param name="qiPan">当前棋盘数据</param>
         /// <returns>返回bool二维数组，对应棋盘上的每一点位</returns>
-        public static bool[,] GetPathPoints(int MoveQiZi, int[,] qipan)
+        public static bool[,] GetPathPoints(int moveQiZi, int[,] qiPan)
         {
             bool[,] points = new bool[9, 10];
             for (int i = 0; i <= 8; i++)
@@ -50,84 +50,84 @@ namespace Chess.SuanFa // 算法
                     points[i, j] = false;
                 }
             }
-            if (MoveQiZi > 31)  // 如果没有预选棋子
+            if (moveQiZi > 31)  // 如果没有预选棋子
             {
                 return points;
             }
-            if (MoveQiZi < 0)
+            if (moveQiZi < 0)
             {
                 return points;
             }
-            if (GlobalValue.QiZiArray[MoveQiZi].Visibility != System.Windows.Visibility.Visible) return points;
-            int MoveQiZi_Col = GlobalValue.QiZiArray[MoveQiZi].Col;
-            int MoveQiZi_Row = GlobalValue.QiZiArray[MoveQiZi].Row;
+            if (GlobalValue.QiZiArray[moveQiZi].Visibility != System.Windows.Visibility.Visible) return points;
+            int moveQiZiCol = GlobalValue.QiZiArray[moveQiZi].Col;
+            int moveQiZiRow = GlobalValue.QiZiArray[moveQiZi].Row;
             int side = 0;
             #region 棋子可移动路径的计算
-            switch (MoveQiZi)
+            switch (moveQiZi)
             {
                 case 7:
                 case 8:
                 case 23:
                 case 24:    // 车的移动  ================================================
-                    if (!JustOneIsThis(MoveQiZi, qipan))
+                    if (!JustOneIsThis(moveQiZi, qiPan))
                     {
-                        for (int i = MoveQiZi_Col - 1; i >= 0; i--) // 同一行向左找
+                        for (int i = moveQiZiCol - 1; i >= 0; i--) // 同一行向左找
                         {
-                            if (qipan[i, MoveQiZi_Row] == -1)
+                            if (qiPan[i, moveQiZiRow] == -1)
                             {
-                                points[i, MoveQiZi_Row] = true;
+                                points[i, moveQiZiRow] = true;
                             }
                             else
                             {
-                                if (!IsTongBang(MoveQiZi, qipan[i, MoveQiZi_Row]))
+                                if (!IsTongBang(moveQiZi, qiPan[i, moveQiZiRow]))
                                 {
-                                    points[i, MoveQiZi_Row] = true;
+                                    points[i, moveQiZiRow] = true;
                                 }
                                 break;
                             }
                         }
-                        for (int i = MoveQiZi_Col + 1; i <= 8; i++) // 同一行向右找
+                        for (int i = moveQiZiCol + 1; i <= 8; i++) // 同一行向右找
                         {
-                            if (qipan[i, MoveQiZi_Row] == -1)
+                            if (qiPan[i, moveQiZiRow] == -1)
                             {
-                                points[i, MoveQiZi_Row] = true;
+                                points[i, moveQiZiRow] = true;
                             }
                             else
                             {
-                                if (!IsTongBang(MoveQiZi, qipan[i, MoveQiZi_Row]))
+                                if (!IsTongBang(moveQiZi, qiPan[i, moveQiZiRow]))
                                 {
-                                    points[i, MoveQiZi_Row] = true;
+                                    points[i, moveQiZiRow] = true;
                                 }
                                 break;
                             }
                         }
                     }
-                    for (int i = MoveQiZi_Row - 1; i >= 0; i--) // 同一列向上找
+                    for (int i = moveQiZiRow - 1; i >= 0; i--) // 同一列向上找
                     {
-                        if (qipan[MoveQiZi_Col, i] == -1)
+                        if (qiPan[moveQiZiCol, i] == -1)
                         {
-                            points[MoveQiZi_Col, i] = true;
+                            points[moveQiZiCol, i] = true;
                         }
                         else
                         {
-                            if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col, i]))
+                            if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol, i]))
                             {
-                                points[MoveQiZi_Col, i] = true;
+                                points[moveQiZiCol, i] = true;
                             }
                             break;
                         }
                     }
-                    for (int i = MoveQiZi_Row + 1; i <= 9; i++) // 同一列向下找
+                    for (int i = moveQiZiRow + 1; i <= 9; i++) // 同一列向下找
                     {
-                        if (qipan[MoveQiZi_Col, i] == -1)
+                        if (qiPan[moveQiZiCol, i] == -1)
                         {
-                            points[MoveQiZi_Col, i] = true;
+                            points[moveQiZiCol, i] = true;
                         }
                         else
                         {
-                            if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col, i]))
+                            if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol, i]))
                             {
-                                points[MoveQiZi_Col, i] = true;
+                                points[moveQiZiCol, i] = true;
                             }
                             break;
                         }
@@ -139,56 +139,56 @@ namespace Chess.SuanFa // 算法
                 case 21:
                 case 22:
                     // 马的移动 ================================================
-                    if (JustOneIsThis(MoveQiZi, qipan))
+                    if (JustOneIsThis(moveQiZi, qiPan))
                     {
                         break;
                     }
                     // 八个方向，逐个检查
-                    if (MoveQiZi_Row > 1 && qipan[MoveQiZi_Col, MoveQiZi_Row - 1] == -1) // 检查上方，如不在边上，且没蹩马腿
+                    if (moveQiZiRow > 1 && qiPan[moveQiZiCol, moveQiZiRow - 1] == -1) // 检查上方，如不在边上，且没蹩马腿
                     {
-                        if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 1, MoveQiZi_Row - 2]))
+                        if (moveQiZiCol > 0 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol - 1, moveQiZiRow - 2]))
                         {
-                            points[MoveQiZi_Col - 1, MoveQiZi_Row - 2] = true;
+                            points[moveQiZiCol - 1, moveQiZiRow - 2] = true;
                         }
-                        if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 1, MoveQiZi_Row - 2]))
+                        if (moveQiZiCol < 8 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol + 1, moveQiZiRow - 2]))
                         {
-                            points[MoveQiZi_Col + 1, MoveQiZi_Row - 2] = true;
+                            points[moveQiZiCol + 1, moveQiZiRow - 2] = true;
                         }
                     }
 
-                    if (MoveQiZi_Row < 8 && qipan[MoveQiZi_Col, MoveQiZi_Row + 1] == -1) // 检查下方，如不在边上，且没蹩马腿
+                    if (moveQiZiRow < 8 && qiPan[moveQiZiCol, moveQiZiRow + 1] == -1) // 检查下方，如不在边上，且没蹩马腿
                     {
-                        if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 1, MoveQiZi_Row + 2]))
+                        if (moveQiZiCol > 0 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol - 1, moveQiZiRow + 2]))
                         {
-                            points[MoveQiZi_Col - 1, MoveQiZi_Row + 2] = true;
+                            points[moveQiZiCol - 1, moveQiZiRow + 2] = true;
                         }
-                        if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 1, MoveQiZi_Row + 2]))
+                        if (moveQiZiCol < 8 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol + 1, moveQiZiRow + 2]))
                         {
-                            points[MoveQiZi_Col + 1, MoveQiZi_Row + 2] = true;
+                            points[moveQiZiCol + 1, moveQiZiRow + 2] = true;
                         }
                     }
 
-                    if (MoveQiZi_Col > 1 && qipan[MoveQiZi_Col - 1, MoveQiZi_Row] == -1) // 检查左方，如不在边上，且没蹩马腿
+                    if (moveQiZiCol > 1 && qiPan[moveQiZiCol - 1, moveQiZiRow] == -1) // 检查左方，如不在边上，且没蹩马腿
                     {
-                        if (MoveQiZi_Row > 0 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 2, MoveQiZi_Row - 1]))
+                        if (moveQiZiRow > 0 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol - 2, moveQiZiRow - 1]))
                         {
-                            points[MoveQiZi_Col - 2, MoveQiZi_Row - 1] = true;
+                            points[moveQiZiCol - 2, moveQiZiRow - 1] = true;
                         }
-                        if (MoveQiZi_Row < 9 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 2, MoveQiZi_Row + 1]))
+                        if (moveQiZiRow < 9 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol - 2, moveQiZiRow + 1]))
                         {
-                            points[MoveQiZi_Col - 2, MoveQiZi_Row + 1] = true;
+                            points[moveQiZiCol - 2, moveQiZiRow + 1] = true;
                         }
                     }
 
-                    if (MoveQiZi_Col < 7 && qipan[MoveQiZi_Col + 1, MoveQiZi_Row] == -1) // 检查右方，如不在边上，且没蹩马腿
+                    if (moveQiZiCol < 7 && qiPan[moveQiZiCol + 1, moveQiZiRow] == -1) // 检查右方，如不在边上，且没蹩马腿
                     {
-                        if (MoveQiZi_Row > 0 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 2, MoveQiZi_Row - 1]))
+                        if (moveQiZiRow > 0 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol + 2, moveQiZiRow - 1]))
                         {
-                            points[MoveQiZi_Col + 2, MoveQiZi_Row - 1] = true;
+                            points[moveQiZiCol + 2, moveQiZiRow - 1] = true;
                         }
-                        if (MoveQiZi_Row < 9 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 2, MoveQiZi_Row + 1]))
+                        if (moveQiZiRow < 9 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol + 2, moveQiZiRow + 1]))
                         {
-                            points[MoveQiZi_Col + 2, MoveQiZi_Row + 1] = true;
+                            points[moveQiZiCol + 2, moveQiZiRow + 1] = true;
                         }
                     }
                     break;
@@ -197,45 +197,45 @@ namespace Chess.SuanFa // 算法
                 case 4:
                 case 19:
                 case 20: // 相的移动 ================================================
-                    if (MoveQiZi_Row <= 4) // 如果是上方相，则上下边界设定为0--4，下方相的边界设定为5--9
+                    if (moveQiZiRow <= 4) // 如果是上方相，则上下边界设定为0--4，下方相的边界设定为5--9
                     {
                         side = 5;
                     }
-                    if (JustOneIsThis(MoveQiZi, qipan))
+                    if (JustOneIsThis(moveQiZi, qiPan))
                     {
                         break;
                     }
-                    if (MoveQiZi_Row != 9 - side)  // 如果不在下边界上，则探查下方的可移动路径
+                    if (moveQiZiRow != 9 - side)  // 如果不在下边界上，则探查下方的可移动路径
                     {
-                        if (MoveQiZi_Col > 0)
+                        if (moveQiZiCol > 0)
                         {
-                            if (qipan[MoveQiZi_Col - 1, MoveQiZi_Row + 1] == -1 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 2, MoveQiZi_Row + 2])) // 左下方
+                            if (qiPan[moveQiZiCol - 1, moveQiZiRow + 1] == -1 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol - 2, moveQiZiRow + 2])) // 左下方
                             {
-                                points[MoveQiZi_Col - 2, MoveQiZi_Row + 2] = true;
+                                points[moveQiZiCol - 2, moveQiZiRow + 2] = true;
                             }
                         }
-                        if (MoveQiZi_Col < 8)
+                        if (moveQiZiCol < 8)
                         {
-                            if (qipan[MoveQiZi_Col + 1, MoveQiZi_Row + 1] == -1 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 2, MoveQiZi_Row + 2])) // 右下方
+                            if (qiPan[moveQiZiCol + 1, moveQiZiRow + 1] == -1 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol + 2, moveQiZiRow + 2])) // 右下方
                             {
-                                points[MoveQiZi_Col + 2, MoveQiZi_Row + 2] = true;
+                                points[moveQiZiCol + 2, moveQiZiRow + 2] = true;
                             }
                         }
                     }
-                    if (MoveQiZi_Row != 5 - side)  // 如果不在上边界上，则探查上方的可移动路径
+                    if (moveQiZiRow != 5 - side)  // 如果不在上边界上，则探查上方的可移动路径
                     {
-                        if (MoveQiZi_Col > 0)
+                        if (moveQiZiCol > 0)
                         {
-                            if (qipan[MoveQiZi_Col - 1, MoveQiZi_Row - 1] == -1 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 2, MoveQiZi_Row - 2])) // 左上方
+                            if (qiPan[moveQiZiCol - 1, moveQiZiRow - 1] == -1 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol - 2, moveQiZiRow - 2])) // 左上方
                             {
-                                points[MoveQiZi_Col - 2, MoveQiZi_Row - 2] = true;
+                                points[moveQiZiCol - 2, moveQiZiRow - 2] = true;
                             }
                         }
-                        if (MoveQiZi_Col < 8)
+                        if (moveQiZiCol < 8)
                         {
-                            if (qipan[MoveQiZi_Col + 1, MoveQiZi_Row - 1] == -1 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 2, MoveQiZi_Row - 2])) // 右上方
+                            if (qiPan[moveQiZiCol + 1, moveQiZiRow - 1] == -1 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol + 2, moveQiZiRow - 2])) // 右上方
                             {
-                                points[MoveQiZi_Col + 2, MoveQiZi_Row - 2] = true;
+                                points[moveQiZiCol + 2, moveQiZiRow - 2] = true;
                             }
                         }
                     }
@@ -245,45 +245,45 @@ namespace Chess.SuanFa // 算法
                 case 17:
                 case 18: // 士的移动 ================================================
                     side = 0;
-                    if (MoveQiZi_Row <= 4) // 如果是上方棋子，则上下边界设定为0--2，下方相的边界设定为7--9
+                    if (moveQiZiRow <= 4) // 如果是上方棋子，则上下边界设定为0--2，下方相的边界设定为7--9
                     {
                         side = 7;
                     }
-                    if (JustOneIsThis(MoveQiZi, qipan))
+                    if (JustOneIsThis(moveQiZi, qiPan))
                     {
                         break;
                     }
-                    if (MoveQiZi_Row != 9 - side)  // 如果不在下边界上，则探查下方的可移动路径
+                    if (moveQiZiRow != 9 - side)  // 如果不在下边界上，则探查下方的可移动路径
                     {
-                        if (MoveQiZi_Col > 3)
+                        if (moveQiZiCol > 3)
                         {
-                            if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 1, MoveQiZi_Row + 1])) // 左下方
+                            if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol - 1, moveQiZiRow + 1])) // 左下方
                             {
-                                points[MoveQiZi_Col - 1, MoveQiZi_Row + 1] = true;
+                                points[moveQiZiCol - 1, moveQiZiRow + 1] = true;
                             }
                         }
-                        if (MoveQiZi_Col < 5)
+                        if (moveQiZiCol < 5)
                         {
-                            if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 1, MoveQiZi_Row + 1])) // 右下方
+                            if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol + 1, moveQiZiRow + 1])) // 右下方
                             {
-                                points[MoveQiZi_Col + 1, MoveQiZi_Row + 1] = true;
+                                points[moveQiZiCol + 1, moveQiZiRow + 1] = true;
                             }
                         }
                     }
-                    if (MoveQiZi_Row != 7 - side)  // 如果不在上边界上，则探查上方的可移动路径
+                    if (moveQiZiRow != 7 - side)  // 如果不在上边界上，则探查上方的可移动路径
                     {
-                        if (MoveQiZi_Col > 3)
+                        if (moveQiZiCol > 3)
                         {
-                            if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 1, MoveQiZi_Row - 1]))// 左上方
+                            if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol - 1, moveQiZiRow - 1]))// 左上方
                             {
-                                points[MoveQiZi_Col - 1, MoveQiZi_Row - 1] = true;
+                                points[moveQiZiCol - 1, moveQiZiRow - 1] = true;
                             }
                         }
-                        if (MoveQiZi_Col < 5)
+                        if (moveQiZiCol < 5)
                         {
-                            if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 1, MoveQiZi_Row - 1])) // 右上方
+                            if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol + 1, moveQiZiRow - 1])) // 右上方
                             {
-                                points[MoveQiZi_Col + 1, MoveQiZi_Row - 1] = true;
+                                points[moveQiZiCol + 1, moveQiZiRow - 1] = true;
                             }
                         }
                     }
@@ -291,59 +291,59 @@ namespace Chess.SuanFa // 算法
                 case 0:
                 case 16: // 将帅的移动 ================================================
                     side = 0;
-                    if (MoveQiZi_Row <= 4) // 黑将的上下移动边界为0--2，红帅的上下移动边界为7--9
+                    if (moveQiZiRow <= 4) // 黑将的上下移动边界为0--2，红帅的上下移动边界为7--9
                     {
                         side = 7;
                     }
-                    if (MoveQiZi_Row != (9 - side))  // 如果不在下边界上，则探查下方的可移动路径
+                    if (moveQiZiRow != (9 - side))  // 如果不在下边界上，则探查下方的可移动路径
                     {
-                        if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col, MoveQiZi_Row + 1])) // 下方移一格
+                        if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol, moveQiZiRow + 1])) // 下方移一格
                         {
                             if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅横向不同线
                             {
-                                points[MoveQiZi_Col, MoveQiZi_Row + 1] = true;
+                                points[moveQiZiCol, moveQiZiRow + 1] = true;
                             }
                             else
                             {
-                                if (MoveQiZi == 0)
+                                if (moveQiZi == 0)
                                 {
                                     for (int i = GlobalValue.QiZiArray[0].Row + 2; i < GlobalValue.QiZiArray[16].Row; i++)
                                     {
-                                        if (qipan[MoveQiZi_Col, i] != -1)
+                                        if (qiPan[moveQiZiCol, i] != -1)
                                         {
-                                            points[MoveQiZi_Col, MoveQiZi_Row + 1] = true;
+                                            points[moveQiZiCol, moveQiZiRow + 1] = true;
                                             break;
                                         }
                                     }
                                 }
-                                if (MoveQiZi == 16)
+                                if (moveQiZi == 16)
                                 {
-                                    points[MoveQiZi_Col, MoveQiZi_Row + 1] = true;
+                                    points[moveQiZiCol, moveQiZiRow + 1] = true;
                                 }
                             }
                         }
                     }
-                    if (MoveQiZi_Row != (7 - side))  // 如果不在上边界上，则探查上方的可移动路径
+                    if (moveQiZiRow != (7 - side))  // 如果不在上边界上，则探查上方的可移动路径
                     {
-                        if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col, MoveQiZi_Row - 1]))// 上方移一格
+                        if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol, moveQiZiRow - 1]))// 上方移一格
                         {
                             if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅横向不同线
                             {
-                                points[MoveQiZi_Col, MoveQiZi_Row - 1] = true;
+                                points[moveQiZiCol, moveQiZiRow - 1] = true;
                             }
                             else
                             {
-                                if (MoveQiZi == 0)
+                                if (moveQiZi == 0)
                                 {
-                                    points[MoveQiZi_Col, MoveQiZi_Row - 1] = true;
+                                    points[moveQiZiCol, moveQiZiRow - 1] = true;
                                 }
-                                if (MoveQiZi == 16)
+                                if (moveQiZi == 16)
                                 {
                                     for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row - 1; i++)
                                     {
-                                        if (qipan[MoveQiZi_Col, i] != -1)
+                                        if (qiPan[moveQiZiCol, i] != -1)
                                         {
-                                            points[MoveQiZi_Col, MoveQiZi_Row - 1] = true;
+                                            points[moveQiZiCol, moveQiZiRow - 1] = true;
                                             break;
                                         }
                                     }
@@ -351,46 +351,46 @@ namespace Chess.SuanFa // 算法
                             }
                         }
                     }
-                    if (MoveQiZi_Col > 3)  // 如果不在左边界上，则探查左方的可移动路径
+                    if (moveQiZiCol > 3)  // 如果不在左边界上，则探查左方的可移动路径
                     {
-                        if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 1, MoveQiZi_Row])) // 左方移一格
+                        if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol - 1, moveQiZiRow])) // 左方移一格
                         {
-                            if (((MoveQiZi_Col - 1) == GlobalValue.QiZiArray[0].Col) || ((MoveQiZi_Col - 1) == GlobalValue.QiZiArray[16].Col))    // 如果将帅横向移动一格
+                            if (((moveQiZiCol - 1) == GlobalValue.QiZiArray[0].Col) || ((moveQiZiCol - 1) == GlobalValue.QiZiArray[16].Col))    // 如果将帅横向移动一格
                             {
                                 for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row; i++)
                                 {
-                                    if (qipan[MoveQiZi_Col - 1, i] != -1)
+                                    if (qiPan[moveQiZiCol - 1, i] != -1)
                                     {
-                                        points[MoveQiZi_Col - 1, MoveQiZi_Row] = true;
+                                        points[moveQiZiCol - 1, moveQiZiRow] = true;
                                         break;
                                     }
                                 }
                             }
                             else
                             {
-                                points[MoveQiZi_Col - 1, MoveQiZi_Row] = true;
+                                points[moveQiZiCol - 1, moveQiZiRow] = true;
                             }
                         }
 
                     }
-                    if (MoveQiZi_Col < 5)  // 如果不在右边界上，则探查右方的可移动路径
+                    if (moveQiZiCol < 5)  // 如果不在右边界上，则探查右方的可移动路径
                     {
-                        if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 1, MoveQiZi_Row])) // 右方移一格
+                        if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol + 1, moveQiZiRow])) // 右方移一格
                         {
-                            if (((MoveQiZi_Col + 1) == GlobalValue.QiZiArray[0].Col) || ((MoveQiZi_Col + 1) == GlobalValue.QiZiArray[16].Col))    // 如果将帅横向移动一格
+                            if (((moveQiZiCol + 1) == GlobalValue.QiZiArray[0].Col) || ((moveQiZiCol + 1) == GlobalValue.QiZiArray[16].Col))    // 如果将帅横向移动一格
                             {
                                 for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row; i++)
                                 {
-                                    if (qipan[MoveQiZi_Col + 1, i] != -1)
+                                    if (qiPan[moveQiZiCol + 1, i] != -1)
                                     {
-                                        points[MoveQiZi_Col + 1, MoveQiZi_Row] = true;
+                                        points[moveQiZiCol + 1, moveQiZiRow] = true;
                                         break;
                                     }
                                 }
                             }
                             else
                             {
-                                points[MoveQiZi_Col + 1, MoveQiZi_Row] = true;
+                                points[moveQiZiCol + 1, moveQiZiRow] = true;
                             }
                         }
                     }
@@ -398,7 +398,7 @@ namespace Chess.SuanFa // 算法
                     {
                         for (int j = 0; j <= 9; j++)
                         {
-                            if (points[i, j] == true && IsKilledPoint(MoveQiZi, i, j, GlobalValue.QiPan) == true)
+                            if (points[i, j] == true && IsKilledPoint(moveQiZi, i, j, GlobalValue.QiPan) == true)
                             {
                                 points[i, j] = false;
                             }
@@ -412,46 +412,46 @@ namespace Chess.SuanFa // 算法
                 case 25:
                 case 26: // 炮的移动 ================================================
                     int gezi = 0; // 隔子计数
-                    if (!JustOneIsThis(MoveQiZi, qipan))
+                    if (!JustOneIsThis(moveQiZi, qiPan))
                     {
-                        for (int i = MoveQiZi_Col - 1; i >= 0; i--) // 同一行向左找
+                        for (int i = moveQiZiCol - 1; i >= 0; i--) // 同一行向左找
                         {
-                            if (qipan[i, MoveQiZi_Row] == -1)
+                            if (qiPan[i, moveQiZiRow] == -1)
                             {
                                 if (gezi == 0)
                                 {
-                                    points[i, MoveQiZi_Row] = true;
+                                    points[i, moveQiZiRow] = true;
                                 }
                             }
                             else
                             {
-                                if (!IsTongBang(MoveQiZi, qipan[i, MoveQiZi_Row]))
+                                if (!IsTongBang(moveQiZi, qiPan[i, moveQiZiRow]))
                                 {
                                     if (gezi == 1)
                                     {
-                                        points[i, MoveQiZi_Row] = true;
+                                        points[i, moveQiZiRow] = true;
                                     }
                                 }
                                 gezi++;
                             }
                         }
                         gezi = 0; // 隔子计数
-                        for (int i = MoveQiZi_Col + 1; i <= 8; i++) // 同一行向右找
+                        for (int i = moveQiZiCol + 1; i <= 8; i++) // 同一行向右找
                         {
-                            if (qipan[i, MoveQiZi_Row] == -1)
+                            if (qiPan[i, moveQiZiRow] == -1)
                             {
                                 if (gezi == 0)
                                 {
-                                    points[i, MoveQiZi_Row] = true;
+                                    points[i, moveQiZiRow] = true;
                                 }
                             }
                             else
                             {
-                                if (!IsTongBang(MoveQiZi, qipan[i, MoveQiZi_Row]))
+                                if (!IsTongBang(moveQiZi, qiPan[i, moveQiZiRow]))
                                 {
                                     if (gezi == 1)
                                     {
-                                        points[i, MoveQiZi_Row] = true;
+                                        points[i, moveQiZiRow] = true;
                                     }
                                 }
                                 gezi++;
@@ -459,44 +459,44 @@ namespace Chess.SuanFa // 算法
                         }
                     }
                     gezi = 0; // 隔子计数
-                    for (int i = MoveQiZi_Row - 1; i >= 0; i--) // 同一列向上找
+                    for (int i = moveQiZiRow - 1; i >= 0; i--) // 同一列向上找
                     {
-                        if (qipan[MoveQiZi_Col, i] == -1)
+                        if (qiPan[moveQiZiCol, i] == -1)
                         {
                             if (gezi == 0)
                             {
-                                points[MoveQiZi_Col, i] = true;
+                                points[moveQiZiCol, i] = true;
                             }
                         }
                         else
                         {
-                            if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col, i]))
+                            if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol, i]))
                             {
                                 if (gezi == 1)
                                 {
-                                    points[MoveQiZi_Col, i] = true;
+                                    points[moveQiZiCol, i] = true;
                                 }
                             }
                             gezi++;
                         }
                     }
                     gezi = 0; // 隔子计数
-                    for (int i = MoveQiZi_Row + 1; i <= 9; i++) // 同一列向下找
+                    for (int i = moveQiZiRow + 1; i <= 9; i++) // 同一列向下找
                     {
-                        if (qipan[MoveQiZi_Col, i] == -1)
+                        if (qiPan[moveQiZiCol, i] == -1)
                         {
                             if (gezi == 0)
                             {
-                                points[MoveQiZi_Col, i] = true;
+                                points[moveQiZiCol, i] = true;
                             }
                         }
                         else
                         {
-                            if (!IsTongBang(MoveQiZi, qipan[MoveQiZi_Col, i]))
+                            if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol, i]))
                             {
                                 if (gezi == 1)
                                 {
-                                    points[MoveQiZi_Col, i] = true;
+                                    points[moveQiZiCol, i] = true;
                                 }
                             }
                             gezi++;
@@ -508,20 +508,20 @@ namespace Chess.SuanFa // 算法
                 case 13:
                 case 14:
                 case 15: // 黑方卒的移动
-                    if (MoveQiZi_Row < 9 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col, MoveQiZi_Row + 1])) // 下方一格
+                    if (moveQiZiRow < 9 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol, moveQiZiRow + 1])) // 下方一格
                     {
-                        points[MoveQiZi_Col, MoveQiZi_Row + 1] = true;
+                        points[moveQiZiCol, moveQiZiRow + 1] = true;
                     }
-                    if (!JustOneIsThis(MoveQiZi, qipan) && MoveQiZi_Row <= 9 && MoveQiZi_Row > 4) // 水平一格
+                    if (!JustOneIsThis(moveQiZi, qiPan) && moveQiZiRow <= 9 && moveQiZiRow > 4) // 水平一格
                     {
-                        if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 1, MoveQiZi_Row]))
+                        if (moveQiZiCol > 0 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol - 1, moveQiZiRow]))
                         {
-                            points[MoveQiZi_Col - 1, MoveQiZi_Row] = true;
+                            points[moveQiZiCol - 1, moveQiZiRow] = true;
                         }
 
-                        if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 1, MoveQiZi_Row]))
+                        if (moveQiZiCol < 8 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol + 1, moveQiZiRow]))
                         {
-                            points[MoveQiZi_Col + 1, MoveQiZi_Row] = true;
+                            points[moveQiZiCol + 1, moveQiZiRow] = true;
                         }
                     }
                     break;
@@ -530,20 +530,20 @@ namespace Chess.SuanFa // 算法
                 case 29:
                 case 30:
                 case 31:// 红方兵的移动
-                    if (MoveQiZi_Row > 0 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col, MoveQiZi_Row - 1])) // 上方一格
+                    if (moveQiZiRow > 0 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol, moveQiZiRow - 1])) // 上方一格
                     {
-                        points[MoveQiZi_Col, MoveQiZi_Row - 1] = true;
+                        points[moveQiZiCol, moveQiZiRow - 1] = true;
                     }
-                    if (!JustOneIsThis(MoveQiZi, qipan) && MoveQiZi_Row >= 0 && MoveQiZi_Row < 5) // 水平一格
+                    if (!JustOneIsThis(moveQiZi, qiPan) && moveQiZiRow >= 0 && moveQiZiRow < 5) // 水平一格
                     {
-                        if (MoveQiZi_Col > 0 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col - 1, MoveQiZi_Row]))
+                        if (moveQiZiCol > 0 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol - 1, moveQiZiRow]))
                         {
-                            points[MoveQiZi_Col - 1, MoveQiZi_Row] = true;
+                            points[moveQiZiCol - 1, moveQiZiRow] = true;
                         }
 
-                        if (MoveQiZi_Col < 8 && !IsTongBang(MoveQiZi, qipan[MoveQiZi_Col + 1, MoveQiZi_Row]))
+                        if (moveQiZiCol < 8 && !IsTongBang(moveQiZi, qiPan[moveQiZiCol + 1, moveQiZiRow]))
                         {
-                            points[MoveQiZi_Col + 1, MoveQiZi_Row] = true;
+                            points[moveQiZiCol + 1, moveQiZiRow] = true;
                         }
                     }
                     break;
@@ -563,22 +563,22 @@ namespace Chess.SuanFa // 算法
         /// <summary>
         /// 将帅在同一列时，检查本棋子是否是将帅之间的唯一棋子。
         /// </summary>
-        /// <param name="qz"></param>
+        /// <param name="qiZi"></param>
         /// <returns>将帅同列时，如果本棋子是他们之间的唯一棋子，则返回ture。</returns>
-        private static bool JustOneIsThis(int qz, int[,] qipan)
+        private static bool JustOneIsThis(int qiZi, int[,] qiPan)
         {
             if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅不在同一列
             {
                 return false;
             }
-            if (GlobalValue.QiZiArray[qz].Col != GlobalValue.QiZiArray[0].Col)    // 如果棋子不与将帅同列
+            if (GlobalValue.QiZiArray[qiZi].Col != GlobalValue.QiZiArray[0].Col)    // 如果棋子不与将帅同列
             {
                 return false;
             }
             int count = 0;
             for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row; i++)
             {
-                if (qipan[GlobalValue.QiZiArray[0].Col, i] != -1)
+                if (qiPan[GlobalValue.QiZiArray[0].Col, i] != -1)
                 {
                     count++;
                 }
@@ -589,38 +589,38 @@ namespace Chess.SuanFa // 算法
         /// <summary>
         /// 在将帅的可移动路径中，排除对方车、马、炮、卒的攻击点。
         /// </summary>
-        /// <param name="QZJiangShuai">0=将，16=帅</param>
+        /// <param name="jiangOrShuai">0=将，16=帅</param>
         /// <param name="col">可移动点的列位置</param>
         /// <param name="row">可移动点的行位置</param>
-        /// <param name="qipan">当前棋盘数据</param>
+        /// <param name="qiPan">当前棋盘数据</param>
         /// <returns></returns>
-        public static bool IsKilledPoint(int QZJiangShuai, int col, int row, int[,] qipan)
+        public static bool IsKilledPoint(int jiangOrShuai, int col, int row, int[,] qiPan)
         {
             // 注意：数组作为参数传递时，不是传递的副本，而是直接数组本身。
-            int[,] myqipan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
+            int[,] myQiPan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)
                 {
-                    myqipan[i, j] = qipan[i, j];
+                    myQiPan[i, j] = qiPan[i, j];
                 }
-            myqipan[col, row] = QZJiangShuai;
-            myqipan[GlobalValue.QiZiArray[QZJiangShuai].Col, GlobalValue.QiZiArray[QZJiangShuai].Row] = -1;
+            myQiPan[col, row] = jiangOrShuai;
+            myQiPan[GlobalValue.QiZiArray[jiangOrShuai].Col, GlobalValue.QiZiArray[jiangOrShuai].Row] = -1;
 
-            bool[,] thispoints;
-            if (QZJiangShuai == 16)
+            bool[,] thisPoints;
+            if (jiangOrShuai == 16)
             {
                 for (int qizi = 5; qizi <= 15; qizi++) //黑方：车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
                 {
-                    thispoints = GetPathPoints(qizi, myqipan);
-                    if (thispoints[col, row]) return true;
+                    thisPoints = GetPathPoints(qizi, myQiPan);
+                    if (thisPoints[col, row]) return true;
                 }
             }
-            if (QZJiangShuai == 0)
+            if (jiangOrShuai == 0)
             {
                 for (int qizi = 21; qizi <= 31; qizi++) //红方：车(23,24)，马(21,22)，炮(25,26)，兵(27,28,29,30,31)
                 {
-                    thispoints = GetPathPoints(qizi, myqipan);
-                    if (thispoints[col, row]) return true;
+                    thisPoints = GetPathPoints(qizi, myQiPan);
+                    if (thisPoints[col, row]) return true;
                 }
             }
             return false;
@@ -629,64 +629,64 @@ namespace Chess.SuanFa // 算法
         /// <summary>
         /// 棋子移动到指定位置后，是否还是被将军
         /// </summary>
-        /// <param name="thisQz">棋子编号</param>
+        /// <param name="qiZi">棋子编号</param>
         /// <param name="x1">将要移动的列位置</param>
         /// <param name="y1">将要移动的行位置</param>
-        /// <param name="qipan">当前棋盘数据</param>
+        /// <param name="qiPan">当前棋盘数据</param>
         /// <returns></returns>
-        public static bool AfterMoveWillJiangJun(int thisQz, int x1, int y1, int[,] qipan)
+        public static bool AfterMoveWillJiangJun(int qiZi, int x1, int y1, int[,] qiPan)
         {
-            int x0 = GlobalValue.QiZiArray[thisQz].Col;
-            int y0 = GlobalValue.QiZiArray[thisQz].Row;
-            return AfterMoveWillJiangJun(thisQz, x0, y0, x1, y1, qipan);
+            int x0 = GlobalValue.QiZiArray[qiZi].Col;
+            int y0 = GlobalValue.QiZiArray[qiZi].Row;
+            return AfterMoveWillJiangJun(qiZi, x0, y0, x1, y1, qiPan);
         }
 
         /// <summary>
         /// 检查棋子移动后，本方是否被将军。
         /// 用于棋子移动前的检测，如果是移动后被将军，则不能允许移动。
         /// </summary>
-        /// <param name="thisQz"></param>
+        /// <param name="qiZi">棋子编号</param>
         /// <param name="x0"></param>
         /// <param name="y0"></param>
         /// <param name="x1"></param>
         /// <param name="y1"></param>
-        /// <param name="qipan"></param>
+        /// <param name="qiPan">棋盘数据</param>
         /// <returns> false=未将军，true=被将军 </returns>
-        public static bool AfterMoveWillJiangJun(int thisQz, int x0, int y0, int x1, int y1, int[,] qipan)
+        public static bool AfterMoveWillJiangJun(int qiZi, int x0, int y0, int x1, int y1, int[,] qiPan)
         {
             // 注意：数组作为参数传递时，不是传递参数的副本，而是传递数组本身的地址，是传址而非传参。所以不要直接修改。
-            int[,] myqipan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
+            int[,] myQiPan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)
                 {
-                    myqipan[i, j] = qipan[i, j];
+                    myQiPan[i, j] = qiPan[i, j];
                 }
-            myqipan[x1, y1] = thisQz;
-            myqipan[x0, y0] = -1;
+            myQiPan[x1, y1] = qiZi;
+            myQiPan[x0, y0] = -1;
 
-            bool[,] thispoints;
+            bool[,] thisPoints;
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)
                 {
-                    int qizi = myqipan[i, j]; // 从棋盘副本上找棋子
-                    if (thisQz > 15)
+                    int localQiZi = myQiPan[i, j]; // 从棋盘副本上找棋子
+                    if (qiZi > 15)
                     {
-                        if (qizi is >= 5 and <= 15) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
+                        if (localQiZi is >= 5 and <= 15) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
                         {
-                            thispoints = GetPathPoints(qizi, myqipan);
-                            int x = (thisQz == 16) ? x1 : GlobalValue.QiZiArray[16].Col;
-                            int y = (thisQz == 16) ? y1 : GlobalValue.QiZiArray[16].Row;
-                            if (thispoints[x, y] == true) return true;
+                            thisPoints = GetPathPoints(localQiZi, myQiPan);
+                            int x = (qiZi == 16) ? x1 : GlobalValue.QiZiArray[16].Col;
+                            int y = (qiZi == 16) ? y1 : GlobalValue.QiZiArray[16].Row;
+                            if (thisPoints[x, y] == true) return true;
                         }
                     }
-                    if (thisQz < 15)
+                    if (qiZi < 15)
                     {
-                        if (qizi is >= 21 and <= 31) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
+                        if (localQiZi is >= 21 and <= 31) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
                         {
-                            thispoints = GetPathPoints(qizi, myqipan);
-                            int x = (thisQz == 0) ? x1 : GlobalValue.QiZiArray[0].Col;
-                            int y = (thisQz == 0) ? y1 : GlobalValue.QiZiArray[0].Row;
-                            if (thispoints[x, y] == true) return true;
+                            thisPoints = GetPathPoints(localQiZi, myQiPan);
+                            int x = (qiZi == 0) ? x1 : GlobalValue.QiZiArray[0].Col;
+                            int y = (qiZi == 0) ? y1 : GlobalValue.QiZiArray[0].Row;
+                            if (thisPoints[x, y] == true) return true;
                         }
                     }
                 }

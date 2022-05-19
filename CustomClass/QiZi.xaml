@@ -15,7 +15,7 @@
         </TransformGroup>
     </UserControl.Resources>
     <Grid RenderTransform="{DynamicResource UserControlRenderTransform1}" x:Name="MaingGrid" MouseLeftButtonUp="Image_MouseLeftButtonUp">
-        <Image x:Name="qzimage"  HorizontalAlignment="Stretch" Height="66" VerticalAlignment="Stretch" Width="66" Stretch="Uniform" Panel.ZIndex="5" RenderTransform="{DynamicResource UserControlRenderTransform1}" MinWidth="66" MinHeight="66" MaxWidth="66" MaxHeight="66" Cursor="Hand">
+        <Image x:Name="QiZiImage"  HorizontalAlignment="Stretch" Height="66" VerticalAlignment="Stretch" Width="66" Stretch="Uniform" Panel.ZIndex="5" RenderTransform="{DynamicResource UserControlRenderTransform1}" MinWidth="66" MinHeight="66" MaxWidth="66" MaxHeight="66" Cursor="Hand">
             <Image.Effect>
                 <DropShadowEffect x:Name="qzShadow" ShadowDepth="8" BlurRadius="10" Opacity="0.6"/>
             </Image.Effect>
