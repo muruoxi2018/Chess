@@ -9,67 +9,70 @@ namespace Chess
 
     public partial class SpyWindow : Window
     {
-        private static ObservableCollection <qpcol> ObserArray;
+        private static ObservableCollection<QiPanCols> obserArray;
         public SpyWindow()
         {
             InitializeComponent();
-            ObserArray = new();
-            SpyQipan.ItemsSource = ObserArray;
+            Left = SystemParameters.WorkArea.Left + 60;
+            Top = SystemParameters.WorkArea.Top + 200;
+
+            obserArray = new();
+            SpyQipan.ItemsSource = obserArray;
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            ObserArray.Clear();
+            obserArray.Clear();
             for (int j = 0; j < 10; j++)
             {
-                qpcol item = new();
-                item.id = j;
-                item.col0 = (GlobalValue.QiPan[0, j] == -1) ? "" : GlobalValue.QiPan[0, j].ToString();
-                item.col1 = (GlobalValue.QiPan[1, j] == -1) ? "" : GlobalValue.QiPan[1, j].ToString();
-                item.col2 = (GlobalValue.QiPan[2, j] == -1) ? "" : GlobalValue.QiPan[2, j].ToString();
-                item.col3 = (GlobalValue.QiPan[3, j] == -1) ? "" : GlobalValue.QiPan[3, j].ToString();
-                item.col4 = (GlobalValue.QiPan[4, j] == -1) ? "" : GlobalValue.QiPan[4, j].ToString();
-                item.col5 = (GlobalValue.QiPan[5, j] == -1) ? "" : GlobalValue.QiPan[5, j].ToString();
-                item.col6 = (GlobalValue.QiPan[6, j] == -1) ? "" : GlobalValue.QiPan[6, j].ToString();
-                item.col7 = (GlobalValue.QiPan[7, j] == -1) ? "" : GlobalValue.QiPan[7, j].ToString();
-                item.col8 = (GlobalValue.QiPan[8, j] == -1) ? "" : GlobalValue.QiPan[8, j].ToString();
-                ObserArray.Add(item);
+                QiPanCols item = new();
+                item.Id = j;
+                item.Col0 = (GlobalValue.qiPan[0, j] == -1) ? "" : GlobalValue.qiPan[0, j].ToString();
+                item.Col1 = (GlobalValue.qiPan[1, j] == -1) ? "" : GlobalValue.qiPan[1, j].ToString();
+                item.Col2 = (GlobalValue.qiPan[2, j] == -1) ? "" : GlobalValue.qiPan[2, j].ToString();
+                item.Col3 = (GlobalValue.qiPan[3, j] == -1) ? "" : GlobalValue.qiPan[3, j].ToString();
+                item.Col4 = (GlobalValue.qiPan[4, j] == -1) ? "" : GlobalValue.qiPan[4, j].ToString();
+                item.Col5 = (GlobalValue.qiPan[5, j] == -1) ? "" : GlobalValue.qiPan[5, j].ToString();
+                item.Col6 = (GlobalValue.qiPan[6, j] == -1) ? "" : GlobalValue.qiPan[6, j].ToString();
+                item.Col7 = (GlobalValue.qiPan[7, j] == -1) ? "" : GlobalValue.qiPan[7, j].ToString();
+                item.Col8 = (GlobalValue.qiPan[8, j] == -1) ? "" : GlobalValue.qiPan[8, j].ToString();
+                obserArray.Add(item);
             }
             SpyQipan.Items.Refresh();
 
         }
-        public class qpcol
+        public class QiPanCols
         {
-            public int id { get; set; }
-            public string col0 { get; set; }
-            public string col1 { get; set; }
-            public string col2 { get; set; }
-            public string col3 { get; set; }
-            public string col4 { get; set; }
-            public string col5 { get; set; }
-            public string col6 { get; set; }
-            public string col7 { get; set; }
-            public string col8 { get; set; }
+            public int Id { get; set; }
+            public string Col0 { get; set; }
+            public string Col1 { get; set; }
+            public string Col2 { get; set; }
+            public string Col3 { get; set; }
+            public string Col4 { get; set; }
+            public string Col5 { get; set; }
+            public string Col6 { get; set; }
+            public string Col7 { get; set; }
+            public string Col8 { get; set; }
 
         }
 
         private void DataRefresh(object sender, RoutedEventArgs e)
         {
-            ObserArray.Clear();
+            obserArray.Clear();
             for (int j = 0; j < 10; j++)
             {
-                qpcol item = new();
-                item.id = j;
-                item.col0 = (GlobalValue.QiPan[0, j] == -1) ? "" : GlobalValue.QiPan[0, j].ToString();
-                item.col1 = (GlobalValue.QiPan[1, j] == -1) ? "" : GlobalValue.QiPan[1, j].ToString();
-                item.col2 = (GlobalValue.QiPan[2, j] == -1) ? "" : GlobalValue.QiPan[2, j].ToString();
-                item.col3 = (GlobalValue.QiPan[3, j] == -1) ? "" : GlobalValue.QiPan[3, j].ToString();
-                item.col4 = (GlobalValue.QiPan[4, j] == -1) ? "" : GlobalValue.QiPan[4, j].ToString();
-                item.col5 = (GlobalValue.QiPan[5, j] == -1) ? "" : GlobalValue.QiPan[5, j].ToString();
-                item.col6 = (GlobalValue.QiPan[6, j] == -1) ? "" : GlobalValue.QiPan[6, j].ToString();
-                item.col7 = (GlobalValue.QiPan[7, j] == -1) ? "" : GlobalValue.QiPan[7, j].ToString();
-                item.col8 = (GlobalValue.QiPan[8, j] == -1) ? "" : GlobalValue.QiPan[8, j].ToString();
-                ObserArray.Add(item);
+                QiPanCols item = new();
+                item.Id = j;
+                item.Col0 = (GlobalValue.qiPan[0, j] == -1) ? "" : GlobalValue.qiPan[0, j].ToString();
+                item.Col1 = (GlobalValue.qiPan[1, j] == -1) ? "" : GlobalValue.qiPan[1, j].ToString();
+                item.Col2 = (GlobalValue.qiPan[2, j] == -1) ? "" : GlobalValue.qiPan[2, j].ToString();
+                item.Col3 = (GlobalValue.qiPan[3, j] == -1) ? "" : GlobalValue.qiPan[3, j].ToString();
+                item.Col4 = (GlobalValue.qiPan[4, j] == -1) ? "" : GlobalValue.qiPan[4, j].ToString();
+                item.Col5 = (GlobalValue.qiPan[5, j] == -1) ? "" : GlobalValue.qiPan[5, j].ToString();
+                item.Col6 = (GlobalValue.qiPan[6, j] == -1) ? "" : GlobalValue.qiPan[6, j].ToString();
+                item.Col7 = (GlobalValue.qiPan[7, j] == -1) ? "" : GlobalValue.qiPan[7, j].ToString();
+                item.Col8 = (GlobalValue.qiPan[8, j] == -1) ? "" : GlobalValue.qiPan[8, j].ToString();
+                obserArray.Add(item);
             }
             //SpyQipan.Items.Refresh();
         }

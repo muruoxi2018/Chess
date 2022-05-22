@@ -116,7 +116,7 @@ namespace Chess.CustomClass
         public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1)
         {
             if (arrowId > _maxNum - 1) return; // 箭头从0开始编号，数量不能超过上限（_maxNum）
-            int haveQizi = GlobalValue.QiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
+            int haveQizi = GlobalValue.qiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
             if (GlobalValue.isQiPanFanZhuan)
             {
                 point0.X = 8 - point1.X;

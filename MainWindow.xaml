@@ -9,7 +9,7 @@
     <Window.Background>
         <ImageBrush ImageSource="/picture/background.jpg"/>
     </Window.Background>
-    <Grid x:Name="maingrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
+    <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
         <Border BorderThickness="1"/>
         <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
             <Image.Effect>

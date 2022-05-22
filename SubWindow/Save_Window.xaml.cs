@@ -44,7 +44,7 @@ namespace Chess.SubWindow
             book.video = videoLink.Text;
             book.memo = memoText.Text;
             book.record = Qipu.CnToString();
-            book.jsonrecord = JsonConvert.SerializeObject(GlobalValue.QiPuSimpleRecordRoot);
+            book.jsonrecord = JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot);
             _ = SqliteHelper.Insert("mybook", book.getDictionary());
             Close();
         }

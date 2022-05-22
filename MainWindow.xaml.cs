@@ -25,55 +25,49 @@ namespace Chess
         /// <param name="e"></param>
         private void MainFormLoaded(object sender, RoutedEventArgs e)
         {
-            GlobalValue.YuanWeiZhi = new QiZi(); // 棋子原位置图片
-            _ = qiziCanvas.Children.Add(GlobalValue.YuanWeiZhi);
+            GlobalValue.yuanWeiZhi = new QiZi(); // 棋子原位置图片
+            _ = qiziCanvas.Children.Add(GlobalValue.yuanWeiZhi);
 
             for (int i = 0; i < 32; i++)
             {
-                GlobalValue.QiZiArray[i] = new QiZi(i);  // 32个棋子
-                _ = qiziCanvas.Children.Add(GlobalValue.QiZiArray[i]);
+                GlobalValue.qiZiArray[i] = new QiZi(i);  // 32个棋子
+                _ = qiziCanvas.Children.Add(GlobalValue.qiZiArray[i]);
             }
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
                 {
-                    GlobalValue.PathPointImage[i, j] = new PathPoint(i, j);  // 走棋路径
-                    _ = qiziCanvas.Children.Add(GlobalValue.PathPointImage[i, j]);
+                    GlobalValue.pathPointImage[i, j] = new PathPoint(i, j);  // 走棋路径
+                    _ = qiziCanvas.Children.Add(GlobalValue.pathPointImage[i, j]);
                 }
             }
             GlobalValue.isQiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
             QiPanChange(false);
             jipuWindow = new Window_JiPu(); // 棋谱记录窗口
-            jipuWindow.SetValue(LeftProperty, SystemParameters.WorkArea.Width - 600);
-            jipuWindow.SetValue(TopProperty, SystemParameters.WorkArea.Top);
-            jipuWindow.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
             jipuWindow.Hide();
             spyWindow = new SpyWindow(); // 棋盘数据监视窗口
             spyWindow.Hide();
 
-            GlobalValue.Window_QiPuKu = new Window_QiPu(); // 棋谱库浏览窗口
-            GlobalValue.Window_QiPuKu.SetValue(LeftProperty, SystemParameters.WorkArea.Left);
-            GlobalValue.Window_QiPuKu.SetValue(TopProperty, SystemParameters.WorkArea.Top);
-            GlobalValue.Window_QiPuKu.SetValue(HeightProperty, SystemParameters.WorkArea.Height);
-            GlobalValue.Window_QiPuKu.Hide();
+            GlobalValue.qiPuKuForm = new Window_QiPu(); // 棋谱库浏览窗口
+            GlobalValue.qiPuKuForm.Hide();
 
-            GlobalValue.JiangJunTiShi = new() // 将军状态文字提示
+            GlobalValue.jiangJunTiShi = new() // 将军状态文字提示
             {
                 Content = "战况",
                 Height = 30.0,
-                Foreground =Brushes.Goldenrod,
+                Foreground = Brushes.Goldenrod,
                 Margin = new Thickness(100, 20, 0, 0),
                 VerticalAlignment = VerticalAlignment.Center
             };
 
-            _ = JiangJunTiShi.Children.Add(GlobalValue.JiangJunTiShi);
+            _ = JiangJunTiShi.Children.Add(GlobalValue.jiangJunTiShi);
 
-            GlobalValue.JueShaImage = new(); // 绝杀图片
-            _ = maingrid.Children.Add(GlobalValue.JueShaImage);
-            
-            DrawGrid.Children.Add(GlobalValue.Arrows.grid); // 走棋提示箭头
+            GlobalValue.jueShaImage = new(); // 绝杀图片
+            _ = mainGrid.Children.Add(GlobalValue.jueShaImage);
 
-            GlobalValue.RedSideRect = new System.Windows.Shapes.Ellipse()
+            DrawGrid.Children.Add(GlobalValue.arrows.grid); // 走棋提示箭头
+
+            GlobalValue.redSideRect = new System.Windows.Shapes.Ellipse()
             {
                 Width = 30,
                 Height = 30,
@@ -83,8 +77,8 @@ namespace Chess
                 Fill = new SolidColorBrush(Colors.Gray),
                 Stroke = new SolidColorBrush(Colors.Goldenrod),
             };
-            _ = maingrid.Children.Add(GlobalValue.RedSideRect);
-            GlobalValue.BlackSideRect = new System.Windows.Shapes.Ellipse()
+            _ = mainGrid.Children.Add(GlobalValue.redSideRect);
+            GlobalValue.blackSideRect = new System.Windows.Shapes.Ellipse()
             {
                 Width = 30,
                 Height = 30,
@@ -94,7 +88,7 @@ namespace Chess
                 Fill = new SolidColorBrush(Colors.Gray),
                 Stroke = new SolidColorBrush(Colors.Goldenrod),
             };
-            _ = maingrid.Children.Add(GlobalValue.BlackSideRect);
+            _ = mainGrid.Children.Add(GlobalValue.blackSideRect);
 
             GlobalValue.Reset();
 
@@ -119,8 +113,8 @@ namespace Chess
         {
             GlobalValue.isQiPanFanZhuan = !GlobalValue.isQiPanFanZhuan;
             QiPanChange(GlobalValue.isQiPanFanZhuan);  // 更换棋盘
-            GlobalValue.YuanWeiZhi.FanZhuanPosition(); // 走棋原位置图片刷新
-            foreach (QiZi item in GlobalValue.QiZiArray)
+            GlobalValue.yuanWeiZhi.FanZhuanPosition(); // 走棋原位置图片刷新
+            foreach (QiZi item in GlobalValue.qiZiArray)
             {
                 item.FanZhuanPosition(); // 棋盘翻转后，刷新显示所有棋子
             }
@@ -128,10 +122,10 @@ namespace Chess
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    GlobalValue.PathPointImage[i, j].FanZhuPosition(); // 棋盘翻转后，刷新显示所有走棋路径
+                    GlobalValue.pathPointImage[i, j].FanZhuPosition(); // 棋盘翻转后，刷新显示所有走棋路径
                 }
             }
-            GlobalValue.Arrows.HideAllPath(); //  隐藏提示箭头
+            GlobalValue.arrows.HideAllPath(); //  隐藏提示箭头
         }
 
         /// <summary>
@@ -144,15 +138,15 @@ namespace Chess
             {
                 qipan_topBlack.Visibility = Visibility.Hidden;
                 qipan_topRed.Visibility = Visibility.Visible;
-                GlobalValue.RedSideRect.Margin = new Thickness(15, 260, 0, 0);
-                GlobalValue.BlackSideRect.Margin = new Thickness(15, 500, 0, 0);
+                GlobalValue.redSideRect.Margin = new Thickness(15, 260, 0, 0);
+                GlobalValue.blackSideRect.Margin = new Thickness(15, 500, 0, 0);
             }
             else
             {
                 qipan_topBlack.Visibility = Visibility.Visible;
                 qipan_topRed.Visibility = Visibility.Hidden;
-                GlobalValue.RedSideRect.Margin = new Thickness(15, 500, 0, 0);
-                GlobalValue.BlackSideRect.Margin = new Thickness(15, 260, 0, 0);
+                GlobalValue.redSideRect.Margin = new Thickness(15, 500, 0, 0);
+                GlobalValue.blackSideRect.Margin = new Thickness(15, 260, 0, 0);
             }
         }
 
@@ -165,10 +159,11 @@ namespace Chess
         {
             if (jipuWindow.IsVisible)
             {
-                jipuWindow.Hide();
+                jipuWindow.Close();
             }
             else
             {
+                jipuWindow = new();
                 jipuWindow.Show();
             }
         }
@@ -182,10 +177,11 @@ namespace Chess
         {
             if (spyWindow.IsVisible)
             {
-                spyWindow.Hide();
+                spyWindow.Close();
             }
             else
             {
+                spyWindow = new SpyWindow();
                 spyWindow.Show();
             }
         }
@@ -244,13 +240,14 @@ namespace Chess
         /// <param name="e"></param>
         private void OpenFuPanWindow(object sender, RoutedEventArgs e)
         {
-            if (GlobalValue.Window_QiPuKu.IsVisible)
+            if (GlobalValue.qiPuKuForm.IsVisible)
             {
-                GlobalValue.Window_QiPuKu.Hide();
+                GlobalValue.qiPuKuForm.Close();
             }
             else
             {
-                GlobalValue.Window_QiPuKu.Show();
+                GlobalValue.qiPuKuForm=new();
+                GlobalValue.qiPuKuForm.Show();
             }
         }
     }

@@ -30,8 +30,11 @@ namespace Chess
             InitializeComponent();
             //FuPanWidow = new SubWindow.FuPan_Window(); // 复盘窗口。调试用，暂不删除。
             //FuPanWidow.Hide();
-            FuPanDataGrid.ItemsSource = GlobalValue.FuPanDataList;
-            TrueTree.ItemsSource = GlobalValue.QiPuRecordRoot.ChildNode;
+            Left = SystemParameters.WorkArea.Left;
+            Top = SystemParameters.WorkArea.Top;
+            Height = SystemParameters.WorkArea.Height;
+            FuPanDataGrid.ItemsSource = GlobalValue.fuPanDataList;
+            TrueTree.ItemsSource = GlobalValue.qiPuRecordRoot.ChildNode;
             CompressTree.ItemsSource = Qipu.ContractQiPu.ChildSteps;
 
         }
@@ -79,15 +82,15 @@ namespace Chess
                 MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
                 MaxDepth = maxDepth
             }); // 反序列化 
-            GlobalValue.QiPuRecordRoot = GlobalValue.ConvertQiPuToFull(simpleRecord); // 转换为完全树数据结构
-            Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.QiPuRecordRoot); // 转换为收缩树数据结构
+            GlobalValue.qiPuRecordRoot = GlobalValue.ConvertQiPuToFull(simpleRecord); // 转换为完全树数据结构
+            Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot); // 转换为收缩树数据结构
 
-            GlobalValue.FuPanDataList.Add(Qipu.ContractQiPu);
+            GlobalValue.fuPanDataList.Add(Qipu.ContractQiPu);
 
-            remarksTextBlock.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString() + GetRemarks(GlobalValue.FuPanDataList);
-            qiPuSteps = GlobalValue.FuPanDataList.ToArray();
+            remarksTextBlock.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString() + GetRemarks(GlobalValue.fuPanDataList);
+            qiPuSteps = GlobalValue.fuPanDataList.ToArray();
             FuPanDataGrid.ItemsSource = Qipu.ContractQiPu.ChildSteps;
-            TrueTree.ItemsSource = GlobalValue.QiPuRecordRoot.ChildNode;
+            TrueTree.ItemsSource = GlobalValue.qiPuRecordRoot.ChildNode;
             CompressTree.ItemsSource = Qipu.ContractQiPu.ChildSteps;
         }
         /// <summary>
@@ -143,9 +146,9 @@ namespace Chess
         /// <param name="e"></param>
         private void UpdateButtonClick(object sender, RoutedEventArgs e)
         {
-            if (GlobalValue.FuPanDataList.Count < 1) return;
+            if (GlobalValue.fuPanDataList.Count < 1) return;
             System.Collections.Generic.Dictionary<string, object> dic = new();
-            dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.FuPanDataList));
+            dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.fuPanDataList));
             if (SqliteHelper.Update("mybook", $"rowid={rowId}", dic) > 0)
             {
                 MessageBox.Show("数据保存成功！", "提示");
@@ -162,7 +165,7 @@ namespace Chess
         /// <param name="e"></param>
         private void OnFuPanDataGridClick(object sender, MouseButtonEventArgs e)
         {
-            if (GlobalValue.FuPanDataList.Count < 1) return;
+            if (GlobalValue.fuPanDataList.Count < 1) return;
             GlobalValue.Reset();
             qpIndex = -1;
 
@@ -175,7 +178,7 @@ namespace Chess
             }
             for (int i = 0; i < Qipu.QiPuList.Count; i++)
             {
-                QiPuList[i].Remarks = GlobalValue.FuPanDataList[i].Remarks;
+                QiPuList[i].Remarks = GlobalValue.fuPanDataList[i].Remarks;
             }
 
         }
@@ -201,7 +204,7 @@ namespace Chess
         /// <param name="e"></param>
         private void NextStep(object sender, RoutedEventArgs e)
         {
-            if (GlobalValue.FuPanDataList.Count < 1) return;
+            if (GlobalValue.fuPanDataList.Count < 1) return;
             if (qpIndex < qiPuSteps.Length - 1)
             {
                 qpIndex++;
@@ -209,15 +212,15 @@ namespace Chess
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
                 if (qpIndex <= qiPuSteps.Length - 2)
                 {
-                    ContractQPClass nextstep = GlobalValue.FuPanDataList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
-                    GlobalValue.Arrows.SetPathDataAndShow(0,
+                    ContractQPClass nextstep = GlobalValue.fuPanDataList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
+                    GlobalValue.arrows.SetPathDataAndShow(0,
                         new System.Drawing.Point(nextstep.StepData.X0, nextstep.StepData.Y0),
                         new System.Drawing.Point(nextstep.StepData.X1, nextstep.StepData.Y1));
-                    var points = Qipu.GetListPoint(GlobalValue.FuPanDataList[qpIndex]);
+                    var points = Qipu.GetListPoint(GlobalValue.fuPanDataList[qpIndex]);
                     int index = 1;
                     foreach (var point in points)
                     {
-                        GlobalValue.Arrows.SetPathDataAndShow(index, point[0], point[1]);
+                        GlobalValue.arrows.SetPathDataAndShow(index, point[0], point[1]);
                         index++;
                     }
                 }
@@ -230,7 +233,7 @@ namespace Chess
         /// <param name="e"></param>
         private void PreStep(object sender, RoutedEventArgs e)
         {
-            if (GlobalValue.FuPanDataList.Count < 1) return;
+            if (GlobalValue.fuPanDataList.Count < 1) return;
             if (qpIndex > -1)
             {
                 GlobalValue.HuiQi();

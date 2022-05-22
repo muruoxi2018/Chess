@@ -22,46 +22,46 @@ namespace Chess
         public static bool isQiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
         public static string qipustr;   // 棋谱转换后的字符串
         public static int currentQiZi;  // 当前选定的棋子
-        public static int[,] QiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
+        public static int[,] qiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
         
         #region // 用户界面元素
-        public static PathPoint[,] PathPointImage = new PathPoint[9, 10];  // 棋子可走路径的圆点标记
-        public static QiZi[] QiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
-        public static QiZi YuanWeiZhi;  // 棋子走动后在原位置显示圆圈
-        public static Label JiangJunTiShi; // 将军时的文字提示
-        public static JueSha JueShaImage; // 绝杀时显示图片
-        public static Window_QiPu Window_QiPuKu; // 棋谱库窗口
-        public static MyGraphics Arrows = new(); // 走棋指示箭头
-        public static Ellipse RedSideRect = new();  // 红方走棋提示灯
-        public static Ellipse BlackSideRect = new();  // 黑方走棋提示灯
+        public static PathPoint[,] pathPointImage = new PathPoint[9, 10];  // 棋子可走路径的圆点标记
+        public static QiZi[] qiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
+        public static QiZi yuanWeiZhi;  // 棋子走动后在原位置显示圆圈
+        public static Label jiangJunTiShi; // 将军时的文字提示
+        public static JueSha jueShaImage; // 绝杀时显示图片
+        public static Window_QiPu qiPuKuForm; // 棋谱库窗口
+        public static MyGraphics arrows = new(); // 走棋指示箭头
+        public static Ellipse redSideRect = new();  // 红方走棋提示灯
+        public static Ellipse blackSideRect = new();  // 黑方走棋提示灯
         #endregion
 
         #region 数据存储
-        public static ObservableCollection<ContractQPClass> FuPanDataList = new(); // 复盘棋谱步骤列表，后期将弃用本变量
-        public static QiPuRecord QiPuRecordRoot = new(); // 棋谱树型数据结构
-        public static QiPuSimpleRecord QiPuSimpleRecordRoot = new(); // 棋谱树型数据结构的精简版
-        public static List<Qipu.ContractQPClass> CnNumberList = new();  // 棋谱中文步骤列表
+        public static ObservableCollection<ContractQPClass> fuPanDataList = new(); // 复盘棋谱步骤列表，后期将弃用本变量
+        public static QiPuRecord qiPuRecordRoot = new(); // 棋谱树型数据结构
+        public static QiPuSimpleRecord qiPuSimpleRecordRoot = new(); // 棋谱树型数据结构的精简版
+        public static List<Qipu.ContractQPClass> cnNumberList = new();  // 棋谱中文步骤列表
         #endregion
 
         #region 棋子及棋盘基础数据
         /// <summary>
         /// 棋子编号0-31，分别对应的图像文件名
         /// </summary>
-        public static readonly string[] QiZiImageFileName = {
+        public static readonly string[] qiZiImageFileName = {
             "黑将", "黑士", "黑士", "黑象", "黑象", "黑马", "黑马", "黑车", "黑车", "黑炮", "黑炮", "黑卒", "黑卒", "黑卒", "黑卒", "黑卒",
             "红帅", "红仕", "红仕", "红相", "红相", "红马", "红马", "红车", "红车", "红炮", "红炮", "红兵", "红兵", "红兵", "红兵", "红兵"
         };
         /// <summary>
         /// 棋子的中文简称，用于棋谱翻译
         /// </summary>
-        public static readonly string[] QiZiCnName = {
+        public static readonly string[] qiZiCnName = {
             "将", "士", "士", "象", "象", "马", "马", "车", "车", "炮", "炮", "卒", "卒", "卒", "卒", "卒",
             "帅", "仕", "仕", "相", "相", "马", "马", "车", "车", "炮", "炮", "兵", "兵", "兵", "兵", "兵"
         };
         /// <summary>
         /// 棋子初始位置
         /// </summary>
-        public static readonly int[,] QiZiInitPosition = new int[32, 2]
+        public static readonly int[,] qiZiInitPosition = new int[32, 2]
         {
             {4, 0},{3, 0},{5, 0},{2, 0},{6, 0},{1, 0},{7, 0},{0, 0},{8, 0},
             {1, 2},{7, 2},
@@ -104,32 +104,31 @@ namespace Chess
         {
             if (qiZi is < 0 or > 31) return;
             // 运子到(m,n)位置
-            int x0 = QiZiArray[qiZi].Col;
-            int y0 = QiZiArray[qiZi].Row;
+            int x0 = qiZiArray[qiZi].Col;
+            int y0 = qiZiArray[qiZi].Row;
+            AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
 
-            if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, QiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
-            _ = QiZiArray[qiZi].SetPosition(m, n);
-            Arrows.HideAllPath();  // 隐藏提示箭头
+            if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, qiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
+            _ = qiZiArray[qiZi].SetPosition(m, n);
+            arrows.HideAllPath();  // 隐藏提示箭头
             Qipu.AddItem(qiZi, x0, y0, m, n, dieQiZi); // 增加一行棋谱记录
-
-
 
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
                 {
-                    PathPointImage[i, j].HasPoint = false; // 走棋后，隐藏走棋路径
+                    pathPointImage[i, j].HasPoint = false; // 走棋后，隐藏走棋路径
                 }
             }
 
             if (JiangJun.IsJueSha(qiZi)) // 检查是否绝杀
             {
-                JueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+                jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
             }
 
             if (dieQiZi != -1) // 如果杀死了棋子
             {
-                QiZiArray[dieQiZi].SetDied(); 
+                qiZiArray[dieQiZi].SetDied(); 
                 if (sound)
                 {
                     /*Form2.mp1.FileName := 'sounds/eat.mp3';
@@ -151,14 +150,14 @@ namespace Chess
             if (sideTag==BLACKSIDE)
             {
                 // 黑方走棋指示
-                BlackSideRect.Fill=Brushes.LightGoldenrodYellow;
-                RedSideRect.Fill=Brushes.Gray;
+                blackSideRect.Fill=Brushes.LightGoldenrodYellow;
+                redSideRect.Fill=Brushes.Gray;
             }
             else
             {
                 // 红方走棋指示
-                BlackSideRect.Fill = Brushes.Gray;
-                RedSideRect.Fill = Brushes.LightGoldenrodYellow;
+                blackSideRect.Fill = Brushes.Gray;
+                redSideRect.Fill = Brushes.LightGoldenrodYellow;
             }
             currentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
@@ -199,8 +198,8 @@ namespace Chess
                 PAy.To = QiPanGrid_Y[9 - y1] - GlobalValue.GRID_WIDTH / 2;
             }
             #endregion
-            QiZiArray[qiZi].BeginAnimation(Canvas.LeftProperty, PAx);
-            QiZiArray[qiZi].BeginAnimation(Canvas.TopProperty, PAy);
+            qiZiArray[qiZi].BeginAnimation(Canvas.LeftProperty, PAx);
+            qiZiArray[qiZi].BeginAnimation(Canvas.TopProperty, PAy);
 
             DoubleAnimation DAscale = new()
             {
@@ -212,13 +211,13 @@ namespace Chess
             ScaleTransform scale = new();
             if (sideTag == REDSIDE)
             {
-                RedSideRect.RenderTransform = scale;
-                RedSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
+                redSideRect.RenderTransform = scale;
+                redSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
             }
             if (sideTag == BLACKSIDE)
             {
-                BlackSideRect.RenderTransform = scale;
-                BlackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
+                blackSideRect.RenderTransform = scale;
+                blackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
             }
             scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale);
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale);
@@ -229,7 +228,7 @@ namespace Chess
         /// </summary>
         public static void Reset()
         {
-            foreach (QiZi item in QiZiArray)
+            foreach (QiZi item in qiZiArray)
             {
                 item.SetInitPosition();
             }
@@ -238,24 +237,24 @@ namespace Chess
             {
                 for (int j = 0; j <= 9; j++)
                 {
-                    QiPan[i, j] = -1;
-                    PathPointImage[i, j].HasPoint = false;
+                    qiPan[i, j] = -1;
+                    pathPointImage[i, j].HasPoint = false;
                 }
             }
             for (int i = 0; i < 32; i++)
             {
-                QiPan[QiZiArray[i].Col, QiZiArray[i].Row] = i;
+                qiPan[qiZiArray[i].Col, qiZiArray[i].Row] = i;
             }
-            YuanWeiZhi.HiddenYuanWeiZhiImage();
+            yuanWeiZhi.HiddenYuanWeiZhiImage();
             Qipu.QiPuList.Clear();
             Window_QiPu.ReStart();
-            Arrows.HideAllPath();  // 隐藏提示箭头
+            arrows.HideAllPath();  // 隐藏提示箭头
 
-            QiPuRecordRoot.Cursor = QiPuRecordRoot;  // 回到根部
-            QiPuRecordRoot.DeleteChildNode();
+            qiPuRecordRoot.Cursor = qiPuRecordRoot;  // 回到根部
+            qiPuRecordRoot.DeleteChildNode();
             
-            BlackSideRect.Fill = Brushes.Gray;
-            RedSideRect.Fill = Brushes.LightGoldenrodYellow;
+            blackSideRect.Fill = Brushes.Gray;
+            redSideRect.Fill = Brushes.LightGoldenrodYellow;
             
         }
 
@@ -272,26 +271,26 @@ namespace Chess
             }
 
             Qipu.StepCode step = Qipu.QiPuList[^1].StepData; // ^1：索引运算符，表示倒数第一个
-            QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
-            _ = QiZiArray[step.QiZi].SetPosition(step.X0, step.Y0);
+            qiZiArray[step.QiZi].Select();  // 重新计算可移动路径
+            _ = qiZiArray[step.QiZi].SetPosition(step.X0, step.Y0);
             AnimationMove(step.QiZi, step.X1, step.Y1, step.X0, step.Y0);
-            QiZiArray[step.QiZi].Select();  // 重新计算可移动路径
-            QiZiArray[step.QiZi].Deselect();
+            qiZiArray[step.QiZi].Select();  // 重新计算可移动路径
+            qiZiArray[step.QiZi].Deselect();
 
             if (step.DieQz > -1)
             {
-                QiZiArray[step.DieQz].Setlived();
-                _ = QiZiArray[step.DieQz].SetPosition(step.X1, step.Y1);
+                qiZiArray[step.DieQz].Setlived();
+                _ = qiZiArray[step.DieQz].SetPosition(step.X1, step.Y1);
             }
-            QiPan[step.X0, step.Y0] = step.QiZi;
-            QiPan[step.X1, step.Y1] = step.DieQz;
+            qiPan[step.X0, step.Y0] = step.QiZi;
+            qiPan[step.X1, step.Y1] = step.DieQz;
             Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count - 1);
             sideTag = !sideTag;
 
-            if (QiPuRecordRoot.Cursor.GetParent() != null)
+            if (qiPuRecordRoot.Cursor.GetParent() != null)
             {
-                QiPuRecordRoot.Cursor=QiPuRecordRoot.Cursor.GetParent();
-                QiPuRecordRoot.Cursor.IsSelected = true;
+                qiPuRecordRoot.Cursor=qiPuRecordRoot.Cursor.GetParent();
+                qiPuRecordRoot.Cursor.IsSelected = true;
             }
         }
 

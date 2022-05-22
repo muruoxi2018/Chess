@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="记谱" Height="913" Width="600" Loaded="FormLoad" Icon="/picture/象128.png">
+        Title="记谱" Height="913" Width="450" Loaded="FormLoad" Icon="/picture/象128.png">
     <Grid>
         <DataGrid x:Name="JiPuDataGrid" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Margin="10,10,10,10" VerticalAlignment="Top" CanUserResizeRows="False">
             <DataGrid.Columns>

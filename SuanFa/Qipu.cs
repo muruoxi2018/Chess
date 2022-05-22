@@ -247,7 +247,7 @@ namespace Chess.SuanFa
             /// <param name="DieQz"></param>
             public void SetRecordData(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
             {
-                string char1 = GlobalValue.QiZiCnName[QiZi];
+                string char1 = GlobalValue.qiZiCnName[QiZi];
                 string char2 = QiZi is >= 0 and <= 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
                 string char3 = "";
                 string char4;
@@ -337,7 +337,7 @@ namespace Chess.SuanFa
         /// <param name="DieQz"></param>
         public static void AddItem(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
         {
-            string char1 = GlobalValue.QiZiCnName[QiZi];
+            string char1 = GlobalValue.qiZiCnName[QiZi];
             string char2 = QiZi is > 0 and < 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
             string char3 = "";
             string char4;
@@ -382,13 +382,13 @@ namespace Chess.SuanFa
 
             QiPuRecord QRecord = new();
             QRecord.SetRecordData(QiZi, x0, y0, x1, y1, DieQz);
-            GlobalValue.QiPuRecordRoot.Cursor = GlobalValue.QiPuRecordRoot.Cursor.AddChild(QRecord);  // 棋谱增加新的节点，指针更新为该节点
-            GlobalValue.QiPuRecordRoot.Cursor.IsSelected = true;
+            GlobalValue.qiPuRecordRoot.Cursor = GlobalValue.qiPuRecordRoot.Cursor.AddChild(QRecord);  // 棋谱增加新的节点，指针更新为该节点
+            GlobalValue.qiPuRecordRoot.Cursor.IsSelected = true;
 
-            GlobalValue.QiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.QiPuRecordRoot);  // 更新简易棋谱记录
-            GlobalValue.Window_QiPuKu.remarksTextBlock.Text = JsonConvert.SerializeObject(GlobalValue.QiPuSimpleRecordRoot);
+            GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
+            GlobalValue.qiPuKuForm.remarksTextBlock.Text = JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot);
 
-            Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.QiPuRecordRoot);
+            Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot);
             //x0 = 100;
         }
         /// <summary>

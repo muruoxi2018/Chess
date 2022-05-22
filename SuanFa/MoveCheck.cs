@@ -16,21 +16,21 @@ namespace Chess.SuanFa // 算法
             {
                 for (int j = 0; j <= 9; j++)
                 {
-                    GlobalValue.PathPointImage[i, j].HasPoint = false;
+                    GlobalValue.pathPointImage[i, j].HasPoint = false;
                     PathBool[i, j] = false;
                 }
             }
             if (qiZi > -1)
             {
-                PathBool = GetPathPoints(qiZi, GlobalValue.QiPan);
+                PathBool = GetPathPoints(qiZi, GlobalValue.qiPan);
                 for (int i = 0; i <= 8; i++)
                 {
                     for (int j = 0; j <= 9; j++)
                     {
-                        GlobalValue.PathPointImage[i, j].HasPoint = PathBool[i, j];
+                        GlobalValue.pathPointImage[i, j].HasPoint = PathBool[i, j];
                     }
                 }
-                GlobalValue.PathPointImage[GlobalValue.QiZiArray[qiZi].Col, GlobalValue.QiZiArray[qiZi].Row].HasPoint = false;
+                GlobalValue.pathPointImage[GlobalValue.qiZiArray[qiZi].Col, GlobalValue.qiZiArray[qiZi].Row].HasPoint = false;
             }
         }
 
@@ -58,9 +58,9 @@ namespace Chess.SuanFa // 算法
             {
                 return points;
             }
-            if (GlobalValue.QiZiArray[moveQiZi].Visibility != System.Windows.Visibility.Visible) return points;
-            int moveQiZiCol = GlobalValue.QiZiArray[moveQiZi].Col;
-            int moveQiZiRow = GlobalValue.QiZiArray[moveQiZi].Row;
+            if (GlobalValue.qiZiArray[moveQiZi].Visibility != System.Windows.Visibility.Visible) return points;
+            int moveQiZiCol = GlobalValue.qiZiArray[moveQiZi].Col;
+            int moveQiZiRow = GlobalValue.qiZiArray[moveQiZi].Row;
             int side = 0;
             #region 棋子可移动路径的计算
             switch (moveQiZi)
@@ -299,7 +299,7 @@ namespace Chess.SuanFa // 算法
                     {
                         if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol, moveQiZiRow + 1])) // 下方移一格
                         {
-                            if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅横向不同线
+                            if (GlobalValue.qiZiArray[0].Col != GlobalValue.qiZiArray[16].Col)    // 如果将帅横向不同线
                             {
                                 points[moveQiZiCol, moveQiZiRow + 1] = true;
                             }
@@ -307,7 +307,7 @@ namespace Chess.SuanFa // 算法
                             {
                                 if (moveQiZi == 0)
                                 {
-                                    for (int i = GlobalValue.QiZiArray[0].Row + 2; i < GlobalValue.QiZiArray[16].Row; i++)
+                                    for (int i = GlobalValue.qiZiArray[0].Row + 2; i < GlobalValue.qiZiArray[16].Row; i++)
                                     {
                                         if (qiPan[moveQiZiCol, i] != -1)
                                         {
@@ -327,7 +327,7 @@ namespace Chess.SuanFa // 算法
                     {
                         if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol, moveQiZiRow - 1]))// 上方移一格
                         {
-                            if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅横向不同线
+                            if (GlobalValue.qiZiArray[0].Col != GlobalValue.qiZiArray[16].Col)    // 如果将帅横向不同线
                             {
                                 points[moveQiZiCol, moveQiZiRow - 1] = true;
                             }
@@ -339,7 +339,7 @@ namespace Chess.SuanFa // 算法
                                 }
                                 if (moveQiZi == 16)
                                 {
-                                    for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row - 1; i++)
+                                    for (int i = GlobalValue.qiZiArray[0].Row + 1; i < GlobalValue.qiZiArray[16].Row - 1; i++)
                                     {
                                         if (qiPan[moveQiZiCol, i] != -1)
                                         {
@@ -355,9 +355,9 @@ namespace Chess.SuanFa // 算法
                     {
                         if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol - 1, moveQiZiRow])) // 左方移一格
                         {
-                            if (((moveQiZiCol - 1) == GlobalValue.QiZiArray[0].Col) || ((moveQiZiCol - 1) == GlobalValue.QiZiArray[16].Col))    // 如果将帅横向移动一格
+                            if (((moveQiZiCol - 1) == GlobalValue.qiZiArray[0].Col) || ((moveQiZiCol - 1) == GlobalValue.qiZiArray[16].Col))    // 如果将帅横向移动一格
                             {
-                                for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row; i++)
+                                for (int i = GlobalValue.qiZiArray[0].Row + 1; i < GlobalValue.qiZiArray[16].Row; i++)
                                 {
                                     if (qiPan[moveQiZiCol - 1, i] != -1)
                                     {
@@ -377,9 +377,9 @@ namespace Chess.SuanFa // 算法
                     {
                         if (!IsTongBang(moveQiZi, qiPan[moveQiZiCol + 1, moveQiZiRow])) // 右方移一格
                         {
-                            if (((moveQiZiCol + 1) == GlobalValue.QiZiArray[0].Col) || ((moveQiZiCol + 1) == GlobalValue.QiZiArray[16].Col))    // 如果将帅横向移动一格
+                            if (((moveQiZiCol + 1) == GlobalValue.qiZiArray[0].Col) || ((moveQiZiCol + 1) == GlobalValue.qiZiArray[16].Col))    // 如果将帅横向移动一格
                             {
-                                for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row; i++)
+                                for (int i = GlobalValue.qiZiArray[0].Row + 1; i < GlobalValue.qiZiArray[16].Row; i++)
                                 {
                                     if (qiPan[moveQiZiCol + 1, i] != -1)
                                     {
@@ -398,7 +398,7 @@ namespace Chess.SuanFa // 算法
                     {
                         for (int j = 0; j <= 9; j++)
                         {
-                            if (points[i, j] == true && IsKilledPoint(moveQiZi, i, j, GlobalValue.QiPan) == true)
+                            if (points[i, j] == true && IsKilledPoint(moveQiZi, i, j, GlobalValue.qiPan) == true)
                             {
                                 points[i, j] = false;
                             }
@@ -567,18 +567,18 @@ namespace Chess.SuanFa // 算法
         /// <returns>将帅同列时，如果本棋子是他们之间的唯一棋子，则返回ture。</returns>
         private static bool JustOneIsThis(int qiZi, int[,] qiPan)
         {
-            if (GlobalValue.QiZiArray[0].Col != GlobalValue.QiZiArray[16].Col)    // 如果将帅不在同一列
+            if (GlobalValue.qiZiArray[0].Col != GlobalValue.qiZiArray[16].Col)    // 如果将帅不在同一列
             {
                 return false;
             }
-            if (GlobalValue.QiZiArray[qiZi].Col != GlobalValue.QiZiArray[0].Col)    // 如果棋子不与将帅同列
+            if (GlobalValue.qiZiArray[qiZi].Col != GlobalValue.qiZiArray[0].Col)    // 如果棋子不与将帅同列
             {
                 return false;
             }
             int count = 0;
-            for (int i = GlobalValue.QiZiArray[0].Row + 1; i < GlobalValue.QiZiArray[16].Row; i++)
+            for (int i = GlobalValue.qiZiArray[0].Row + 1; i < GlobalValue.qiZiArray[16].Row; i++)
             {
-                if (qiPan[GlobalValue.QiZiArray[0].Col, i] != -1)
+                if (qiPan[GlobalValue.qiZiArray[0].Col, i] != -1)
                 {
                     count++;
                 }
@@ -604,7 +604,7 @@ namespace Chess.SuanFa // 算法
                     myQiPan[i, j] = qiPan[i, j];
                 }
             myQiPan[col, row] = jiangOrShuai;
-            myQiPan[GlobalValue.QiZiArray[jiangOrShuai].Col, GlobalValue.QiZiArray[jiangOrShuai].Row] = -1;
+            myQiPan[GlobalValue.qiZiArray[jiangOrShuai].Col, GlobalValue.qiZiArray[jiangOrShuai].Row] = -1;
 
             bool[,] thisPoints;
             if (jiangOrShuai == 16)
@@ -636,8 +636,8 @@ namespace Chess.SuanFa // 算法
         /// <returns></returns>
         public static bool AfterMoveWillJiangJun(int qiZi, int x1, int y1, int[,] qiPan)
         {
-            int x0 = GlobalValue.QiZiArray[qiZi].Col;
-            int y0 = GlobalValue.QiZiArray[qiZi].Row;
+            int x0 = GlobalValue.qiZiArray[qiZi].Col;
+            int y0 = GlobalValue.qiZiArray[qiZi].Row;
             return AfterMoveWillJiangJun(qiZi, x0, y0, x1, y1, qiPan);
         }
 
@@ -674,8 +674,8 @@ namespace Chess.SuanFa // 算法
                         if (localQiZi is >= 5 and <= 15) //车(7,8)，马(5,6)，炮(9,10)，卒(11,12,13,14,15)
                         {
                             thisPoints = GetPathPoints(localQiZi, myQiPan);
-                            int x = (qiZi == 16) ? x1 : GlobalValue.QiZiArray[16].Col;
-                            int y = (qiZi == 16) ? y1 : GlobalValue.QiZiArray[16].Row;
+                            int x = (qiZi == 16) ? x1 : GlobalValue.qiZiArray[16].Col;
+                            int y = (qiZi == 16) ? y1 : GlobalValue.qiZiArray[16].Row;
                             if (thisPoints[x, y] == true) return true;
                         }
                     }
@@ -684,8 +684,8 @@ namespace Chess.SuanFa // 算法
                         if (localQiZi is >= 21 and <= 31) //车(23,24)，马(21,22)，炮(25,26)，卒(27,28,29,30,31)
                         {
                             thisPoints = GetPathPoints(localQiZi, myQiPan);
-                            int x = (qiZi == 0) ? x1 : GlobalValue.QiZiArray[0].Col;
-                            int y = (qiZi == 0) ? y1 : GlobalValue.QiZiArray[0].Row;
+                            int x = (qiZi == 0) ? x1 : GlobalValue.qiZiArray[0].Col;
+                            int y = (qiZi == 0) ? y1 : GlobalValue.qiZiArray[0].Row;
                             if (thisPoints[x, y] == true) return true;
                         }
                     }

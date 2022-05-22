@@ -26,6 +26,10 @@ namespace Chess
         public Window_JiPu()
         {
             InitializeComponent();
+            Left = SystemParameters.WorkArea.Right-this.Width;
+            Top = SystemParameters.WorkArea.Top;
+            Height = SystemParameters.WorkArea.Height;
+
         }
 
         private void FormLoad(object sender, RoutedEventArgs e)
@@ -45,12 +49,12 @@ namespace Chess
         public void Save_jipu()
         {
             ObservableCollection<ObservableCollection<Qipu.ContractQPClass>> lstLstQiPu = new();
-            GlobalValue.FuPanDataList.Clear();
+            GlobalValue.fuPanDataList.Clear();
             foreach (Qipu.ContractQPClass qp in lstLstQiPu[0])
             {
-                GlobalValue.FuPanDataList.Add(qp);
+                GlobalValue.fuPanDataList.Add(qp);
             }
-            Window_QiPu.GetRemarks(GlobalValue.FuPanDataList);
+            Window_QiPu.GetRemarks(GlobalValue.fuPanDataList);
         }
         /// <summary>
         /// 递归查找变招位置，并将变招存入相应分支
