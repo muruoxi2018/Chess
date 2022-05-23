@@ -7,18 +7,16 @@
 1.  棋盘可上下翻转，红方可在下面，也可以在上面。运行期间可随意翻转棋盘。
 2.  走棋具备动画效果，有悔棋功能。
 3.  可显示棋子移动的有效位置。
+4.  红方先走棋，非走棋方的棋子选不中。
 4.  将军时有提示，且下一步必须走解将的棋子，其他走棋无效。
+5.  走棋错误时，自动取消走棋。
 5.  有绝杀判断功能。判断是否绝杀的算法比较复杂，费了不少脑细胞。
 6.  有记谱功能，可在单独窗口同步显示。
 7.  点“开局”按钮，可恢复到初始状态。
 8.  仿QQ象棋界面，严格遵循象棋走棋规则。
-
-
-##### 正在继续完善的功能：
-1.  使用SQLite在本地保存棋谱。
-2.  对已保存的棋谱增加修改、删除功能。
-3.  开发变招数据存储结构。
-4.  开发变招的箭头提示功能。
+9.  SQLite在本地保存棋谱，具体增加、删除、修改功能。
+10. 完善的变招数据存储结构。
+11. 遇到变招时，显示箭头提示。
 
 #### 软件架构
 
@@ -36,18 +34,61 @@ C#，NET5.0/6.0，WPF，SQLite3.0
 
 1.  全部源码，开箱即用。
 2.  代码中含有大量注释，能够快速理解程序流程。
-3.  红方先走棋。非走棋方的棋子选不中。不会象棋的洗洗睡吧。
+3.  修改数据库地址为你磁盘的真实地址，修改位置如下：
+``` c#
+//  OpenSource\SqliteHelper.cs
+//  数据库文件路径。调试期间使用绝对路径，发布时改为相对路径。
+private static string DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";
+//  软件发布时使用如下设置
+//  private static readonly string DbFile = System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db";
+```  
 
+#### 代码示例
+
+``` c#
+for (int i = 0; i < 9; i++)
+    for (int j = 0; j < 10; j++)
+    {
+        int qizi = GlobalValue.qiPan[i, j]; // 从棋盘上找到存活的本方棋子
+        if (gongJiQiZi > 15 && qizi > 0 && qizi <= 15) // 黑方被将军时
+        {
+            thispoints = MoveCheck.GetPathPoints(qizi, GlobalValue.qiPan); // 获得本方棋子的可移动路径
+            foreach (int[] point in jieShaPoints) // 逐个取出可解除将军的点位坐标
+            {
+                if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
+                {
+                    if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.qiPan))
+                        return true;  // true=能够解杀
+                }
+            }
+        }
+        if (gongJiQiZi <= 15 && qizi > 16 && qizi <= 31) // 红方被将军时
+        {
+            thispoints = MoveCheck.GetPathPoints(qizi, GlobalValue.qiPan); // 获得本方棋子的可移动路径
+            foreach (int[] point in jieShaPoints) // 逐个取出可解除将军的点位坐标
+            {
+                if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
+                {
+                    if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.qiPan))
+                        return true;  // true=能够解杀
+                }
+            }
+        }
+    }
+```
+
+
+#### 绝杀算法
+![doT3F.png](https://s1.328888.xyz/2022/05/23/doT3F.png)
 
 #### 参与贡献
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+1.  Fork 本仓库：暂无
+2.  新建 Feat_xxx 分支：暂无
+3.  提交代码：暂无
+4.  新建 Pull Request：暂无
 
 
 #### 特技
 
 1.  感谢Gitee!
-2.  感谢QQ象棋！如有版权问题，请留言，必改。

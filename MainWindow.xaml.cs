@@ -30,7 +30,7 @@ namespace Chess
 
             for (int i = 0; i < 32; i++)
             {
-                GlobalValue.qiZiArray[i] = new QiZi(i);  // 32个棋子
+                GlobalValue.qiZiArray[i] = new QiZi(i);  // 初始化32个棋子
                 _ = qiziCanvas.Children.Add(GlobalValue.qiZiArray[i]);
             }
             for (int i = 0; i <= 8; i++)
