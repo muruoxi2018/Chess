@@ -10,7 +10,7 @@
         <ImageBrush ImageSource="/picture/background.jpg"/>
     </Window.Background>
     <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
-        <Border BorderThickness="1"/>
+        <Border BorderThickness="2" BorderBrush="#FF694903"/>
         <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
             <Image.Effect>
                 <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="10" Color="#FF543C08"/>
@@ -38,22 +38,23 @@
             </d:Image>
         </Canvas>
         <Grid x:Name="DrawGrid" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5"/>
-        <Grid Height="30" VerticalAlignment="Bottom" Margin="0,0,0,42" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <WrapPanel Height="30" VerticalAlignment="Bottom" Margin="0,0,0,42" ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <Button Content="开局" x:Name="ResetBtn" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Width="70" Click="ResetBtnClick"/>
-            <Button Content="翻转棋盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="614,0,0,0" VerticalAlignment="Center" Width="70" Click="OnFanZhuanQiPan"/>
-            <Button Content="设置" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="533,0,0,0" VerticalAlignment="Center" Click="SetupOption" Width="70"/>
-            <Button Content="悔棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="166,0,0,0" VerticalAlignment="Center" Width="70" Click="HuiQiButton"/>
-        </Grid>
+            <Button Content="翻转棋盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="OnFanZhuanQiPan"/>
+            <Button Content="设置" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Click="SetupOption" Width="70"/>
+        </WrapPanel>
 
-        <Grid VerticalAlignment="Bottom" Height="30" MinHeight="30" MaxHeight="30" MinWidth="767" Width="767" MaxWidth="767" Visibility="Visible" Margin="0,0,0,9">
-            <Button Content="记谱窗口" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="533,0,0,0" VerticalAlignment="Center" Click="OpenJiPuWindow" Width="70"/>
-            <Button Content="棋盘数据监控" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="614,0,0,0" VerticalAlignment="Center" Width="100" Click="OpenSpyWindow"/>
-            <Button Content="存为新棋谱" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="250,0,0,0" VerticalAlignment="Center" Click="SaveQiPu" Width="70"/>
-            <Button Content="缓存记谱" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="340,0,0,0" VerticalAlignment="Center" Click="SaveJiPuToBuffer" Width="70"/>
-            <Button Content="复盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Click="OpenFuPanWindow" Width="70"/>
-        </Grid>
+        <WrapPanel VerticalAlignment="Bottom" Height="30" MinHeight="30" MaxHeight="30" MinWidth="767" Width="767" MaxWidth="767" Visibility="Visible" Margin="0,0,0,9">
+            <Button Content="棋谱库" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Click="OpenFuPanWindow" Width="70"/>
+            <Button Content="上一步" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="HuiQiButton"/>
+            <Button Content="下一步" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="NextStep"/>
+            <Button Content="记谱窗口" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Click="OpenJiPuWindow" Width="70"/>
+            <Button Content="棋盘监控" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="OpenSpyWindow"/>
+            <Button Content="存为新棋谱" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Click="SaveQiPu" Width="70"/>
+            <Button Content="缓存记谱" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Click="SaveJiPuToBuffer" Width="70"/>
+        </WrapPanel>
         <Grid x:Name="JiangJunTiShi" VerticalAlignment="Top" Height="43">
-            <d:Label Content="Label" HorizontalAlignment="Left" Margin="100,0,20,0" VerticalAlignment="Center" Foreground="#FFE0B540"/>
+            <d:Label Content="战况" HorizontalAlignment="Left" Margin="100,0,20,0" VerticalAlignment="Center" Foreground="#FFE0B540"/>
 
         </Grid>
 

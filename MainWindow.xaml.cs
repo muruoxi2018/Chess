@@ -53,7 +53,7 @@ namespace Chess
 
             GlobalValue.jiangJunTiShi = new() // 将军状态文字提示
             {
-                Content = "战况",
+                Content = "",
                 Height = 30.0,
                 Foreground = Brushes.Goldenrod,
                 Margin = new Thickness(100, 20, 0, 0),
@@ -71,8 +71,8 @@ namespace Chess
             {
                 Width = 30,
                 Height = 30,
-                Margin = new Thickness(15, 500, 0, 0),
-                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(15, 500, 30, 0),
+                HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Top,
                 Fill = new SolidColorBrush(Colors.Gray),
                 Stroke = new SolidColorBrush(Colors.Goldenrod),
@@ -82,8 +82,8 @@ namespace Chess
             {
                 Width = 30,
                 Height = 30,
-                Margin = new Thickness(15, 260, 0, 0),
-                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(15, 260, 30, 0),
+                HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Top,
                 Fill = new SolidColorBrush(Colors.Gray),
                 Stroke = new SolidColorBrush(Colors.Goldenrod),
@@ -138,15 +138,15 @@ namespace Chess
             {
                 qipan_topBlack.Visibility = Visibility.Hidden;
                 qipan_topRed.Visibility = Visibility.Visible;
-                GlobalValue.redSideRect.Margin = new Thickness(15, 260, 0, 0);
-                GlobalValue.blackSideRect.Margin = new Thickness(15, 500, 0, 0);
+                GlobalValue.redSideRect.Margin = new Thickness(15, 260, 30, 0);
+                GlobalValue.blackSideRect.Margin = new Thickness(15, 500, 30, 0);
             }
             else
             {
                 qipan_topBlack.Visibility = Visibility.Visible;
                 qipan_topRed.Visibility = Visibility.Hidden;
-                GlobalValue.redSideRect.Margin = new Thickness(15, 500, 0, 0);
-                GlobalValue.blackSideRect.Margin = new Thickness(15, 260, 0, 0);
+                GlobalValue.redSideRect.Margin = new Thickness(15, 500, 30, 0);
+                GlobalValue.blackSideRect.Margin = new Thickness(15, 260, 30, 0);
             }
         }
 
@@ -219,7 +219,7 @@ namespace Chess
         }
 
         /// <summary>
-        /// 悔棋
+        /// 上一步
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -228,6 +228,15 @@ namespace Chess
             GlobalValue.HuiQi();
         }
 
+        /// <summary>
+        /// 下一步
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NextStep(object sender, RoutedEventArgs e)
+        {
+            GlobalValue.NextStep();
+        }
         private void SaveJiPuToBuffer(object sender, RoutedEventArgs e)
         {
             jipuWindow.Save_jipu();
@@ -250,5 +259,6 @@ namespace Chess
                 GlobalValue.qiPuKuForm.Show();
             }
         }
+
     }
 }

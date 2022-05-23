@@ -97,7 +97,7 @@ namespace Chess.SuanFa // 算法
             int[] jiangJun = { -1, -1, -1 };
             if (moveQiZi < 16) jiangJun = IsJiangJun(16); // 检查红帅是否被将军。
             if (moveQiZi >= 16) jiangJun = IsJiangJun(0); // 检查黑将是否被将军
-            GlobalValue.jiangJunTiShi.Content = "战况"; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
+            GlobalValue.jiangJunTiShi.Content = ""; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
             if (jiangJun[0] == -1) return false;  // 没有被将军时，则不需检测是否绝杀
             string gongJiQiZi1; // 第一个攻击棋子的名字
             if (jiangJun[1] != -1) gongJiQiZi1 = GlobalValue.qiZiImageFileName[jiangJun[1]]; else gongJiQiZi1 = "";

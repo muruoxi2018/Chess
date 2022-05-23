@@ -151,12 +151,12 @@ namespace Chess
             {
                 // 黑方走棋指示灯
                 blackSideRect.Fill=Brushes.LightGoldenrodYellow;
-                redSideRect.Fill=Brushes.Gray;
+                redSideRect.Fill=Brushes.DarkSlateGray;
             }
             else
             {
                 // 红方走棋指示灯
-                blackSideRect.Fill = Brushes.Gray;
+                blackSideRect.Fill = Brushes.DarkSlateGray;
                 redSideRect.Fill = Brushes.LightGoldenrodYellow;
             }
             currentQiZi = 100;  //  当前预选棋子设为无效棋子
@@ -212,15 +212,17 @@ namespace Chess
             if (sideTag == REDSIDE)
             {
                 redSideRect.RenderTransform = scale;
+                blackSideRect.RenderTransform = null;
                 redSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
             }
             if (sideTag == BLACKSIDE)
             {
+                redSideRect.RenderTransform = null;
                 blackSideRect.RenderTransform = scale;
                 blackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
             }
-            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale);
-            scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale);
+            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // x方向缩放
+            scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
         }
 
         /// <summary>
@@ -253,7 +255,7 @@ namespace Chess
             qiPuRecordRoot.Cursor = qiPuRecordRoot;  // 回到根部
             qiPuRecordRoot.DeleteChildNode();
             
-            blackSideRect.Fill = Brushes.Gray;
+            blackSideRect.Fill = Brushes.DarkSlateGray;
             redSideRect.Fill = Brushes.LightGoldenrodYellow;
             
         }
@@ -291,6 +293,19 @@ namespace Chess
             {
                 qiPuRecordRoot.Cursor=qiPuRecordRoot.Cursor.GetParent();
                 qiPuRecordRoot.Cursor.IsSelected = true;
+            }
+        }
+        /// <summary>
+        /// 下一步
+        /// </summary>
+        public static void NextStep()
+        {
+            QiPuRecord cursor = qiPuRecordRoot.Cursor;
+            if (cursor.ChildNode.Count == 1)
+            {
+                cursor=cursor.ChildNode[0];
+                QiZiMoveTo(cursor.Id, cursor.StepData.X1, cursor.StepData.Y1, cursor.StepData.DieQz,true);
+                qiPuRecordRoot.Cursor = cursor;
             }
         }
 

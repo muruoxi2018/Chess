@@ -138,7 +138,27 @@ namespace Chess.SuanFa
         {
             private QiPuRecord ParentNode { get; set; } // 父结点
             public ObservableCollection<QiPuRecord> ChildNode { get; set; }  // 子结点
-            public QiPuRecord Cursor { get; set; }  // 当前结点游标指针，仅根结点游标有用
+            private QiPuRecord _cursor;
+            public QiPuRecord Cursor
+            {
+                get { return _cursor; }
+                set
+                {
+                    _cursor = value;
+                    _cursor.IsSelected = true;
+                    GlobalValue.arrows.HideAllPath();
+                    if (!_cursor.IsLeaf())
+                    {
+                        var points = Qipu.GetListPoint(_cursor);
+                        int index = 0;
+                        foreach (var point in points)
+                        {
+                            GlobalValue.arrows.SetPathDataAndShow(index, point[0], point[1]);
+                            index++;
+                        }
+                    }
+                }
+            }  // 当前结点游标指针，仅根结点游标有用
             public string SideColor { get; set; }  // RED=红方，BLACK=黑方
             private bool _isSelected;
             public bool IsSelected
@@ -190,7 +210,7 @@ namespace Chess.SuanFa
                 }
                 //child.CurrentRecord = null;
                 child.ParentNode = this;
-                child.Id = this.Id+1;
+                child.Id = this.Id + 1;
                 ChildNode.Add(child);
                 return child;
             }
@@ -450,6 +470,18 @@ namespace Chess.SuanFa
                 List<System.Drawing.Point> pt = new List<System.Drawing.Point>();
                 pt.Add(new System.Drawing.Point(qs.StepData.X0, qs.StepData.Y0));
                 pt.Add(new System.Drawing.Point(qs.StepData.X1, qs.StepData.Y1));
+                pp.Add(pt);
+            }
+            return pp;
+        }
+        public static List<List<System.Drawing.Point>> GetListPoint(QiPuRecord qPStep)
+        {
+            List<List<System.Drawing.Point>> pp = new List<List<System.Drawing.Point>>();
+            foreach (var lp in qPStep.ChildNode)
+            {
+                List<System.Drawing.Point> pt = new List<System.Drawing.Point>();
+                pt.Add(new System.Drawing.Point(lp.StepData.X0, lp.StepData.Y0));
+                pt.Add(new System.Drawing.Point(lp.StepData.X1, lp.StepData.Y1));
                 pp.Add(pt);
             }
             return pp;

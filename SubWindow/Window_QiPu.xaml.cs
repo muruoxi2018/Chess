@@ -210,20 +210,7 @@ namespace Chess
                 qpIndex++;
                 StepCode step = qiPuSteps[qpIndex].StepData;
                 GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
-                if (qpIndex <= qiPuSteps.Length - 2)
-                {
-                    ContractQPClass nextstep = GlobalValue.fuPanDataList[qpIndex + 1]; // 取出下一条走棋指令，绘制走棋提示箭头，并显示
-                    GlobalValue.arrows.SetPathDataAndShow(0,
-                        new System.Drawing.Point(nextstep.StepData.X0, nextstep.StepData.Y0),
-                        new System.Drawing.Point(nextstep.StepData.X1, nextstep.StepData.Y1));
-                    var points = Qipu.GetListPoint(GlobalValue.fuPanDataList[qpIndex]);
-                    int index = 1;
-                    foreach (var point in points)
-                    {
-                        GlobalValue.arrows.SetPathDataAndShow(index, point[0], point[1]);
-                        index++;
-                    }
-                }
+                
             }
         }
         /// <summary>
