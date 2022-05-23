@@ -5,6 +5,7 @@ namespace Chess.SuanFa // 算法
     public class MoveCheck  // 走棋规则检查
     {
         public static bool[,] PathBool = new bool[9, 10];
+        
         /// <summary>
         /// 获取棋子可移动路径，并在棋盘上显示标记
         /// </summary>

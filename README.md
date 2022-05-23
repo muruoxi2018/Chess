@@ -39,7 +39,8 @@ C#，NET5.0/6.0，WPF，SQLite3.0
 //  OpenSource\SqliteHelper.cs
 //  数据库文件路径。调试期间使用绝对路径，发布时改为相对路径。
 private static string DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";
-//  软件发布时使用如下设置
+
+//  软件发布时，数据库改为如下相对路径。
 //  private static readonly string DbFile = System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db";
 ```  
 
@@ -79,8 +80,7 @@ for (int i = 0; i < 9; i++)
 
 
 #### 绝杀算法
-![doT3F.png](https://s1.328888.xyz/2022/05/23/doT3F.png)
-
+![dBkNm.png](https://s1.328888.xyz/2022/05/23/dBkNm.png)
 #### 参与贡献
 
 1.  Fork 本仓库：暂无

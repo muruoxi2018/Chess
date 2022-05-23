@@ -33,7 +33,7 @@ namespace Chess
             Left = SystemParameters.WorkArea.Left;
             Top = SystemParameters.WorkArea.Top;
             Height = SystemParameters.WorkArea.Height;
-            FuPanDataGrid.ItemsSource = GlobalValue.fuPanDataList;
+            FuPanDataGrid.ItemsSource = Qipu.ContractQiPu.ChildSteps;
             TrueTree.ItemsSource = GlobalValue.qiPuRecordRoot.ChildNode;
             CompressTree.ItemsSource = Qipu.ContractQiPu.ChildSteps;
 

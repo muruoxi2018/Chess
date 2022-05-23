@@ -149,13 +149,13 @@ namespace Chess
             sideTag = !sideTag;  // 变换走棋方
             if (sideTag==BLACKSIDE)
             {
-                // 黑方走棋指示
+                // 黑方走棋指示灯
                 blackSideRect.Fill=Brushes.LightGoldenrodYellow;
                 redSideRect.Fill=Brushes.Gray;
             }
             else
             {
-                // 红方走棋指示
+                // 红方走棋指示灯
                 blackSideRect.Fill = Brushes.Gray;
                 redSideRect.Fill = Brushes.LightGoldenrodYellow;
             }
