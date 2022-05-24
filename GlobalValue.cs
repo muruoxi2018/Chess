@@ -23,7 +23,7 @@ namespace Chess
         public static string qipustr;   // 棋谱转换后的字符串
         public static int currentQiZi;  // 当前选定的棋子
         public static int[,] qiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
-        
+
         #region // 用户界面元素
         public static PathPoint[,] pathPointImage = new PathPoint[9, 10];  // 棋子可走路径的圆点标记
         public static QiZi[] qiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
@@ -128,7 +128,7 @@ namespace Chess
 
             if (dieQiZi != -1) // 如果杀死了棋子
             {
-                qiZiArray[dieQiZi].SetDied(); 
+                qiZiArray[dieQiZi].SetDied();
                 if (sound)
                 {
                     /*Form2.mp1.FileName := 'sounds/eat.mp3';
@@ -147,11 +147,11 @@ namespace Chess
             }
 
             sideTag = !sideTag;  // 变换走棋方
-            if (sideTag==BLACKSIDE)
+            if (sideTag == BLACKSIDE)
             {
                 // 黑方走棋指示灯
-                blackSideRect.Fill=Brushes.LightGoldenrodYellow;
-                redSideRect.Fill=Brushes.DarkSlateGray;
+                blackSideRect.Fill = Brushes.LightGoldenrodYellow;
+                redSideRect.Fill = Brushes.DarkSlateGray;
             }
             else
             {
@@ -254,10 +254,10 @@ namespace Chess
 
             qiPuRecordRoot.Cursor = qiPuRecordRoot;  // 回到根部
             qiPuRecordRoot.DeleteChildNode();
-            
+
             blackSideRect.Fill = Brushes.DarkSlateGray;
             redSideRect.Fill = Brushes.LightGoldenrodYellow;
-            
+
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Chess
 
             if (qiPuRecordRoot.Cursor.GetParent() != null)
             {
-                qiPuRecordRoot.Cursor=qiPuRecordRoot.Cursor.GetParent();
+                qiPuRecordRoot.Cursor = qiPuRecordRoot.Cursor.GetParent();
                 qiPuRecordRoot.Cursor.IsSelected = true;
             }
         }
@@ -303,8 +303,9 @@ namespace Chess
             QiPuRecord cursor = qiPuRecordRoot.Cursor;
             if (cursor.ChildNode.Count == 1)
             {
-                cursor=cursor.ChildNode[0];
-                QiZiMoveTo(cursor.Id, cursor.StepData.X1, cursor.StepData.Y1, cursor.StepData.DieQz,true);
+                cursor = cursor.ChildNode[0];
+                StepCode step = cursor.StepData;
+                QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, true);
                 qiPuRecordRoot.Cursor = cursor;
             }
         }
@@ -322,7 +323,7 @@ namespace Chess
             simpleQiPu.CopyDataFromStep(fullQiPu.StepData);
             foreach (QiPuRecord Recode in fullQiPu.ChildNode)
             {
-                QiPuSimpleRecord childRecode=ConvertQiPuToSimple(Recode);
+                QiPuSimpleRecord childRecode = ConvertQiPuToSimple(Recode);
                 simpleQiPu.Child.Add(childRecode);
             }
             return simpleQiPu;
@@ -336,14 +337,14 @@ namespace Chess
         public static QiPuRecord ConvertQiPuToFull(QiPuSimpleRecord simpleQiPu)
         {
             QiPuRecord qiPu = new();
-            qiPu.Id=simpleQiPu.Id;
-            qiPu.Remarks=simpleQiPu.Remarks;
+            qiPu.Id = simpleQiPu.Id;
+            qiPu.Remarks = simpleQiPu.Remarks;
             qiPu.SetRecordData(simpleQiPu.Data);
             foreach (QiPuSimpleRecord Recode in simpleQiPu.Child)
             {
                 QiPuRecord childRecode = ConvertQiPuToFull(Recode);
                 qiPu.AddChild(childRecode);
-                
+
             }
             return qiPu;
         }
