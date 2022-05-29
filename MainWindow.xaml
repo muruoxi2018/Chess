@@ -5,20 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="900" SizeToContent="WidthAndHeight" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="800" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-    <Window.Background>
-        <ImageBrush ImageSource="/picture/木纹_深色2243.png" Stretch="Fill" TileMode="None"/>
-    </Window.Background>
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="900" SizeToContent="WidthAndHeight" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="800" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF005250">
     <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
-        <Border BorderThickness="2"/>
+        <Border BorderThickness="2" Background="#FF866721" CornerRadius="5,5,5,5">
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.5" BlurRadius="12" Color="#FF584503"/>
+            </Border.Effect>
+        </Border>
         <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
             <Image.Effect>
-                <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="10" Color="#FF543C08"/>
+                <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="0" Color="#FF543C08"/>
             </Image.Effect>
         </Image>
         <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" >
             <Image.Effect>
-                <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="10" Color="#FF543C08"/>
+                <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="0" Color="#FF543C08"/>
             </Image.Effect>
         </Image>
 
