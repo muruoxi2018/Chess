@@ -24,6 +24,8 @@ namespace Chess
         public static int currentQiZi;  // 当前选定的棋子
         public static int[,] qiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
 
+        public static MediaPlayer player = new();
+
         #region // 用户界面元素
         public static PathPoint[,] pathPointImage = new PathPoint[9, 10];  // 棋子可走路径的圆点标记
         public static QiZi[] qiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
@@ -129,21 +131,6 @@ namespace Chess
             if (dieQiZi != -1) // 如果杀死了棋子
             {
                 qiZiArray[dieQiZi].SetDied();
-                if (sound)
-                {
-                    /*Form2.mp1.FileName := 'sounds/eat.mp3';
-                    Form2.mp1.Open;
-                    Form2.mp1.Play;*/
-                }
-            }
-            else
-            {
-                if (sound)
-                {
-                    /*Form2.mp1.FileName := 'sounds/go.wav';
-                    Form2.mp1.Open;
-                    Form2.mp1.Play;*/
-                }
             }
 
             sideTag = !sideTag;  // 变换走棋方
@@ -161,6 +148,11 @@ namespace Chess
             }
             currentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
+            if (sound)
+            {
+                player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
+                player.Play();
+            }
 
         }
 

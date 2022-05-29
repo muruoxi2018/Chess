@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 
 namespace Chess
 {
+    
     /// <summary>
     /// 棋子类
     /// 主程序中有32个棋子实例
@@ -111,6 +112,9 @@ namespace Chess
             SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.currentQiZi); // 获取可移动路径，并显示在棋盘上
             GlobalValue.yuanWeiZhi.SetPosition(Col, Row); // 棋子原位置标记，显示在当前位置
             GlobalValue.yuanWeiZhi.ShowYuanWeiZhiImage();
+            GlobalValue.player.Open(new Uri("Sounds/select.mp3", UriKind.Relative));
+            GlobalValue.player.Play();
+
         }
 
         /// <summary>

@@ -9,7 +9,7 @@
     <Grid>
         <DataGrid x:Name="JiPuDataGrid" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Margin="10,10,10,10" VerticalAlignment="Top" CanUserResizeRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}" Header="步" Width="30" />
+                <DataGridTextColumn Binding="{Binding Id}" Header="步" Width="30"/>
                 <DataGridTextColumn Binding="{Binding Nm}" Header="代码" MinWidth="100"/>
                 <DataGridTextColumn Binding="{Binding Cn}" Header="棋谱" MinWidth="100" />
                 <DataGridTextColumn Binding="{Binding Memo}" Header="备注" MinWidth="200"/>
@@ -18,9 +18,9 @@
             <DataGrid.ContextMenu>
                 <ContextMenu Name="menu">
                     <MenuItem Header="保存到复盘棋谱" Click="Save_Click">
-                        
+
                     </MenuItem>
-                    
+
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>

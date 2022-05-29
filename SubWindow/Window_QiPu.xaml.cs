@@ -148,7 +148,7 @@ namespace Chess
         {
             if (GlobalValue.fuPanDataList.Count < 1) return;
             System.Collections.Generic.Dictionary<string, object> dic = new();
-            dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.fuPanDataList));
+            dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot));
             if (SqliteHelper.Update("mybook", $"rowid={rowId}", dic) > 0)
             {
                 MessageBox.Show("数据保存成功！", "提示");

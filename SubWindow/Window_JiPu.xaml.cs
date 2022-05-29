@@ -35,7 +35,7 @@ namespace Chess
         private void FormLoad(object sender, RoutedEventArgs e)
         {
             JiPuDataGrid.ItemsSource = Qipu.QiPuList;
-
+            
         }
         /// <summary>
         /// 将新谱保存到老谱中，变招作为分支保存

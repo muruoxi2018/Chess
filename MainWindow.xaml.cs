@@ -255,10 +255,29 @@ namespace Chess
             }
             else
             {
-                GlobalValue.qiPuKuForm=new();
+                GlobalValue.qiPuKuForm = new();
                 GlobalValue.qiPuKuForm.Show();
             }
         }
 
+        private void AddRemark(object sender, RoutedEventArgs e)
+        {
+            remarkGrid.Visibility = Visibility.Visible;
+            string str;
+            str = String.IsNullOrEmpty(GlobalValue.qiPuRecordRoot.Cursor.Remarks) ? "" : GlobalValue.qiPuRecordRoot.Cursor.Remarks + System.Environment.NewLine;
+            str+=GlobalValue.qiPuRecordRoot.Cursor.Id+ "、"+GlobalValue.qiPuRecordRoot.Cursor.Id + "，下一步：";
+            foreach (var item in GlobalValue.qiPuRecordRoot.Cursor.ChildNode)
+            {
+                str += item.Cn;
+            }
+            remarkTextBox.Text = System.Environment.NewLine + str;
+            
+        }
+
+        private void SaveRemark(object sender, RoutedEventArgs e)
+        {
+            GlobalValue.qiPuRecordRoot.Cursor.Remarks = remarkTextBox.Text;
+            remarkGrid.Visibility = Visibility.Hidden;
+        }
     }
 }

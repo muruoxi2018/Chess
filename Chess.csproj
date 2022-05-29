@@ -72,6 +72,43 @@
     <None Remove="picture\黑象.png" />
     <None Remove="picture\黑车.png" />
     <None Remove="picture\黑马.png" />
+    <None Remove="Sounds\alarm.mp3" />
+    <None Remove="Sounds\bg.mp3" />
+    <None Remove="Sounds\eat.mp3" />
+    <None Remove="Sounds\Female_001.mp3" />
+    <None Remove="Sounds\Female_0010.mp3" />
+    <None Remove="Sounds\Female_0011.mp3" />
+    <None Remove="Sounds\Female_0012.mp3" />
+    <None Remove="Sounds\Female_0013.mp3" />
+    <None Remove="Sounds\Female_002.mp3" />
+    <None Remove="Sounds\Female_003.mp3" />
+    <None Remove="Sounds\Female_004.mp3" />
+    <None Remove="Sounds\Female_005.mp3" />
+    <None Remove="Sounds\Female_006.mp3" />
+    <None Remove="Sounds\Female_007.mp3" />
+    <None Remove="Sounds\Female_008.mp3" />
+    <None Remove="Sounds\Female_009.mp3" />
+    <None Remove="Sounds\gamelose.mp3" />
+    <None Remove="Sounds\gamewin.mp3" />
+    <None Remove="Sounds\go.mp3" />
+    <None Remove="Sounds\go.wav" />
+    <None Remove="Sounds\goerror.mp3" />
+    <None Remove="Sounds\Male_001.mp3" />
+    <None Remove="Sounds\Male_0010.mp3" />
+    <None Remove="Sounds\Male_0011.mp3" />
+    <None Remove="Sounds\Male_0012.mp3" />
+    <None Remove="Sounds\Male_0013.mp3" />
+    <None Remove="Sounds\Male_002.mp3" />
+    <None Remove="Sounds\Male_003.mp3" />
+    <None Remove="Sounds\Male_004.mp3" />
+    <None Remove="Sounds\Male_005.mp3" />
+    <None Remove="Sounds\Male_006.mp3" />
+    <None Remove="Sounds\Male_007.mp3" />
+    <None Remove="Sounds\Male_008.mp3" />
+    <None Remove="Sounds\Male_009.mp3" />
+    <None Remove="Sounds\Man_jiangjun.mp3" />
+    <None Remove="Sounds\select.mp3" />
+    <None Remove="Sounds\Woman_jiangjun.mp3" />
     <None Remove="象.jpeg" />
   </ItemGroup>
 
@@ -83,6 +120,114 @@
   <ItemGroup>
     <Content Include="picture\background.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\alarm.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\bg.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\eat.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_001.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_0010.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_0011.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_0012.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_0013.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_002.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_003.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_004.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_005.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_006.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_007.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_008.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Female_009.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\gamelose.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\gamewin.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\go.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\goerror.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_001.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_0010.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_0011.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_0012.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_0013.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_002.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_003.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_004.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_005.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_006.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_007.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_008.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Male_009.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Man_jiangjun.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\select.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Woman_jiangjun.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="picture\juesha_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
