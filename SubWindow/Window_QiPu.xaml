@@ -26,7 +26,7 @@
             <d:TabItem/>
             <DataGrid.ContextMenu>
                 <ContextMenu Name="menu">
-                    <MenuItem Name="refresh" Header="刷新" Click="QipuListRefresh"/>
+                    <MenuItem Name="refresh" Header="刷新" Click="QipuDBListRefresh"/>
                     <Separator/>
                     <MenuItem Name="delete" Header="删除" Click="DeleteRowData"/>
                     
@@ -37,7 +37,7 @@
         <TabControl VerticalAlignment="Stretch" MinHeight="500" Padding="0,0,0,0" Margin="0,5,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" >
             <TabItem HorizontalAlignment="Center" Height="19" Header="步骤列表" VerticalAlignment="Center" Width="59">
                 <Grid Background="#FFFFFFFF" VerticalAlignment="Top">
-                    <DataGrid x:Name="FuPanDataGrid" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" MouseLeftButtonUp="OnFuPanDataGridClick" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MinHeight="500" HorizontalAlignment="Stretch" MinWidth="250" ScrollViewer.CanContentScroll="False" VerticalContentAlignment="Stretch">
+                    <DataGrid x:Name="FuPanDataGrid" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MinHeight="500" HorizontalAlignment="Stretch" MinWidth="250" ScrollViewer.CanContentScroll="False" VerticalContentAlignment="Stretch">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Id}" Header="步" Width="30"/>
                             <DataGridTextColumn Binding="{Binding Cn}" Header="棋谱" MinWidth="100" />

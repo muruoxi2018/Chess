@@ -241,7 +241,7 @@ namespace Chess
             }
             yuanWeiZhi.HiddenYuanWeiZhiImage();
             Qipu.QiPuList.Clear();
-            Window_QiPu.ReStart();
+
             arrows.HideAllPath();  // 隐藏提示箭头
 
             qiPuRecordRoot.Cursor = qiPuRecordRoot;  // 回到根部

@@ -293,12 +293,12 @@ namespace Chess
 
         private void UpdateQiPu(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(GlobalValue.qiPuKuForm.GetRowid()))
+            if (!string.IsNullOrEmpty(Window_QiPu.GetRowid()))
             {
                 GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
                 System.Collections.Generic.Dictionary<string, object> dic = new();
                 dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot));
-                if (SqliteHelper.Update("mybook", $"rowid={GlobalValue.qiPuKuForm.GetRowid()}", dic) > 0)
+                if (SqliteHelper.Update("mybook", $"rowid={Window_QiPu.GetRowid()}", dic) > 0)
                 {
                     MessageBox.Show("数据保存成功！", "提示");
                 }
@@ -314,7 +314,7 @@ namespace Chess
                 _ = window.ShowDialog();
             }
             //  更新数据后，刷新棋谱列表
-            GlobalValue.qiPuKuForm.QipuListRefresh();
+            GlobalValue.qiPuKuForm.QipuDBListRefresh();
         }
     }
 }
