@@ -331,7 +331,7 @@ namespace Chess
             QiPuRecord qiPu = new();
             qiPu.Id = simpleQiPu.Id;
             qiPu.Remarks = simpleQiPu.Remarks;
-            qiPu.SetRecordData(simpleQiPu.Data);
+            qiPu.CopyRecordData(simpleQiPu.Data);
             foreach (QiPuSimpleRecord Recode in simpleQiPu.Child)
             {
                 QiPuRecord childRecode = ConvertQiPuToFull(Recode);

@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Chess.OpenSource;
+using Chess.SuanFa;
+using Newtonsoft.Json;
+using System;
+using System.Data;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -237,10 +241,6 @@ namespace Chess
         {
             GlobalValue.NextStep();
         }
-        private void SaveJiPuToBuffer(object sender, RoutedEventArgs e)
-        {
-            jipuWindow.Save_jipu();
-        }
 
         /// <summary>
         /// 打开复盘窗口
@@ -259,25 +259,62 @@ namespace Chess
                 GlobalValue.qiPuKuForm.Show();
             }
         }
-
+        /// <summary>
+        /// 添加注释
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddRemark(object sender, RoutedEventArgs e)
         {
             remarkGrid.Visibility = Visibility.Visible;
             string str;
-            str = String.IsNullOrEmpty(GlobalValue.qiPuRecordRoot.Cursor.Remarks) ? "" : GlobalValue.qiPuRecordRoot.Cursor.Remarks + System.Environment.NewLine;
-            str+=GlobalValue.qiPuRecordRoot.Cursor.Id+ "、"+GlobalValue.qiPuRecordRoot.Cursor.Id + "，下一步：";
+            str = String.IsNullOrEmpty(GlobalValue.qiPuRecordRoot.Cursor.Remarks) ? "" : (GlobalValue.qiPuRecordRoot.Cursor.Remarks + System.Environment.NewLine);
+            str+=GlobalValue.qiPuRecordRoot.Cursor.Id+ "、"+GlobalValue.qiPuRecordRoot.Cursor.Cn + "：下一步，";
             foreach (var item in GlobalValue.qiPuRecordRoot.Cursor.ChildNode)
             {
                 str += item.Cn;
             }
             remarkTextBox.Text = System.Environment.NewLine + str;
-            
         }
-
+        /// <summary>
+        /// 点击保存按钮后，保存到内存中，同时更新数据显示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveRemark(object sender, RoutedEventArgs e)
         {
             GlobalValue.qiPuRecordRoot.Cursor.Remarks = remarkTextBox.Text;
             remarkGrid.Visibility = Visibility.Hidden;
+
+            GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
+            Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot); // 压缩树更新
+            GlobalValue.qiPuKuForm.remarksTextBlock.Text = JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot);
+        }
+
+        private void UpdateQiPu(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(GlobalValue.qiPuKuForm.GetRowid()))
+            {
+                GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
+                System.Collections.Generic.Dictionary<string, object> dic = new();
+                dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot));
+                if (SqliteHelper.Update("mybook", $"rowid={GlobalValue.qiPuKuForm.GetRowid()}", dic) > 0)
+                {
+                    MessageBox.Show("数据保存成功！", "提示");
+                }
+                else
+                {
+                    MessageBox.Show("数据没有能够保存，请查找原因！", "提示");
+                }
+            }
+            else
+            {
+                //  如果棋谱库编号为空，则另存为新棋谱。
+                SubWindow.Save_Window window = new();
+                _ = window.ShowDialog();
+            }
+            //  更新数据后，刷新棋谱列表
+            GlobalValue.qiPuKuForm.QipuListRefresh();
         }
     }
 }

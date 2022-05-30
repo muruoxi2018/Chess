@@ -19,7 +19,7 @@ namespace Chess
     /// </summary>
     public partial class Window_QiPu : Window
     {
-        private static string rowId;
+        private static string rowId { get; set; }
         private static int qpIndex = -1;
         private static ContractQPClass[] qiPuSteps;
         /// <summary>
@@ -57,6 +57,13 @@ namespace Chess
         /// <param name="e"></param>
         public void QipuListRefresh(object sender, RoutedEventArgs e)
         {
+            QipuListRefresh();
+        }
+        /// <summary>
+        /// 更新棋谱库列表
+        /// </summary>
+        public void QipuListRefresh()
+        {
             DataTable sr = OpenSource.SqliteHelper.Select("mybook", "rowid,*");
             if (sr == null) return;
             DbDataGrid.ItemsSource = sr.DefaultView;
@@ -69,6 +76,7 @@ namespace Chess
         private void OnMouseLeftButtonUP(object sender, MouseButtonEventArgs e)
         {
             if (DbDataGrid.Items.Count == 0) return;
+            GlobalValue.Reset(); // 棋盘复位
             rowId = ((DataRowView)DbDataGrid.SelectedItem).Row["rowid"].ToString();
             RowIdText.Text = $"棋谱编号：{rowId}";
             videoUrl.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["video"].ToString();
@@ -82,39 +90,22 @@ namespace Chess
                 MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
                 MaxDepth = maxDepth
             }); // 反序列化 
+
             GlobalValue.qiPuRecordRoot = GlobalValue.ConvertQiPuToFull(simpleRecord); // 转换为完全树数据结构
             Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot); // 转换为收缩树数据结构
 
             GlobalValue.fuPanDataList.Add(Qipu.ContractQiPu);
-
-            remarksTextBlock.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString() + GetRemarks(GlobalValue.fuPanDataList);
             qiPuSteps = GlobalValue.fuPanDataList.ToArray();
+
+            remarksTextBlock.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["memo"].ToString();
+            remarksTextBlock.Text += System.Environment.NewLine + jsonStr;
+
             FuPanDataGrid.ItemsSource = Qipu.ContractQiPu.ChildSteps;
             TrueTree.ItemsSource = GlobalValue.qiPuRecordRoot.ChildNode;
             CompressTree.ItemsSource = Qipu.ContractQiPu.ChildSteps;
         }
-        /// <summary>
-        /// 棋谱中的所有注释
-        /// </summary>
-        /// <param name="qiPuLst">走棋步骤列表</param>
-        /// <returns>棋谱中的全部说明文字</returns>
-        public static string GetRemarks(ObservableCollection<Qipu.ContractQPClass> qiPuLst)
-        {
-            string memoStrs = "";
-            foreach (Qipu.ContractQPClass qp in qiPuLst)
-            {
-                if (!string.IsNullOrEmpty(qp.Remarks))
-                {
-                    memoStrs += System.Environment.NewLine + $"第{qp.Id}步：{qp.Remarks}";
-                }
-            }
-            return memoStrs;
-        }
+        
 
-        private void OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            //menu.IsOpen = true;
-        }
         /// <summary>
         /// 删除当前选中的棋谱
         /// </summary>
@@ -129,35 +120,7 @@ namespace Chess
                 QipuListRefresh(sender, e);
             }
         }
-        private void FuPan(object sender, RoutedEventArgs e)
-        {
-
-            /*if (FuPanWidow != null)
-            {
-                FuPanWidow.Close();
-            }
-            FuPanWidow = new SubWindow.FuPan_Window();
-            FuPanWidow.Show();*/
-        }
-        /// <summary>
-        /// 将复盘数据保存到棋谱库中
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UpdateButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (GlobalValue.fuPanDataList.Count < 1) return;
-            System.Collections.Generic.Dictionary<string, object> dic = new();
-            dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot));
-            if (SqliteHelper.Update("mybook", $"rowid={rowId}", dic) > 0)
-            {
-                MessageBox.Show("数据保存成功！", "提示");
-            }
-            else
-            {
-                MessageBox.Show("数据没有能够保存，请查找原因！", "提示");
-            }
-        }
+                
         /// <summary>
         /// 点击棋谱步骤时
         /// </summary>
@@ -197,43 +160,17 @@ namespace Chess
             proc.StartInfo.FileName = videoUrl.Text;
             _ = proc.Start();
         }
-        /// <summary>
-        /// 下一步按钮
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NextStep(object sender, RoutedEventArgs e)
-        {
-            if (GlobalValue.fuPanDataList.Count < 1) return;
-            if (qpIndex < qiPuSteps.Length - 1)
-            {
-                qpIndex++;
-                StepCode step = qiPuSteps[qpIndex].StepData;
-                GlobalValue.QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, false);
-                
-            }
-        }
-        /// <summary>
-        /// 上一步按钮
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PreStep(object sender, RoutedEventArgs e)
-        {
-            if (GlobalValue.fuPanDataList.Count < 1) return;
-            if (qpIndex > -1)
-            {
-                GlobalValue.HuiQi();
-                qpIndex--;
-
-            }
-        }
+        
         /// <summary>
         /// 重新开始复盘
         /// </summary>
         public static void ReStart()
         {
             qpIndex = -1;
+        }
+        public string GetRowid()
+        {
+            return rowId;
         }
     }
 }

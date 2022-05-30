@@ -12,7 +12,7 @@ namespace Chess.SuanFa
     public static class Qipu  // 棋谱类
     {
 
-        public static ObservableCollection<ContractQPClass> QiPuList = new(); // 棋谱步骤列表
+        public static ObservableCollection<ContractQPClass> QiPuList = new(); // 棋谱记录列表
         public static ContractQPClass ContractQiPu = new(); // 收缩树
         /// <summary>
         /// 走棋数据指令类
@@ -157,6 +157,8 @@ namespace Chess.SuanFa
                             index++;
                         }
                     }
+                    if (_cursor.Remarks != null)
+                        GlobalValue.jiangJunTiShi.Content = _cursor.Remarks;
                 }
             }  // 当前结点游标指针，仅根结点游标有用
             public string SideColor { get; set; }  // RED=红方，BLACK=黑方
@@ -205,7 +207,7 @@ namespace Chess.SuanFa
                 {
                     if (string.Equals(item.Cn, child.Cn, StringComparison.OrdinalIgnoreCase))
                     {
-                        return item;
+                        return item;  // 如果已存在，则不增加新步骤
                     }
                 }
                 //child.CurrentRecord = null;
@@ -251,7 +253,7 @@ namespace Chess.SuanFa
             /// 设置棋谱记录数据
             /// </summary>
             /// <param name="code">已有的记录</param>
-            public void SetRecordData(StepCode code)
+            public void CopyRecordData(StepCode code)
             {
                 if (code == null) return;
                 SetRecordData(code.QiZi, code.X0, code.Y0, code.X1, code.Y1, code.DieQz);
@@ -302,9 +304,9 @@ namespace Chess.SuanFa
                 #endregion
                 Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}";
                 Cn = char1 + char2 + char3 + char4;
-                Remarks = "";
+                //Remarks = "";
                 StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
-                SideColor = QiZi is >= 0 and <= 15 ? "Black" : "Red";
+                //SideColor = QiZi is >= 0 and <= 15 ? "Black" : "Red";
                 //QiPuList.Add(this);
             }
             /// <summary>
@@ -411,32 +413,7 @@ namespace Chess.SuanFa
             Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot);
             //x0 = 100;
         }
-        /// <summary>
-        /// 将棋谱数字代码转化为JSON字符串
-        /// </summary>
-        /// <returns></returns>
-        public static string NmToJson()
-        {
-            ArrayList recode = new();
-            foreach (ContractQPClass p in QiPuList)
-            {
-                _ = recode.Add(p.Nm);
-            }
-            return JsonConvert.SerializeObject(recode);
-        }
-        /// <summary>
-        /// 将棋谱中文代码转化为JSON字符串
-        /// </summary>
-        /// <returns></returns>
-        public static string CnToJson()
-        {
-            ArrayList recode = new();
-            foreach (ContractQPClass p in QiPuList)
-            {
-                _ = recode.Add(p.Cn);
-            }
-            return JsonConvert.SerializeObject(recode);
-        }
+
         /// <summary>
         /// 将棋谱中文代码转化为长字符串
         /// </summary>

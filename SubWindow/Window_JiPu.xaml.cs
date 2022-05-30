@@ -26,7 +26,7 @@ namespace Chess
         public Window_JiPu()
         {
             InitializeComponent();
-            Left = SystemParameters.WorkArea.Right-this.Width;
+            Left = SystemParameters.WorkArea.Right - this.Width;
             Top = SystemParameters.WorkArea.Top;
             Height = SystemParameters.WorkArea.Height;
 
@@ -35,26 +35,7 @@ namespace Chess
         private void FormLoad(object sender, RoutedEventArgs e)
         {
             JiPuDataGrid.ItemsSource = Qipu.QiPuList;
-            
-        }
-        /// <summary>
-        /// 将新谱保存到老谱中，变招作为分支保存
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            Save_jipu();
-        }
-        public void Save_jipu()
-        {
-            ObservableCollection<ObservableCollection<Qipu.ContractQPClass>> lstLstQiPu = new();
-            GlobalValue.fuPanDataList.Clear();
-            foreach (Qipu.ContractQPClass qp in lstLstQiPu[0])
-            {
-                GlobalValue.fuPanDataList.Add(qp);
-            }
-            Window_QiPu.GetRemarks(GlobalValue.fuPanDataList);
+
         }
         /// <summary>
         /// 递归查找变招位置，并将变招存入相应分支

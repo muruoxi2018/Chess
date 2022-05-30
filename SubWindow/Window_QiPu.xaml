@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="DbDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" MouseLeftButtonUp="OnMouseLeftButtonUP" MouseRightButtonUp="OnMouseRightButtonUp" CanUserAddRows="False" CanUserDeleteRows="False" MinHeight="50" >
+        <DataGrid x:Name="DbDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" AutoGenerateColumns="False" MouseLeftButtonUp="OnMouseLeftButtonUP" CanUserAddRows="False" CanUserDeleteRows="False" MinHeight="50" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding rowid}" Header="编号"/>
                 <DataGridTextColumn Binding="{Binding date}" Header="日期"/>
@@ -20,8 +20,7 @@
                 <DataGridTextColumn Binding="{Binding title}" Header="标题" />
                 <DataGridTextColumn Binding="{Binding type}" Header="类型" />
                 <DataGridTextColumn Binding="{Binding video}" Header="视频" />
-                <DataGridTextColumn Binding="{Binding record}" Header="棋谱" >
-                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding record}" Header="棋谱" />
             </DataGrid.Columns>
             <d:TabItem/>
             <d:TabItem/>
@@ -30,8 +29,7 @@
                     <MenuItem Name="refresh" Header="刷新" Click="QipuListRefresh"/>
                     <Separator/>
                     <MenuItem Name="delete" Header="删除" Click="DeleteRowData"/>
-                    <Separator/>
-                    <MenuItem Name="fupan" Header="复盘" Click="FuPan"/>
+                    
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
@@ -68,6 +66,8 @@
                                     <TextBlock Text="{Binding Id}"/>
                                     <TextBlock Text=". "/>
                                     <TextBlock Text="{Binding Cn}"/>
+                                    <TextBlock Text="   "/>
+                                    <TextBlock Text="{Binding Remarks}"/>
                                 </StackPanel>
                             </HierarchicalDataTemplate>
 
@@ -79,7 +79,7 @@
                         </TreeView.ItemContainerStyle>
                         <TreeView.Resources>
                             <!--选择时的背景色-->
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Yellow"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DarkGreen"/>
                         </TreeView.Resources>
                     </TreeView>
                 </Grid>
@@ -128,10 +128,7 @@
             </TabItem>
         </TabControl>
         <WrapPanel Margin="0,13,0,10" VerticalAlignment="Bottom" Grid.Row="3">
-            <Button x:Name="updateQipu" Content="保存到现有棋谱" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="25" Click="UpdateButtonClick" Margin="10,0,0,0"/>
             <TextBlock x:Name="RowIdText" HorizontalAlignment="Left" Margin="10,5,0,6" Text="棋谱编号：" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="preStep" Content="上一步" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="25" Click="PreStep" Margin="10,0,0,0"/>
-            <Button x:Name="nextStep" Content="下一步" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="25" Click="NextStep" Margin="10,0,0,0"/>
         </WrapPanel>
     </Grid>
 </Window>
