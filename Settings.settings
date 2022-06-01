@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Chess" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="设置" Type="System.String" Scope="User">
-      <Value Profile="(Default)">65</Value>
-    </Setting>
-    <Setting Name="窗口背景色" Type="System.Drawing.Color" Scope="User">
+    <Setting Name="mainBKColor" Description="主窗口背景色" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">SteelBlue</Value>
+    </Setting>
+    <Setting Name="stepArrow" Description="每一步都箭头提示" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

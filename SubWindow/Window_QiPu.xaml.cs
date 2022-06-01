@@ -19,7 +19,7 @@ namespace Chess
     /// </summary>
     public partial class Window_QiPu : Window
     {
-        private static string rowId { get; set; }
+        private static string _rowId { get; set; }
         /// <summary>
         /// 棋谱库窗口
         /// </summary>
@@ -75,8 +75,8 @@ namespace Chess
         {
             if (DbDataGrid.Items.Count == 0) return;
             GlobalValue.Reset(); // 棋盘复位
-            rowId = ((DataRowView)DbDataGrid.SelectedItem).Row["rowid"].ToString();
-            RowIdText.Text = $"棋谱编号：{rowId}";
+            _rowId = ((DataRowView)DbDataGrid.SelectedItem).Row["rowid"].ToString();
+            RowIdText.Text = $"棋谱编号：{_rowId}";
             videoUrl.Text = ((DataRowView)DbDataGrid.SelectedItem).Row["video"].ToString();
 
             string jsonStr = ((DataRowView)DbDataGrid.SelectedItem).Row["jsonrecord"].ToString(); // 获得点击行的棋谱数据
@@ -115,7 +115,6 @@ namespace Chess
                 QipuDBListRefresh(sender, e);
             }
         }
-                
         
         /// <summary>
         /// 在浏览器中打开视频链接
@@ -135,7 +134,7 @@ namespace Chess
         
         public static string GetRowid()
         {
-            return rowId;
+            return _rowId;
         }
     }
 }

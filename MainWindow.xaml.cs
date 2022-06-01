@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Chess.SubWindow;
 
 namespace Chess
 {
@@ -60,7 +61,7 @@ namespace Chess
                 Content = "",
                 Height = 30.0,
                 Foreground = Brushes.Goldenrod,
-                Margin = new Thickness(100, 20, 0, 0),
+                Margin = new Thickness(100, 0, 0, 0),
                 VerticalAlignment = VerticalAlignment.Center
             };
 
@@ -208,6 +209,7 @@ namespace Chess
         /// <param name="e"></param>
         private void OnMainWindowClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Settings.Default.Save();
             Environment.Exit(0); // 关闭所有窗口，并释放所有资源，包括相关辅助窗口。
         }
 
@@ -239,7 +241,12 @@ namespace Chess
         /// <param name="e"></param>
         private void NextStep(object sender, RoutedEventArgs e)
         {
-            GlobalValue.NextStep();
+            int childCount=GlobalValue.NextStep();
+            if (childCount > 1)
+            {
+                ChildSelectPage selectPage = new(childCount);
+                //this.AddChild(selectPage);
+            }
         }
 
         /// <summary>
@@ -268,8 +275,8 @@ namespace Chess
         {
             remarkGrid.Visibility = Visibility.Visible;
             string str;
-            str = String.IsNullOrEmpty(GlobalValue.qiPuRecordRoot.Cursor.Remarks) ? "" : (GlobalValue.qiPuRecordRoot.Cursor.Remarks + System.Environment.NewLine);
-            str+=GlobalValue.qiPuRecordRoot.Cursor.Id+ "、"+GlobalValue.qiPuRecordRoot.Cursor.Cn + "：下一步，";
+            str = GlobalValue.qiPuRecordRoot.Cursor.Remarks;
+            str += GlobalValue.qiPuRecordRoot.Cursor.Id + "、" + GlobalValue.qiPuRecordRoot.Cursor.Cn + "：下一步，";
             foreach (var item in GlobalValue.qiPuRecordRoot.Cursor.ChildNode)
             {
                 str += item.Cn;

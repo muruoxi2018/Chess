@@ -306,7 +306,7 @@ namespace Chess.SuanFa
                 Cn = char1 + char2 + char3 + char4;
                 //Remarks = "";
                 StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
-                //SideColor = QiZi is >= 0 and <= 15 ? "Black" : "Red";
+                SideColor = QiZi is >= 0 and <= 15 ? "Black" : "Red";  //  在treeView中，显示不同的颜色。
                 //QiPuList.Add(this);
             }
             /// <summary>

@@ -290,12 +290,33 @@ namespace Chess
         /// <summary>
         /// 下一步
         /// </summary>
-        public static void NextStep()
+        public static int NextStep()
         {
             QiPuRecord cursor = qiPuRecordRoot.Cursor;
             if (cursor.ChildNode.Count == 1)
             {
                 cursor = cursor.ChildNode[0];
+                StepCode step = cursor.StepData;
+                QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, true);
+                qiPuRecordRoot.Cursor = cursor;
+                return 1;
+            }
+            if (cursor.ChildNode.Count > 1)
+            {
+                return cursor.ChildNode.Count;
+            }
+            return 0;
+        }
+        public static void NextStep(string childId)
+        {
+            NextStep(int.Parse(childId));
+        }
+        public static void NextStep(int childId)
+        {
+            QiPuRecord cursor = qiPuRecordRoot.Cursor;
+            if (childId > 0 && childId < cursor.ChildNode.Count)
+            {
+                cursor = cursor.ChildNode[childId - 1];
                 StepCode step = cursor.StepData;
                 QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, true);
                 qiPuRecordRoot.Cursor = cursor;

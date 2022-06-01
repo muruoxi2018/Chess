@@ -12,7 +12,7 @@ namespace Chess {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -23,27 +23,35 @@ namespace Chess {
             }
         }
         
+        /// <summary>
+        /// 主窗口背景色
+        /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("主窗口背景色")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("65")]
-        public string 设置 {
+        [global::System.Configuration.DefaultSettingValueAttribute("SteelBlue")]
+        public global::System.Drawing.Color mainBKColor {
             get {
-                return ((string)(this["设置"]));
+                return ((global::System.Drawing.Color)(this["mainBKColor"]));
             }
             set {
-                this["设置"] = value;
+                this["mainBKColor"] = value;
             }
         }
         
+        /// <summary>
+        /// 每一步都箭头提示
+        /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("每一步都箭头提示")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SteelBlue")]
-        public global::System.Drawing.Color 窗口背景色 {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool stepArrow {
             get {
-                return ((global::System.Drawing.Color)(this["窗口背景色"]));
+                return ((bool)(this["stepArrow"]));
             }
             set {
-                this["窗口背景色"] = value;
+                this["stepArrow"] = value;
             }
         }
     }
