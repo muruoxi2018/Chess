@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using static Chess.SuanFa.Qipu;
+using static Chess.CustomClass.Qipu;
 using Chess.CustomClass;
 using System.Windows.Shapes;
 using System.Windows.Media;
@@ -314,7 +314,7 @@ namespace Chess
         public static void NextStep(int childId)
         {
             QiPuRecord cursor = qiPuRecordRoot.Cursor;
-            if (childId > 0 && childId < cursor.ChildNode.Count)
+            if (childId > 0 && childId <= cursor.ChildNode.Count)
             {
                 cursor = cursor.ChildNode[childId - 1];
                 StepCode step = cursor.StepData;

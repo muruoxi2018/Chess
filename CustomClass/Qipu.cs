@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Drawing;
 using System.ComponentModel;
 
-namespace Chess.SuanFa
+namespace Chess.CustomClass
 {
     public static class Qipu  // 棋谱类
     {
@@ -149,7 +149,7 @@ namespace Chess.SuanFa
                     GlobalValue.arrows.HideAllPath();
                     if (!_cursor.IsLeaf())
                     {
-                        var points = Qipu.GetListPoint(_cursor);
+                        var points = GetListPoint(_cursor);
                         int index = 0;
                         foreach (var point in points)
                         {
@@ -175,8 +175,8 @@ namespace Chess.SuanFa
 
             private void INotifyPropertyChanged(string v)
             {
-                if (this.PropertyChanged != null)
-                    this.PropertyChanged(this, new PropertyChangedEventArgs(v));
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs(v));
             }
 
             public QiPuRecord()
@@ -212,7 +212,7 @@ namespace Chess.SuanFa
                 }
                 //child.CurrentRecord = null;
                 child.ParentNode = this;
-                child.Id = this.Id + 1;
+                child.Id = Id + 1;
                 ChildNode.Add(child);
                 return child;
             }
@@ -239,7 +239,7 @@ namespace Chess.SuanFa
             }
             public void SetParent(QiPuRecord parent)
             {
-                this.ParentNode = parent;
+                ParentNode = parent;
             }
             /// <summary>
             /// 获取父节点
@@ -410,7 +410,7 @@ namespace Chess.SuanFa
             GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
             GlobalValue.qiPuKuForm.remarksTextBlock.Text = JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot);
 
-            Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot);
+            ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot);
             //x0 = 100;
         }
 
@@ -438,27 +438,27 @@ namespace Chess.SuanFa
         /// </summary>
         /// <param name="qPStep">棋谱节点</param>
         /// <returns>坐标数据列表</returns>
-        public static List<List<System.Drawing.Point>> GetListPoint(ContractQPClass qPStep)
+        public static List<List<Point>> GetListPoint(ContractQPClass qPStep)
         {
-            List<List<System.Drawing.Point>> pp = new List<List<System.Drawing.Point>>();
+            List<List<Point>> pp = new List<List<Point>>();
             foreach (var lp in qPStep.ChildSteps)
             {
                 ContractQPClass qs = lp[0];
-                List<System.Drawing.Point> pt = new List<System.Drawing.Point>();
-                pt.Add(new System.Drawing.Point(qs.StepData.X0, qs.StepData.Y0));
-                pt.Add(new System.Drawing.Point(qs.StepData.X1, qs.StepData.Y1));
+                List<Point> pt = new List<Point>();
+                pt.Add(new Point(qs.StepData.X0, qs.StepData.Y0));
+                pt.Add(new Point(qs.StepData.X1, qs.StepData.Y1));
                 pp.Add(pt);
             }
             return pp;
         }
-        public static List<List<System.Drawing.Point>> GetListPoint(QiPuRecord qPStep)
+        public static List<List<Point>> GetListPoint(QiPuRecord qPStep)
         {
-            List<List<System.Drawing.Point>> pp = new List<List<System.Drawing.Point>>();
+            List<List<Point>> pp = new List<List<Point>>();
             foreach (var lp in qPStep.ChildNode)
             {
-                List<System.Drawing.Point> pt = new List<System.Drawing.Point>();
-                pt.Add(new System.Drawing.Point(lp.StepData.X0, lp.StepData.Y0));
-                pt.Add(new System.Drawing.Point(lp.StepData.X1, lp.StepData.Y1));
+                List<Point> pt = new List<Point>();
+                pt.Add(new Point(lp.StepData.X0, lp.StepData.Y0));
+                pt.Add(new Point(lp.StepData.X1, lp.StepData.Y1));
                 pp.Add(pt);
             }
             return pp;

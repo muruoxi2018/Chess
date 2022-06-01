@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using Newtonsoft.Json;
-using Chess.SuanFa;
 using Chess.DataClass;
 using Chess.OpenSource;
 using System.Data;
+using Chess.CustomClass;
 
 namespace Chess.SubWindow
 {

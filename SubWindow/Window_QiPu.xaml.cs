@@ -2,15 +2,14 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Newtonsoft.Json;
-using Chess.SuanFa;
 using System.Data;
 using System.Collections.ObjectModel;
 using Chess.OpenSource;
 using Chess.DataClass;
-using static Chess.SuanFa.Qipu;
+using static Chess.CustomClass.Qipu;
 using System.Linq;
 using System.Diagnostics;
-
+using Chess.CustomClass;
 
 namespace Chess
 {

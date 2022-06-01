@@ -1,5 +1,4 @@
 ﻿using Chess.OpenSource;
-using Chess.SuanFa;
 using Newtonsoft.Json;
 using System;
 using System.Data;
@@ -7,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Chess.SubWindow;
+using Chess.CustomClass;
 
 namespace Chess
 {
@@ -244,8 +244,10 @@ namespace Chess
             int childCount=GlobalValue.NextStep();
             if (childCount > 1)
             {
-                ChildSelectPage selectPage = new(childCount);
-                //this.AddChild(selectPage);
+                ChildSelecteWindow selectPage = new(childCount);
+                selectPage.ShowDialog();
+                string childid=Clipboard.GetText();
+                GlobalValue.NextStep(childid);
             }
         }
 
