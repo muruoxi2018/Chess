@@ -79,8 +79,8 @@ for (int i = 0; i < 9; i++)
 ```
 
 
-#### 绝杀算法
-![dBkNm.png](https://s1.328888.xyz/2022/05/23/dBkNm.png)
+#### 绝杀算法流程图
+![5PYmt.png](https://s1.328888.xyz/2022/06/02/5PYmt.png)
 #### 参与贡献
 
 1.  Fork 本仓库：暂无
