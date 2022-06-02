@@ -80,7 +80,7 @@ for (int i = 0; i < 9; i++)
 
 
 #### 绝杀算法流程图
-![5PYmt.png](https://s1.328888.xyz/2022/06/02/5PYmt.png)
+![5PaWA.png](https://s1.328888.xyz/2022/06/02/5PaWA.png)
 #### 参与贡献
 
 1.  Fork 本仓库：暂无
