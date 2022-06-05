@@ -247,7 +247,10 @@ namespace Chess
                 ChildSelecteWindow selectPage = new(childCount);
                 selectPage.ShowDialog();
                 string childid=Clipboard.GetText();
-                GlobalValue.NextStep(childid);
+                if (childid != null && childid.Length == 1)
+                {
+                    GlobalValue.NextStep(childid);
+                }
             }
         }
 
@@ -276,14 +279,12 @@ namespace Chess
         private void AddRemark(object sender, RoutedEventArgs e)
         {
             remarkGrid.Visibility = Visibility.Visible;
-            string str;
-            str = GlobalValue.qiPuRecordRoot.Cursor.Remarks;
-            str += GlobalValue.qiPuRecordRoot.Cursor.Id + "、" + GlobalValue.qiPuRecordRoot.Cursor.Cn + "：下一步，";
-            foreach (var item in GlobalValue.qiPuRecordRoot.Cursor.ChildNode)
+            string str= GlobalValue.qiPuRecordRoot.Cursor.Remarks;
+            if (str == null || str.Length<1)
             {
-                str += item.Cn;
+                str =GlobalValue.qiPuRecordRoot.Cursor.Cn;
             }
-            remarkTextBox.Text = System.Environment.NewLine + str;
+            remarkTextBox.Text = str;
         }
         /// <summary>
         /// 点击保存按钮后，保存到内存中，同时更新数据显示

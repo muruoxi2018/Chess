@@ -151,11 +151,15 @@ namespace Chess.CustomClass
                     {
                         var points = GetListPoint(_cursor);
                         int index = 0;
-                        foreach (var point in points)
+                        for (int i = 0; i < points.Count; i++)
                         {
-                            GlobalValue.arrows.SetPathDataAndShow(index, point[0], point[1]);
-                            index++;
+                            GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], _cursor.ChildNode[i].Remarks);
                         }
+                        /*foreach (var point in points)
+                        {
+                            GlobalValue.arrows.SetPathDataAndShow(index, point[0], point[1], _cursor.Remarks);
+                            index++;
+                        }*/
                     }
                     if (_cursor.Remarks != null)
                         GlobalValue.jiangJunTiShi.Content = _cursor.Remarks;

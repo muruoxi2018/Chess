@@ -23,6 +23,7 @@ namespace Chess.CustomClass
         private readonly Path[] ArrowPath = new Path[_maxNum];  // 箭头本体。
         private readonly TextBlock[] ArrowText = new TextBlock[_maxNum];  // 箭头上标识的数字
         private readonly Ellipse[] ArrowEllipses = new Ellipse[_maxNum];    // 数字标识的背景圆圈
+        private readonly TextBlock[] MemoText=new TextBlock[_maxNum]; // 每一个变招的说明文字
         private static readonly int arrowAngle = 160; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowAngle1 = 170; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowLong = 30; // 箭头斜边的长度
@@ -32,6 +33,7 @@ namespace Chess.CustomClass
         /// </summary>
         public MyGraphics()
         {
+            #region 初始化提示箭头
             grid.Opacity = 1;
             grid.HorizontalAlignment = HorizontalAlignment.Stretch;
             grid.VerticalAlignment = VerticalAlignment.Stretch;
@@ -62,6 +64,24 @@ namespace Chess.CustomClass
                     Foreground = Brushes.Black
                 };
             }
+            for (int i = 0; i < ArrowText.Length; i++)
+            {
+                MemoText[i] = new TextBlock  // 箭头上标识的数字
+                {
+                    Text = (i + 1).ToString(),
+                    FontSize = 16,
+                    FontWeight = FontWeights.Bold,
+                    Visibility = Visibility.Hidden,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Foreground = Brushes.Black,
+                    Background = Brushes.LightGoldenrodYellow,
+                    Opacity=0.5,
+                    TextWrapping = TextWrapping.Wrap,
+                   
+                    
+                };
+            }
             for (int i = 0; i < ArrowEllipses.Length; i++)
             {
                 ArrowEllipses[i] = new Ellipse  // 数字标识的背景圆圈
@@ -72,7 +92,7 @@ namespace Chess.CustomClass
                     VerticalAlignment = VerticalAlignment.Top,
                     Visibility = Visibility.Hidden,
                     Fill = Brushes.GreenYellow,
-                    Opacity = 0.9
+                    Opacity = 0.8
                 };
             }
 
@@ -88,6 +108,11 @@ namespace Chess.CustomClass
             {
                 _ = grid.Children.Add(item);
             }
+            foreach (TextBlock item in MemoText)
+            {
+                _ = grid.Children.Add(item);
+            }
+            #endregion
         }
         /// <summary>
         /// 隐藏所有箭头
@@ -106,6 +131,10 @@ namespace Chess.CustomClass
             {
                 item.Visibility = Visibility.Hidden;
             }
+            foreach (TextBlock item in MemoText)
+            {
+                item.Visibility = Visibility.Hidden;
+            }
         }
         /// <summary>
         /// 根据箭头起始点，计算绘制箭头的各项数据，并显示到界面
@@ -113,14 +142,14 @@ namespace Chess.CustomClass
         /// <param name="arrowId">箭头的编号，0-4 </param>
         /// <param name="point0">起始点</param>
         /// <param name="point1">终点</param>
-        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1)
+        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1,string memo)
         {
             if (arrowId > _maxNum - 1) return; // 箭头从0开始编号，数量不能超过上限（_maxNum）
             int haveQizi = GlobalValue.qiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
             if (GlobalValue.isQiPanFanZhuan)
             {
-                point0.X = 8 - point1.X;
-                point0.Y = 9 - point1.Y;
+                point0.X = 8 - point0.X;  // 棋盘处于翻转状态时，转换坐标
+                point0.Y = 9 - point0.Y;
                 point1.X = 8 - point1.X;
                 point1.Y = 9 - point1.Y;
             }
@@ -131,7 +160,7 @@ namespace Chess.CustomClass
             x1 = GlobalValue.QiPanGrid_X[point1.X];
             y1 = GlobalValue.QiPanGrid_Y[point1.Y];
 
-
+            #region  计算提示箭头及数字编号标识
             List<PointF> pointFs = new();
 
             double angle = Math.Atan2(y1 - y0, x1 - x0); //箭杆的角度
@@ -185,7 +214,10 @@ namespace Chess.CustomClass
 
             ArrowText[arrowId].Margin = new Thickness(circleX + 5, circleY, 0, 0); // 5是经验数据，用于修正文字的偏移。文字的字体大小为16时，在+5后，文字正好在圆圈中心。如果字体大小有改变，需修正此数据。
             ArrowText[arrowId].Visibility = Visibility.Visible;
-
+            MemoText[arrowId].Text = memo;
+            MemoText[arrowId].Margin= new Thickness(circleX -30, circleY+20, 20, 0);
+            MemoText[arrowId].Visibility = Visibility.Visible;
+            #endregion
         }
         /// <summary>
         /// 角度转换为弧度
