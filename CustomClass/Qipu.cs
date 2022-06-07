@@ -150,16 +150,10 @@ namespace Chess.CustomClass
                     if (!_cursor.IsLeaf())
                     {
                         var points = GetListPoint(_cursor);
-                        int index = 0;
                         for (int i = 0; i < points.Count; i++)
                         {
                             GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], _cursor.ChildNode[i].Remarks);
                         }
-                        /*foreach (var point in points)
-                        {
-                            GlobalValue.arrows.SetPathDataAndShow(index, point[0], point[1], _cursor.Remarks);
-                            index++;
-                        }*/
                     }
                     if (_cursor.Remarks != null)
                         GlobalValue.jiangJunTiShi.Content = _cursor.Remarks;

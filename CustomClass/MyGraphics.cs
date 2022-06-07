@@ -76,7 +76,7 @@ namespace Chess.CustomClass
                     VerticalAlignment = VerticalAlignment.Top,
                     Foreground = Brushes.Black,
                     Background = Brushes.LightGoldenrodYellow,
-                    Opacity=0.5,
+                    Opacity=0.7,
                     TextWrapping = TextWrapping.Wrap,
                    
                     
@@ -216,6 +216,8 @@ namespace Chess.CustomClass
             ArrowText[arrowId].Visibility = Visibility.Visible;
             MemoText[arrowId].Text = memo;
             MemoText[arrowId].Margin= new Thickness(circleX -30, circleY+20, 20, 0);
+            MemoText[arrowId].Padding=new Thickness(0,3,0,3);
+            MemoText[arrowId].FontSize = 11;
             MemoText[arrowId].Visibility = Visibility.Visible;
             #endregion
         }
