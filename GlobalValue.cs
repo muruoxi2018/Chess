@@ -113,7 +113,7 @@ namespace Chess
             if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, qiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
             _ = qiZiArray[qiZi].SetPosition(m, n);
             arrows.HideAllPath();  // 隐藏提示箭头
-            Qipu.AddItem(qiZi, x0, y0, m, n, dieQiZi); // 增加一行棋谱记录
+            Qipu.AddQiPuItem(qiZi, x0, y0, m, n, dieQiZi); // 增加一行棋谱记录
 
             for (int i = 0; i <= 8; i++)
             {

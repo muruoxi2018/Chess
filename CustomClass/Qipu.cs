@@ -355,7 +355,7 @@ namespace Chess.CustomClass
         /// <param name="x1"></param>
         /// <param name="y1"></param>
         /// <param name="DieQz"></param>
-        public static void AddItem(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
+        public static void AddQiPuItem(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
         {
             string char1 = GlobalValue.qiZiCnName[QiZi];
             string char2 = QiZi is > 0 and < 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
@@ -436,19 +436,6 @@ namespace Chess.CustomClass
         /// </summary>
         /// <param name="qPStep">棋谱节点</param>
         /// <returns>坐标数据列表</returns>
-        public static List<List<Point>> GetListPoint(ContractQPClass qPStep)
-        {
-            List<List<Point>> pp = new List<List<Point>>();
-            foreach (var lp in qPStep.ChildSteps)
-            {
-                ContractQPClass qs = lp[0];
-                List<Point> pt = new List<Point>();
-                pt.Add(new Point(qs.StepData.X0, qs.StepData.Y0));
-                pt.Add(new Point(qs.StepData.X1, qs.StepData.Y1));
-                pp.Add(pt);
-            }
-            return pp;
-        }
         public static List<List<Point>> GetListPoint(QiPuRecord qPStep)
         {
             List<List<Point>> pp = new List<List<Point>>();
