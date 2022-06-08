@@ -9,6 +9,7 @@ using static Chess.CustomClass.Qipu;
 using Chess.CustomClass;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using Newtonsoft.Json;
 
 namespace Chess
 {
@@ -20,7 +21,6 @@ namespace Chess
         public static bool sideTag;  // 当前走棋方
         public static bool isGameOver; // 游戏结束
         public static bool isQiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
-        public static string qipustr;   // 棋谱转换后的字符串
         public static int currentQiZi;  // 当前选定的棋子
         public static int[,] qiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
 
@@ -113,7 +113,7 @@ namespace Chess
             if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, qiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
             _ = qiZiArray[qiZi].SetPosition(m, n);
             arrows.HideAllPath();  // 隐藏提示箭头
-            Qipu.AddQiPuItem(qiZi, x0, y0, m, n, dieQiZi); // 增加一行棋谱记录
+            AddQiPuItem(qiZi, x0, y0, m, n, dieQiZi); // 增加一行棋谱记录
 
             for (int i = 0; i <= 8; i++)
             {
@@ -154,6 +154,72 @@ namespace Chess
                 player.Play();
             }
 
+        }
+
+        /// <summary>
+        /// 添加一条棋谱记录
+        /// </summary>
+        /// <param name="QiZi"></param>
+        /// <param name="x0"></param>
+        /// <param name="y0"></param>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="DieQz"></param>
+        public static void AddQiPuItem(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
+        {
+            string char1 = GlobalValue.qiZiCnName[QiZi];
+            string char2 = QiZi is > 0 and < 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
+            string char3 = "";
+            string char4;
+            #region 棋谱翻译为中文
+            int m = Math.Abs(y1 - y0);
+            // 进退平
+            if (y0 == y1)
+            {
+                char3 = "平";
+                char4 = QiZi is >= 0 and <= 15 ? (x1 + 1).ToString() : GlobalValue.CnNumber[9 - x1];
+            }
+            else
+            {
+                if (QiZi is >= 0 and <= 15)
+                {
+                    char3 = y1 > y0 ? "进" : "退";
+                }
+                if (QiZi is >= 16 and <= 31)
+                {
+                    char3 = y1 > y0 ? "退" : "进";
+                }
+
+                char4 = QiZi switch
+                {
+                    1 or 2 or 3 or 4 or 5 or 6 => (x1 + 1).ToString(),
+                    17 or 18 or 19 or 20 or 21 or 22 => GlobalValue.CnNumber[9 - x1],
+                    // 其他所有可以直走的棋子
+                    _ => QiZi is > 0 and < 15 ? m.ToString() : GlobalValue.CnNumber[m],
+                };
+
+            }
+            #endregion
+            QiPuList.Add(new ContractQPClass()
+            {
+                Id = QiPuList.Count + 1,
+                Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}",
+                Cn = char1 + char2 + char3 + char4,
+                Remarks = "",
+                StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz)
+            });
+
+
+            QiPuRecord QRecord = new();
+            QRecord.SetRecordData(QiZi, x0, y0, x1, y1, DieQz);
+            GlobalValue.qiPuRecordRoot.Cursor = GlobalValue.qiPuRecordRoot.Cursor.AddChild(QRecord);  // 棋谱增加新的节点，指针更新为该节点
+            GlobalValue.qiPuRecordRoot.Cursor.IsSelected = true;
+
+            GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
+            GlobalValue.qiPuKuForm.remarksTextBlock.Text = JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot);
+
+            ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot);
+            //x0 = 100;
         }
 
         /// <summary>

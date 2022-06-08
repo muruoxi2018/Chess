@@ -23,7 +23,8 @@ namespace Chess.CustomClass
         private readonly Path[] ArrowPath = new Path[_maxNum];  // 箭头本体。
         private readonly TextBlock[] ArrowText = new TextBlock[_maxNum];  // 箭头上标识的数字
         private readonly Ellipse[] ArrowEllipses = new Ellipse[_maxNum];    // 数字标识的背景圆圈
-        private readonly TextBlock[] MemoText=new TextBlock[_maxNum]; // 每一个变招的说明文字
+        private readonly TextBlock[] MemoText = new TextBlock[_maxNum]; // 每一个变招的说明文字
+        private readonly Border[] MemoBorder = new Border[_maxNum];
         private static readonly int arrowAngle = 160; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowAngle1 = 170; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowLong = 30; // 箭头斜边的长度
@@ -69,17 +70,24 @@ namespace Chess.CustomClass
                 MemoText[i] = new TextBlock  // 箭头上标识的数字
                 {
                     Text = (i + 1).ToString(),
-                    FontSize = 16,
+                    FontSize = 11,
                     FontWeight = FontWeights.Bold,
-                    Visibility = Visibility.Hidden,
+                    Padding = new Thickness(3),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Foreground = Brushes.Black,
-                    Background = Brushes.LightGoldenrodYellow,
-                    Opacity=0.7,
                     TextWrapping = TextWrapping.Wrap,
-                   
-                    
+                    Visibility = Visibility.Hidden,
+                };
+                MemoBorder[i] = new Border
+                {
+                    BorderBrush = Brushes.Black,
+                    BorderThickness = new Thickness(1),
+                    Background = Brushes.LightGoldenrodYellow,
+                    Opacity = 0.7,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Child = MemoText[i],
+                    Visibility = Visibility.Hidden,
                 };
             }
             for (int i = 0; i < ArrowEllipses.Length; i++)
@@ -108,7 +116,7 @@ namespace Chess.CustomClass
             {
                 _ = grid.Children.Add(item);
             }
-            foreach (TextBlock item in MemoText)
+            foreach (Border item in MemoBorder)
             {
                 _ = grid.Children.Add(item);
             }
@@ -131,7 +139,8 @@ namespace Chess.CustomClass
             {
                 item.Visibility = Visibility.Hidden;
             }
-            foreach (TextBlock item in MemoText)
+
+            foreach (Border item in MemoBorder)
             {
                 item.Visibility = Visibility.Hidden;
             }
@@ -142,7 +151,7 @@ namespace Chess.CustomClass
         /// <param name="arrowId">箭头的编号，0-4 </param>
         /// <param name="point0">起始点</param>
         /// <param name="point1">终点</param>
-        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1,string memo)
+        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1, string memo)
         {
             if (arrowId > _maxNum - 1) return; // 箭头从0开始编号，数量不能超过上限（_maxNum）
             int haveQizi = GlobalValue.qiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
@@ -205,7 +214,7 @@ namespace Chess.CustomClass
             double circleX, circleY;
             double cirlcePos;
             cirlcePos = haveQizi == -1 ? 1 : arrowLong * -1.75;  // 目标位置没有棋子时，圆圈及数字的位置设置在目标位置的棋盘交叉点上
-            // 计算圆圈的位置，其中心设置在箭杆的中心线上
+                                                                 // 计算圆圈的位置，其中心设置在箭杆的中心线上
             circleX = Math.Floor(x1 + (cirlcePos * Math.Cos(angle))) - 10; // 10是圆圈的半径。计算结果为圆心位置，而margin是从其边界计算，因此需用半径修正数据。
             circleY = Math.Floor(y1 + (cirlcePos * Math.Sin(angle))) - 10;
 
@@ -214,11 +223,16 @@ namespace Chess.CustomClass
 
             ArrowText[arrowId].Margin = new Thickness(circleX + 5, circleY, 0, 0); // 5是经验数据，用于修正文字的偏移。文字的字体大小为16时，在+5后，文字正好在圆圈中心。如果字体大小有改变，需修正此数据。
             ArrowText[arrowId].Visibility = Visibility.Visible;
+
+            if (memo == null || string.IsNullOrEmpty(memo)) return;
+            memo = $"{arrowId + 1}：{memo}";
             MemoText[arrowId].Text = memo;
-            MemoText[arrowId].Margin= new Thickness(circleX -30, circleY+20, 20, 0);
-            MemoText[arrowId].Padding=new Thickness(0,3,0,3);
-            MemoText[arrowId].FontSize = 11;
             MemoText[arrowId].Visibility = Visibility.Visible;
+
+            MemoBorder[arrowId].Margin = new Thickness(circleX - 30, circleY + 20, 100, 0);
+            MemoBorder[arrowId].Width = MemoText[arrowId].Width;
+            MemoBorder[arrowId].Height = MemoText[arrowId].Height;
+            MemoBorder[arrowId].Visibility = Visibility.Visible;
             #endregion
         }
         /// <summary>
