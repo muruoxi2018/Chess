@@ -23,8 +23,7 @@ namespace Chess.CustomClass
         private readonly Path[] ArrowPath = new Path[_maxNum];  // 箭头本体。
         private readonly TextBlock[] ArrowText = new TextBlock[_maxNum];  // 箭头上标识的数字
         private readonly Ellipse[] ArrowEllipses = new Ellipse[_maxNum];    // 数字标识的背景圆圈
-        private readonly TextBlock[] MemoText = new TextBlock[_maxNum]; // 每一个变招的说明文字
-        private readonly Border[] MemoBorder = new Border[_maxNum];
+        private readonly MyPrompt[] MemoPrompt = new MyPrompt[_maxNum];
         private static readonly int arrowAngle = 160; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowAngle1 = 170; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowLong = 30; // 箭头斜边的长度
@@ -65,31 +64,7 @@ namespace Chess.CustomClass
                     Foreground = Brushes.Black
                 };
             }
-            for (int i = 0; i < ArrowText.Length; i++)
-            {
-                MemoText[i] = new TextBlock  // 箭头上标识的数字
-                {
-                    Text = (i + 1).ToString(),
-                    FontSize = 11,
-                    FontWeight = FontWeights.Bold,
-                    Padding = new Thickness(3),
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    TextWrapping = TextWrapping.Wrap,
-                    Visibility = Visibility.Hidden,
-                };
-                MemoBorder[i] = new Border
-                {
-                    BorderBrush = Brushes.Black,
-                    BorderThickness = new Thickness(1),
-                    Background = Brushes.LightGoldenrodYellow,
-                    Opacity = 0.7,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Child = MemoText[i],
-                    Visibility = Visibility.Hidden,
-                };
-            }
+
             for (int i = 0; i < ArrowEllipses.Length; i++)
             {
                 ArrowEllipses[i] = new Ellipse  // 数字标识的背景圆圈
@@ -103,8 +78,12 @@ namespace Chess.CustomClass
                     Opacity = 0.8
                 };
             }
+            for (int i = 0; i < ArrowEllipses.Length; i++)
+            {
+                MemoPrompt[i] = new MyPrompt();
+            }
 
-            foreach (Path item in ArrowPath)
+                foreach (Path item in ArrowPath)
             {
                 _ = grid.Children.Add(item);
             }
@@ -116,9 +95,10 @@ namespace Chess.CustomClass
             {
                 _ = grid.Children.Add(item);
             }
-            foreach (Border item in MemoBorder)
+
+            foreach(MyPrompt prompt in MemoPrompt)
             {
-                _ = grid.Children.Add(item);
+                _=grid.Children.Add(prompt);
             }
             #endregion
         }
@@ -140,9 +120,9 @@ namespace Chess.CustomClass
                 item.Visibility = Visibility.Hidden;
             }
 
-            foreach (Border item in MemoBorder)
+            foreach(MyPrompt prompt in MemoPrompt)
             {
-                item.Visibility = Visibility.Hidden;
+                prompt.Visibility = Visibility.Hidden;
             }
         }
         /// <summary>
@@ -226,13 +206,10 @@ namespace Chess.CustomClass
 
             if (memo == null || string.IsNullOrEmpty(memo)) return;
             memo = $"{arrowId + 1}：{memo}";
-            MemoText[arrowId].Text = memo;
-            MemoText[arrowId].Visibility = Visibility.Visible;
 
-            MemoBorder[arrowId].Margin = new Thickness(circleX - 30, circleY + 20, 100, 0);
-            MemoBorder[arrowId].Width = MemoText[arrowId].Width;
-            MemoBorder[arrowId].Height = MemoText[arrowId].Height;
-            MemoBorder[arrowId].Visibility = Visibility.Visible;
+            MemoPrompt[arrowId].SetText(memo);
+            MemoPrompt[arrowId].SetVisible();
+            MemoPrompt[arrowId].Margin=new Thickness(circleX-30, circleY+22, 80, 0);
             #endregion
         }
         /// <summary>
