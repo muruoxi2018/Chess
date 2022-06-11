@@ -88,6 +88,13 @@ for (int i = 0; i < 9; i++)
 3.  提交代码：暂无
 4.  新建 Pull Request：暂无
 
+#### 参考资料
+
+1.  [opencv识别象棋棋子_中国象棋电脑应用规范——棋盘棋子的格式坐标与着法表示](https://blog.csdn.net/weixin_28681719/article/details/113090094?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-4-113090094-blog-87528438.pc_relevant_paycolumn_v3&spm=1001.2101.3001.4242.3&utm_relevant_index=6)
+2.  [qq象棋棋谱格式详解及其解析](https://blog.csdn.net/qq_43668159/article/details/87528438)
+3.  [中国象棋棋谱棋书链接](https://blog.csdn.net/hbuxiaofei/article/details/50686325?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-0-50686325-blog-87528438.pc_relevant_paycolumn_v3&spm=1001.2101.3001.4242.1&utm_relevant_index=2)
+4.  [谈谈象棋的基本功《三》棋谱篇](https://blog.csdn.net/l970090853/article/details/89036756?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3-89036756-blog-87528438.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3-89036756-blog-87528438.pc_relevant_paycolumn_v3&utm_relevant_index=5)
+
 
 #### 特技
 
