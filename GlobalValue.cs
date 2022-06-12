@@ -396,9 +396,11 @@ namespace Chess
         /// <returns>简易记录棋谱</returns>
         public static QiPuSimpleRecord ConvertQiPuToSimple(QiPuRecord fullQiPu)
         {
-            QiPuSimpleRecord simpleQiPu = new();
-            simpleQiPu.Id = fullQiPu.Id;
-            simpleQiPu.Remarks = fullQiPu.Remarks;
+            QiPuSimpleRecord simpleQiPu = new()
+            {
+                Id = fullQiPu.Id,
+                Remarks = fullQiPu.Remarks
+            };
             simpleQiPu.CopyDataFromStep(fullQiPu.StepData);
             foreach (QiPuRecord Recode in fullQiPu.ChildNode)
             {
@@ -415,9 +417,11 @@ namespace Chess
         /// <returns>全记录棋谱</returns>
         public static QiPuRecord ConvertQiPuToFull(QiPuSimpleRecord simpleQiPu)
         {
-            QiPuRecord qiPu = new();
-            qiPu.Id = simpleQiPu.Id;
-            qiPu.Remarks = simpleQiPu.Remarks;
+            QiPuRecord qiPu = new()
+            {
+                Id = simpleQiPu.Id,
+                Remarks = simpleQiPu.Remarks
+            };
             qiPu.CopyRecordData(simpleQiPu.Data);
             foreach (QiPuSimpleRecord Recode in simpleQiPu.Child)
             {
