@@ -5,22 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="900" SizeToContent="WidthAndHeight" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="800" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF005250">
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="900" SizeToContent="WidthAndHeight" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="800" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+    <Window.Background>
+        <ImageBrush ImageSource="/青草.jpeg"/>
+    </Window.Background>
     <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
-        <Border BorderThickness="2" Background="#FF5D5950" CornerRadius="5,5,5,5">
-            <Border.Effect>
-                <DropShadowEffect Opacity="0.5" BlurRadius="12" Color="#FF584503"/>
-            </Border.Effect>
+        <Border BorderThickness="2" Background="#7F487905" CornerRadius="5,5,5,5" BorderBrush="#FF234404">
+           
         </Border>
         <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
-            <Image.Effect>
-                <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="0" Color="#FF543C08"/>
-            </Image.Effect>
+            
         </Image>
         <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" >
-            <Image.Effect>
-                <DropShadowEffect Opacity="0.5" BlurRadius="12" ShadowDepth="0" Color="#FF543C08"/>
-            </Image.Effect>
+           
         </Image>
 
         <Canvas x:Name="qiziCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="767" Height="842" MinWidth="767" MaxWidth="767" MinHeight="842" MaxHeight="842" ScrollViewer.VerticalScrollBarVisibility="Disabled" Cursor="Arrow">
@@ -39,7 +36,7 @@
             </d:Image>
         </Canvas>
         <Grid x:Name="DrawGrid" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5"/>
-        <Grid VerticalAlignment="Bottom" Height="75" Background="#FF33332B" Margin="10,0,10,10">
+        <Grid VerticalAlignment="Bottom" Height="75" Background="#B2224A17" Margin="10,0,10,10">
             <WrapPanel Height="30" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,10,0,0">
                 <Button Content="开局" x:Name="ResetBtn" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Width="70" Click="ResetBtnClick"/>
                 <Button Content="翻转棋盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="OnFanZhuanQiPan"/>
@@ -57,7 +54,7 @@
                 <Button Content="注释说明" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Click="AddRemark" Width="70"/>
             </WrapPanel>
         </Grid>
-        <Grid x:Name="JiangJunTiShi" VerticalAlignment="Top" Height="35" Background="#FF33332B" Margin="10,10,10,0">
+        <Grid x:Name="JiangJunTiShi" VerticalAlignment="Top" Height="35" Background="#7F155404" Margin="10,10,10,0">
             <d:Label Content="战况" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" Foreground="#FFE0B540"/>
         </Grid>
         <Grid x:Name="remarkGrid" VerticalAlignment="Bottom" Height="65" Margin="0,0,0,9" Background="#FF846E06" Opacity="0.95" Visibility="Hidden">

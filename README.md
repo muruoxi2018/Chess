@@ -95,7 +95,10 @@ for (int i = 0; i < 9; i++)
 3.  [中国象棋棋谱棋书链接](https://blog.csdn.net/hbuxiaofei/article/details/50686325?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-0-50686325-blog-87528438.pc_relevant_paycolumn_v3&spm=1001.2101.3001.4242.1&utm_relevant_index=2)
 4.  [谈谈象棋的基本功《三》棋谱篇](https://blog.csdn.net/l970090853/article/details/89036756?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3-89036756-blog-87528438.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3-89036756-blog-87528438.pc_relevant_paycolumn_v3&utm_relevant_index=5)
 
+#### 明清棋谱大致分为两大类
 
+1.  一类是少林派，以橘中秘，金鹏十八变等等，简称用炮局。所谓少林派，节奏明快，直来直往，势大力沉。
+2.  一类是武当派，很简单，以梅花谱为代表，简称用马局。 所谓武当派，一波三折，曲径通幽，绵里藏针。
 #### 特技
 
 1.  感谢Gitee!

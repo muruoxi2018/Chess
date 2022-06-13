@@ -15,7 +15,7 @@
         <Label Content="标题：" HorizontalAlignment="Left" Margin="0,38,0,0" VerticalAlignment="Top"/>
         <Label Content="棋谱类型：" HorizontalAlignment="Left" Margin="0,68,0,0" VerticalAlignment="Top"/>
         <Label Content="视频链接：" HorizontalAlignment="Left" Margin="0,98,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="videoLink" HorizontalAlignment="Left" Margin="77,100,0,0" TextWrapping="Wrap" Text="Https://" VerticalAlignment="Top" Width="319" Height="21"/>
+        <TextBox x:Name="videoLink" HorizontalAlignment="Left" Margin="77,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="319" Height="21"/>
         <TextBox x:Name="memoText" Margin="5,185,0,39" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" Text="棋谱说明：">
             <TextBox.Effect>
                 <DropShadowEffect Opacity="0.3" ShadowDepth="5" BlurRadius="10"/>

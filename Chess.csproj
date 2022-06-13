@@ -64,6 +64,7 @@
     <None Remove="picture\象128.png" />
     <None Remove="picture\象棋棋子阴影.png" />
     <None Remove="picture\路径点.png" />
+    <None Remove="picture\青草.jpeg" />
     <None Remove="picture\预选框.png" />
     <None Remove="picture\黑卒.png" />
     <None Remove="picture\黑士.png" />
@@ -110,6 +111,7 @@
     <None Remove="Sounds\select.mp3" />
     <None Remove="Sounds\Woman_jiangjun.mp3" />
     <None Remove="象.jpeg" />
+    <None Remove="青草.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -271,9 +273,13 @@
     <Resource Include="picture\路径点.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="picture\青草.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="picture\预选框.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="青草.jpeg" />
     <Content Include="picture\黑卒.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
