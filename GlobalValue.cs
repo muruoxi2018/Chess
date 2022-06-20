@@ -138,12 +138,12 @@ namespace Chess
             {
                 // 黑方走棋指示灯
                 blackSideRect.Fill = Brushes.LightGoldenrodYellow;
-                redSideRect.Fill = Brushes.DarkSlateGray;
+                redSideRect.Fill = Brushes.DarkGreen;
             }
             else
             {
                 // 红方走棋指示灯
-                blackSideRect.Fill = Brushes.DarkSlateGray;
+                blackSideRect.Fill = Brushes.DarkGreen;
                 redSideRect.Fill = Brushes.LightGoldenrodYellow;
             }
             currentQiZi = 100;  //  当前预选棋子设为无效棋子
@@ -313,7 +313,7 @@ namespace Chess
             qiPuRecordRoot.Cursor = qiPuRecordRoot;  // 回到根部
             qiPuRecordRoot.DeleteChildNode();
 
-            blackSideRect.Fill = Brushes.DarkSlateGray;
+            blackSideRect.Fill = Brushes.DarkGreen;
             redSideRect.Fill = Brushes.LightGoldenrodYellow;
 
         }

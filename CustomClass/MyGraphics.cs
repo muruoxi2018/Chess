@@ -41,64 +41,45 @@ namespace Chess.CustomClass
             {
                 ArrowPath[i] = new Path // 箭头本体
                 {
-                    Stroke = Brushes.ForestGreen,
-                    Fill = Brushes.GreenYellow,
                     SnapsToDevicePixels = false,
+                    Stroke = Brushes.ForestGreen,
                     StrokeThickness = 1,
+                    Fill = Brushes.GreenYellow,
                     Opacity = 0.8,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Visibility = Visibility.Hidden
                 };
-            }
-            for (int i = 0; i < ArrowText.Length; i++)
-            {
+                _ = grid.Children.Add(ArrowPath[i]);
+
+                ArrowEllipses[i] = new Ellipse  // 数字标识的背景圆圈
+                {
+                    Width = 20,
+                    Height = 20,
+                    Stroke = Brushes.ForestGreen,
+                    StrokeThickness = 1,
+                    Fill = Brushes.GreenYellow,
+                    Opacity = 0.8,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Visibility = Visibility.Hidden,
+                };
+                _ = grid.Children.Add(ArrowEllipses[i]);
+
                 ArrowText[i] = new TextBlock  // 箭头上标识的数字
                 {
                     Text = (i + 1).ToString(),
                     FontSize = 16,
-                    FontWeight = FontWeights.Bold,
+                    //FontWeight = FontWeights.Bold,
                     Visibility = Visibility.Hidden,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Foreground = Brushes.Black
                 };
-            }
+                _ = grid.Children.Add(ArrowText[i]);
 
-            for (int i = 0; i < ArrowEllipses.Length; i++)
-            {
-                ArrowEllipses[i] = new Ellipse  // 数字标识的背景圆圈
-                {
-                    Width = 20,
-                    Height = 20,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Visibility = Visibility.Hidden,
-                    Fill = Brushes.GreenYellow,
-                    Opacity = 0.8
-                };
-            }
-            for (int i = 0; i < ArrowEllipses.Length; i++)
-            {
                 MemoPrompt[i] = new MyPrompt();
-            }
-
-                foreach (Path item in ArrowPath)
-            {
-                _ = grid.Children.Add(item);
-            }
-            foreach (Ellipse item in ArrowEllipses)
-            {
-                _ = grid.Children.Add(item);
-            }
-            foreach (TextBlock item in ArrowText)
-            {
-                _ = grid.Children.Add(item);
-            }
-
-            foreach(MyPrompt prompt in MemoPrompt)
-            {
-                _=grid.Children.Add(prompt);
+                _ = grid.Children.Add(MemoPrompt[i]);
             }
             #endregion
         }
@@ -120,7 +101,7 @@ namespace Chess.CustomClass
                 item.Visibility = Visibility.Hidden;
             }
 
-            foreach(MyPrompt prompt in MemoPrompt)
+            foreach (MyPrompt prompt in MemoPrompt)
             {
                 prompt.Visibility = Visibility.Hidden;
             }
@@ -209,7 +190,7 @@ namespace Chess.CustomClass
 
             MemoPrompt[arrowId].SetText(memo);
             MemoPrompt[arrowId].SetVisible();
-            MemoPrompt[arrowId].Margin=new Thickness(circleX-30, circleY+22, 80, 0);
+            MemoPrompt[arrowId].Margin = new Thickness(circleX - 30, circleY + 22, 80, 0);
             #endregion
         }
         /// <summary>

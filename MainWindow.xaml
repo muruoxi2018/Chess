@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="900" SizeToContent="WidthAndHeight" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="800" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
     <Window.Background>
-        <ImageBrush ImageSource="/青草.jpeg"/>
+        <ImageBrush ImageSource="https://s1.328888.xyz/2022/06/20/0NytA.jpg"/>
     </Window.Background>
     <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
         <Border BorderThickness="2" Background="#7F487905" CornerRadius="5,5,5,5" BorderBrush="#FF234404">
