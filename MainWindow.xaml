@@ -10,14 +10,17 @@
         <ImageBrush ImageSource="/青草.jpeg"/>
     </Window.Background>
     <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
-        <Border BorderThickness="2" Background="#7F487905" CornerRadius="5,5,5,5" BorderBrush="#FF234404">
-           
+        <Border BorderThickness="2" CornerRadius="5,5,5,5" BorderBrush="#FF234404">
+            <Border.Background>
+                <ImageBrush/>
+            </Border.Background>
+
         </Border>
         <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
-            
+
         </Image>
         <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" >
-           
+
         </Image>
 
         <Canvas x:Name="qiziCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="767" Height="842" MinWidth="767" MaxWidth="767" MinHeight="842" MaxHeight="842" ScrollViewer.VerticalScrollBarVisibility="Disabled" Cursor="Arrow">
