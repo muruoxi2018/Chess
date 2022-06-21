@@ -65,6 +65,7 @@
     <None Remove="picture\象棋棋子阴影.png" />
     <None Remove="picture\路径点.png" />
     <None Remove="picture\青草.jpeg" />
+    <None Remove="picture\青草.jpg" />
     <None Remove="picture\预选框.png" />
     <None Remove="picture\黑卒.png" />
     <None Remove="picture\黑士.png" />
@@ -273,7 +274,7 @@
     <Resource Include="picture\路径点.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="picture\青草.jpeg">
+    <Resource Include="picture\青草.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="picture\预选框.png">

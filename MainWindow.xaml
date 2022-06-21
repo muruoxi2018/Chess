@@ -7,17 +7,22 @@
         mc:Ignorable="d"
         Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="900" SizeToContent="WidthAndHeight" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="800" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
     <Window.Background>
-        <ImageBrush ImageSource="https://s1.328888.xyz/2022/06/20/0NytA.jpg"/>
+        <ImageBrush ImageSource="/picture/青草.jpg"/>
     </Window.Background>
     <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
-        <Border BorderThickness="2" Background="#7F487905" CornerRadius="5,5,5,5" BorderBrush="#FF234404">
-           
+        <Border BorderThickness="3" CornerRadius="5,5,5,5" BorderBrush="#CC627F03">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#335A0101"/>
+                    <GradientStop Color="#335A0101" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
         </Border>
         <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
-            
+
         </Image>
         <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" >
-           
+
         </Image>
 
         <Canvas x:Name="qiziCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="767" Height="842" MinWidth="767" MaxWidth="767" MinHeight="842" MaxHeight="842" ScrollViewer.VerticalScrollBarVisibility="Disabled" Cursor="Arrow">
