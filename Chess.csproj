@@ -280,7 +280,6 @@
     <Resource Include="picture\预选框.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="青草.jpeg" />
     <Content Include="picture\黑卒.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
