@@ -112,7 +112,8 @@ namespace Chess.CustomClass
         /// <param name="arrowId">箭头的编号，0-4 </param>
         /// <param name="point0">起始点</param>
         /// <param name="point1">终点</param>
-        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1, string memo)
+        /// <param name="sameTargetPoint">箭头指向同一位置时，第二个参数为true，避免编号位置重叠</param>
+        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1,bool sameTargetPoint, string memo)
         {
             if (arrowId > _maxNum - 1) return; // 箭头从0开始编号，数量不能超过上限（_maxNum）
             int haveQizi = GlobalValue.qiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
@@ -173,9 +174,14 @@ namespace Chess.CustomClass
             ArrowPath[arrowId].Visibility = Visibility.Visible;
 
             double circleX, circleY;
-            double cirlcePos;
-            cirlcePos = haveQizi == -1 ? 1 : arrowLong * -1.75;  // 目标位置没有棋子时，圆圈及数字的位置设置在目标位置的棋盘交叉点上
-                                                                 // 计算圆圈的位置，其中心设置在箭杆的中心线上
+            double cirlcePos=1.0;
+            if (haveQizi > -1 || sameTargetPoint)
+            {
+                // 目标位置没有棋子时，圆圈及数字的位置设置在目标位置的棋盘交叉点上，有棋子时，位置设置至箭头后面
+                // 多个箭头指向同一位置时，圆圈及数字的位置设置在箭头后面
+                cirlcePos = arrowLong * -1.75;
+            }
+            //计算圆圈的位置，其中心设置在箭杆的中心线上
             circleX = Math.Floor(x1 + (cirlcePos * Math.Cos(angle))) - 10; // 10是圆圈的半径。计算结果为圆心位置，而margin是从其边界计算，因此需用半径修正数据。
             circleY = Math.Floor(y1 + (cirlcePos * Math.Sin(angle))) - 10;
 

@@ -89,7 +89,7 @@ namespace Chess.CustomClass
                 QiPuRecord currStep = qiPuRecord;
                 while (!currStep.IsLeaf())
                 {
-                    ContractQPClass qp0 = new ContractQPClass();
+                    ContractQPClass qp0 = new();
                     qp0.CopyDataFromQiPuRecord(currStep);
                     ObservableCollection<ContractQPClass> qpList = new();
                     qpList.Add(qp0);
@@ -107,7 +107,7 @@ namespace Chess.CustomClass
                 }
                 if (currStep.IsLeaf())
                 {
-                    ContractQPClass qp0 = new ContractQPClass();
+                    ContractQPClass qp0 = new();
                     qp0.CopyDataFromQiPuRecord(currStep);
                     ObservableCollection<ContractQPClass> qplist = new();
                     qplist.Add(qp0);
@@ -152,7 +152,15 @@ namespace Chess.CustomClass
                         var points = GetListPoint(_cursor);
                         for (int i = 0; i < points.Count; i++)
                         {
-                            GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], _cursor.ChildNode[i].Remarks);
+                            bool sameTargetPoint = false;
+                            if (i > 0)
+                            {
+                                if (points[i][1].X==points[i-1][1].X && points[i][1].Y == points[i - 1][1].Y)
+                                {
+                                    sameTargetPoint = true;
+                                }
+                            }
+                            GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], sameTargetPoint, _cursor.ChildNode[i].Remarks);
                         }
                     }
                     if (_cursor.Remarks != null)
@@ -173,8 +181,7 @@ namespace Chess.CustomClass
 
             private void INotifyPropertyChanged(string v)
             {
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs(v));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
             }
 
             public QiPuRecord()
@@ -311,7 +318,7 @@ namespace Chess.CustomClass
             /// 获取当前节点的深度
             /// </summary>
             /// <returns></returns>
-            private int getDepth()
+            private int GetDepth()
             {
                 int depth = 1;
                 QiPuRecord point = this;
@@ -361,7 +368,7 @@ namespace Chess.CustomClass
             string substr = recode;
             if (recode.Length > maxLen)
             {
-                substr = recode.Substring(0, maxLen) + " ...";
+                substr = string.Concat(recode.AsSpan(0, maxLen), " ...");
             }
             return $"{substr} (共{QiPuList.Count}步)";
         }
@@ -372,12 +379,14 @@ namespace Chess.CustomClass
         /// <returns>坐标数据列表</returns>
         public static List<List<Point>> GetListPoint(QiPuRecord qPStep)
         {
-            List<List<Point>> pp = new List<List<Point>>();
+            List<List<Point>> pp = new();
             foreach (var lp in qPStep.ChildNode)
             {
-                List<Point> pt = new List<Point>();
-                pt.Add(new Point(lp.StepData.X0, lp.StepData.Y0));
-                pt.Add(new Point(lp.StepData.X1, lp.StepData.Y1));
+                List<Point> pt = new()
+                {
+                    new Point(lp.StepData.X0, lp.StepData.Y0),
+                    new Point(lp.StepData.X1, lp.StepData.Y1)
+                };
                 pp.Add(pt);
             }
             return pp;
