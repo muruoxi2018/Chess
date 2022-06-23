@@ -30,7 +30,7 @@ namespace Chess
         public static PathPoint[,] pathPointImage = new PathPoint[9, 10];  // 棋子可走路径的圆点标记
         public static QiZi[] qiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
         public static QiZi yuanWeiZhi;  // 棋子走动后在原位置显示圆圈
-        public static Label jiangJunTiShi; // 将军时的文字提示
+        public static TextBlock jiangJunTiShi; // 将军时的文字提示
         public static JueSha jueShaImage; // 绝杀时显示图片
         public static Window_QiPu qiPuKuForm; // 棋谱库窗口
         public static MyGraphics arrows = new(); // 走棋指示箭头

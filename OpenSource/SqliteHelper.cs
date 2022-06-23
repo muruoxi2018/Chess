@@ -27,7 +27,7 @@ namespace Chess.OpenSource
             DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";
             if (!System.IO.File.Exists(DbFile))
             {
-                DbFile = @"E:\source\repos\Chess\DB\KaiJuKu.db";
+                DbFile = @"E:\source\Chess\DB\KaiJuKu.db";
                 if (!System.IO.File.Exists(DbFile))
                 {
                     System.Windows.MessageBox.Show("数据库文件未找到，请检查文件路径。", "错误提示");

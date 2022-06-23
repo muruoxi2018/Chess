@@ -164,7 +164,7 @@ namespace Chess.CustomClass
                         }
                     }
                     if (_cursor.Remarks != null)
-                        GlobalValue.jiangJunTiShi.Content = _cursor.Remarks;
+                        GlobalValue.jiangJunTiShi.Text = _cursor.Remarks;
                 }
             }  // 当前结点游标指针，仅根结点游标有用
             public string SideColor { get; set; }  // RED=红方，BLACK=黑方
