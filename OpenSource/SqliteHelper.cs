@@ -15,7 +15,7 @@ namespace Chess.OpenSource
         //  数据库文件路径。调试期间使用绝对路径，发布时改为相对路径。
         private static string DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";
         // 软件发布时使用此设置
-        //private static readonly string DbFile = System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db"; 
+        //private static string DbFile = System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db"; 
         private static string DbSourcePath = @"data source="+ DbFile;
 
         /// <summary>
