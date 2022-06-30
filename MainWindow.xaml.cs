@@ -58,11 +58,12 @@ namespace Chess
 
             GlobalValue.jiangJunTiShi = new() // 将军状态文字提示
             {
-                Content = "",
-                Height = 30.0,
-                Foreground = Brushes.Goldenrod,
+                Text = "",
+                Foreground = Brushes.Yellow,
+                FontSize=14,
                 Margin = new Thickness(100, 0, 0, 0),
-                VerticalAlignment = VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
+                
             };
 
             _ = JiangJunTiShi.Children.Add(GlobalValue.jiangJunTiShi);

@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="900" SizeToContent="WidthAndHeight" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="800" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Loaded="MainFormLoaded" Closing="OnMainWindowClose" Icon="/picture/象128.png" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="900" SizeToContent="WidthAndHeight" Height="900" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="800" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black">
     <Window.Background>
         <ImageBrush ImageSource="/picture/青草.jpg"/>
     </Window.Background>
+    <Border BorderBrush="#FF2D2D2D" BorderThickness="0,1,0,0">
     <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
         <Border BorderThickness="3" CornerRadius="5,5,5,5" BorderBrush="#CC017F4E" Background="#33007A00"/>
         <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
@@ -54,9 +55,9 @@
                 </WrapPanel>
             </Grid>
         </Border>
-        <Border VerticalAlignment="Top" BorderBrush="#FF058419" BorderThickness="1,1,1,1" CornerRadius="3,3,3,3" Margin="10,10,10,10" Background="#19008400">
+        <Border VerticalAlignment="Top" BorderBrush="#FF058419" BorderThickness="1,1,1,1" CornerRadius="3,3,3,3" Margin="10,10,10,10" Background="#50005200">
             <Grid x:Name="JiangJunTiShi"  VerticalAlignment="Top" Height="35" >
-                <d:Label Content="战况" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" Foreground="#FFE0B540"/>
+                <d:Label Content="战况" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" Foreground="#FFEAF587" FontSize="14"/>
             </Grid>
         </Border>
         <Grid x:Name="remarkGrid" VerticalAlignment="Bottom" Height="65" Margin="0,0,0,9" Background="#FF846E06" Opacity="0.95" Visibility="Hidden">
@@ -69,4 +70,5 @@
 
 
     </Grid>
+    </Border>
 </Window>
