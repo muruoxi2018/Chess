@@ -38,6 +38,8 @@
 
   <ItemGroup>
     <None Remove="DB\KaiJuKu.db" />
+    <None Remove="Engine\BOOK.DAT" />
+    <None Remove="Engine\ELEEYE.EXE" />
     <None Remove="juesha.png" />
     <None Remove="KaiJuKu.db" />
     <None Remove="picture\background.jpg" />
@@ -121,6 +123,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Engine\BOOK.DAT">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engine\ELEEYE.EXE">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="picture\background.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

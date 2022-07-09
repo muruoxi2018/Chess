@@ -153,7 +153,8 @@ namespace Chess
                 player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
                 player.Play();
             }
-
+            jiangJunTiShi.Text = Engine.XQEngine.getFenString();
+            jiangJunTiShi.Text=Engine.XQEngine.BestStep(jiangJunTiShi.Text,5);
         }
 
         /// <summary>
