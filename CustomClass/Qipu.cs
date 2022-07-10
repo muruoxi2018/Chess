@@ -274,41 +274,8 @@ namespace Chess.CustomClass
             /// <param name="DieQz"></param>
             public void SetRecordData(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
             {
-                string char1 = GlobalValue.qiZiCnName[QiZi];
-                string char2 = QiZi is >= 0 and <= 15 ? (x0 + 1).ToString() : GlobalValue.CnNumber[9 - x0];
-                string char3 = "";
-                string char4;
-                #region 棋谱翻译为中文
-                int m = Math.Abs(y1 - y0);
-                // 进退平
-                if (y0 == y1)
-                {
-                    char3 = "平";
-                    char4 = QiZi is >= 0 and <= 15 ? (x1 + 1).ToString() : GlobalValue.CnNumber[9 - x1];
-                }
-                else
-                {
-                    if (QiZi is >= 0 and <= 15)
-                    {
-                        char3 = y1 > y0 ? "进" : "退";
-                    }
-                    if (QiZi is >= 16 and <= 31)
-                    {
-                        char3 = y1 > y0 ? "退" : "进";
-                    }
-
-                    char4 = QiZi switch
-                    {
-                        1 or 2 or 3 or 4 or 5 or 6 => (x1 + 1).ToString(),
-                        17 or 18 or 19 or 20 or 21 or 22 => GlobalValue.CnNumber[9 - x1],
-                        // 其他所有可以直走的棋子
-                        _ => QiZi is >= 0 and <= 15 ? m.ToString() : GlobalValue.CnNumber[m],
-                    };
-
-                }
-                #endregion
                 Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}";
-                Cn = char1 + char2 + char3 + char4;
+                Cn = GlobalValue.TranslateToCN(QiZi,x0,y0,x1,y1);
                 //Remarks = "";
                 StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
                 SideColor = QiZi is >= 0 and <= 15 ? "Black" : "Red";  //  在treeView中，显示不同的颜色。
