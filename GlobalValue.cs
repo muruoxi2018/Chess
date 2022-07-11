@@ -22,7 +22,7 @@ namespace Chess
         public static bool isGameOver; // 游戏结束
         public static bool isQiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
         public static int currentQiZi;  // 当前选定的棋子
-        public static int[,] qiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
+        public static int[,] qiPan = new int[9, 10]; // 棋盘数据，9列10行，记录棋子位置，如果为-1，则表示该位置没有棋子。
 
         public static MediaPlayer player = new();
 
@@ -153,8 +153,8 @@ namespace Chess
                 player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
                 player.Play();
             }
-            jiangJunTiShi.Text = Engine.XQEngine.getFenString();
-            jiangJunTiShi.Text=Engine.XQEngine.BestStep(jiangJunTiShi.Text,5);
+            jiangJunTiShi.Text = Engine.XQEngine.QiPanDataToFenStr();
+            jiangJunTiShi.Text=Engine.XQEngine.BestStep(jiangJunTiShi.Text,5,5);
         }
 
         /// <summary>

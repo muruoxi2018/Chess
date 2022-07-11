@@ -9,8 +9,14 @@ namespace Chess.Engine
 {
     public class XQEngine
     {
-
-        public static string BestStep(string fen, int thinkTime)
+        /// <summary>
+        /// 获取最佳走棋招数
+        /// </summary>
+        /// <param name="fen">局面代码</param>
+        /// <param name="thinkTime">思考限制时间</param>
+        /// <param name="depth">计算深度</param>
+        /// <returns></returns>
+        public static string BestStep(string fen, int thinkTime, int depth)
         {
             Process proEngine = new Process
             {
@@ -29,6 +35,7 @@ namespace Chess.Engine
             proEngine.StandardInput.WriteLine("setoption batch on");
             proEngine.StandardInput.WriteLine("position fen " + fen);
             proEngine.StandardInput.WriteLine("go time " + thinkTime.ToString());
+            proEngine.StandardInput.WriteLine("go depth " + depth.ToString());
             proEngine.StandardInput.WriteLine("quit");
             string output = proEngine.StandardOutput.ReadToEnd();
             proEngine.Close();
@@ -39,7 +46,7 @@ namespace Chess.Engine
                 output = output.Substring(start);
                 output = output.Replace("info depth", "info_depth");
                 output = output.Replace("bye" + Environment.NewLine, "");
-                output = fenToCn(output);
+                output = UcciToCn(output);
                 output = output.Replace(Environment.NewLine, "；");
                 //start = output.IndexOf("bestmove");
                 //return output.Substring(start);
@@ -51,7 +58,7 @@ namespace Chess.Engine
             return output;
         }
 
-        // UCCI标准
+        // UCCI标准棋子名称，小写为黑方，对应0-15，大写为红方，对应16-31，见GlobalValue.qiZiCnName棋子名称数组
         private static readonly string[] Fen = {
             "k","a","a","b","b","n","n","r","r","c","c","p","p","p","p","p",
             "K","A","A","B","B","N","N","R","R","C","C","P","P","P","P","P"
@@ -61,7 +68,7 @@ namespace Chess.Engine
         /// 根据棋盘数据，生成FEN字符串
         /// </summary>
         /// <returns></returns>
-        public static string getFenString()
+        public static string QiPanDataToFenStr()
         {
             #region 棋盘数据生成FEN字符串
             string output = "";
@@ -109,32 +116,49 @@ namespace Chess.Engine
             #endregion
         }
 
-        private static string fenToCn(string fenStr)
+        private static string UcciToCn(string fenStr)
         {
+            int[,] thisqiPan = new int[9, 10]; // 棋盘坐标，记录棋子位置，如果为-1，则表示该位置没有棋子。
             string bufferStr = fenStr.Replace(Environment.NewLine, " ");
             string[] arrStr = bufferStr.Split(" ");
-            string cols = "abcdefghi";
-            string rows = "9876543210";
 
             for (int i = 0; i < arrStr.Length; i++)
             {
                 if (arrStr[i] == "pv" || arrStr[i] == "bestmove" || arrStr[i] == "ponder")
                 {
                     string fens = arrStr[i + 1];
-                    int x0 = cols.IndexOf(fens[0]);
-                    int y0 = rows.IndexOf(fens[1]);
-                    int x1 = cols.IndexOf(fens[2]);
-                    int y1 = rows.IndexOf(fens[3]);
-                    int qizi = GlobalValue.qiPan[x0, y0];
-                    if (qizi > -1)
-                    {
-                        string cnstr = GlobalValue.TranslateToCN(qizi, x0, y0, x1, y1);
-                        fenStr = fenStr.Replace(fens, cnstr);
-                    }
-
+                    string cnstr = UcciStrToCnStr(fens, GlobalValue.qiPan);
+                    fenStr = fenStr.Replace(fens, cnstr);
                 }
             }
             return fenStr;
+        }
+        /// <summary>
+        /// 将单个UCCI着法指令，转换为中文着法指令
+        /// </summary>
+        /// <param name="fenStr">UCCI着法指令，例如"h9g8"</param>
+        /// <param name="curQiPan">棋盘数据数组</param>
+        /// <returns>中文着法指令,例如“马八进七”</returns>
+        private static string UcciStrToCnStr(string fenStr, int[,] curQiPan)
+        {
+            string cols = "abcdefghi";
+            string rows = "9876543210";
+            string cnstr = "";
+            string workStr=fenStr.Trim();
+            if (curQiPan == null)
+            {
+                return "";
+            }
+            int x0 = cols.IndexOf(workStr[0]);  // 现位置
+            int y0 = rows.IndexOf(workStr[1]);
+            int x1 = cols.IndexOf(workStr[2]);  // 目标位置
+            int y1 = rows.IndexOf(workStr[3]);
+            int qizi = GlobalValue.qiPan[x0, y0];
+            if (qizi > -1)
+            {
+                cnstr = GlobalValue.TranslateToCN(qizi, x0, y0, x1, y1);
+            }
+            return cnstr;
         }
     }
 }
