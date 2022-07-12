@@ -10,6 +10,8 @@ namespace Chess.Engine
 {
     public class XQEngine
     {
+        public static UcciInfoClass ucciInfo = new();   // 哈希表
+
         /// <summary>
         /// 获取最佳走棋招数
         /// </summary>
@@ -17,8 +19,9 @@ namespace Chess.Engine
         /// <param name="thinkTime">思考限制时间</param>
         /// <param name="depth">计算深度</param>
         /// <returns></returns>
-        public static string BestStep(string fen, int thinkTime, int depth)
+        public static string BestStep(int thinkTime, int depth)
         {
+            string fenstr = QiPanDataToFenStr();
             Process proEngine = new Process
             {
                 StartInfo = new ProcessStartInfo()
@@ -34,7 +37,7 @@ namespace Chess.Engine
             proEngine.Start();
             proEngine.StandardInput.WriteLine("ucci");
             proEngine.StandardInput.WriteLine("setoption batch on");
-            proEngine.StandardInput.WriteLine("position fen " + fen);
+            proEngine.StandardInput.WriteLine("position fen " + fenstr);
             proEngine.StandardInput.WriteLine("go time " + thinkTime.ToString());
             proEngine.StandardInput.WriteLine("go depth " + depth.ToString());
             proEngine.StandardInput.WriteLine("quit");
@@ -44,10 +47,9 @@ namespace Chess.Engine
             {
                 // 裁剪掉无用信息
                 int start = output.IndexOf("info depth");
-                output = output.Substring(start);
-                //output = output.Replace("info depth", "info_depth");
+                output = output[start..];
                 output = output.Replace("bye" + Environment.NewLine, "");
-                output = UcciToCn(output);
+                //output = UcciToCn(output);
                 output = output.Replace(Environment.NewLine, "；");
                 //start = output.IndexOf("bestmove");
                 //return output.Substring(start);
@@ -56,6 +58,7 @@ namespace Chess.Engine
             {
                 output = "No BestMove!";
             }
+            ucciInfo.InfoSource = output;
             return output;
         }
 
@@ -117,87 +120,102 @@ namespace Chess.Engine
             #endregion
         }
 
-        private static string UcciToCn(string fenStr)
+        public class PvClass
         {
-            string bufferStr = fenStr;
-
-            Hashtable ht = new();   // 哈希表
-
-            string keystr = "bestmove"; // 最佳着法
-            int start = bufferStr.IndexOf(keystr);
-            if (start > -1)
+            public string InfoStrLine { get; set; }
+            public string Depth { get; set; }
+            public string Score { get; set; }
+            public List<string> UcciStr { get; set; }
+            public List<string> CnStr { get; set; }
+            public PvClass()
             {
-                string uccistr = bufferStr.Substring(start + keystr.Length, 5).Trim();
-                string cnstr = UcciStrToCnStr(uccistr, GlobalValue.qiPan);
-                ht.Add(keystr, cnstr);
+                UcciStr = new List<string>();
+                CnStr = new List<string>();
             }
-
-            keystr = "ponder"; // 后续的最佳着法
-            start = bufferStr.IndexOf(keystr);
-            if (start > -1)
+            public void UcciToCn()
             {
-                string uccistr = bufferStr.Substring(start + keystr.Length, 5).Trim();
-                string cnstr = UcciStrToCnStr(uccistr, GlobalValue.qiPan);
-                ht.Add(keystr, cnstr);
-            }
-            int end = bufferStr.IndexOf("bestmove"); // 删除bestmove所在行
-            bufferStr = bufferStr[..end];
-
-            pvclass pvc = new();
-            
-            bufferStr = bufferStr.Trim();
-            string[] bufArr = bufferStr.Split(Environment.NewLine); // 按行分割字符串为数组
-
-            foreach (string str in bufArr) // 逐行解析
-            {
-                string[] strarr = str.Split(" ");
-                if (strarr.Length > 0)
+                /*foreach (string str in bufArr) // 逐行解析
                 {
-                    Hashtable htb = new();
-                    htb.Add("depth", strarr[Array.IndexOf(strarr, "depth") + 1]); // 搜索深度
-                    htb.Add("score", strarr[Array.IndexOf(strarr, "score") + 1]); // 分值
-
-                    start = Array.IndexOf(strarr, "pv") + 1; // 着法（可能一个，也可能是一组连续的着法）
-                    string joinstr = "";
-                    for (int i = start; i < strarr.Length; i++)
+                    string[] strarr = str.Trim().Split(" "); // 每一行字符串，删除前后空白字符，删除换行符后，再以空格为分隔符，分隔为单词数组
+                    if (strarr.Length > 0)
                     {
-                        joinstr += strarr[i].Trim() + " ";
+                        pvc.Depth = strarr[Array.IndexOf(strarr, "depth") + 1]; // 搜索深度
+                        pvc.Score = strarr[Array.IndexOf(strarr, "score") + 1]; // 分值
+
+                        start = Array.IndexOf(strarr, "pv") + 1; // “pv”后边是着法，着法可能仅有一个，也可能是一串。
+                        for (int i = start; i < strarr.Length; i++)
+                        {
+                            pvc.UcciStr.Add(strarr[i].Trim());
+                        }
+                        pvc.CnStr = UcciStrToCnStr(pvc.UcciStr, GlobalValue.qiPan);
+
+                        string strs = $"着法（{pvc.Score}分）: ";
+                        foreach (string stri in pvc.CnStr)
+                        {
+                            strs += stri + " ";
+                        }
+                        htb.Add("pv", strs);
+                        pvc.htarr.Add(htb);
                     }
-                    joinstr = joinstr.Trim();
-                    string cnstr = UcciStrToCnStr(joinstr, GlobalValue.qiPan);
-                    htb.Add("pv", cnstr);
-                    pvc.htarr.Add(htb);
-                }
+                    ucciInfo.InfoList.Add(pvc);
+                }*/
             }
-
-            ht.Add("info", pvc);
-
-            return ((pvclass)ht["info"]).htarr[0]["pv"].ToString();
         }
+
         /// <summary>
         /// 着法类
         /// </summary>
-        public class pvclass
+        public class UcciInfoClass
         {
-            public List<Hashtable> htarr { get; set; }
-            public pvclass()
+            public string InfoSource;
+            public string Bestmove { get; set; }
+            public string Ponder { get; set; }
+            public List<PvClass> InfoList { get; set; }
+            public UcciInfoClass()
             {
-                htarr = new List<Hashtable>();
+                InfoList = new List<PvClass>();
+            }
+            private void UcciToCn(string fenStr)
+            {
+                string keystr = "bestmove"; // 最佳着法
+                int start = InfoSource.IndexOf(keystr);
+                if (start > -1)
+                {
+                    string uccistr = InfoSource.Substring(start + keystr.Length, 5).Trim();
+                    string cnstr = UcciStrToCnStr(uccistr, GlobalValue.qiPan, false);
+                    Bestmove = cnstr;
+                }
+
+                keystr = "ponder"; // 后续的最佳着法
+                start = InfoSource.IndexOf(keystr);
+                if (start > -1)
+                {
+                    string uccistr = InfoSource.Substring(start + keystr.Length, 5).Trim();
+                    string cnstr = UcciStrToCnStr(uccistr, GlobalValue.qiPan, false);
+                    Ponder = cnstr;
+                }
+                int end = InfoSource.IndexOf("bestmove"); // 删除bestmove所在行
+                string InfoStr = InfoSource[..end];
+                InfoStr = InfoStr.Trim();
+                string[] bufArr = InfoStr.Split(Environment.NewLine); // 按行分割字符串为数组
+                foreach (string str in bufArr)
+                {
+                    PvClass pvc = new PvClass();
+                    pvc.InfoStrLine=str;
+                    pvc.UcciToCn();
+                    InfoList.Add(pvc);
+                }
             }
         }
+
         /// <summary>
         /// 将单个UCCI着法指令，转换为中文着法指令
         /// </summary>
         /// <param name="fenStr">UCCI着法指令，例如"h9g8"</param>
         /// <param name="curQiPan">棋盘数据数组</param>
         /// <returns>中文着法指令,例如“马八进七”</returns>
-        private static string UcciStrToCnStr(string fenStr, int[,] curQiPan)
+        private static List<string> UcciStrToCnStr(List<string> strlist, int[,] curQiPan)
         {
-            string cols = "abcdefghi";
-            string rows = "9876543210";
-            string cnstr = "";
-
-            string workStr = fenStr.Trim();
             int[,] qipan = new int[9, 10];
             for (int i = 0; i <= 8; i++)
             {
@@ -207,20 +225,47 @@ namespace Chess.Engine
                 }
             }
 
-            if (curQiPan == null)
+            List<string> returnlist = new();
+            foreach (string str in strlist)
             {
-                return null;
+                string workStr = UcciStrToCnStr(str, qipan, true);
+                returnlist.Add(workStr);
             }
-            int x0 = cols.IndexOf(workStr[0]);  // 现位置
-            int y0 = rows.IndexOf(workStr[1]);
-            int x1 = cols.IndexOf(workStr[2]);  // 目标位置
-            int y1 = rows.IndexOf(workStr[3]);
+            return returnlist;
+        }
+
+        /// <summary>
+        /// 将单个UCCI着法，转换为中文着法
+        /// </summary>
+        /// <param name="ucciStr">UCCI着法</param>
+        /// <param name="qipan">棋盘数据</param>
+        /// <param name="writeQipan">是否有后续着法，用于避免改动系统现棋盘数据，导致数据错误</param>
+        /// <returns></returns>
+        private static string UcciStrToCnStr(string ucciStr, int[,] qipan, bool writeQipan)
+        {
+            ucciStr = ucciStr.Trim();
+            if (ucciStr.Length != 4)
+            {
+                return "";
+            }
+            string cols = "abcdefghi";
+            string rows = "9876543210";
+            int x0 = cols.IndexOf(ucciStr[0]);  // 现位置
+            int y0 = rows.IndexOf(ucciStr[1]);
+            int x1 = cols.IndexOf(ucciStr[2]);  // 目标位置
+            int y1 = rows.IndexOf(ucciStr[3]);
+            string resultstr = "";
             int qizi = qipan[x0, y0];
             if (qizi > -1)
             {
-                cnstr = GlobalValue.TranslateToCN(qizi, x0, y0, x1, y1);
+                resultstr = GlobalValue.TranslateToCN(qizi, x0, y0, x1, y1);
+                if (writeQipan)
+                {
+                    qipan[x0, y0] = -1;
+                    qipan[x1, y1] = qizi;
+                }
             }
-            return cnstr;
+            return resultstr;
         }
     }
 }
