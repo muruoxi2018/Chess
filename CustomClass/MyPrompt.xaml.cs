@@ -34,6 +34,11 @@ namespace Chess.CustomClass
                 Visibility = Visibility.Hidden;
             }
         }
+        public void SetBold()
+        {
+            textBlock.FontWeight = FontWeights.Bold;
+            textBlock.Foreground = new SolidColorBrush(Colors.Red);
+        }
         public void SetVisible()
         {
             if (textBlock.Text == null || string.IsNullOrEmpty(textBlock.Text)) Visibility = Visibility.Hidden;

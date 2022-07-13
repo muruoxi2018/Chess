@@ -10,7 +10,7 @@ namespace Chess.Engine
 {
     public class XQEngine
     {
-        public static UcciInfoClass ucciInfo = new();   // 哈希表
+        public static UcciInfoClass UcciInfo = new();   // 推荐着法存储类
 
         /// <summary>
         /// 获取最佳走棋招数
@@ -22,7 +22,7 @@ namespace Chess.Engine
         public static string BestStep(int thinkTime, int depth)
         {
             string fenstr = QiPanDataToFenStr();
-            Process proEngine = new Process
+            Process proEngine = new()
             {
                 StartInfo = new ProcessStartInfo()
                 {
@@ -49,16 +49,11 @@ namespace Chess.Engine
                 int start = output.IndexOf("info depth");
                 output = output[start..];
                 output = output.Replace("bye" + Environment.NewLine, "");
-                //output = UcciToCn(output);
-                output = output.Replace(Environment.NewLine, "；");
-                //start = output.IndexOf("bestmove");
-                //return output.Substring(start);
             }
             else
             {
                 output = "No BestMove!";
             }
-            ucciInfo.InfoSource = output;
             return output;
         }
 
@@ -122,43 +117,67 @@ namespace Chess.Engine
 
         public class PvClass
         {
-            public string InfoStrLine { get; set; }
-            public string Depth { get; set; }
-            public string Score { get; set; }
-            public List<string> UcciStr { get; set; }
-            public List<string> CnStr { get; set; }
+            public int Depth { get; set; }
+            public int Score { get; set; }
+            public List<string> UcciStrList { get; set; }
+            public List<string> CnStrList { get; set; }
+            public CustomClass.Qipu.StepCode FirstStep { get; set; }
+            private string _InfoStrLine;
+            public string InfoStrLine
+            {
+                get { return _InfoStrLine; }
+                set
+                {
+                    _InfoStrLine = value.Trim();
+                    UcciStrList.Clear();
+                    CnStrList.Clear();
+                    Depth = 0;
+                    Score = 0;
+                    if (!_InfoStrLine.Contains("info depth"))
+                    {
+                        return;
+                    }
+                    string[] strarr = _InfoStrLine.Split(" ");
+                    Depth = int.Parse(strarr[Array.IndexOf(strarr, "depth") + 1]); // 搜索深度
+                    Score = int.Parse(strarr[Array.IndexOf(strarr, "score") + 1]); // 分值
+                    int start = Array.IndexOf(strarr, "pv") + 1; // “pv”后边是着法，着法可能仅有一个，也可能是一串。
+                    for (int i = start; i < strarr.Length; i++)
+                    {
+                        UcciStrList.Add(strarr[i].Trim());
+                    }
+                    FirstStep = GetStep(UcciStrList[0], GlobalValue.qiPan);
+                    CnStrList = UcciStrToCnStr(UcciStrList, GlobalValue.qiPan);
+                }
+            }
             public PvClass()
             {
-                UcciStr = new List<string>();
-                CnStr = new List<string>();
+                UcciStrList = new List<string>();
+                CnStrList = new List<string>();
             }
-            public void UcciToCn()
+            public string GetMove()
             {
-                /*foreach (string str in bufArr) // 逐行解析
+                string movestr = "";
+                if (CnStrList.Count > 0)
                 {
-                    string[] strarr = str.Trim().Split(" "); // 每一行字符串，删除前后空白字符，删除换行符后，再以空格为分隔符，分隔为单词数组
-                    if (strarr.Length > 0)
+                    foreach (string str in CnStrList)
                     {
-                        pvc.Depth = strarr[Array.IndexOf(strarr, "depth") + 1]; // 搜索深度
-                        pvc.Score = strarr[Array.IndexOf(strarr, "score") + 1]; // 分值
-
-                        start = Array.IndexOf(strarr, "pv") + 1; // “pv”后边是着法，着法可能仅有一个，也可能是一串。
-                        for (int i = start; i < strarr.Length; i++)
-                        {
-                            pvc.UcciStr.Add(strarr[i].Trim());
-                        }
-                        pvc.CnStr = UcciStrToCnStr(pvc.UcciStr, GlobalValue.qiPan);
-
-                        string strs = $"着法（{pvc.Score}分）: ";
-                        foreach (string stri in pvc.CnStr)
-                        {
-                            strs += stri + " ";
-                        }
-                        htb.Add("pv", strs);
-                        pvc.htarr.Add(htb);
+                        movestr += str + " ";
                     }
-                    ucciInfo.InfoList.Add(pvc);
-                }*/
+                }
+                else
+                {
+                    movestr = "无";
+                }
+                return movestr;
+            }
+            public List<System.Drawing.Point> GetPoint()
+            {
+                List<System.Drawing.Point> points = new List<System.Drawing.Point>();
+                System.Drawing.Point pt0=new System.Drawing.Point(FirstStep.X0,FirstStep.Y0);
+                points.Add(pt0);
+                System.Drawing.Point pt1 = new System.Drawing.Point(FirstStep.X1, FirstStep.Y1);
+                points.Add(pt1);
+                return points;
             }
         }
 
@@ -167,7 +186,45 @@ namespace Chess.Engine
         /// </summary>
         public class UcciInfoClass
         {
-            public string InfoSource;
+            private string _InfoSource;
+            public string InfoSource
+            {
+                get { return _InfoSource; }
+                set
+                {
+                    _InfoSource = value;
+                    InfoList.Clear();
+                    Bestmove = "";
+                    Ponder = "";
+                    string keystr = "bestmove"; // 最佳着法
+                    int start = _InfoSource.IndexOf(keystr);
+                    if (start > -1)
+                    {
+                        string uccistr = InfoSource.Substring(start + keystr.Length, 5).Trim();
+                        Bestmove = UcciStrToCnStr(uccistr, GlobalValue.qiPan, false);
+                    }
+
+                    keystr = "ponder"; // 后续的最佳着法
+                    start = InfoSource.IndexOf(keystr);
+                    if (start > -1)
+                    {
+                        string uccistr = InfoSource.Substring(start + keystr.Length, 5).Trim();
+                        Ponder = UcciStrToCnStr(uccistr, GlobalValue.qiPan, false);
+                    }
+
+                    int end = InfoSource.IndexOf("bestmove"); // 删除bestmove所在行
+                    string[] bufArr = InfoSource[..end].Trim().Split(Environment.NewLine); // 按行分割字符串为数组
+                    
+                    foreach (string str in bufArr)
+                    {
+                        PvClass pvc = new()
+                        {
+                            InfoStrLine = str
+                        };
+                        InfoList.Add(pvc);
+                    }
+                }
+            }
             public string Bestmove { get; set; }
             public string Ponder { get; set; }
             public List<PvClass> InfoList { get; set; }
@@ -175,35 +232,49 @@ namespace Chess.Engine
             {
                 InfoList = new List<PvClass>();
             }
-            private void UcciToCn(string fenStr)
+            public string GetBestMove()
             {
-                string keystr = "bestmove"; // 最佳着法
-                int start = InfoSource.IndexOf(keystr);
-                if (start > -1)
+                InfoSource = BestStep(10, 5); // 调用象棋引擎，获得下一步着法信息
+                ShowArrows();
+                string str = "";
+                if (InfoList.Count > 0)
                 {
-                    string uccistr = InfoSource.Substring(start + keystr.Length, 5).Trim();
-                    string cnstr = UcciStrToCnStr(uccistr, GlobalValue.qiPan, false);
-                    Bestmove = cnstr;
+                    int maxscore=InfoList.Max(x => x.Score);
+                    str=InfoList.FirstOrDefault(x => x.Score==maxscore).GetMove();
+                    str = $"最佳着法（{maxscore}分）： {str}";
                 }
-
-                keystr = "ponder"; // 后续的最佳着法
-                start = InfoSource.IndexOf(keystr);
-                if (start > -1)
+                else
                 {
-                    string uccistr = InfoSource.Substring(start + keystr.Length, 5).Trim();
-                    string cnstr = UcciStrToCnStr(uccistr, GlobalValue.qiPan, false);
-                    Ponder = cnstr;
+                    str = $"最佳着法： {InfoSource}";
                 }
-                int end = InfoSource.IndexOf("bestmove"); // 删除bestmove所在行
-                string InfoStr = InfoSource[..end];
-                InfoStr = InfoStr.Trim();
-                string[] bufArr = InfoStr.Split(Environment.NewLine); // 按行分割字符串为数组
-                foreach (string str in bufArr)
+                return str;
+            }
+            private void ShowArrows()
+            {
+                GlobalValue.arrows.HideAllPath();
+                if (InfoList.Count > 0)
                 {
-                    PvClass pvc = new PvClass();
-                    pvc.InfoStrLine=str;
-                    pvc.UcciToCn();
-                    InfoList.Add(pvc);
+                    List<List< System.Drawing.Point>> points = new();
+                    foreach (PvClass p in InfoList)
+                    {
+                        points.Add(p.GetPoint());
+                    }
+                    for (int i = 0; i < points.Count; i++)
+                    {
+                        bool sameTargetPoint = false;
+                        if (i > 0)
+                        {
+                            for (int j = 0; j < i; j++)
+                            {
+                                if (points[i][1].X == points[j][1].X && points[i][1].Y == points[j][1].Y)
+                                {
+                                    sameTargetPoint = true;
+                                    break;
+                                }
+                            }
+                        }
+                        GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], sameTargetPoint, InfoList[i].Score.ToString()+"分。");
+                    }
                 }
             }
         }
@@ -266,6 +337,23 @@ namespace Chess.Engine
                 }
             }
             return resultstr;
+        }
+        private static CustomClass.Qipu.StepCode GetStep(string ucciStr, int[,] qipan)
+        {
+            ucciStr = ucciStr.Trim();
+            if (ucciStr.Length != 4)
+            {
+                return null;
+            }
+            string cols = "abcdefghi";
+            string rows = "9876543210";
+            int x0 = cols.IndexOf(ucciStr[0]);  // 现位置
+            int y0 = rows.IndexOf(ucciStr[1]);
+            int x1 = cols.IndexOf(ucciStr[2]);  // 目标位置
+            int y1 = rows.IndexOf(ucciStr[3]);
+            int qizi = qipan[x0, y0];
+            CustomClass.Qipu.StepCode step = new CustomClass.Qipu.StepCode(qizi,x0, y0, x1, y1, -1);
+            return step;
         }
     }
 }

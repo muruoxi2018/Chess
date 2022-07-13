@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Chess.CustomClass"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500" HorizontalAlignment="Left" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=textBlock, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=textBlock, Mode=OneWay}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+             d:DesignHeight="72.936" d:DesignWidth="142.202" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=textBlock, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=textBlock, Mode=OneWay}" Background="#B2F9FFD6" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
-        <TextBlock x:Name="textBlock" d:Text="测试测试。" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5,3,5,5" FontSize="11" TextWrapping="Wrap" MinWidth="100" MaxWidth="300" />
+    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#B2F9FFD6" ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="50" MaxWidth="300" >
+        <TextBlock x:Name="textBlock" d:Text="测试测试。" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5,3,5,5" FontSize="11" TextWrapping="Wrap" />
     </Border>
 </UserControl>

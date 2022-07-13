@@ -42,7 +42,7 @@ namespace Chess.CustomClass
                 ArrowPath[i] = new Path // 箭头本体
                 {
                     SnapsToDevicePixels = false,
-                    Stroke = Brushes.ForestGreen,
+                    Stroke = (i == 0) ? Brushes.OrangeRed : Brushes.ForestGreen,
                     StrokeThickness = 1,
                     Fill = Brushes.GreenYellow,
                     Opacity = 0.8,
@@ -51,12 +51,14 @@ namespace Chess.CustomClass
                     Visibility = Visibility.Hidden
                 };
                 _ = grid.Children.Add(ArrowPath[i]);
-
+            }
+            for (int i = 0; i < ArrowPath.Length; i++)
+            {
                 ArrowEllipses[i] = new Ellipse  // 数字标识的背景圆圈
                 {
                     Width = 20,
                     Height = 20,
-                    Stroke = Brushes.ForestGreen,
+                    Stroke = (i == 0) ? Brushes.OrangeRed : Brushes.ForestGreen,
                     StrokeThickness = 1,
                     Fill = Brushes.GreenYellow,
                     Opacity = 0.8,
@@ -70,15 +72,19 @@ namespace Chess.CustomClass
                 {
                     Text = (i + 1).ToString(),
                     FontSize = 16,
-                    //FontWeight = FontWeights.Bold,
+                    FontWeight = (i == 0) ? FontWeights.Bold : FontWeights.Normal,
                     Visibility = Visibility.Hidden,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Foreground = Brushes.Black
+                    Foreground = (i == 0) ? Brushes.Red : Brushes.Black
                 };
-                _ = grid.Children.Add(ArrowText[i]);
 
+                _ = grid.Children.Add(ArrowText[i]);
+            }
+            for (int i = ArrowPath.Length - 1; i >= 0; i--)
+            {
                 MemoPrompt[i] = new MyPrompt();
+                if (i == 0) MemoPrompt[i].SetBold();
                 _ = grid.Children.Add(MemoPrompt[i]);
             }
             #endregion
@@ -113,7 +119,7 @@ namespace Chess.CustomClass
         /// <param name="point0">起始点</param>
         /// <param name="point1">终点</param>
         /// <param name="sameTargetPoint">箭头指向同一位置时，第二个参数为true，避免编号位置重叠</param>
-        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1,bool sameTargetPoint, string memo)
+        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1, bool sameTargetPoint, string memo)
         {
             if (arrowId > _maxNum - 1) return; // 箭头从0开始编号，数量不能超过上限（_maxNum）
             int haveQizi = GlobalValue.qiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
@@ -174,7 +180,7 @@ namespace Chess.CustomClass
             ArrowPath[arrowId].Visibility = Visibility.Visible;
 
             double circleX, circleY;
-            double cirlcePos=1.0;
+            double cirlcePos = 1.0;
             if (haveQizi > -1 || sameTargetPoint)
             {
                 // 目标位置没有棋子时，圆圈及数字的位置设置在目标位置的棋盘交叉点上，有棋子时，位置设置至箭头后面
@@ -196,7 +202,8 @@ namespace Chess.CustomClass
 
             MemoPrompt[arrowId].SetText(memo);
             MemoPrompt[arrowId].SetVisible();
-            MemoPrompt[arrowId].Margin = new Thickness(circleX - 30, circleY + 22, 80, 0);
+
+            MemoPrompt[arrowId].Margin = new Thickness(circleX, circleY + 22, 80, 0);
             #endregion
         }
         /// <summary>

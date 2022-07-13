@@ -154,7 +154,7 @@ namespace Chess
                 player.Play();
             }
 
-            jiangJunTiShi.Text = Engine.XQEngine.BestStep(5, 5);
+            jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove();
         }
 
         /// <summary>
