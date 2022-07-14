@@ -23,7 +23,7 @@ namespace Chess.SuanFa // 算法
             }
             if (qiZi > -1)
             {
-                PathBool = GetPathPoints(qiZi, GlobalValue.qiPan);
+                PathBool = GetPathPoints(qiZi, GlobalValue.QiPan);
                 for (int i = 0; i <= 8; i++)
                 {
                     for (int j = 0; j <= 9; j++)
@@ -399,7 +399,7 @@ namespace Chess.SuanFa // 算法
                     {
                         for (int j = 0; j <= 9; j++)
                         {
-                            if (points[i, j] == true && IsKilledPoint(moveQiZi, i, j, GlobalValue.qiPan) == true)
+                            if (points[i, j] == true && IsKilledPoint(moveQiZi, i, j, GlobalValue.QiPan) == true)
                             {
                                 points[i, j] = false;
                             }

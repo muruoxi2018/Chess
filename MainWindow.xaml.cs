@@ -46,7 +46,7 @@ namespace Chess
                     _ = qiziCanvas.Children.Add(GlobalValue.pathPointImage[i, j]);
                 }
             }
-            GlobalValue.isQiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
+            GlobalValue.IsQiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
             QiPanChange(false);
             jipuWindow = new Window_JiPu(); // 棋谱记录窗口
             jipuWindow.Hide();
@@ -117,8 +117,8 @@ namespace Chess
         /// <param name="e"></param>
         private void OnFanZhuanQiPan(object sender, RoutedEventArgs e)
         {
-            GlobalValue.isQiPanFanZhuan = !GlobalValue.isQiPanFanZhuan;
-            QiPanChange(GlobalValue.isQiPanFanZhuan);  // 更换棋盘
+            GlobalValue.IsQiPanFanZhuan = !GlobalValue.IsQiPanFanZhuan;
+            QiPanChange(GlobalValue.IsQiPanFanZhuan);  // 更换棋盘
             GlobalValue.yuanWeiZhi.FanZhuanPosition(); // 走棋原位置图片刷新
             foreach (QiZi item in GlobalValue.qiZiArray)
             {

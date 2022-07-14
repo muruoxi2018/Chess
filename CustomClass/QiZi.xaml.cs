@@ -76,7 +76,7 @@ namespace Chess
                 //item.yuxuankuang.Visibility = Visibility.Hidden;
                 item.Deselect();
             }
-            if (SideColor == GlobalValue.sideTag)
+            if (SideColor == GlobalValue.SideTag)
             {
                 Select();
             }
@@ -107,9 +107,9 @@ namespace Chess
             };
             QiZiImage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
             yuxuankuang.Visibility = Visibility.Visible;
-            GlobalValue.currentQiZi = QiziId;
+            GlobalValue.CurrentQiZi = QiziId;
             //Scall(1.01);
-            SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.currentQiZi); // 获取可移动路径，并显示在棋盘上
+            SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi); // 获取可移动路径，并显示在棋盘上
             GlobalValue.yuanWeiZhi.SetPosition(Col, Row); // 棋子原位置标记，显示在当前位置
             GlobalValue.yuanWeiZhi.ShowYuanWeiZhiImage();
             GlobalValue.player.Open(new Uri("Sounds/select.mp3", UriKind.Relative));
@@ -129,12 +129,12 @@ namespace Chess
 
             if (QiziId > -1) // 仅仅对棋子有效
             {
-                GlobalValue.qiPan[Col, Row] = -1;
-                GlobalValue.qiPan[x, y] = QiziId;
+                GlobalValue.QiPan[Col, Row] = -1;
+                GlobalValue.QiPan[x, y] = QiziId;
             }
             Col = x;
             Row = y;
-            if (GlobalValue.isQiPanFanZhuan) // 如果棋盘翻转为上红下黑，则进行坐标转换
+            if (GlobalValue.IsQiPanFanZhuan) // 如果棋盘翻转为上红下黑，则进行坐标转换
             {
                 x = 8 - x;
                 y = 9 - y;

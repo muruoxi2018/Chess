@@ -56,7 +56,7 @@ namespace Chess
         {
             Col = x;
             Row = y;
-            if (GlobalValue.isQiPanFanZhuan)
+            if (GlobalValue.IsQiPanFanZhuan)
             {
                 x = 8 - x;
                 y = 9 - y;
@@ -97,7 +97,7 @@ namespace Chess
         private void OnMouseup(object sender, MouseButtonEventArgs e)
         {
             // 当前有预选棋子时，将预选棋子运子到(m,n)位置================= 运子
-            GlobalValue.QiZiMoveTo(GlobalValue.currentQiZi, Col, Row, GlobalValue.qiPan[Col, Row], true);
+            GlobalValue.QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, GlobalValue.QiPan[Col, Row], true);
             // 点击位置有棋子时，将预选棋子运子到(m,n)位置，并吃掉目标位置的对方棋子===== 吃子
         }
 

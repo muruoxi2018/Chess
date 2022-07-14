@@ -13,13 +13,12 @@ namespace Chess.Engine
         public static UcciInfoClass UcciInfo = new();   // 推荐着法存储类
 
         /// <summary>
-        /// 获取最佳走棋招数
+        /// 调用象棋引擎eleeye.exe，获取推荐走棋着法
         /// </summary>
-        /// <param name="fen">局面代码</param>
         /// <param name="thinkTime">思考限制时间</param>
         /// <param name="depth">计算深度</param>
         /// <returns></returns>
-        public static string BestStep(int thinkTime, int depth)
+        public static string CallEngine(int thinkTime, int depth)
         {
             string fenstr = QiPanDataToFenStr();
             Process proEngine = new()
@@ -77,7 +76,7 @@ namespace Chess.Engine
                 int spaceNum = 0;
                 for (int j = 0; j < 9; j++) // 列
                 {
-                    int qz = GlobalValue.qiPan[j, i];
+                    int qz = GlobalValue.QiPan[j, i];
                     if (qz == -1)
                     {
                         spaceNum++;
@@ -102,7 +101,7 @@ namespace Chess.Engine
                     output += "/";
                 }
             }
-            if (GlobalValue.sideTag == GlobalValue.BLACKSIDE)
+            if (GlobalValue.SideTag == GlobalValue.BLACKSIDE)
             {
                 output += " b";
             }
@@ -114,16 +113,18 @@ namespace Chess.Engine
             return output;
             #endregion
         }
-
+        /// <summary>
+        /// 头条着法存储类，用于存储单行UCCI的解析信息
+        /// </summary>
         public class PvClass
         {
-            public int Depth { get; set; }
-            public int Score { get; set; }
-            public List<string> UcciStrList { get; set; }
-            public List<string> CnStrList { get; set; }
-            public CustomClass.Qipu.StepCode FirstStep { get; set; }
+            internal int Depth { get; set; }
+            internal int Score { get; set; }
+            internal List<string> UcciStrList { get; set; }
+            internal List<string> CnStrList { get; set; }
+            private CustomClass.Qipu.StepCode FirstStep { get; set; }
             private string _InfoStrLine;
-            public string InfoStrLine
+            internal string InfoStrLine
             {
                 get { return _InfoStrLine; }
                 set
@@ -145,16 +146,23 @@ namespace Chess.Engine
                     {
                         UcciStrList.Add(strarr[i].Trim());
                     }
-                    FirstStep = GetStep(UcciStrList[0], GlobalValue.qiPan);
-                    CnStrList = UcciStrToCnStr(UcciStrList, GlobalValue.qiPan);
+                    FirstStep = GetStep(UcciStrList[0], GlobalValue.QiPan);
+                    CnStrList = UcciStrToCnStr(UcciStrList, GlobalValue.QiPan);
                 }
             }
+            /// <summary>
+            /// 类初始化
+            /// </summary>
             public PvClass()
             {
                 UcciStrList = new List<string>();
                 CnStrList = new List<string>();
             }
-            public string GetMove()
+            /// <summary>
+            /// 获取着法信息串
+            /// </summary>
+            /// <returns></returns>
+            internal string GetMove()
             {
                 string movestr = "";
                 if (CnStrList.Count > 0)
@@ -170,6 +178,10 @@ namespace Chess.Engine
                 }
                 return movestr;
             }
+            /// <summary>
+            /// 获取着法的原位置和目标位置坐标数据，用于电脑走棋和箭头提示
+            /// </summary>
+            /// <returns></returns>
             public List<System.Drawing.Point> GetPoint()
             {
                 List<System.Drawing.Point> points = new List<System.Drawing.Point>();
@@ -182,12 +194,12 @@ namespace Chess.Engine
         }
 
         /// <summary>
-        /// 着法类
+        /// 着法类，存储UCCI的全部解析信息
         /// </summary>
         public class UcciInfoClass
         {
             private string _InfoSource;
-            public string InfoSource
+            private string InfoSource
             {
                 get { return _InfoSource; }
                 set
@@ -196,12 +208,16 @@ namespace Chess.Engine
                     InfoList.Clear();
                     Bestmove = "";
                     Ponder = "";
+                    if (!_InfoSource.Contains("info depth"))
+                    {
+                        return;
+                    }
                     string keystr = "bestmove"; // 最佳着法
                     int start = _InfoSource.IndexOf(keystr);
                     if (start > -1)
                     {
                         string uccistr = InfoSource.Substring(start + keystr.Length, 5).Trim();
-                        Bestmove = UcciStrToCnStr(uccistr, GlobalValue.qiPan, false);
+                        Bestmove = UcciStrToCnStr(uccistr, GlobalValue.QiPan, false);
                     }
 
                     keystr = "ponder"; // 后续的最佳着法
@@ -209,7 +225,7 @@ namespace Chess.Engine
                     if (start > -1)
                     {
                         string uccistr = InfoSource.Substring(start + keystr.Length, 5).Trim();
-                        Ponder = UcciStrToCnStr(uccistr, GlobalValue.qiPan, false);
+                        Ponder = UcciStrToCnStr(uccistr, GlobalValue.QiPan, false);
                     }
 
                     int end = InfoSource.IndexOf("bestmove"); // 删除bestmove所在行
@@ -225,16 +241,21 @@ namespace Chess.Engine
                     }
                 }
             }
-            public string Bestmove { get; set; }
-            public string Ponder { get; set; }
-            public List<PvClass> InfoList { get; set; }
+            private string Bestmove { get; set; }
+            private string Ponder { get; set; }
+            private List<PvClass> InfoList { get; set; }
             public UcciInfoClass()
             {
                 InfoList = new List<PvClass>();
             }
+
+            /// <summary>
+            /// 获取最佳着法，同时显示所有推荐着法的提示箭头
+            /// </summary>
+            /// <returns>最佳着法</returns>
             public string GetBestMove()
             {
-                InfoSource = BestStep(10, 5); // 调用象棋引擎，获得下一步着法信息
+                InfoSource = CallEngine(10, 5); // 调用象棋引擎，获得下一步着法信息
                 ShowArrows();
                 string str = "";
                 if (InfoList.Count > 0)
@@ -249,6 +270,10 @@ namespace Chess.Engine
                 }
                 return str;
             }
+
+            /// <summary>
+            /// 显示所有推荐着法的提示箭头
+            /// </summary>
             private void ShowArrows()
             {
                 GlobalValue.arrows.HideAllPath();
@@ -273,7 +298,8 @@ namespace Chess.Engine
                                 }
                             }
                         }
-                        GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], sameTargetPoint, InfoList[i].Score.ToString()+"分。");
+                        string tipInfo = $"{InfoList[i].Score.ToString()}分{Environment.NewLine}{InfoList[i].GetMove()}";
+                        GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], sameTargetPoint, tipInfo);
                     }
                 }
             }

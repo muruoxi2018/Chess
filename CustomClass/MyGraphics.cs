@@ -42,10 +42,10 @@ namespace Chess.CustomClass
                 ArrowPath[i] = new Path // 箭头本体
                 {
                     SnapsToDevicePixels = false,
-                    Stroke = (i == 0) ? Brushes.OrangeRed : Brushes.ForestGreen,
+                    Stroke = Brushes.ForestGreen,
                     StrokeThickness = 1,
                     Fill = Brushes.GreenYellow,
-                    Opacity = 0.8,
+                    Opacity = 0.8 - i * 0.1,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Visibility = Visibility.Hidden
@@ -58,10 +58,10 @@ namespace Chess.CustomClass
                 {
                     Width = 20,
                     Height = 20,
-                    Stroke = (i == 0) ? Brushes.OrangeRed : Brushes.ForestGreen,
+                    Stroke =  Brushes.ForestGreen,
                     StrokeThickness = 1,
                     Fill = Brushes.GreenYellow,
-                    Opacity = 0.8,
+                    Opacity = 0.8 - i * 0.1,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Visibility = Visibility.Hidden,
@@ -76,7 +76,7 @@ namespace Chess.CustomClass
                     Visibility = Visibility.Hidden,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Foreground = (i == 0) ? Brushes.Red : Brushes.Black
+                    Foreground = (i == 0) ? Brushes.ForestGreen : Brushes.Black
                 };
 
                 _ = grid.Children.Add(ArrowText[i]);
@@ -122,8 +122,8 @@ namespace Chess.CustomClass
         public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1, bool sameTargetPoint, string memo)
         {
             if (arrowId > _maxNum - 1) return; // 箭头从0开始编号，数量不能超过上限（_maxNum）
-            int haveQizi = GlobalValue.qiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
-            if (GlobalValue.isQiPanFanZhuan)
+            int haveQizi = GlobalValue.QiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
+            if (GlobalValue.IsQiPanFanZhuan)
             {
                 point0.X = 8 - point0.X;  // 棋盘处于翻转状态时，转换坐标
                 point0.Y = 9 - point0.Y;

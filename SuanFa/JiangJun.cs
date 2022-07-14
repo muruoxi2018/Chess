@@ -31,7 +31,7 @@ namespace Chess.SuanFa // 算法
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)
                 {
-                    myQiPan[i, j] = GlobalValue.qiPan[i, j];
+                    myQiPan[i, j] = GlobalValue.QiPan[i, j];
                 }
 
             bool[,] thisPoints;
@@ -107,12 +107,12 @@ namespace Chess.SuanFa // 算法
             {
                 GlobalValue.jiangJunTiShi.Text = "1、【黑将】正被将军！";
 
-                bool[,] points = MoveCheck.GetPathPoints(0, GlobalValue.qiPan); // 获取黑将的可移动路径
+                bool[,] points = MoveCheck.GetPathPoints(0, GlobalValue.QiPan); // 获取黑将的可移动路径
                 bool selfCanMove = false;
                 for (int i = 3; i <= 5; i++)
                     for (int j = 0; j <= 2; j++)
                     {
-                        if (points[i, j] == true && !MoveCheck.IsKilledPoint(0, i, j, GlobalValue.qiPan)) // 检查可移动路径是否是对方的攻击点
+                        if (points[i, j] == true && !MoveCheck.IsKilledPoint(0, i, j, GlobalValue.QiPan)) // 检查可移动路径是否是对方的攻击点
                         {
                             selfCanMove = true; // 如果不是对方的攻击点，则可移动到请该点。
                             break;
@@ -150,12 +150,12 @@ namespace Chess.SuanFa // 算法
             {
                 GlobalValue.jiangJunTiShi.Text = " 2、【红帅】被" + gongJiQiZi1 + "将军！";
 
-                bool[,] points = MoveCheck.GetPathPoints(16, GlobalValue.qiPan);
+                bool[,] points = MoveCheck.GetPathPoints(16, GlobalValue.QiPan);
                 bool selfCanMove = false;
                 for (int i = 3; i <= 5; i++)
                     for (int j = 7; j <= 9; j++)
                     {
-                        if (points[i, j] == true && !MoveCheck.IsKilledPoint(16, i, j, GlobalValue.qiPan))
+                        if (points[i, j] == true && !MoveCheck.IsKilledPoint(16, i, j, GlobalValue.QiPan))
                         {
                             selfCanMove = true;
                             break;
@@ -225,7 +225,7 @@ namespace Chess.SuanFa // 算法
                         {
                             for (int row = gongJiQiZiRow + 1; row < redShuaiRow; row++)
                             {
-                                if (GlobalValue.qiPan[gongJiQiZiCol, row] is > 16 and < 32)
+                                if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 16 and < 32)
                                 {
                                     findCol = gongJiQiZiCol;
                                     findRow = row;
@@ -237,7 +237,7 @@ namespace Chess.SuanFa // 算法
                         {
                             for (int row = redShuaiRow + 1; row < gongJiQiZiRow; row++)
                             {
-                                if (GlobalValue.qiPan[gongJiQiZiCol, row] is > 16 and < 32)
+                                if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 16 and < 32)
                                 {
                                     findCol = gongJiQiZiCol;
                                     findRow = row;
@@ -252,7 +252,7 @@ namespace Chess.SuanFa // 算法
                         {
                             for (int col = gongJiQiZiCol + 1; col < redShuaiCol; col++)
                             {
-                                if (GlobalValue.qiPan[col, gongJiQiZiRow] is > 16 and < 32)
+                                if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 16 and < 32)
                                 {
                                     findCol = col;
                                     findRow = gongJiQiZiRow;
@@ -264,7 +264,7 @@ namespace Chess.SuanFa // 算法
                         {
                             for (int col = redShuaiCol + 1; col < gongJiQiZiCol; col++)
                             {
-                                if (GlobalValue.qiPan[col, gongJiQiZiRow] is > 16 and < 32)
+                                if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 16 and < 32)
                                 {
                                     findCol = col;
                                     findRow = gongJiQiZiRow;
@@ -274,7 +274,7 @@ namespace Chess.SuanFa // 算法
                         }
                     }
                     if (findCol == -1 || findRow == -1) break;
-                    points = MoveCheck.GetPathPoints(GlobalValue.qiPan[findCol, findRow], GlobalValue.qiPan);
+                    points = MoveCheck.GetPathPoints(GlobalValue.QiPan[findCol, findRow], GlobalValue.QiPan);
                     for (int i = 0; i < 9; i++)
                     {
                         for (int j = 0; j < 10; j++)
@@ -294,7 +294,7 @@ namespace Chess.SuanFa // 算法
                         {
                             for (int row = gongJiQiZiRow + 1; row < blackJiangRow; row++)
                             {
-                                if (GlobalValue.qiPan[gongJiQiZiCol, row] is > 0 and < 16)
+                                if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 0 and < 16)
                                 {
                                     findCol = gongJiQiZiCol;
                                     findRow = row;
@@ -306,7 +306,7 @@ namespace Chess.SuanFa // 算法
                         {
                             for (int row = blackJiangRow + 1; row < gongJiQiZiRow; row++)
                             {
-                                if (GlobalValue.qiPan[gongJiQiZiCol, row] is > 0 and < 16)
+                                if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 0 and < 16)
                                 {
                                     findCol = gongJiQiZiCol;
                                     findRow = row;
@@ -321,7 +321,7 @@ namespace Chess.SuanFa // 算法
                         {
                             for (int col = gongJiQiZiCol + 1; col < blackJiangCol; col++)
                             {
-                                if (GlobalValue.qiPan[col, gongJiQiZiRow] is > 0 and < 16)
+                                if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 0 and < 16)
                                 {
                                     findCol = col;
                                     findRow = gongJiQiZiRow;
@@ -333,7 +333,7 @@ namespace Chess.SuanFa // 算法
                         {
                             for (int col = blackJiangCol + 1; col < gongJiQiZiCol; col++)
                             {
-                                if (GlobalValue.qiPan[col, gongJiQiZiRow] is > 0 and < 16)
+                                if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 0 and < 16)
                                 {
                                     findCol = col;
                                     findRow = gongJiQiZiRow;
@@ -343,7 +343,7 @@ namespace Chess.SuanFa // 算法
                         }
                     }
                     if (findCol == -1 || findRow == -1) break;
-                    points = MoveCheck.GetPathPoints(GlobalValue.qiPan[findCol, findRow], GlobalValue.qiPan);
+                    points = MoveCheck.GetPathPoints(GlobalValue.QiPan[findCol, findRow], GlobalValue.QiPan);
                     for (int i = 0; i < 9; i++)
                     {
                         for (int j = 0; j < 10; j++)
@@ -491,27 +491,27 @@ namespace Chess.SuanFa // 算法
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)
                 {
-                    int qizi = GlobalValue.qiPan[i, j]; // 从棋盘上找到存活的本方棋子
+                    int qizi = GlobalValue.QiPan[i, j]; // 从棋盘上找到存活的本方棋子
                     if (gongJiQiZi > 15 && qizi > 0 && qizi <= 15) // 黑方被将军时
                     {
-                        thispoints = MoveCheck.GetPathPoints(qizi, GlobalValue.qiPan); // 获得本方棋子的可移动路径
+                        thispoints = MoveCheck.GetPathPoints(qizi, GlobalValue.QiPan); // 获得本方棋子的可移动路径
                         foreach (int[] point in jieShaPoints) // 逐个取出可解除将军的点位坐标
                         {
                             if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
                             {
-                                if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.qiPan))
+                                if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
                                     return true;  // true=能够解杀
                             }
                         }
                     }
                     if (gongJiQiZi <= 15 && qizi > 16 && qizi <= 31) // 红方被将军时
                     {
-                        thispoints = MoveCheck.GetPathPoints(qizi, GlobalValue.qiPan); // 获得本方棋子的可移动路径
+                        thispoints = MoveCheck.GetPathPoints(qizi, GlobalValue.QiPan); // 获得本方棋子的可移动路径
                         foreach (int[] point in jieShaPoints) // 逐个取出可解除将军的点位坐标
                         {
                             if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
                             {
-                                if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.qiPan))
+                                if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
                                     return true;  // true=能够解杀
                             }
                         }

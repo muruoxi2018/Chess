@@ -27,15 +27,15 @@ namespace Chess
             {
                 QiPanCols item = new();
                 item.Id = j;
-                item.Col0 = (GlobalValue.qiPan[0, j] == -1) ? "" : GlobalValue.qiPan[0, j].ToString();
-                item.Col1 = (GlobalValue.qiPan[1, j] == -1) ? "" : GlobalValue.qiPan[1, j].ToString();
-                item.Col2 = (GlobalValue.qiPan[2, j] == -1) ? "" : GlobalValue.qiPan[2, j].ToString();
-                item.Col3 = (GlobalValue.qiPan[3, j] == -1) ? "" : GlobalValue.qiPan[3, j].ToString();
-                item.Col4 = (GlobalValue.qiPan[4, j] == -1) ? "" : GlobalValue.qiPan[4, j].ToString();
-                item.Col5 = (GlobalValue.qiPan[5, j] == -1) ? "" : GlobalValue.qiPan[5, j].ToString();
-                item.Col6 = (GlobalValue.qiPan[6, j] == -1) ? "" : GlobalValue.qiPan[6, j].ToString();
-                item.Col7 = (GlobalValue.qiPan[7, j] == -1) ? "" : GlobalValue.qiPan[7, j].ToString();
-                item.Col8 = (GlobalValue.qiPan[8, j] == -1) ? "" : GlobalValue.qiPan[8, j].ToString();
+                item.Col0 = (GlobalValue.QiPan[0, j] == -1) ? "" : GlobalValue.QiPan[0, j].ToString();
+                item.Col1 = (GlobalValue.QiPan[1, j] == -1) ? "" : GlobalValue.QiPan[1, j].ToString();
+                item.Col2 = (GlobalValue.QiPan[2, j] == -1) ? "" : GlobalValue.QiPan[2, j].ToString();
+                item.Col3 = (GlobalValue.QiPan[3, j] == -1) ? "" : GlobalValue.QiPan[3, j].ToString();
+                item.Col4 = (GlobalValue.QiPan[4, j] == -1) ? "" : GlobalValue.QiPan[4, j].ToString();
+                item.Col5 = (GlobalValue.QiPan[5, j] == -1) ? "" : GlobalValue.QiPan[5, j].ToString();
+                item.Col6 = (GlobalValue.QiPan[6, j] == -1) ? "" : GlobalValue.QiPan[6, j].ToString();
+                item.Col7 = (GlobalValue.QiPan[7, j] == -1) ? "" : GlobalValue.QiPan[7, j].ToString();
+                item.Col8 = (GlobalValue.QiPan[8, j] == -1) ? "" : GlobalValue.QiPan[8, j].ToString();
                 obserArray.Add(item);
             }
             SpyQipan.Items.Refresh();
@@ -63,15 +63,15 @@ namespace Chess
             {
                 QiPanCols item = new();
                 item.Id = j;
-                item.Col0 = (GlobalValue.qiPan[0, j] == -1) ? "" : GlobalValue.qiPan[0, j].ToString();
-                item.Col1 = (GlobalValue.qiPan[1, j] == -1) ? "" : GlobalValue.qiPan[1, j].ToString();
-                item.Col2 = (GlobalValue.qiPan[2, j] == -1) ? "" : GlobalValue.qiPan[2, j].ToString();
-                item.Col3 = (GlobalValue.qiPan[3, j] == -1) ? "" : GlobalValue.qiPan[3, j].ToString();
-                item.Col4 = (GlobalValue.qiPan[4, j] == -1) ? "" : GlobalValue.qiPan[4, j].ToString();
-                item.Col5 = (GlobalValue.qiPan[5, j] == -1) ? "" : GlobalValue.qiPan[5, j].ToString();
-                item.Col6 = (GlobalValue.qiPan[6, j] == -1) ? "" : GlobalValue.qiPan[6, j].ToString();
-                item.Col7 = (GlobalValue.qiPan[7, j] == -1) ? "" : GlobalValue.qiPan[7, j].ToString();
-                item.Col8 = (GlobalValue.qiPan[8, j] == -1) ? "" : GlobalValue.qiPan[8, j].ToString();
+                item.Col0 = (GlobalValue.QiPan[0, j] == -1) ? "" : GlobalValue.QiPan[0, j].ToString();
+                item.Col1 = (GlobalValue.QiPan[1, j] == -1) ? "" : GlobalValue.QiPan[1, j].ToString();
+                item.Col2 = (GlobalValue.QiPan[2, j] == -1) ? "" : GlobalValue.QiPan[2, j].ToString();
+                item.Col3 = (GlobalValue.QiPan[3, j] == -1) ? "" : GlobalValue.QiPan[3, j].ToString();
+                item.Col4 = (GlobalValue.QiPan[4, j] == -1) ? "" : GlobalValue.QiPan[4, j].ToString();
+                item.Col5 = (GlobalValue.QiPan[5, j] == -1) ? "" : GlobalValue.QiPan[5, j].ToString();
+                item.Col6 = (GlobalValue.QiPan[6, j] == -1) ? "" : GlobalValue.QiPan[6, j].ToString();
+                item.Col7 = (GlobalValue.QiPan[7, j] == -1) ? "" : GlobalValue.QiPan[7, j].ToString();
+                item.Col8 = (GlobalValue.QiPan[8, j] == -1) ? "" : GlobalValue.QiPan[8, j].ToString();
                 obserArray.Add(item);
             }
             //SpyQipan.Items.Refresh();

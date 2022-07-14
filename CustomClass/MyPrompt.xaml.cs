@@ -37,7 +37,7 @@ namespace Chess.CustomClass
         public void SetBold()
         {
             textBlock.FontWeight = FontWeights.Bold;
-            textBlock.Foreground = new SolidColorBrush(Colors.Red);
+            textBlock.Foreground = new SolidColorBrush(Colors.OrangeRed);
         }
         public void SetVisible()
         {
