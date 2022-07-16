@@ -146,7 +146,7 @@ namespace Chess.CustomClass
                 {
                     _cursor = value;
                     _cursor.IsSelected = true;
-                    GlobalValue.arrows.HideAllPath();
+                    if (GlobalValue.arrows!=null) GlobalValue.arrows.HideAllPath();
                     if (!_cursor.IsLeaf())
                     {
                         var points = GetListPoint(_cursor);

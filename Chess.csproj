@@ -48,7 +48,9 @@
     <None Remove="picture\原位置.png" />
     <None Remove="picture\大理石1.jpeg" />
     <None Remove="picture\大理石1.png" />
+    <None Remove="picture\大象.png" />
     <None Remove="picture\将军.png" />
+    <None Remove="picture\小师妹.png" />
     <None Remove="picture\木纹_浅色1920.png" />
     <None Remove="picture\木纹_浅色3000.jpeg" />
     <None Remove="picture\木纹_深色.jpg" />
@@ -245,6 +247,12 @@
     </Resource>
     <Resource Include="picture\原位置.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\大象.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\小师妹.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="picture\棋盘（红上）.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

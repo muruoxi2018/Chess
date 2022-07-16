@@ -29,6 +29,7 @@ namespace Chess
         public QiPanPage()
         {
             InitializeComponent();
+            
         }
         /// <summary>
         /// 主窗口载入时，初始化自定义控件
@@ -78,6 +79,7 @@ namespace Chess
             GlobalValue.jueShaImage = new(); // 绝杀图片
             _ = mainGrid.Children.Add(GlobalValue.jueShaImage);
 
+            GlobalValue.arrows = new();
             DrawGrid.Children.Add(GlobalValue.arrows.grid); // 走棋提示箭头
 
             GlobalValue.redSideRect = new System.Windows.Shapes.Ellipse()

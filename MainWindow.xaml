@@ -5,18 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" Closing="OnMainWindowClose" Icon="/picture/象128.png" SizeToContent="WidthAndHeight" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" WindowState="Normal" Width="800" Height="900" Loaded="OnLoad" WindowStyle="ThreeDBorderWindow" MinWidth="800" MinHeight="900">
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" Closing="OnMainWindowClose" Icon="/picture/象128.png" SizeToContent="WidthAndHeight" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" WindowState="Normal" Width="1024" Height="900" Loaded="OnLoad" WindowStyle="ThreeDBorderWindow" MinWidth="800" MinHeight="900">
     <Window.Background>
         <ImageBrush ImageSource="/picture/青草.jpg"/>
     </Window.Background>
     <Grid>
+        <Image HorizontalAlignment="Right" Source="/picture/大象.png" Stretch="None" StretchDirection="Both" VerticalAlignment="Bottom" Margin="0,0,20,0" Opacity="0.8" />
         <Frame x:Name="MainFram" ></Frame>
-        <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600">
+        <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Content="人机对战"  Style="{StaticResource mainMenuButton}"/>
             <Button Content="电脑对战"  Style="{StaticResource mainMenuButton}"/>
             <Button Content="自由打谱"  Style="{StaticResource mainMenuButton}" Click="FreeDaPu"/>
             <Button Content="棋谱记录"  Style="{StaticResource mainMenuButton}"/>
         </StackPanel>
         <Button Content="返回" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20" Padding="5,1,5,1" Click="ReturnMainMenu"/>
+    
     </Grid>
+    
 </Window>
