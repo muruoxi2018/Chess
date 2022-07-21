@@ -26,10 +26,11 @@ namespace Chess
     {
         private static Window_JiPu jipuWindow;  // 记谱窗口
         private static SpyWindow spyWindow;    // 棋盘数据监视窗口
+
         public QiPanPage()
         {
             InitializeComponent();
-            
+
         }
         /// <summary>
         /// 主窗口载入时，初始化自定义控件
@@ -38,6 +39,7 @@ namespace Chess
         /// <param name="e"></param>
         private void MainFormLoaded(object sender, RoutedEventArgs e)
         {
+
             GlobalValue.yuanWeiZhi = new QiZi(); // 棋子原位置图片
             _ = qiziCanvas.Children.Add(GlobalValue.yuanWeiZhi);
 
@@ -104,6 +106,27 @@ namespace Chess
                 Stroke = new SolidColorBrush(Colors.Goldenrod),
             };
             _ = mainGrid.Children.Add(GlobalValue.blackSideRect);
+            this.PCVsPc.Visibility = Visibility.Hidden;
+            this.PersonVsPC.Visibility = Visibility.Hidden;
+            this.FreeDaPu.Visibility = Visibility.Hidden;
+            this.FuPan.Visibility = Visibility.Hidden;
+            switch (MainWindow.menuItem)
+            {
+                case 1:
+                    this.PersonVsPC.Visibility= Visibility.Visible;
+                    break;
+                case 2:
+                    this.PCVsPc.Visibility= Visibility.Visible;
+                    break;
+                case 3:
+                    this.FreeDaPu.Visibility= Visibility.Visible;
+                    break;
+                case 4:
+                    this.FuPan.Visibility= Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
 
             GlobalValue.Reset();
 
@@ -212,7 +235,7 @@ namespace Chess
             sw.Show();
         }
 
-       
+
 
         /// <summary>
         /// 保存棋谱
@@ -326,6 +349,11 @@ namespace Chess
             }
             //  更新数据后，刷新棋谱列表
             GlobalValue.qiPuKuForm.QipuDBListRefresh();
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

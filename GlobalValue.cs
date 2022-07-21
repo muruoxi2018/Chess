@@ -102,12 +102,14 @@ namespace Chess
         /// <param name="n">目的地的行</param>
         /// <param name="dieQiZi">所杀死的棋子的编号，-1表示没有杀死棋子</param>
         /// <param name="sound">是否打开声音效果</param>
-        public static void QiZiMoveTo(int qiZi, int m, int n, int dieQiZi, bool sound)  // 运子
+        public static void QiZiMoveTo(int qiZi, int m, int n,  bool sound)  // 运子
         {
             if (qiZi is < 0 or > 31) return;
             // 运子到(m,n)位置
             int x0 = qiZiArray[qiZi].Col;
             int y0 = qiZiArray[qiZi].Row;
+            int dieQiZi = QiPan[m, n];
+
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
 
             if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, QiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
@@ -125,7 +127,12 @@ namespace Chess
 
             if (JiangJun.IsJueSha(qiZi)) // 检查是否绝杀
             {
+                IsGameOver = true;
                 jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+            }
+            else
+            {
+                IsGameOver=false;
             }
 
             if (dieQiZi != -1) // 如果杀死了棋子
@@ -153,8 +160,10 @@ namespace Chess
                 player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
                 player.Play();
             }
-
-            jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove();
+            if (MainWindow.menuItem is 1)
+            {
+                jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(); // 调用象棋引擎，得到下一步推荐着法
+            }
         }
 
         /// <summary>
@@ -239,14 +248,14 @@ namespace Chess
                 From = QiPanGrid_X[x0] - GlobalValue.GRID_WIDTH / 2,
                 To = QiPanGrid_X[x1] - GlobalValue.GRID_WIDTH / 2,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.2))
+                Duration = new Duration(TimeSpan.FromSeconds(0.1))
             };
             DoubleAnimation PAy = new()
             {
                 From = QiPanGrid_Y[y0] - GlobalValue.GRID_WIDTH / 2,
                 To = QiPanGrid_Y[y1] - GlobalValue.GRID_WIDTH / 2,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.2))
+                Duration = new Duration(TimeSpan.FromSeconds(0.1))
             };
 
             if (IsQiPanFanZhuan)
@@ -265,7 +274,7 @@ namespace Chess
                 From = 1,
                 To = 1.5,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.2))
+                Duration = new Duration(TimeSpan.FromSeconds(0.1))
             };
             ScaleTransform scale = new();
             if (SideTag == REDSIDE)
@@ -364,7 +373,8 @@ namespace Chess
             {
                 cursor = cursor.ChildNode[0];
                 StepCode step = cursor.StepData;
-                QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, true);
+                step.LunchStep();
+                //QiZiMoveTo(step.QiZi, step.X1, step.Y1, true);
                 qiPuRecordRoot.Cursor = cursor;
                 return 1;
             }
@@ -385,7 +395,8 @@ namespace Chess
             {
                 cursor = cursor.ChildNode[childId - 1];
                 StepCode step = cursor.StepData;
-                QiZiMoveTo(step.QiZi, step.X1, step.Y1, step.DieQz, true);
+                step.LunchStep();
+                //QiZiMoveTo(step.QiZi, step.X1, step.Y1, true);
                 qiPuRecordRoot.Cursor = cursor;
             }
         }

@@ -20,8 +20,10 @@ namespace Chess
     /// </summary>
     public partial class MainMenu : Page
     {
+        public static int menuItem;
         public MainMenu()
         {
+
             InitializeComponent();
         }
     }

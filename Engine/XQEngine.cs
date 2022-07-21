@@ -298,7 +298,7 @@ namespace Chess.Engine
                                 }
                             }
                         }
-                        string tipInfo = $"{InfoList[i].Score.ToString()}分{Environment.NewLine}{InfoList[i].GetMove()}";
+                        string tipInfo = $"{InfoList[i].Score}分{Environment.NewLine}{InfoList[i].GetMove()}";
                         GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], sameTargetPoint, tipInfo);
                     }
                 }
@@ -378,7 +378,8 @@ namespace Chess.Engine
             int x1 = cols.IndexOf(ucciStr[2]);  // 目标位置
             int y1 = rows.IndexOf(ucciStr[3]);
             int qizi = qipan[x0, y0];
-            CustomClass.Qipu.StepCode step = new CustomClass.Qipu.StepCode(qizi,x0, y0, x1, y1, -1);
+            int dieQiZi=qipan[x1, y1];
+            CustomClass.Qipu.StepCode step = new CustomClass.Qipu.StepCode(qizi,x0, y0, x1, y1, dieQiZi);
             return step;
         }
     }

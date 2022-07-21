@@ -15,9 +15,9 @@ namespace Chess.CustomClass
         public static ObservableCollection<ContractQPClass> QiPuList = new(); // 棋谱记录列表
         public static ContractQPClass ContractQiPu = new(); // 收缩树
         /// <summary>
-        /// 走棋数据指令类
+        /// 着法类
         /// </summary>
-        public class StepCode // 棋谱记录
+        public class StepCode
         {
             #region 棋谱数据
             public int QiZi { get; set; } // 棋子编号
@@ -34,6 +34,16 @@ namespace Chess.CustomClass
                 X1 = x1;
                 Y1 = y1;
                 DieQz = dieQz;
+            }
+            /// <summary>
+            /// 执行着法
+            /// </summary>
+            public void LunchStep()
+            {
+                if (QiZi is > -1 and < 32)
+                {
+                    GlobalValue.QiZiMoveTo(QiZi, X1, Y1, true);
+                }
             }
             #endregion
         }
@@ -146,8 +156,8 @@ namespace Chess.CustomClass
                 {
                     _cursor = value;
                     _cursor.IsSelected = true;
-                    if (GlobalValue.arrows!=null) GlobalValue.arrows.HideAllPath();
-                    if (!_cursor.IsLeaf())
+                    if (GlobalValue.arrows != null) GlobalValue.arrows.HideAllPath();
+                    if (MainWindow.menuItem == 4 && !_cursor.IsLeaf())
                     {
                         var points = GetListPoint(_cursor);
                         for (int i = 0; i < points.Count; i++)
@@ -155,7 +165,7 @@ namespace Chess.CustomClass
                             bool sameTargetPoint = false;
                             if (i > 0)
                             {
-                                if (points[i][1].X==points[i-1][1].X && points[i][1].Y == points[i - 1][1].Y)
+                                if (points[i][1].X == points[i - 1][1].X && points[i][1].Y == points[i - 1][1].Y)
                                 {
                                     sameTargetPoint = true;
                                 }
@@ -275,7 +285,7 @@ namespace Chess.CustomClass
             public void SetRecordData(int QiZi, int x0, int y0, int x1, int y1, int DieQz)
             {
                 Nm = $"{QiZi:d2} {x0:d} {y0:d} {x1:d} {y1:d} {DieQz:d}";
-                Cn = GlobalValue.TranslateToCN(QiZi,x0,y0,x1,y1);
+                Cn = GlobalValue.TranslateToCN(QiZi, x0, y0, x1, y1);
                 //Remarks = "";
                 StepData = new StepCode(QiZi, x0, y0, x1, y1, DieQz);
                 SideColor = QiZi is >= 0 and <= 15 ? "Black" : "Red";  //  在treeView中，显示不同的颜色。

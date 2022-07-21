@@ -13,10 +13,10 @@
         <Image HorizontalAlignment="Right" Source="/picture/大象.png" Stretch="None" StretchDirection="Both" VerticalAlignment="Bottom" Margin="0,0,20,0" Opacity="0.8" />
         <Frame x:Name="MainFram" ></Frame>
         <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="人机对战"  Style="{StaticResource mainMenuButton}"/>
-            <Button Content="电脑对战"  Style="{StaticResource mainMenuButton}"/>
+            <Button Content="人机对战"  Style="{StaticResource mainMenuButton}" Click="PersonVsPC"/>
+            <Button Content="电脑对战"  Style="{StaticResource mainMenuButton}" Click="PCVsPC"/>
             <Button Content="自由打谱"  Style="{StaticResource mainMenuButton}" Click="FreeDaPu"/>
-            <Button Content="棋谱记录"  Style="{StaticResource mainMenuButton}"/>
+            <Button Content="棋谱记录"  Style="{StaticResource mainMenuButton}" Click="FuPan"/>
         </StackPanel>
         <Button Content="返回" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20" Padding="5,1,5,1" Click="ReturnMainMenu"/>
     

@@ -16,11 +16,12 @@ namespace Chess
     /// </summary>
     public partial class MainWindow : Window
     {
-        
 
+        public static int menuItem;
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         /// <summary>
@@ -38,7 +39,8 @@ namespace Chess
         {
             //this.Width = SystemParameters.PrimaryScreenWidth;
             //this.WindowState = WindowState.Maximized;
-            
+            menuItem = 0;
+
         }
 
         private void ReturnMainMenu(object sender, RoutedEventArgs e)
@@ -47,10 +49,31 @@ namespace Chess
             MainMenu.Visibility = Visibility.Visible;
         }
 
+        private void PersonVsPC(object sender, RoutedEventArgs e)
+        {
+            menuItem = 1;
+            MainMenu.Visibility = Visibility.Hidden;
+            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+        }
+
+        private void PCVsPC(object sender, RoutedEventArgs e)
+        {
+            menuItem = 2;
+            MainMenu.Visibility = Visibility.Hidden;
+            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+        }
         private void FreeDaPu(object sender, RoutedEventArgs e)
         {
+            menuItem = 3;
             MainMenu.Visibility = Visibility.Hidden;
-            MainFram.Source =new Uri("QiPanPage.xaml",UriKind.RelativeOrAbsolute);
+            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+        }
+
+        private void FuPan(object sender, RoutedEventArgs e)
+        {
+            menuItem = 4;
+            MainMenu.Visibility = Visibility.Hidden;
+            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
         }
     }
 }
