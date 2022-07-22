@@ -44,6 +44,7 @@
     <None Remove="KaiJuKu.db" />
     <None Remove="picture\background.jpg" />
     <None Remove="picture\break_roleH_10zhanghan.png" />
+    <None Remove="picture\juesha.png" />
     <None Remove="picture\juesha_0.png" />
     <None Remove="picture\原位置.png" />
     <None Remove="picture\大理石1.jpeg" />
@@ -242,6 +243,9 @@
     <Content Include="Sounds\Woman_jiangjun.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="picture\juesha.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="picture\juesha_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

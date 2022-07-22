@@ -122,7 +122,7 @@ namespace Chess.Engine
             internal int Score { get; set; }
             internal List<string> UcciStrList { get; set; }
             internal List<string> CnStrList { get; set; }
-            private CustomClass.Qipu.StepCode FirstStep { get; set; }
+            public CustomClass.Qipu.StepCode FirstStep { get; set; }
             private string _InfoStrLine;
             internal string InfoStrLine
             {
@@ -252,11 +252,11 @@ namespace Chess.Engine
             /// <summary>
             /// 获取最佳着法，同时显示所有推荐着法的提示箭头
             /// </summary>
+            /// <param name="showarrow">得到最佳着法后，是否在棋盘上显示指示箭头</param>
             /// <returns>最佳着法</returns>
-            public string GetBestMove()
+            public string GetBestMove(bool showarrow)
             {
                 InfoSource = CallEngine(10, 5); // 调用象棋引擎，获得下一步着法信息
-                ShowArrows();
                 string str = "";
                 if (InfoList.Count > 0)
                 {
@@ -268,6 +268,7 @@ namespace Chess.Engine
                 {
                     str = $"最佳着法： {InfoSource}";
                 }
+                if (showarrow) ShowArrows();
                 return str;
             }
 
@@ -302,6 +303,11 @@ namespace Chess.Engine
                         GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], sameTargetPoint, tipInfo);
                     }
                 }
+            }
+            public CustomClass.Qipu.StepCode GetBestSetp()
+            {
+                if (InfoList.Count>0) return InfoList[0].FirstStep; 
+                return null;
             }
         }
 

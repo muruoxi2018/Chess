@@ -10,13 +10,14 @@
         <ImageBrush ImageSource="/picture/青草.jpg"/>
     </Window.Background>
     <Grid>
-        <Image HorizontalAlignment="Right" Source="/picture/大象.png" Stretch="None" StretchDirection="Both" VerticalAlignment="Bottom" Margin="0,0,20,0" Opacity="0.8" />
+        
         <Frame x:Name="MainFram" ></Frame>
-        <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,63,0,0">
             <Button Content="人机对战"  Style="{StaticResource mainMenuButton}" Click="PersonVsPC"/>
             <Button Content="电脑对战"  Style="{StaticResource mainMenuButton}" Click="PCVsPC"/>
             <Button Content="自由打谱"  Style="{StaticResource mainMenuButton}" Click="FreeDaPu"/>
             <Button Content="棋谱记录"  Style="{StaticResource mainMenuButton}" Click="FuPan"/>
+            <Image HorizontalAlignment="Center" Source="/picture/大象.png" Stretch="Uniform" StretchDirection="Both" VerticalAlignment="Bottom" Width="300" Margin="0,30,0,0" Opacity="0.75" />
         </StackPanel>
         <Button Content="返回" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20" Padding="5,1,5,1" Click="ReturnMainMenu"/>
     

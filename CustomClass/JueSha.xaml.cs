@@ -23,7 +23,7 @@ namespace Chess.CustomClass
             Visibility = Visibility.Visible;
             image.Visibility = Visibility.Visible;
             //image.Opacity = 1.0;
-            DoubleAnimation PAx = new DoubleAnimation
+            DoubleAnimation PAx = new()
             {
                 From = 1.0,
                 To = 0.0,

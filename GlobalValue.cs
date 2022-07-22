@@ -160,10 +160,8 @@ namespace Chess
                 player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
                 player.Play();
             }
-            if (MainWindow.menuItem is 1)
-            {
-                jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(); // 调用象棋引擎，得到下一步推荐着法
-            }
+
+                jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
         }
 
         /// <summary>
@@ -291,6 +289,7 @@ namespace Chess
             }
             scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // x方向缩放
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
+            
         }
 
         /// <summary>

@@ -1,7 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Security.Permissions;
+using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
+using System.Windows.Threading;
 
 namespace Chess
 {
@@ -99,6 +103,39 @@ namespace Chess
             // 当前有预选棋子时，将预选棋子运子到(m,n)位置================= 运子
             GlobalValue.QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, true);
             // 点击位置有棋子时，将预选棋子运子到(m,n)位置，并吃掉目标位置的对方棋子===== 吃子
+
+            // 电脑执黑，人机对战。功能已实现，但动画总是在后台代码执行结束后再渲染，导致动作不流畅，比如下边那个延时，会影响之前的动画。
+            // DispatcherHelper.DoEvents() 好像解决了上边这个问题
+            if (MainWindow.menuItem == 1 && GlobalValue.SideTag==GlobalValue.BLACKSIDE)
+            {
+                Delay(500);
+                CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                if (step!=null) step.LunchStep();
+            }
+        }
+        public static void Delay(int milliSecond)
+        {
+            int start = Environment.TickCount;
+            while(Math.Abs(Environment.TickCount - start) < milliSecond)
+            {
+                DispatcherHelper.DoEvents();
+            }
+        }
+        public static class DispatcherHelper
+        {
+            //[SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
+            public static void DoEvents()
+            {
+                DispatcherFrame frame = new DispatcherFrame();
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(ExitFrames), frame);
+                try { Dispatcher.PushFrame(frame); }
+                catch (InvalidOperationException) { }
+            }
+            private static object ExitFrames(object frame)
+            {
+                ((DispatcherFrame)frame).Continue = false;
+                return null;
+            }
         }
 
     }

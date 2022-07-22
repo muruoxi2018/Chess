@@ -11,7 +11,7 @@
     <Grid Unloaded="OnUnloaded">
         <Border BorderBrush="#FF2D2D2D" BorderThickness="0,1,0,0">
             <d:Border.Background>
-                <ImageBrush ImageSource="/picture/青草.jpg"/>
+                <ImageBrush ImageSource="/picture/青草.jpg" Stretch="Fill"/>
             </d:Border.Background>
             <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="767" Height="842" MinWidth="767" MinHeight="842" MaxWidth="767" MaxHeight="842">
                 <Border BorderThickness="3" CornerRadius="5,5,5,5" BorderBrush="#CC017F4E" Background="#33007A00"/>
