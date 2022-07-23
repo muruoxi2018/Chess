@@ -106,17 +106,24 @@ namespace Chess
 
             // 电脑执黑，人机对战。功能已实现，但动画总是在后台代码执行结束后再渲染，导致动作不流畅，比如下边那个延时，会影响之前的动画。
             // DispatcherHelper.DoEvents() 好像解决了上边这个问题
-            if (MainWindow.menuItem == 1 && GlobalValue.SideTag==GlobalValue.BLACKSIDE)
+            if (MainWindow.menuItem == 1 && GlobalValue.SideTag == GlobalValue.BLACKSIDE && GlobalValue.IsGameOver == false)
             {
                 Delay(500);
                 CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
-                if (step!=null) step.LunchStep();
+                if (step != null) step.LunchStep();
             }
+            if (MainWindow.menuItem == 2)
+                while (GlobalValue.IsGameOver == false)
+                {
+                    Delay(1000);
+                    CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                    if (step != null) step.LunchStep(); else break;
+                }
         }
         public static void Delay(int milliSecond)
         {
             int start = Environment.TickCount;
-            while(Math.Abs(Environment.TickCount - start) < milliSecond)
+            while (Math.Abs(Environment.TickCount - start) < milliSecond)
             {
                 DispatcherHelper.DoEvents();
             }

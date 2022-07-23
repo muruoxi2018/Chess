@@ -40,6 +40,7 @@ namespace Chess
             //this.Width = SystemParameters.PrimaryScreenWidth;
             //this.WindowState = WindowState.Maximized;
             menuItem = 0;
+            ReturnButton.Visibility = Visibility.Hidden;
 
         }
 
@@ -47,6 +48,7 @@ namespace Chess
         {
             MainFram.Source = null;
             MainMenu.Visibility = Visibility.Visible;
+            ReturnButton.Visibility = Visibility.Hidden;
         }
 
         private void PersonVsPC(object sender, RoutedEventArgs e)
@@ -54,6 +56,7 @@ namespace Chess
             menuItem = 1;
             MainMenu.Visibility = Visibility.Hidden;
             MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+            ReturnButton.Visibility = Visibility.Visible;
         }
 
         private void PCVsPC(object sender, RoutedEventArgs e)
@@ -61,12 +64,14 @@ namespace Chess
             menuItem = 2;
             MainMenu.Visibility = Visibility.Hidden;
             MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+            ReturnButton.Visibility = Visibility.Visible;
         }
         private void FreeDaPu(object sender, RoutedEventArgs e)
         {
             menuItem = 3;
             MainMenu.Visibility = Visibility.Hidden;
             MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+            ReturnButton.Visibility = Visibility.Visible;
         }
 
         private void FuPan(object sender, RoutedEventArgs e)
@@ -74,6 +79,13 @@ namespace Chess
             menuItem = 4;
             MainMenu.Visibility = Visibility.Hidden;
             MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+            ReturnButton.Visibility = Visibility.Visible;
         }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
     }
 }

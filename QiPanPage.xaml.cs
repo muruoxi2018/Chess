@@ -353,7 +353,12 @@ namespace Chess
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            //Environment.Exit(0);
+        }
+
+        private void GameOverClick(object sender, RoutedEventArgs e)
+        {
+            GlobalValue.IsGameOver = true;
         }
     }
 }

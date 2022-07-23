@@ -12,10 +12,13 @@ namespace Chess.OpenSource
     /// </summary>
     public class SqliteHelper
     {
-        //  数据库文件路径。调试期间使用绝对路径，发布时改为相对路径。
+        
+#if(DEBUG) //  数据库文件路径。调试期间使用绝对路径，发布时改为相对路径。
         private static string DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";
-        // 软件发布时使用此设置
-        //private static string DbFile = System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db"; 
+        
+#else // 软件发布时使用此设置
+        private static string DbFile = System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db"; 
+#endif       
         private static string DbSourcePath = @"data source="+ DbFile;
 
         /// <summary>

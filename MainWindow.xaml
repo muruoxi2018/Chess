@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" Closing="OnMainWindowClose" Icon="/picture/象128.png" SizeToContent="WidthAndHeight" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" WindowState="Normal" Width="1024" Height="900" Loaded="OnLoad" WindowStyle="ThreeDBorderWindow" MinWidth="800" MinHeight="900">
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" Closing="OnMainWindowClose" Icon="/picture/象128.png" SizeToContent="WidthAndHeight" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" WindowState="Normal" Width="1280" Height="900" Loaded="OnLoad" WindowStyle="ThreeDBorderWindow" MinWidth="800" MinHeight="900" Unloaded="OnUnloaded">
     <Window.Background>
         <ImageBrush ImageSource="/picture/青草.jpg"/>
     </Window.Background>
-    <Grid>
+    <Grid Width="1280">
         
-        <Frame x:Name="MainFram" ></Frame>
+        <Frame x:Name="MainFram" />
         <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,63,0,0">
             <Button Content="人机对战"  Style="{StaticResource mainMenuButton}" Click="PersonVsPC"/>
             <Button Content="电脑对战"  Style="{StaticResource mainMenuButton}" Click="PCVsPC"/>
@@ -19,7 +19,7 @@
             <Button Content="棋谱记录"  Style="{StaticResource mainMenuButton}" Click="FuPan"/>
             <Image HorizontalAlignment="Center" Source="/picture/大象.png" Stretch="Uniform" StretchDirection="Both" VerticalAlignment="Bottom" Width="300" Margin="0,30,0,0" Opacity="0.75" />
         </StackPanel>
-        <Button Content="返回" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20" Padding="5,1,5,1" Click="ReturnMainMenu"/>
+        <Button x:Name="ReturnButton" Content="返回" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20" Padding="5,1,5,1" Click="ReturnMainMenu" Width="45"/>
     
     </Grid>
     
