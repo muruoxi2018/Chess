@@ -10,6 +10,7 @@ using Chess.CustomClass;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using Newtonsoft.Json;
+using System.Windows.Threading;
 
 namespace Chess
 {
@@ -102,7 +103,7 @@ namespace Chess
         /// <param name="n">目的地的行</param>
         /// <param name="dieQiZi">所杀死的棋子的编号，-1表示没有杀死棋子</param>
         /// <param name="sound">是否打开声音效果</param>
-        public static void QiZiMoveTo(int qiZi, int m, int n,  bool sound)  // 运子
+        public static void QiZiMoveTo(int qiZi, int m, int n, bool sound)  // 运子
         {
             if (qiZi is < 0 or > 31) return;
             // 运子到(m,n)位置
@@ -132,7 +133,7 @@ namespace Chess
             }
             else
             {
-                IsGameOver=false;
+                IsGameOver = false;
             }
 
             if (dieQiZi != -1) // 如果杀死了棋子
@@ -160,8 +161,8 @@ namespace Chess
                 player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
                 player.Play();
             }
-
-                jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
+            Delay(500);
+            jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
         }
 
         /// <summary>
@@ -240,31 +241,32 @@ namespace Chess
         /// <param name="y1"></param>
         private static void AnimationMove(int qiZi, int x0, int y0, int x1, int y1)
         {
+            const double delayTime = 200.0; // 动画延续时间，毫秒
             #region 动画参数设置
             DoubleAnimation PAx = new()
             {
-                From = QiPanGrid_X[x0] - GlobalValue.GRID_WIDTH / 2,
-                To = QiPanGrid_X[x1] - GlobalValue.GRID_WIDTH / 2,
+                From = QiPanGrid_X[x0] - GRID_WIDTH / 2,
+                To = QiPanGrid_X[x1] - GRID_WIDTH / 2,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.1))
+                Duration = new Duration(TimeSpan.FromSeconds(delayTime / 1000))
             };
             DoubleAnimation PAy = new()
             {
-                From = QiPanGrid_Y[y0] - GlobalValue.GRID_WIDTH / 2,
-                To = QiPanGrid_Y[y1] - GlobalValue.GRID_WIDTH / 2,
+                From = QiPanGrid_Y[y0] - GRID_WIDTH / 2,
+                To = QiPanGrid_Y[y1] - GRID_WIDTH / 2,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.1))
+                Duration = new Duration(TimeSpan.FromSeconds(delayTime / 1000))
             };
 
             if (IsQiPanFanZhuan)
             {
-                PAx.From = QiPanGrid_X[8 - x0] - GlobalValue.GRID_WIDTH / 2;
-                PAx.To = QiPanGrid_X[8 - x1] - GlobalValue.GRID_WIDTH / 2;
-                PAy.From = QiPanGrid_Y[9 - y0] - GlobalValue.GRID_WIDTH / 2;
-                PAy.To = QiPanGrid_Y[9 - y1] - GlobalValue.GRID_WIDTH / 2;
+                PAx.From = QiPanGrid_X[8 - x0] - GRID_WIDTH / 2;
+                PAx.To = QiPanGrid_X[8 - x1] - GRID_WIDTH / 2;
+                PAy.From = QiPanGrid_Y[9 - y0] - GRID_WIDTH / 2;
+                PAy.To = QiPanGrid_Y[9 - y1] - GRID_WIDTH / 2;
             }
             #endregion
-            qiZiArray[qiZi].BeginAnimation(Canvas.LeftProperty, PAx);
+            qiZiArray[qiZi].BeginAnimation(Canvas.LeftProperty, PAx); // 棋子移动动画
             qiZiArray[qiZi].BeginAnimation(Canvas.TopProperty, PAy);
 
             DoubleAnimation DAscale = new()
@@ -272,7 +274,7 @@ namespace Chess
                 From = 1,
                 To = 1.5,
                 FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(0.1))
+                Duration = new Duration(TimeSpan.FromSeconds(delayTime / 1000))
             };
             ScaleTransform scale = new();
             if (SideTag == REDSIDE)
@@ -287,7 +289,7 @@ namespace Chess
                 blackSideRect.RenderTransform = scale;
                 blackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
             }
-            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // x方向缩放
+            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // 走棋方指示灯动画，x方向缩放
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
             
         }
@@ -487,6 +489,33 @@ namespace Chess
             }
             #endregion
             return char1 + char2 + char3 + char4;
+        }
+
+
+        public static void Delay(int milliSecond)
+        {
+            int start = Environment.TickCount;
+            while (Math.Abs(Environment.TickCount - start) < milliSecond)
+            {
+                DispatcherHelper.DoEvents();
+            }
+        }
+        public static class DispatcherHelper
+        {
+            //[SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
+            public static void DoEvents()
+            {
+                DispatcherFrame frame = new DispatcherFrame();
+                // Dispatcher的作用是用于管理线程工作项队列，类似于Win32中的消息队列
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(ExitFrames), frame);
+                try { Dispatcher.PushFrame(frame); }
+                catch (InvalidOperationException) { }
+            }
+            private static object ExitFrames(object frame)
+            {
+                ((DispatcherFrame)frame).Continue = false;
+                return null;
+            }
         }
     }
 }

@@ -108,41 +108,17 @@ namespace Chess
             // DispatcherHelper.DoEvents() 好像解决了上边这个问题
             if (MainWindow.menuItem == 1 && GlobalValue.SideTag == GlobalValue.BLACKSIDE && GlobalValue.IsGameOver == false)
             {
-                Delay(500);
+                GlobalValue.Delay(500);
                 CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                 if (step != null) step.LunchStep();
             }
             if (MainWindow.menuItem == 2)
                 while (GlobalValue.IsGameOver == false)
                 {
-                    Delay(1000);
+                    GlobalValue.Delay(1000);
                     CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                     if (step != null) step.LunchStep(); else break;
                 }
-        }
-        public static void Delay(int milliSecond)
-        {
-            int start = Environment.TickCount;
-            while (Math.Abs(Environment.TickCount - start) < milliSecond)
-            {
-                DispatcherHelper.DoEvents();
-            }
-        }
-        public static class DispatcherHelper
-        {
-            //[SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
-            public static void DoEvents()
-            {
-                DispatcherFrame frame = new DispatcherFrame();
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(ExitFrames), frame);
-                try { Dispatcher.PushFrame(frame); }
-                catch (InvalidOperationException) { }
-            }
-            private static object ExitFrames(object frame)
-            {
-                ((DispatcherFrame)frame).Continue = false;
-                return null;
-            }
         }
 
     }

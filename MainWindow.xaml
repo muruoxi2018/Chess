@@ -9,9 +9,9 @@
     <Window.Background>
         <ImageBrush ImageSource="/picture/青草.jpg"/>
     </Window.Background>
-    <Grid Width="1280">
+    <Grid>
         
-        <Frame x:Name="MainFram" />
+        <Frame x:Name="MainFram" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="767" MinHeight="800" NavigationUIVisibility="Hidden" />
         <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,63,0,0">
             <Button Content="人机对战"  Style="{StaticResource mainMenuButton}" Click="PersonVsPC"/>
             <Button Content="电脑对战"  Style="{StaticResource mainMenuButton}" Click="PCVsPC"/>
@@ -19,8 +19,9 @@
             <Button Content="棋谱记录"  Style="{StaticResource mainMenuButton}" Click="FuPan"/>
             <Image HorizontalAlignment="Center" Source="/picture/大象.png" Stretch="Uniform" StretchDirection="Both" VerticalAlignment="Bottom" Width="300" Margin="0,30,0,0" Opacity="0.75" />
         </StackPanel>
-        <Button x:Name="ReturnButton" Content="返回" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20" Padding="5,1,5,1" Click="ReturnMainMenu" Width="45"/>
-    
+        <Button x:Name="ReturnButton" Content="返回" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,50" Padding="5,1,5,1" Click="ReturnMainMenu" Width="45"/>
+        <Button Content="置顶" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20" Padding="5,1,5,1" Click="AllwayOnTop" Width="45"/>
+
     </Grid>
     
 </Window>

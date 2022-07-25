@@ -41,7 +41,6 @@ namespace Chess
             //this.WindowState = WindowState.Maximized;
             menuItem = 0;
             ReturnButton.Visibility = Visibility.Hidden;
-
         }
 
         private void ReturnMainMenu(object sender, RoutedEventArgs e)
@@ -87,5 +86,9 @@ namespace Chess
             Environment.Exit(0);
         }
 
+        private void AllwayOnTop(object sender, RoutedEventArgs e)
+        {
+            this.Topmost = !this.Topmost;
+        }
     }
 }

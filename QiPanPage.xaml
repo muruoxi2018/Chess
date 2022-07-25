@@ -8,8 +8,8 @@
       d:DesignHeight="900" d:DesignWidth="900"
       Title="QiPanPage" Loaded="MainFormLoaded">
 
-    <Grid Unloaded="OnUnloaded">
-        <Border BorderBrush="#FF2D2D2D" BorderThickness="0,1,0,0">
+    <Grid>
+        <Border>
             <d:Border.Background>
                 <ImageBrush ImageSource="/picture/青草.jpg" Stretch="Fill"/>
             </d:Border.Background>
