@@ -26,6 +26,7 @@ namespace Chess.CustomClass
             public int X1 { get; set; } // 移动后位置
             public int Y1 { get; set; }
             public int DieQz { get; set; } // 移动后杀死的棋子
+            public string UcciStep;
             public StepCode(int qiZi, int x0, int y0, int x1, int y1, int dieQz)
             {
                 QiZi = qiZi;
@@ -34,6 +35,9 @@ namespace Chess.CustomClass
                 X1 = x1;
                 Y1 = y1;
                 DieQz = dieQz;
+                string cols = "abcdefghi";
+                string rows = "9876543210";
+                UcciStep = string.Concat(cols.AsSpan(x0, 1), rows.AsSpan(y0, 1), cols.AsSpan(x1, 1), rows.AsSpan(y1, 1));
             }
             /// <summary>
             /// 执行着法
@@ -305,6 +309,24 @@ namespace Chess.CustomClass
                     point = point.GetParent();
                 }
                 return depth;
+            }
+            /// <summary>
+            /// 获取6个历史着法，主要用于象棋引擎的重复走棋判断
+            /// </summary>
+            /// <returns></returns>
+            public string Get6Moves()
+            {
+                string str="";
+                QiPuRecord record =this.Cursor;
+                for (int i = 0; i < 8; i++)
+                {
+                    if (!record.IsRoot())
+                    {
+                        str +=" " + record.StepData.UcciStep;
+                        record = record.GetParent();
+                    }
+                }
+                return str;
             }
         }
         /// <summary>
