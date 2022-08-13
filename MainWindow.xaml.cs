@@ -49,7 +49,11 @@ namespace Chess
             MainMenu.Visibility = Visibility.Visible;
             ReturnButton.Visibility = Visibility.Hidden;
         }
-
+        /// <summary>
+        /// 人机对战
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PersonVsPC(object sender, RoutedEventArgs e)
         {
             menuItem = 1;
@@ -57,7 +61,11 @@ namespace Chess
             MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
             ReturnButton.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        /// 电脑对战
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PCVsPC(object sender, RoutedEventArgs e)
         {
             menuItem = 2;
@@ -65,6 +73,11 @@ namespace Chess
             MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
             ReturnButton.Visibility = Visibility.Visible;
         }
+        /// <summary>
+        /// 自由打谱
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FreeDaPu(object sender, RoutedEventArgs e)
         {
             menuItem = 3;
@@ -89,6 +102,30 @@ namespace Chess
         private void AllwayOnTop(object sender, RoutedEventArgs e)
         {
             this.Topmost = !this.Topmost;
+        }
+        /// <summary>
+        /// 残局设计
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CanJuSheJi(object sender, RoutedEventArgs e)
+        {
+            menuItem = 5;
+            MainMenu.Visibility = Visibility.Hidden;
+            MainFram.Source = new Uri("CanJuSheJi.xaml", UriKind.RelativeOrAbsolute);
+            ReturnButton.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// 残局练习
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CanJuLianXi(object sender, RoutedEventArgs e)
+        {
+            menuItem = 6;
+            MainMenu.Visibility = Visibility.Hidden;
+            MainFram.Source = new Uri("CanJuSheJi.xaml", UriKind.RelativeOrAbsolute);
+            ReturnButton.Visibility = Visibility.Visible;
         }
     }
 }

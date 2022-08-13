@@ -16,6 +16,8 @@
             <Button Content="人机对战"  Style="{StaticResource mainMenuButton}" Click="PersonVsPC"/>
             <Button Content="电脑对战"  Style="{StaticResource mainMenuButton}" Click="PCVsPC"/>
             <Button Content="自由打谱"  Style="{StaticResource mainMenuButton}" Click="FreeDaPu"/>
+            <Button Content="残局练习"  Style="{StaticResource mainMenuButton}" Click="CanJuLianXi"/>
+            <Button Content="残局设计"  Style="{StaticResource mainMenuButton}" Click="CanJuSheJi"/>
             <Button Content="棋谱记录"  Style="{StaticResource mainMenuButton}" Click="FuPan"/>
             <Image HorizontalAlignment="Center" Source="/picture/大象.png" Stretch="Uniform" StretchDirection="Both" VerticalAlignment="Bottom" Width="300" Margin="0,30,0,0" Opacity="0.75" />
         </StackPanel>
