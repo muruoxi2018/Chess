@@ -61,12 +61,7 @@ namespace Chess.Engine
             "k","a","a","b","b","n","n","r","r","c","c","p","p","p","p","p",
             "K","A","A","B","B","N","N","R","R","C","C","P","P","P","P","P"
         };
-
-        /// <summary>
-        /// 根据棋盘数据，生成FEN字符串
-        /// </summary>
-        /// <returns></returns>
-        public static string QiPanDataToFenStr()
+        public static string QiPanDataToFenStr_header()
         {
             #region 棋盘数据生成FEN字符串
             string output = "";
@@ -101,6 +96,18 @@ namespace Chess.Engine
                     output += "/";
                 }
             }
+            return output;
+            #endregion
+        }
+        /// <summary>
+        /// 根据棋盘数据，生成FEN字符串
+        /// </summary>
+        /// <returns></returns>
+        public static string QiPanDataToFenStr()
+        {
+            #region 棋盘数据生成FEN字符串
+            string output = QiPanDataToFenStr_header();
+
             if (GlobalValue.SideTag == GlobalValue.BLACKSIDE)
             {
                 output += " b";
@@ -113,6 +120,50 @@ namespace Chess.Engine
             output += " moves " + GlobalValue.qiPuRecordRoot.Get6Moves();
             return output;
             #endregion
+        }
+        /// <summary>
+        /// 将FEN串信息转换到棋谱数组中
+        /// </summary>
+        /// <param name="fen">FEN串</param>
+        /// <returns>棋谱数组int[9,10]</returns>
+        public static int[,] ConvertFenStrToQiPan(string fen)
+        {
+            int[,] output = new int[9, 10];
+            int col, row;
+            col = 0;
+            row = 0;
+            string[] locFen = new string[Fen.Length];
+            Array.Copy(Fen, locFen, Fen.Length);
+
+            foreach (char c in fen)
+            {
+                if (c == '/')
+                {
+                    row++;
+                    col = 0;
+                    continue;
+                }
+                if (char.IsDigit(c)) // 如果是数字
+                {
+                    int num =(int)Char.GetNumericValue(c);
+                    while (num > 0)
+                    {
+                        output[col,row] = -1;
+                        col++;
+                        num--;
+                    }
+                }
+                else
+                {
+                    // 如果是字符
+                    int offset = Array.IndexOf(locFen,c+"");
+                    output[col, row] = offset;
+                    col++;
+                    locFen[offset] = "";
+
+                }
+            }
+            return output;
         }
         /// <summary>
         /// 头条着法存储类，用于存储单行UCCI的解析信息
@@ -186,7 +237,7 @@ namespace Chess.Engine
             public List<System.Drawing.Point> GetPoint()
             {
                 List<System.Drawing.Point> points = new List<System.Drawing.Point>();
-                System.Drawing.Point pt0=new System.Drawing.Point(FirstStep.X0,FirstStep.Y0);
+                System.Drawing.Point pt0 = new System.Drawing.Point(FirstStep.X0, FirstStep.Y0);
                 points.Add(pt0);
                 System.Drawing.Point pt1 = new System.Drawing.Point(FirstStep.X1, FirstStep.Y1);
                 points.Add(pt1);
@@ -231,7 +282,7 @@ namespace Chess.Engine
 
                     int end = InfoSource.IndexOf("bestmove"); // 删除bestmove所在行
                     string[] bufArr = InfoSource[..end].Trim().Split(Environment.NewLine); // 按行分割字符串为数组
-                    
+
                     foreach (string str in bufArr)
                     {
                         PvClass pvc = new()
@@ -261,8 +312,8 @@ namespace Chess.Engine
                 string str = "";
                 if (InfoList.Count > 0)
                 {
-                    int maxscore=InfoList.Max(x => x.Score);
-                    str=InfoList.FirstOrDefault(x => x.Score==maxscore).GetMove();
+                    int maxscore = InfoList.Max(x => x.Score);
+                    str = InfoList.FirstOrDefault(x => x.Score == maxscore).GetMove();
                     str = $"最佳着法（{maxscore}分）： {str}";
                 }
                 else
@@ -281,7 +332,7 @@ namespace Chess.Engine
                 GlobalValue.arrows.HideAllPath();
                 if (InfoList.Count > 0)
                 {
-                    List<List< System.Drawing.Point>> points = new();
+                    List<List<System.Drawing.Point>> points = new();
                     foreach (PvClass p in InfoList)
                     {
                         points.Add(p.GetPoint());
@@ -307,7 +358,7 @@ namespace Chess.Engine
             }
             public CustomClass.Qipu.StepCode GetBestSetp()
             {
-                if (InfoList.Count>0) return InfoList[0].FirstStep; 
+                if (InfoList.Count > 0) return InfoList[0].FirstStep;
                 return null;
             }
         }
@@ -385,8 +436,8 @@ namespace Chess.Engine
             int x1 = cols.IndexOf(ucciStr[2]);  // 目标位置
             int y1 = rows.IndexOf(ucciStr[3]);
             int qizi = qipan[x0, y0];
-            int dieQiZi=qipan[x1, y1];
-            CustomClass.Qipu.StepCode step = new CustomClass.Qipu.StepCode(qizi,x0, y0, x1, y1, dieQiZi);
+            int dieQiZi = qipan[x1, y1];
+            CustomClass.Qipu.StepCode step = new CustomClass.Qipu.StepCode(qizi, x0, y0, x1, y1, dieQiZi);
             return step;
         }
     }

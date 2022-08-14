@@ -124,7 +124,7 @@ namespace Chess
         {
             menuItem = 6;
             MainMenu.Visibility = Visibility.Hidden;
-            MainFram.Source = new Uri("CanJuSheJi.xaml", UriKind.RelativeOrAbsolute);
+            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
             ReturnButton.Visibility = Visibility.Visible;
         }
     }

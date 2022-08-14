@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" Closing="OnMainWindowClose" Icon="/picture/象128.png" SizeToContent="WidthAndHeight" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" WindowState="Normal" Width="1280" Height="900" Loaded="OnLoad" WindowStyle="ThreeDBorderWindow" MinWidth="800" MinHeight="900" Unloaded="OnUnloaded">
+        Title="中国象棋" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" Closing="OnMainWindowClose" Icon="/picture/象128.png" SizeToContent="WidthAndHeight" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" WindowState="Normal" Width="1280" Height="1000" Loaded="OnLoad" WindowStyle="ThreeDBorderWindow" MinWidth="1000" MinHeight="1000" Unloaded="OnUnloaded">
     <Window.Background>
         <ImageBrush ImageSource="/picture/青草.jpg"/>
     </Window.Background>
     <Grid>
-        
+        <Border BorderBrush="#FF7F7F7F" BorderThickness="0,1,0,0"></Border>
         <Frame x:Name="MainFram" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="767" MinHeight="800" NavigationUIVisibility="Hidden" />
         <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,63,0,0">
             <Button Content="人机对战"  Style="{StaticResource mainMenuButton}" Click="PersonVsPC"/>

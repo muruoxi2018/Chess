@@ -21,7 +21,7 @@ namespace Chess.SuanFa // 算法
                     PathBool[i, j] = false;
                 }
             }
-            if (qiZi > -1)
+            if (qiZi > -1 && MainWindow.menuItem != 5)
             {
                 PathBool = GetPathPoints(qiZi, GlobalValue.QiPan);
                 for (int i = 0; i <= 8; i++)
@@ -32,6 +32,17 @@ namespace Chess.SuanFa // 算法
                     }
                 }
                 GlobalValue.pathPointImage[GlobalValue.qiZiArray[qiZi].Col, GlobalValue.qiZiArray[qiZi].Row].HasPoint = false;
+            }
+            if (MainWindow.menuItem == 5)
+            {
+                for (int i = 0; i <= 8; i++)
+                {
+                    for (int j = 0; j <= 9; j++)
+                    {
+                        GlobalValue.pathPointImage[i, j].HasPoint = true;
+                        PathBool[i, j] = true;
+                    }
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 
 /// <summary>
 /// 开源软件
@@ -12,14 +13,8 @@ namespace Chess.OpenSource
     /// </summary>
     public class SqliteHelper
     {
-        
-#if(DEBUG) //  数据库文件路径。调试期间使用绝对路径，发布时改为相对路径。
-        private static string DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";
-        
-#else // 软件发布时使用此设置
-        private static string DbFile = System.Environment.CurrentDirectory + @"\DB\KaiJuKu.db"; 
-#endif       
-        private static string DbSourcePath = @"data source="+ DbFile;
+        private static string DbFile = "";
+        private static string DbSourcePath = "";
 
         /// <summary>
         /// 检查数据库文件是否存在
@@ -27,17 +22,23 @@ namespace Chess.OpenSource
         /// <returns>true=文件存在；false=文件不存在</returns>
         private static bool DbFileExist()
         {
-            DbFile = @"D:\CSHARP\Chess\DB\KaiJuKu.db";
+            string path = System.AppDomain.CurrentDomain.BaseDirectory;
+#if (DEBUG) //  调试期间数据库文件使用代码路径。
+            path = Directory.GetParent(path).FullName;
+            path = Directory.GetParent(path).FullName;
+            path = Directory.GetParent(path).FullName;
+            path = Directory.GetParent(path).FullName;
+#else // 软件发布时使用生成的可执行文件路径。
+            path = System.AppDomain.CurrentDomain.BaseDirectory;
+#endif
+            DbFile = path + @"\DB\KaiJuKu.db";
             if (!System.IO.File.Exists(DbFile))
             {
-                DbFile = @"E:\source\Chess\DB\KaiJuKu.db";
-                if (!System.IO.File.Exists(DbFile))
-                {
-                    System.Windows.MessageBox.Show("数据库文件未找到，请检查文件路径。", "错误提示");
-                    return false;
-                }
+                System.Windows.MessageBox.Show($"数据库文件{DbFile}未找到，请检查文件路径，或修改SqliteHelper.cs中的文件路径。", "错误提示");
+                return false;
             }
             DbSourcePath = @"data source=" + DbFile;
+
             return true;
         }
         /// <summary>
@@ -109,7 +110,7 @@ namespace Chess.OpenSource
         }
         public static DataTable ExecuteTable(string sql)
         {
-            if (!DbFileExist()) return null; 
+            if (!DbFileExist()) return null;
             DataTable dt = new();
             try
             {

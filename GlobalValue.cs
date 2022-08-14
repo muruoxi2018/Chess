@@ -73,6 +73,18 @@ namespace Chess
             {1, 7},{7, 7},
             {0, 6},{2, 6},{4, 6},{6, 6},{8, 6}
         };
+        /// <summary>
+        /// 残局设计时棋子的初始位置
+        /// </summary>
+        public static readonly int[,] qiZiCanJuInitPosition = new int[32, 2]
+       {
+            {0, -1},{1, -1},{1, -1},{2, -1},{2, -1},{3, -1},{3, -1},{4, -1},{4, -1},
+            {5, -1},{5, -1},
+            {6, -1},{6, -1},{6, -1},{6, -1},{6, -1},
+            {0, 10},{1, 10},{1, 10},{2, 10},{2, 10},{3, 10},{3, 10},{4, 10},{4, 10},
+            {5, 10},{5, 10},
+            {6, 10},{6, 10},{6, 10},{6, 10},{6, 10}
+       };
         const int gw = 35;
         /// <summary>
         /// 棋盘每一格的列坐标
@@ -89,6 +101,8 @@ namespace Chess
         {
             61.0 + gw, 130.0 + gw, 197.0 + gw, 264.0 + gw, 332.0 + gw, 400.0 + gw, 467.0 + gw, 535.0 + gw, 603.0 + gw, 669.0 + gw
         };
+        public static readonly double QiPanGrid_Y_0 = -20;
+        public static readonly double QiPanGrid_Y_10 = 750;
         /// <summary>
         /// 阿拉伯数字0-9，对应的中文数字
         /// </summary>
@@ -164,7 +178,40 @@ namespace Chess
             Delay(500);
             jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
         }
+        public static void QiZiFreeMoveTo(int qiZi, int m, int n, bool sound)  // 运子
+        {
+            if (qiZi is < 0 or > 31) return;
+            // 运子到(m,n)位置
+            int x0 = qiZiArray[qiZi].Col;
+            int y0 = qiZiArray[qiZi].Row;
+            int dieQiZi = QiPan[m, n];
 
+            AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
+
+            _ = qiZiArray[qiZi].SetPosition(m, n);
+
+            for (int i = 0; i <= 8; i++)
+            {
+                for (int j = 0; j <= 9; j++)
+                {
+                    pathPointImage[i, j].HasPoint = false; // 走棋后，隐藏走棋路径
+                }
+            }
+
+            if (dieQiZi != -1) // 如果杀死了棋子
+            {
+                qiZiArray[dieQiZi].SetDied();
+            }
+
+            CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
+            AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
+            if (sound)
+            {
+                player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
+                player.Play();
+            }
+            Delay(500);
+        }
         /// <summary>
         /// 添加一条棋谱记录
         /// </summary>
@@ -242,6 +289,32 @@ namespace Chess
         private static void AnimationMove(int qiZi, int x0, int y0, int x1, int y1)
         {
             const double delayTime = 200.0; // 动画延续时间，毫秒
+            double Grid_y0=0.0;
+            if (y0>=0 && y0 < 10)
+            {
+                Grid_y0 = QiPanGrid_Y[y0] - GRID_WIDTH / 2;
+            }
+            if (y0 == -1)
+            {
+                Grid_y0 = QiPanGrid_Y_0;
+            }
+            if (y0 == 10)
+            {
+                Grid_y0 = QiPanGrid_Y_10;
+            }
+            double Grid_y1 = 0.0;
+            if (y1 >= 0 && y1 < 10)
+            {
+                Grid_y1 = QiPanGrid_Y[y1] - GRID_WIDTH / 2;
+            }
+            if (y1 == -1)
+            {
+                Grid_y1 = QiPanGrid_Y_0;
+            }
+            if (y1 == 10)
+            {
+                Grid_y1 = QiPanGrid_Y_10;
+            }
             #region 动画参数设置
             DoubleAnimation PAx = new()
             {
@@ -252,8 +325,8 @@ namespace Chess
             };
             DoubleAnimation PAy = new()
             {
-                From = QiPanGrid_Y[y0] - GRID_WIDTH / 2,
-                To = QiPanGrid_Y[y1] - GRID_WIDTH / 2,
+                From = Grid_y0,
+                To = Grid_y1,
                 FillBehavior = FillBehavior.Stop,
                 Duration = new Duration(TimeSpan.FromSeconds(delayTime / 1000))
             };

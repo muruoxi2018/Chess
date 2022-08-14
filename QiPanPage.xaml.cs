@@ -16,6 +16,7 @@ using Chess.OpenSource;
 using Newtonsoft.Json;
 using Chess.SubWindow;
 using Chess.CustomClass;
+using System.Data;
 
 namespace Chess
 {
@@ -110,6 +111,7 @@ namespace Chess
             this.PersonVsPC.Visibility = Visibility.Hidden;
             this.FreeDaPu.Visibility = Visibility.Hidden;
             this.FuPan.Visibility = Visibility.Hidden;
+            GlobalValue.Reset();
             switch (MainWindow.menuItem)
             {
                 case 1:
@@ -124,11 +126,32 @@ namespace Chess
                 case 4:
                     this.FuPan.Visibility= Visibility.Visible;
                     break;
+                case 6:
+                    this.FreeDaPu.Visibility = Visibility.Visible;
+                    DataTable sr = OpenSource.SqliteHelper.Select("CanJuKu", "rowid,*");
+                    for (int i = 0; i < 32; i++)
+                    {
+                        GlobalValue.qiZiArray[i].SetDied();
+                    }
+                    string fen = sr.Rows[0]["FENstring"].ToString();
+                    GlobalValue.QiPan= Engine.XQEngine.ConvertFenStrToQiPan(fen);
+                    for (int i = 0; i <= 8; i++)
+                    {
+                        for (int j = 0; j <= 9; j++)
+                        {
+                            int qizi = GlobalValue.QiPan[i, j];
+                            if (qizi > -1)
+                            {
+                                GlobalValue.qiZiArray[qizi].SetPosition(i, j);
+                                GlobalValue.qiZiArray[qizi].Setlived();
+                            }
+                        }
+                    }
+                    break;
                 default:
                     break;
             }
 
-            GlobalValue.Reset();
 
         }
 

@@ -48,6 +48,7 @@ namespace Chess
             }
             HasPoint = false;
             Setposition(x, y);
+            if (MainWindow.menuItem == 5) image.Visibility = Visibility.Hidden;
 
         }
 
@@ -101,7 +102,8 @@ namespace Chess
         private void OnMouseup(object sender, MouseButtonEventArgs e)
         {
             // 当前有预选棋子时，将预选棋子运子到(m,n)位置================= 运子
-            GlobalValue.QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, true);
+            if (MainWindow.menuItem != 5) GlobalValue.QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, true);
+            else GlobalValue.QiZiFreeMoveTo(GlobalValue.CurrentQiZi, Col, Row, true);
             // 点击位置有棋子时，将预选棋子运子到(m,n)位置，并吃掉目标位置的对方棋子===== 吃子
 
             // 电脑执黑，人机对战。功能已实现，但动画总是在后台代码执行结束后再渲染，导致动作不流畅，比如下边那个延时，会影响之前的动画。
@@ -119,6 +121,11 @@ namespace Chess
                     CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                     if (step != null) step.LunchStep(); else break;
                 }
+            // 残局设计
+            if (MainWindow.menuItem == 5)
+            {
+
+            }
         }
 
     }

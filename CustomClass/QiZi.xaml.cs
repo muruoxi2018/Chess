@@ -55,7 +55,12 @@ namespace Chess
             QiZiImage.Source = bi;
             init_col = GlobalValue.qiZiInitPosition[id, 0]; // 开局时，棋子的位置
             init_row = GlobalValue.qiZiInitPosition[id, 1];
-            SetPosition(init_col, init_row);
+            if (MainWindow.menuItem == 5)
+            {
+                init_col = GlobalValue.qiZiCanJuInitPosition[id, 0]; // 残局设计开局时，棋子的位置
+                init_row = GlobalValue.qiZiCanJuInitPosition[id, 1];
+            }
+                SetPosition(init_col, init_row);
             SideColor = id >= 16;
             Selected = false;
             //yuxuankuang.Visibility = Visibility.Hidden;
@@ -77,6 +82,10 @@ namespace Chess
                 item.Deselect();
             }
             if (SideColor == GlobalValue.SideTag)
+            {
+                Select();
+            }
+            if (MainWindow.menuItem == 5)
             {
                 Select();
             }
@@ -127,9 +136,12 @@ namespace Chess
         {
             //if (Visibility != Visibility.Visible) return false;
 
-            if (QiziId > -1) // 仅仅对棋子有效
+            if (QiziId > -1 && (Col >= 0 && Col < 9) && (Row >= 0 && Row < 10)) // 仅仅对棋子有效
             {
                 GlobalValue.QiPan[Col, Row] = -1;
+            }
+            if (QiziId > -1 && (x >= 0 && x < 9) && (y >= 0 && y < 10)) // 仅仅对棋子有效
+            {
                 GlobalValue.QiPan[x, y] = QiziId;
             }
             Col = x;
@@ -140,7 +152,18 @@ namespace Chess
                 y = 9 - y;
             }
             SetValue(Canvas.LeftProperty, GlobalValue.QiPanGrid_X[x] - 33);
-            SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] - 33);
+            if (y >= 0 && y < 10)
+            {
+                SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y[y] - 33);
+            }
+            if (y == -1)
+            {
+                SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y_0);
+            }
+            if (y == 10)
+            {
+                SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y_10);
+            }
             QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
             return true;
 
