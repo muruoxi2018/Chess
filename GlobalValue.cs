@@ -191,6 +191,8 @@ namespace Chess
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
 
             qiZiArray[qiZi].SetPosition(m, n);
+            if (y0 >= 0 && y0 < 10) GlobalValue.QiPan[x0, y0] = -1;
+            GlobalValue.QiPan[m, n] = qiZi;
 
             for (int i = 0; i <= 8; i++)
             {
@@ -291,8 +293,8 @@ namespace Chess
         private static void AnimationMove(int qiZi, int x0, int y0, int x1, int y1)
         {
             const double delayTime = 200.0; // 动画延续时间，毫秒
-            double Grid_y0=0.0;
-            if (y0>=0 && y0 < 10)
+            double Grid_y0 = 0.0;
+            if (y0 >= 0 && y0 < 10)
             {
                 Grid_y0 = QiPanGrid_Y[y0] - GRID_WIDTH / 2;
             }
@@ -366,7 +368,7 @@ namespace Chess
             }
             scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // 走棋方指示灯动画，x方向缩放
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
-            
+
         }
 
         /// <summary>
@@ -420,7 +422,7 @@ namespace Chess
             qiZiArray[step.QiZi].Select();  // 重新计算可移动路径
             qiZiArray[step.QiZi].SetPosition(step.X0, step.Y0);
             AnimationMove(step.QiZi, step.X1, step.Y1, step.X0, step.Y0);
-            qiZiArray[step.QiZi].Select();  
+            qiZiArray[step.QiZi].Select();
             qiZiArray[step.QiZi].Deselect();
 
             if (step.DieQz > -1)

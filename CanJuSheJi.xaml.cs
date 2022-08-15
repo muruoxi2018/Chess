@@ -99,6 +99,8 @@ namespace Chess
         /// <param name="e"></param>
         private void ClearQiPan(object sender, RoutedEventArgs e)
         {
+            CanJuName.Text = "";
+            Comment.Text = "";
             for (int i = 0; i < 32; i++)
             {
                 GlobalValue.qiZiArray[i].SetInitPosition();

@@ -154,6 +154,7 @@ namespace Chess
                 default:
                     break;
             }
+            GlobalValue.jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
         }
 
         /// <summary>
