@@ -11,7 +11,7 @@
     </Window.Background>
     <Grid>
         <Border BorderBrush="#FF7F7F7F" BorderThickness="0,1,0,0"></Border>
-        <Frame x:Name="MainFram" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="767" MinHeight="800" NavigationUIVisibility="Hidden" />
+        <Frame x:Name="MainFrame" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="767" MinHeight="800" NavigationUIVisibility="Hidden" />
         <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,63,0,0">
             <Button Content="人机对战"  Style="{StaticResource mainMenuButton}" Click="PersonVsPC"/>
             <Button Content="电脑对战"  Style="{StaticResource mainMenuButton}" Click="PCVsPC"/>

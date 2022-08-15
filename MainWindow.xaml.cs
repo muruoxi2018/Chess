@@ -45,7 +45,7 @@ namespace Chess
 
         private void ReturnMainMenu(object sender, RoutedEventArgs e)
         {
-            MainFram.Source = null;
+            MainFrame.Source = null;
             MainMenu.Visibility = Visibility.Visible;
             ReturnButton.Visibility = Visibility.Hidden;
         }
@@ -58,7 +58,7 @@ namespace Chess
         {
             menuItem = 1;
             MainMenu.Visibility = Visibility.Hidden;
-            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
             ReturnButton.Visibility = Visibility.Visible;
         }
         /// <summary>
@@ -70,7 +70,7 @@ namespace Chess
         {
             menuItem = 2;
             MainMenu.Visibility = Visibility.Hidden;
-            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
             ReturnButton.Visibility = Visibility.Visible;
         }
         /// <summary>
@@ -82,7 +82,7 @@ namespace Chess
         {
             menuItem = 3;
             MainMenu.Visibility = Visibility.Hidden;
-            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
             ReturnButton.Visibility = Visibility.Visible;
         }
 
@@ -90,7 +90,7 @@ namespace Chess
         {
             menuItem = 4;
             MainMenu.Visibility = Visibility.Hidden;
-            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
             ReturnButton.Visibility = Visibility.Visible;
         }
 
@@ -112,7 +112,7 @@ namespace Chess
         {
             menuItem = 5;
             MainMenu.Visibility = Visibility.Hidden;
-            MainFram.Source = new Uri("CanJuSheJi.xaml", UriKind.RelativeOrAbsolute);
+            MainFrame.Source = new Uri("CanJuSheJi.xaml", UriKind.RelativeOrAbsolute);
             ReturnButton.Visibility = Visibility.Visible;
         }
         /// <summary>
@@ -124,7 +124,7 @@ namespace Chess
         {
             menuItem = 6;
             MainMenu.Visibility = Visibility.Hidden;
-            MainFram.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
             ReturnButton.Visibility = Visibility.Visible;
         }
     }

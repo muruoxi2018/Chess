@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 
 namespace Chess
 {
-    
+
     /// <summary>
     /// 棋子类
     /// 主程序中有32个棋子实例
@@ -60,7 +60,7 @@ namespace Chess
                 init_col = GlobalValue.qiZiCanJuInitPosition[id, 0]; // 残局设计开局时，棋子的位置
                 init_row = GlobalValue.qiZiCanJuInitPosition[id, 1];
             }
-                SetPosition(init_col, init_row);
+            SetPosition(init_col, init_row);
             SideColor = id >= 16;
             Selected = false;
             //yuxuankuang.Visibility = Visibility.Hidden;
@@ -132,18 +132,18 @@ namespace Chess
         /// </summary>
         /// <param name="x">列坐标</param>
         /// <param name="y">行坐标</param>
-        public bool SetPosition(int x, int y)
+        public void SetPosition(int x, int y)
         {
             //if (Visibility != Visibility.Visible) return false;
 
-            if (QiziId > -1 && (Col >= 0 && Col < 9) && (Row >= 0 && Row < 10)) // 仅仅对棋子有效
+            /*if (QiziId > -1 && (Col >= 0 && Col < 9) && (Row >= 0 && Row < 10)) // 仅仅对棋子有效
             {
                 GlobalValue.QiPan[Col, Row] = -1;
             }
             if (QiziId > -1 && (x >= 0 && x < 9) && (y >= 0 && y < 10)) // 仅仅对棋子有效
             {
                 GlobalValue.QiPan[x, y] = QiziId;
-            }
+            }*/
             Col = x;
             Row = y;
             if (GlobalValue.IsQiPanFanZhuan) // 如果棋盘翻转为上红下黑，则进行坐标转换
@@ -165,8 +165,6 @@ namespace Chess
                 SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y_10);
             }
             QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
-            return true;
-
         }
 
 

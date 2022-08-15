@@ -68,6 +68,18 @@
                         </WrapPanel>
                     </Grid>
                 </Border>
+                <Border x:Name="CanJuLianXi" VerticalAlignment="Bottom" Height="75" Margin="10,0,10,10" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1" BorderBrush="#E5056955" Background="#33000000" Visibility="Hidden">
+                    <Grid Visibility="Visible">
+                        <WrapPanel Height="30" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,10,0,0">
+                            <Button Content="重来"  Style="{StaticResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Width="70" Click="ReStartCanJu"/>
+                            <Button Content="自动走棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="AutoMoveCanJu"/>
+                            <Button Content="上一局" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="PerCanJu"/>
+                            <Button Content="下一局" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="NextCanJu"/>
+                        </WrapPanel>
+                        <TextBlock x:Name="CanJuComment" HorizontalAlignment="Stretch" Margin="10,36,10,0" VerticalAlignment="Top" Foreground="#FFEAF587" FontSize="14" TextWrapping="Wrap"/>
+
+                    </Grid>
+                </Border>
                 <Border x:Name="FuPan" VerticalAlignment="Bottom" Height="75" Margin="10,0,10,10" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1" BorderBrush="#E5056955" Background="#33000000" Visibility="Hidden">
                     <Grid Visibility="Visible">
                         <WrapPanel Height="30" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,10,0,0">

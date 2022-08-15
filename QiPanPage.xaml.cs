@@ -27,7 +27,8 @@ namespace Chess
     {
         private static Window_JiPu jipuWindow;  // 记谱窗口
         private static SpyWindow spyWindow;    // 棋盘数据监视窗口
-
+        private static DataTable CanJuData;
+        private static int CanJuIndex = 0;
         public QiPanPage()
         {
             InitializeComponent();
@@ -112,28 +113,29 @@ namespace Chess
             this.FreeDaPu.Visibility = Visibility.Hidden;
             this.FuPan.Visibility = Visibility.Hidden;
             GlobalValue.Reset();
+            GlobalValue.jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
             switch (MainWindow.menuItem)
             {
-                case 1:
+                case 1: // 人机对战
                     this.PersonVsPC.Visibility= Visibility.Visible;
                     break;
-                case 2:
+                case 2: // 电脑对战
                     this.PCVsPc.Visibility= Visibility.Visible;
                     break;
-                case 3:
+                case 3: // 自由打谱
                     this.FreeDaPu.Visibility= Visibility.Visible;
                     break;
-                case 4:
+                case 4: // 复盘
                     this.FuPan.Visibility= Visibility.Visible;
                     break;
-                case 6:
-                    this.FreeDaPu.Visibility = Visibility.Visible;
-                    DataTable sr = OpenSource.SqliteHelper.Select("CanJuKu", "rowid,*");
+                case 6:// 残局练习
+                    this.CanJuLianXi.Visibility = Visibility.Visible;
+                    CanJuData = OpenSource.SqliteHelper.Select("CanJuKu", "rowid,*");
                     for (int i = 0; i < 32; i++)
                     {
                         GlobalValue.qiZiArray[i].SetDied();
                     }
-                    string fen = sr.Rows[0]["FENstring"].ToString();
+                    string fen = CanJuData.Rows[CanJuIndex]["FENstring"].ToString();
                     GlobalValue.QiPan= Engine.XQEngine.ConvertFenStrToQiPan(fen);
                     for (int i = 0; i <= 8; i++)
                     {
@@ -147,12 +149,11 @@ namespace Chess
                             }
                         }
                     }
+                    CanJuComment.Text = $"{CanJuIndex + 1}/{CanJuData.Rows.Count}  " + CanJuData.Rows[CanJuIndex]["Name"].ToString() + "：" + CanJuData.Rows[CanJuIndex]["Comment"].ToString();
                     break;
                 default:
                     break;
             }
-
-
         }
 
         /// <summary>
@@ -382,6 +383,76 @@ namespace Chess
         private void GameOverClick(object sender, RoutedEventArgs e)
         {
             GlobalValue.IsGameOver = true;
+        }
+
+        //  以下为残局练习的相关代码
+        
+        /// <summary>
+        /// 重来，当前局重来
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ReStartCanJu(object sender, RoutedEventArgs e)
+        {
+            string fen = CanJuData.Rows[CanJuIndex]["FENstring"].ToString();
+            GlobalValue.QiPan = Engine.XQEngine.ConvertFenStrToQiPan(fen);
+            for (int i = 0; i < 32; i++)
+            {
+                GlobalValue.qiZiArray[i].SetDied();
+            }
+            for (int i = 0; i <= 8; i++)
+            {
+                for (int j = 0; j <= 9; j++)
+                {
+                    int qizi = GlobalValue.QiPan[i, j];
+                    if (qizi > -1)
+                    {
+                        GlobalValue.qiZiArray[qizi].SetPosition(i, j);
+                        GlobalValue.qiZiArray[qizi].Setlived();
+                    }
+                }
+            }
+            GlobalValue.IsGameOver=false;
+            GlobalValue.SideTag = GlobalValue.REDSIDE;
+            GlobalValue.jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
+            CanJuComment.Text = $"{CanJuIndex+1}/{CanJuData.Rows.Count}  "+CanJuData.Rows[CanJuIndex]["Name"].ToString() + "：" + CanJuData.Rows[CanJuIndex]["Comment"].ToString();
+        }
+        /// <summary>
+        /// 前一个残局
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PerCanJu(object sender, RoutedEventArgs e)
+        {
+            CanJuIndex--;
+            if (CanJuIndex < 0) CanJuIndex = 0;
+            ReStartCanJu(sender, e);
+        }
+        /// <summary>
+        /// 下一个残局
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NextCanJu(object sender, RoutedEventArgs e)
+        {
+            CanJuIndex++;
+            if (CanJuIndex >= CanJuData.Rows.Count) CanJuIndex = CanJuData.Rows.Count-1;
+            ReStartCanJu(sender, e);
+        }
+        /// <summary>
+        /// 电脑自动走残局
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AutoMoveCanJu(object sender, RoutedEventArgs e)
+        {
+            ReStartCanJu(sender, e);
+            while (GlobalValue.IsGameOver == false)
+            {
+                GlobalValue.Delay(1000);
+                CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                if (step != null) step.LunchStep(); else break;
+            }
         }
     }
 }

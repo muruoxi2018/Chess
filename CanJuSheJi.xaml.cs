@@ -79,9 +79,18 @@ namespace Chess
             dic.Add("Name", CanJuName.Text);
             dic.Add("Comment", Comment.Text);
             dic.Add("FENstring", fenstr);
-            _ = SqliteHelper.Insert("CanJuKu", dic);
-            string str = CanJuName.Text;
-
+            int rows = SqliteHelper.Insert("CanJuKu", dic);
+            if (rows > 0)
+            {
+                SaveOk.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SaveNotOk.Visibility = Visibility.Visible;
+            }
+            GlobalValue.Delay(1000);
+            SaveOk.Visibility = Visibility.Hidden;
+            SaveNotOk.Visibility = Visibility.Hidden;
         }
         /// <summary>
         /// 清空棋盘
@@ -90,7 +99,18 @@ namespace Chess
         /// <param name="e"></param>
         private void ClearQiPan(object sender, RoutedEventArgs e)
         {
-
+            for (int i = 0; i < 32; i++)
+            {
+                GlobalValue.qiZiArray[i].SetInitPosition();
+            }
+            for (int i = 0; i <= 8; i++)
+            {
+                for (int j = 0; j <= 9; j++)
+                {
+                    GlobalValue.QiPan[i, j] = -1; // 棋盘数据清空
+                    GlobalValue.pathPointImage[i, j].HasPoint = false; // 走棋路径点清空
+                }
+            }
         }
     }
 }

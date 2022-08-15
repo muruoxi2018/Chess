@@ -128,7 +128,9 @@ namespace Chess
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
 
             if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, QiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
-            _ = qiZiArray[qiZi].SetPosition(m, n);
+            qiZiArray[qiZi].SetPosition(m, n);
+            GlobalValue.QiPan[x0, y0] = -1;
+            GlobalValue.QiPan[m, n] = qiZi;
             arrows.HideAllPath();  // 隐藏提示箭头
             AddQiPuItem(qiZi, x0, y0, m, n, dieQiZi); // 增加一行棋谱记录
 
@@ -188,7 +190,7 @@ namespace Chess
 
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
 
-            _ = qiZiArray[qiZi].SetPosition(m, n);
+            qiZiArray[qiZi].SetPosition(m, n);
 
             for (int i = 0; i <= 8; i++)
             {
@@ -416,15 +418,15 @@ namespace Chess
 
             Qipu.StepCode step = Qipu.QiPuList[^1].StepData; // ^1：索引运算符，表示倒数第一个
             qiZiArray[step.QiZi].Select();  // 重新计算可移动路径
-            _ = qiZiArray[step.QiZi].SetPosition(step.X0, step.Y0);
+            qiZiArray[step.QiZi].SetPosition(step.X0, step.Y0);
             AnimationMove(step.QiZi, step.X1, step.Y1, step.X0, step.Y0);
-            qiZiArray[step.QiZi].Select();  // 重新计算可移动路径
+            qiZiArray[step.QiZi].Select();  
             qiZiArray[step.QiZi].Deselect();
 
             if (step.DieQz > -1)
             {
                 qiZiArray[step.DieQz].Setlived();
-                _ = qiZiArray[step.DieQz].SetPosition(step.X1, step.Y1);
+                qiZiArray[step.DieQz].SetPosition(step.X1, step.Y1);
             }
             QiPan[step.X0, step.Y0] = step.QiZi;
             QiPan[step.X1, step.Y1] = step.DieQz;
@@ -564,7 +566,10 @@ namespace Chess
             return char1 + char2 + char3 + char4;
         }
 
-
+        /// <summary>
+        /// 延时函数，延时期间可接收和执行事件，解决了系统假死问题
+        /// </summary>
+        /// <param name="milliSecond"></param>
         public static void Delay(int milliSecond)
         {
             int start = Environment.TickCount;

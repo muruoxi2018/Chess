@@ -318,6 +318,7 @@ namespace Chess.CustomClass
             {
                 string str="";
                 QiPuRecord record =this.Cursor;
+                if (record.IsRoot()) return str;
                 for (int i = 0; i < 8; i++)
                 {
                     if (!record.IsRoot())
@@ -326,7 +327,7 @@ namespace Chess.CustomClass
                         record = record.GetParent();
                     }
                 }
-                return str;
+                return " moves " + str;
             }
         }
         /// <summary>
