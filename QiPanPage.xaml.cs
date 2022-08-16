@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using Chess.SubWindow;
 using Chess.CustomClass;
 using System.Data;
+using System.Diagnostics;
 
 namespace Chess
 {
@@ -114,19 +115,20 @@ namespace Chess
             this.FuPan.Visibility = Visibility.Hidden;
             GlobalValue.Reset();
             GlobalValue.jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
+            CanJuIndex = 0;
             switch (MainWindow.menuItem)
             {
                 case 1: // 人机对战
-                    this.PersonVsPC.Visibility= Visibility.Visible;
+                    this.PersonVsPC.Visibility = Visibility.Visible;
                     break;
                 case 2: // 电脑对战
-                    this.PCVsPc.Visibility= Visibility.Visible;
+                    this.PCVsPc.Visibility = Visibility.Visible;
                     break;
                 case 3: // 自由打谱
-                    this.FreeDaPu.Visibility= Visibility.Visible;
+                    this.FreeDaPu.Visibility = Visibility.Visible;
                     break;
                 case 4: // 复盘
-                    this.FuPan.Visibility= Visibility.Visible;
+                    this.FuPan.Visibility = Visibility.Visible;
                     break;
                 case 6:// 残局练习
                     this.CanJuLianXi.Visibility = Visibility.Visible;
@@ -136,7 +138,7 @@ namespace Chess
                         GlobalValue.qiZiArray[i].SetDied();
                     }
                     string fen = CanJuData.Rows[CanJuIndex]["FENstring"].ToString();
-                    GlobalValue.QiPan= Engine.XQEngine.ConvertFenStrToQiPan(fen);
+                    GlobalValue.QiPan = Engine.XQEngine.ConvertFenStrToQiPan(fen);
                     for (int i = 0; i <= 8; i++)
                     {
                         for (int j = 0; j <= 9; j++)
@@ -387,7 +389,7 @@ namespace Chess
         }
 
         //  以下为残局练习的相关代码
-        
+
         /// <summary>
         /// 重来，当前局重来
         /// </summary>
@@ -413,10 +415,10 @@ namespace Chess
                     }
                 }
             }
-            GlobalValue.IsGameOver=false;
+            GlobalValue.IsGameOver = false;
             GlobalValue.SideTag = GlobalValue.REDSIDE;
             GlobalValue.jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
-            CanJuComment.Text = $"{CanJuIndex+1}/{CanJuData.Rows.Count}  "+CanJuData.Rows[CanJuIndex]["Name"].ToString() + "：" + CanJuData.Rows[CanJuIndex]["Comment"].ToString();
+            CanJuComment.Text = $"{CanJuIndex + 1}/{CanJuData.Rows.Count}  " + CanJuData.Rows[CanJuIndex]["Name"].ToString() + "：" + CanJuData.Rows[CanJuIndex]["Comment"].ToString();
         }
         /// <summary>
         /// 前一个残局
@@ -437,7 +439,7 @@ namespace Chess
         private void NextCanJu(object sender, RoutedEventArgs e)
         {
             CanJuIndex++;
-            if (CanJuIndex >= CanJuData.Rows.Count) CanJuIndex = CanJuData.Rows.Count-1;
+            if (CanJuIndex >= CanJuData.Rows.Count) CanJuIndex = CanJuData.Rows.Count - 1;
             ReStartCanJu(sender, e);
         }
         /// <summary>
@@ -447,13 +449,28 @@ namespace Chess
         /// <param name="e"></param>
         private void AutoMoveCanJu(object sender, RoutedEventArgs e)
         {
-            ReStartCanJu(sender, e);
-            while (GlobalValue.IsGameOver == false)
+            //ReStartCanJu(sender, e);
+            AutoMoveCanJuQiZi.IsEnabled = false;
+            int moveCount = 20; // 20步内没有胜负，则结束自动走棋
+            while (GlobalValue.IsGameOver == false && moveCount > 0)
             {
-                GlobalValue.Delay(1000);
                 CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                 if (step != null) step.LunchStep(); else break;
+                moveCount--;
+                GlobalValue.Delay(1000);
             }
+            AutoMoveCanJuQiZi.IsEnabled=true;
+        }
+
+        private void VideoUrl(object sender, RoutedEventArgs e)
+        {
+            Process proc = new();
+            proc.StartInfo.UseShellExecute = true;
+            // 在 .Net中，为了保证跨平台性，
+            // 需要委托 Windows Shell 做一些事情时，
+            // 需要显式声明 Process.StartUseShellExecute=true
+            proc.StartInfo.FileName = "https://blog.csdn.net/weixin_33347911/article/details/114608150?spm=1035.2023.3001.6557&utm_medium=distribute.pc_relevant_bbs_down_v2.none-task-blog-2~default~OPENSEARCH~Rate-11.pc_relevant_bbs_down_v2_default&depth_1-utm_source=distribute.pc_relevant_bbs_down_v2.none-task-blog-2~default~OPENSEARCH~Rate-11.pc_relevant_bbs_down_v2_default";
+            _ = proc.Start();
         }
     }
 }

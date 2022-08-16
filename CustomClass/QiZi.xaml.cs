@@ -220,6 +220,19 @@ namespace Chess
         {
             yuanweizhi.Visibility = Visibility.Hidden;
         }
+        /// <summary>
+        /// 在残局设计界面，可移除棋子
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteQiZi(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.menuItem == 5)
+            {
+                GlobalValue.QiPan[Col, Row] = -1;
+                SetInitPosition();
+            }
+        }
     }
 }
 
