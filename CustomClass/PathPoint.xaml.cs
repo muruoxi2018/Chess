@@ -101,36 +101,41 @@ namespace Chess
         /// <param name="e"></param>
         private void OnMouseup(object sender, MouseButtonEventArgs e)
         {
-            // 当前有预选棋子时，将预选棋子运子到(m,n)位置================= 运子
-            if (MainWindow.menuItem != 5) GlobalValue.QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, true);
-            else GlobalValue.QiZiFreeMoveTo(GlobalValue.CurrentQiZi, Col, Row, true);
-
-            // 电脑执黑，人机对战。功能已实现，但动画总是在后台代码执行结束后再渲染，导致动作不流畅，比如下边那个延时，会影响之前的动画。
-            // DispatcherHelper.DoEvents() 好像解决了上边这个问题
-            
-            // 人机对战，电脑执黑
-            if (MainWindow.menuItem == 1 && GlobalValue.SideTag == GlobalValue.BLACKSIDE && GlobalValue.IsGameOver == false)
+            if (MainWindow.menuItem == 5)
             {
-                GlobalValue.Delay(500);
-                CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
-                if (step != null) step.LunchStep();
+                // 自由摆放棋子
+                GlobalValue.QiZiFreeMoveTo(GlobalValue.CurrentQiZi, Col, Row, true);
             }
-            // 电脑对战，第一步需人为走出
-            if (MainWindow.menuItem == 2)
-                while (GlobalValue.IsGameOver == false)
-                {
-                    GlobalValue.Delay(1000);
-                    CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
-                    if (step != null) step.LunchStep(); else break;
-                }
-            // 残局练习
-            if (MainWindow.menuItem == 6)
+            else
             {
-                GlobalValue.Delay(500);
-                CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
-                if (step != null) step.LunchStep();
+                // 按走棋规则走棋
+                if (GlobalValue.QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, true))
+                {
+                    // 人机对战，电脑执黑
+                    if (MainWindow.menuItem == 1 && GlobalValue.SideTag == GlobalValue.BLACKSIDE && GlobalValue.IsGameOver == false)
+                    {
+                        GlobalValue.Delay(500);
+                        CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                        if (step != null) step.LunchStep();
+                    }
+                    // 电脑对战，第一步需人为走出
+                    if (MainWindow.menuItem == 2)
+                        GlobalValue.EnabeGameStop = false;
+                        while (GlobalValue.EnabeGameStop == false)
+                        {
+                            GlobalValue.Delay(1000);
+                            CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                            if (step != null) step.LunchStep(); else break;
+                        }
+                    // 残局练习
+                    if (MainWindow.menuItem == 6)
+                    {
+                        GlobalValue.Delay(500);
+                        CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                        if (step != null) step.LunchStep();
+                    }
+                }
             }
         }
-
     }
 }

@@ -5,7 +5,7 @@ namespace Chess.SuanFa // 算法
     public class MoveCheck  // 走棋规则检查
     {
         public static bool[,] PathBool = new bool[9, 10];
-        
+
         /// <summary>
         /// 获取棋子可移动路径，并在棋盘上显示标记
         /// </summary>
@@ -583,9 +583,23 @@ namespace Chess.SuanFa // 算法
             {
                 return false;
             }
-            if (GlobalValue.qiZiArray[qiZi].Col != GlobalValue.qiZiArray[0].Col)    // 如果棋子不与将帅同列
+            else
             {
-                return false;
+                if (GlobalValue.qiZiArray[qiZi].Col != GlobalValue.qiZiArray[0].Col)    // 如果棋子不与将帅同列
+                {
+                    return false;
+                }
+                else
+                {
+                    if (GlobalValue.qiZiArray[qiZi].Row < GlobalValue.qiZiArray[0].Row)    // 如果在黑将上方
+                    {
+                        return false;
+                    }
+                    if (GlobalValue.qiZiArray[qiZi].Row > GlobalValue.qiZiArray[16].Row)    // 如果在红帅下方
+                    {
+                        return false;
+                    }
+                }
             }
             int count = 0;
             for (int i = GlobalValue.qiZiArray[0].Row + 1; i < GlobalValue.qiZiArray[16].Row; i++)
@@ -703,6 +717,79 @@ namespace Chess.SuanFa // 算法
                     }
                 }
             return false; // false=未被将军
+        }
+        public static bool FreeMoveCheck(int qizi, int col, int row)
+        {
+            switch (qizi)
+            {
+                case 3:
+                case 4: // 象 ================================================
+                    int[,] pos = new int[7, 2] { { 2, 0 }, { 6, 0 }, { 0, 2 }, { 4, 2 }, { 8, 2 }, { 2, 4 }, { 6, 4 } };
+                    for (int i = 0; i < 7; i++)
+                    {
+                        if (col == pos[i, 0] && row == pos[i, 1]) return true;
+                    }
+                    break;
+                case 19:
+                case 20: // 相 ================================================
+                    int[,] pos19 = new int[7, 2] { { 2, 0 }, { 6, 0 }, { 0, 2 }, { 4, 2 }, { 8, 2 }, { 2, 4 }, { 6, 4 } };
+                    for (int i = 0; i < 7; i++)
+                    {
+                        if (col == pos19[i, 0] && row == pos19[i, 1] + 5) return true;
+                    }
+                    break;
+                case 1:
+                case 2:// 士 ================================================
+                    int[,] pos1 = new int[5, 2] { { 3, 0 }, { 5, 0 }, { 4, 1 }, { 3, 2 }, { 5, 2 } };
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (col == pos1[i, 0] && row == pos1[i, 1]) return true;
+                    }
+
+                    break;
+                case 17:
+                case 18: // 仕 ================================================
+                    int[,] pos17 = new int[5, 2] { { 3, 0 }, { 5, 0 }, { 4, 1 }, { 3, 2 }, { 5, 2 } };
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (col == pos17[i, 0] && row == pos17[i, 1] + 7) return true;
+                    }
+                    break;
+                case 0: // 将 ===============================================
+                    if (col >= 3 && col <= 5 && row >= 0 && row <= 2) return true;
+                    break;
+                case 16: // 帅 ================================================
+                    if (col >= 3 && col <= 5 && row >= 7 && row <= 9) return true;
+                    break;
+
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 15: // 黑方卒
+                    if (row < 3) return false;
+                    if (row > 4) return true;
+                    if (row is 3 or 4)
+                    {
+                        if (col is 0 or 2 or 4 or 6 or 8) return true;
+                    }
+                    break;
+                case 27:
+                case 28:
+                case 29:
+                case 30:
+                case 31:// 红方兵
+                    if (row > 6) return false;
+                    if (row < 5) return true;
+                    if (row is 5 or 6)
+                    {
+                        if (col is 0 or 2 or 4 or 6 or 8) return true;
+                    }
+                    break;
+                default:
+                    return true;
+            }
+            return false;
         }
     }
 }

@@ -20,7 +20,8 @@ namespace Chess
         public const bool BLACKSIDE = false;  // 黑方
         public const bool REDSIDE = true;   //红方
         public static bool SideTag;  // 当前走棋方
-        public static bool IsGameOver; // 游戏结束
+        public static bool IsGameOver; // 游戏结束，系统自动检测
+        public static bool EnabeGameStop; // 人为停止游戏，用于电脑自动走棋过程中，中止走棋
         public static bool IsQiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
         public static int CurrentQiZi;  // 当前选定的棋子
         public static int[,] QiPan = new int[9, 10]; // 棋盘数据，9列10行，记录棋子位置，如果为-1，则表示该位置没有棋子。
@@ -117,17 +118,23 @@ namespace Chess
         /// <param name="n">目的地的行</param>
         /// <param name="dieQiZi">所杀死的棋子的编号，-1表示没有杀死棋子</param>
         /// <param name="sound">是否打开声音效果</param>
-        public static void QiZiMoveTo(int qiZi, int m, int n, bool sound)  // 运子
+        public static bool QiZiMoveTo(int qiZi, int m, int n, bool sound)  // 运子
         {
-            if (qiZi is < 0 or > 31) return;
+            if (qiZi is < 0 or > 31) return false;
             // 运子到(m,n)位置
             int x0 = qiZiArray[qiZi].Col;
             int y0 = qiZiArray[qiZi].Row;
             int dieQiZi = QiPan[m, n];
 
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
+            if (sound)
+            {
+                player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
+                player.Play();
+            }
 
-            if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, QiPan)) return; // 如果棋子移动后，本方处于将军状态，则不可以移动。
+            if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, QiPan)) return false; // 如果棋子移动后，本方处于将军状态，则不可以移动。
+            
             qiZiArray[qiZi].SetPosition(m, n);
             GlobalValue.QiPan[x0, y0] = -1;
             GlobalValue.QiPan[m, n] = qiZi;
@@ -146,10 +153,6 @@ namespace Chess
             {
                 IsGameOver = true;
                 jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
-            }
-            else
-            {
-                IsGameOver = false;
             }
 
             if (dieQiZi != -1) // 如果杀死了棋子
@@ -172,14 +175,17 @@ namespace Chess
             }
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
-            if (sound)
-            {
-                player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
-                player.Play();
-            }
             Delay(500);
             jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
+            return true;
         }
+        /// <summary>
+        /// 自由摆放棋子，主要用于残局设计
+        /// </summary>
+        /// <param name="qiZi"></param>
+        /// <param name="m"></param>
+        /// <param name="n"></param>
+        /// <param name="sound"></param>
         public static void QiZiFreeMoveTo(int qiZi, int m, int n, bool sound)  // 运子
         {
             if (qiZi is < 0 or > 31) return;
@@ -189,6 +195,12 @@ namespace Chess
             int dieQiZi = QiPan[m, n];
 
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
+            if (sound)
+            {
+                player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
+                player.Play();
+            }
+            if (!MoveCheck.FreeMoveCheck(qiZi,m,n)) return; // 棋子摆放位置是否合规
 
             qiZiArray[qiZi].SetPosition(m, n);
             if (y0 >= 0 && y0 < 10) GlobalValue.QiPan[x0, y0] = -1;
@@ -204,16 +216,12 @@ namespace Chess
 
             if (dieQiZi != -1) // 如果杀死了棋子
             {
-                qiZiArray[dieQiZi].SetDied();
+                qiZiArray[dieQiZi].SetInitPosition();
             }
 
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
-            if (sound)
-            {
-                player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
-                player.Play();
-            }
+            
             Delay(500);
         }
         /// <summary>
@@ -403,7 +411,7 @@ namespace Chess
 
             blackSideRect.Fill = Brushes.DarkGreen; // 黑方走棋指示灯灭
             redSideRect.Fill = Brushes.LightGoldenrodYellow; // 红方走棋指标灯亮
-
+            IsGameOver = false;
         }
 
         /// <summary>

@@ -76,6 +76,7 @@
                             <Button Content="上一局" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="PerCanJu"/>
                             <Button Content="下一局" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="NextCanJu"/>
                             <Button Content="视频教程" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="VideoUrl"/>
+                            <Button x:Name="StopAutoMove" Content="停止走棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="StopAutoMoveCanJu" IsEnabled="False"/>
                         </WrapPanel>
                         <TextBlock x:Name="CanJuComment" HorizontalAlignment="Stretch" Margin="10,36,10,0" VerticalAlignment="Top" Foreground="#FFEAF587" FontSize="14" TextWrapping="Wrap"/>
 

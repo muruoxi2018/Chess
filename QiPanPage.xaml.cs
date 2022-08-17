@@ -451,12 +451,12 @@ namespace Chess
         {
             //ReStartCanJu(sender, e);
             AutoMoveCanJuQiZi.IsEnabled = false;
-            int moveCount = 20; // 20步内没有胜负，则结束自动走棋
-            while (GlobalValue.IsGameOver == false && moveCount > 0)
+            GlobalValue.EnabeGameStop = false;
+            StopAutoMove.IsEnabled = true;
+            while (GlobalValue.EnabeGameStop == false)
             {
                 CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                 if (step != null) step.LunchStep(); else break;
-                moveCount--;
                 GlobalValue.Delay(1000);
             }
             AutoMoveCanJuQiZi.IsEnabled=true;
@@ -471,6 +471,13 @@ namespace Chess
             // 需要显式声明 Process.StartUseShellExecute=true
             proc.StartInfo.FileName = "https://blog.csdn.net/weixin_33347911/article/details/114608150?spm=1035.2023.3001.6557&utm_medium=distribute.pc_relevant_bbs_down_v2.none-task-blog-2~default~OPENSEARCH~Rate-11.pc_relevant_bbs_down_v2_default&depth_1-utm_source=distribute.pc_relevant_bbs_down_v2.none-task-blog-2~default~OPENSEARCH~Rate-11.pc_relevant_bbs_down_v2_default";
             _ = proc.Start();
+        }
+
+        private void StopAutoMoveCanJu(object sender, RoutedEventArgs e)
+        {
+            GlobalValue.EnabeGameStop = true;
+            AutoMoveCanJuQiZi.IsEnabled = true;
+            StopAutoMove.IsEnabled = false;
         }
     }
 }
