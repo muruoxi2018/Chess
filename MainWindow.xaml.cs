@@ -48,6 +48,7 @@ namespace Chess
             MainFrame.Source = null;
             MainMenu.Visibility = Visibility.Visible;
             ReturnButton.Visibility = Visibility.Hidden;
+            menuItem = 0;
         }
         /// <summary>
         /// 人机对战

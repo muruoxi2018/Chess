@@ -451,9 +451,9 @@ namespace Chess
         {
             //ReStartCanJu(sender, e);
             AutoMoveCanJuQiZi.IsEnabled = false;
-            GlobalValue.EnabeGameStop = false;
+            GlobalValue.EnableGameStop = false;
             StopAutoMove.IsEnabled = true;
-            while (GlobalValue.EnabeGameStop == false)
+            while (GlobalValue.EnableGameStop == false)
             {
                 CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                 if (step != null) step.LunchStep(); else break;
@@ -475,7 +475,7 @@ namespace Chess
 
         private void StopAutoMoveCanJu(object sender, RoutedEventArgs e)
         {
-            GlobalValue.EnabeGameStop = true;
+            GlobalValue.EnableGameStop = true;
             AutoMoveCanJuQiZi.IsEnabled = true;
             StopAutoMove.IsEnabled = false;
         }

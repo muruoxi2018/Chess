@@ -120,17 +120,19 @@ namespace Chess
                     }
                     // 电脑对战，第一步需人为走出
                     if (MainWindow.menuItem == 2)
-                        GlobalValue.EnabeGameStop = false;
-                        while (GlobalValue.EnabeGameStop == false)
+                    {
+                        GlobalValue.EnableGameStop = false;
+                        while (GlobalValue.EnableGameStop == false)
                         {
                             GlobalValue.Delay(1000);
                             CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                             if (step != null) step.LunchStep(); else break;
                         }
+                    }
                     // 残局练习
                     if (MainWindow.menuItem == 6)
                     {
-                        GlobalValue.Delay(500);
+                        GlobalValue.Delay(10);
                         CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                         if (step != null) step.LunchStep();
                     }

@@ -21,7 +21,7 @@ namespace Chess
         public const bool REDSIDE = true;   //红方
         public static bool SideTag;  // 当前走棋方
         public static bool IsGameOver; // 游戏结束，系统自动检测
-        public static bool EnabeGameStop; // 人为停止游戏，用于电脑自动走棋过程中，中止走棋
+        public static bool EnableGameStop; // 人为停止游戏，用于电脑自动走棋过程中，中止走棋
         public static bool IsQiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
         public static int CurrentQiZi;  // 当前选定的棋子
         public static int[,] QiPan = new int[9, 10]; // 棋盘数据，9列10行，记录棋子位置，如果为-1，则表示该位置没有棋子。

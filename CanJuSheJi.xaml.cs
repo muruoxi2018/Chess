@@ -74,11 +74,13 @@ namespace Chess
         private void SaveCanJu(object sender, RoutedEventArgs e)
         {
             string fenstr = Engine.XQEngine.QiPanDataToFenStr_header();
-            
-            Dictionary<string, object> dic = new();
-            dic.Add("Name", CanJuName.Text);
-            dic.Add("Comment", Comment.Text);
-            dic.Add("FENstring", fenstr);
+
+            Dictionary<string, object> dic = new()
+            {
+                { "Name", CanJuName.Text },
+                { "Comment", Comment.Text },
+                { "FENstring", fenstr }
+            };
             int rows = SqliteHelper.Insert("CanJuKu", dic);
             if (rows > 0)
             {

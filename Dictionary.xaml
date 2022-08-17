@@ -3,7 +3,7 @@
     <Style x:Key="button" TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="#FF4A3F0C"/>
         <Setter Property="BorderBrush" Value="#FF564808"/>
-        <Setter Property="Height" Value="25"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Background" Value="#FFD8B67C"/>
         <Setter Property="Effect">
             <Setter.Value>
