@@ -31,8 +31,11 @@ namespace Chess.SuanFa // 算法
                         GlobalValue.pathPointImage[i, j].HasPoint = PathBool[i, j];
                     }
                 }
+                // 自身当前位置排除在可移动路径之外
                 GlobalValue.pathPointImage[GlobalValue.qiZiArray[qiZi].Col, GlobalValue.qiZiArray[qiZi].Row].HasPoint = false;
             }
+            
+            // 残局设计时
             if (MainWindow.menuItem == 5)
             {
                 for (int i = 0; i <= 8; i++)
@@ -74,7 +77,7 @@ namespace Chess.SuanFa // 算法
             int moveQiZiCol = GlobalValue.qiZiArray[moveQiZi].Col;
             int moveQiZiRow = GlobalValue.qiZiArray[moveQiZi].Row;
             int side = 0;
-            #region 棋子可移动路径的计算
+            #region 单个棋子可移动路径的计算
             switch (moveQiZi)
             {
                 case 7:
@@ -668,8 +671,8 @@ namespace Chess.SuanFa // 算法
         }
 
         /// <summary>
-        /// 检查棋子移动后，本方是否被将军。
-        /// 用于棋子移动前的检测，如果是移动后被将军，则不能允许移动。
+        /// 检查棋子移动后，本方是否被将军。如果移动后被将军，则通过相关机制不允许该棋子移动到目标位置。
+        /// 用于棋子移动前的检测。
         /// </summary>
         /// <param name="qiZi">棋子编号</param>
         /// <param name="x0"></param>
@@ -718,8 +721,16 @@ namespace Chess.SuanFa // 算法
                 }
             return false; // false=未被将军
         }
+        /// <summary>
+        /// 残局等棋局设计在自由摆放棋子时，也要对棋子位置是否符合规则进行检查，例如：将帅、象相、仕士、兵卒等，不能超出了活动范围。
+        /// </summary>
+        /// <param name="qizi"></param>
+        /// <param name="col"></param>
+        /// <param name="row"></param>
+        /// <returns>true=棋子位置合规，false=棋子位置不合规</returns>
         public static bool FreeMoveCheck(int qizi, int col, int row)
         {
+            #region 将帅、象相、仕士、兵卒等的摆放位置，不能超出各自的活动范围
             switch (qizi)
             {
                 case 3:
@@ -789,6 +800,7 @@ namespace Chess.SuanFa // 算法
                 default:
                     return true;
             }
+            #endregion
             return false;
         }
     }

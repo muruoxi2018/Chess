@@ -133,7 +133,7 @@ namespace Chess
                 player.Play();
             }
 
-            if (MoveCheck.AfterMoveWillJiangJun(qiZi, x0, y0, m, n, QiPan)) return false; // 如果棋子移动后，本方处于将军状态，则不可以移动。
+            if (MoveCheck.AfterMoveWillJiangJun(qiZi, m, n, QiPan)) return false; // 如果棋子移动后，本方处于将军状态，则不可以移动。
             
             qiZiArray[qiZi].SetPosition(m, n);
             GlobalValue.QiPan[x0, y0] = -1;
@@ -158,6 +158,11 @@ namespace Chess
             if (dieQiZi != -1) // 如果杀死了棋子
             {
                 qiZiArray[dieQiZi].SetDied();
+                if (dieQiZi is 0 or 16) // 将帅被吃，则游戏结束。本系统通过将军和绝杀判断，不允许出现此种情况。仅仅暂且保留此代码。
+                {
+                    IsGameOver = true;
+                    jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+                }
             }
 
             SideTag = !SideTag;  // 变换走棋方
