@@ -663,11 +663,11 @@ namespace Chess.SuanFa // 算法
         /// <param name="y1">将要移动的行位置</param>
         /// <param name="qiPan">当前棋盘数据</param>
         /// <returns></returns>
-        public static bool AfterMoveWillJiangJun(int qiZi, int x1, int y1, int[,] qiPan)
+        public static bool AfterMoveStillJiangJun(int qiZi, int x1, int y1, int[,] qiPan)
         {
             int x0 = GlobalValue.qiZiArray[qiZi].Col;
             int y0 = GlobalValue.qiZiArray[qiZi].Row;
-            return AfterMoveWillJiangJun(qiZi, x0, y0, x1, y1, qiPan);
+            return AfterMoveStillJiangJun(qiZi, x0, y0, x1, y1, qiPan);
         }
 
         /// <summary>
@@ -681,7 +681,7 @@ namespace Chess.SuanFa // 算法
         /// <param name="y1"></param>
         /// <param name="qiPan">棋盘数据</param>
         /// <returns> false=未将军，true=被将军 </returns>
-        public static bool AfterMoveWillJiangJun(int qiZi, int x0, int y0, int x1, int y1, int[,] qiPan)
+        public static bool AfterMoveStillJiangJun(int qiZi, int x0, int y0, int x1, int y1, int[,] qiPan)
         {
             // 注意：数组作为参数传递时，不是传递参数的副本，而是传递数组本身的地址，是传址而非传参。所以不要直接修改。
             int[,] myQiPan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。

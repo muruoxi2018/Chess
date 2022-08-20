@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections;
 
 namespace Chess.SuanFa // 算法
 {
+    /// <summary>
+    /// 将军
+    /// </summary>
     class JiangJun  // 将军
     {
-
-
         /// <summary>
         /// 棋子移动后，判断对方是否被绝杀
         /// </summary>
@@ -19,16 +16,18 @@ namespace Chess.SuanFa // 算法
         public static bool IsJueSha(int moveQiZi)
         {
 
-            int[] jiangJun = { -1, -1, -1 };
-            if (moveQiZi < 16) jiangJun = IsJiangJun(16); // 检查红帅是否被将军。
-            if (moveQiZi >= 16) jiangJun = IsJiangJun(0); // 检查黑将是否被将军
+            int[] jiangJunQiZi = { -1, -1, -1 };
+            if (moveQiZi < 16) jiangJunQiZi = IsJiangJun(16); // 检查红帅是否被将军。
+            if (moveQiZi >= 16) jiangJunQiZi = IsJiangJun(0); // 检查黑将是否被将军
             GlobalValue.jiangJunTiShi.Text = ""; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
-            if (jiangJun[0] == -1) return false;  // 没有被将军时，则不需检测是否绝杀
+            if (jiangJunQiZi[0] == -1) return false;  // 没有被将军时，则不需检测是否绝杀
+
             string gongJiQiZi1; // 第一个攻击棋子的名字
-            if (jiangJun[1] != -1) gongJiQiZi1 = GlobalValue.qiZiImageFileName[jiangJun[1]]; else gongJiQiZi1 = "";
+            if (jiangJunQiZi[1] != -1) gongJiQiZi1 = GlobalValue.qiZiImageFileName[jiangJunQiZi[1]]; else gongJiQiZi1 = "";
             string gongJiQiZi2; // 第二个攻击棋子的名字
-            if (jiangJun[2] != -1) gongJiQiZi2 = "和" + GlobalValue.qiZiImageFileName[jiangJun[2]]; else gongJiQiZi2 = "";
-            if (jiangJun[0] == 0) // 被将军的是黑将
+            if (jiangJunQiZi[2] != -1) gongJiQiZi2 = "和" + GlobalValue.qiZiImageFileName[jiangJunQiZi[2]]; else gongJiQiZi2 = "";
+            
+            if (jiangJunQiZi[0] == 0) // 被将军的是黑将
             {
                 GlobalValue.jiangJunTiShi.Text = "1、【黑将】正被将军！";
 
@@ -50,9 +49,9 @@ namespace Chess.SuanFa // 算法
                 }
                 else  // 黑将不可移动时
                 {
-                    if (jiangJun[2] != -1) // 如果是双将
+                    if (jiangJunQiZi[2] != -1) // 如果是双将
                     {
-                        if ((jiangJun[1] is 21 or 22) || (jiangJun[2] is 21 or 22))
+                        if ((jiangJunQiZi[1] is 21 or 22) || (jiangJunQiZi[2] is 21 or 22))
                         {
                             GlobalValue.jiangJunTiShi.Text += " 3、【黑将】不能移动，被" + gongJiQiZi1 + gongJiQiZi2 + "双将绝杀！";
                             return true;
@@ -63,16 +62,14 @@ namespace Chess.SuanFa // 算法
                     {
                         GlobalValue.jiangJunTiShi.Text += " 5、【黑将】被" + gongJiQiZi1 + "将军，不能移动，请求外援。";
                     }
-
-
-                    if (!JieSha(jiangJun[1])) // 本方其他棋子解杀不成
+                    if (!JieSha(jiangJunQiZi[1])) // 本方其他棋子解杀不成
                     {
                         GlobalValue.jiangJunTiShi.Text += " 6、【黑将】被" + gongJiQiZi1 + "绝杀！";
                         return true;
-                    };
+                    }
                 }
             }
-            if (jiangJun[0] == 16) // 被将军的是红帅
+            if (jiangJunQiZi[0] == 16) // 被将军的是红帅
             {
                 #region 被将军的是红帅
                 GlobalValue.jiangJunTiShi.Text = " 2、【红帅】被" + gongJiQiZi1 + "将军！";
@@ -94,9 +91,9 @@ namespace Chess.SuanFa // 算法
                 }
                 else
                 {
-                    if (jiangJun[2] != -1) // 双将
+                    if (jiangJunQiZi[2] != -1) // 双将
                     {
-                        if ((jiangJun[1] is 5 or 6) || (jiangJun[2] is 5 or 6))
+                        if ((jiangJunQiZi[1] is 5 or 6) || (jiangJunQiZi[2] is 5 or 6))
                         {
                             GlobalValue.jiangJunTiShi.Text += " 5、【红帅】不能移动，被" + gongJiQiZi1 + gongJiQiZi2 + "双将绝杀！";
                             return true;
@@ -108,11 +105,11 @@ namespace Chess.SuanFa // 算法
                     {
                         GlobalValue.jiangJunTiShi.Text = " 5、【红帅】被" + gongJiQiZi1 + "将军，不能移动，请求外援。";
                     }
-                    if (!JieSha(jiangJun[1]))  // 绝杀判断
+                    if (!JieSha(jiangJunQiZi[1]))  // 绝杀判断
                     {
                         GlobalValue.jiangJunTiShi.Text = " 6、【红帅】被" + gongJiQiZi1 + "绝杀！";
                         return true;
-                    };
+                    }
 
                 }
                 #endregion
@@ -215,67 +212,36 @@ namespace Chess.SuanFa // 算法
 
             bool[,] points;
 
-            #region 移子解杀。如果是炮将军时，查找炮与将帅之间的被将军方的棋子，如可移开，则解杀
+            #region 移子解杀。如果是炮将军时，查找炮与将帅之间的被将军方的棋子，如可移开，且移开后不再将军，则解杀
             switch (gongJiQiZi)  // 如果是炮将军时，查找炮与将帅之间的被将军方的棋子，如可移开，则解杀
             {
                 case 9:
                 case 10: // 攻击棋子为黑方炮(9,10)，查找黑炮与红帅之间的红方棋子，如可移开，则解杀
-                    if (IsOtherPaoAtBack(gongJiQiZi)) return false;
                     int findCol = -1;
                     int findRow = -1;
                     if (gongJiQiZiCol == redShuaiCol) // 黑炮与红帅在同一列时，攻击方向为纵向
                     {
-                        if (gongJiQiZiRow < redShuaiRow) // 从上方攻击
+                        // 在黑炮和红帅之间寻找红方棋子
+                        for (int row = Math.Min(gongJiQiZiRow, redShuaiRow) + 1; row < Math.Max(gongJiQiZiRow, redShuaiRow); row++)
                         {
-                            // 在黑炮和红帅之间寻找红方棋子
-                            for (int row = gongJiQiZiRow + 1; row < redShuaiRow; row++)
+                            // 如果在黑炮和红帅之间找到了红方棋子，则记录该棋子位置，并停止查找
+                            if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 16 and < 32)
                             {
-                                // 如果在黑炮和红帅之间找到了红方棋子，则记录该棋子位置，并停止查找
-                                if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 16 and < 32)
-                                {
-                                    findCol = gongJiQiZiCol;
-                                    findRow = row;
-                                    break;
-                                }
-                            }
-                        }
-                        else // 从下方攻击
-                        {
-                            for (int row = redShuaiRow + 1; row < gongJiQiZiRow; row++)
-                            {
-                                if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 16 and < 32)
-                                {
-                                    findCol = gongJiQiZiCol;
-                                    findRow = row;
-                                    break;
-                                }
+                                findCol = gongJiQiZiCol;
+                                findRow = row;
+                                break;
                             }
                         }
                     }
                     if (gongJiQiZiRow == redShuaiRow) // 黑炮与红帅在同一行时，攻击方向为横向
                     {
-                        if (gongJiQiZiCol < redShuaiCol) // 从左方攻击
+                        for (int col = Math.Min(gongJiQiZiCol, redShuaiCol) + 1; col < Math.Max(gongJiQiZiCol, redShuaiCol); col++)
                         {
-                            for (int col = gongJiQiZiCol + 1; col < redShuaiCol; col++)
+                            if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 16 and < 32)
                             {
-                                if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 16 and < 32)
-                                {
-                                    findCol = col;
-                                    findRow = gongJiQiZiRow;
-                                    break;
-                                }
-                            }
-                        }
-                        else // 从右方攻击
-                        {
-                            for (int col = redShuaiCol + 1; col < gongJiQiZiCol; col++)
-                            {
-                                if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 16 and < 32)
-                                {
-                                    findCol = col;
-                                    findRow = gongJiQiZiRow;
-                                    break;
-                                }
+                                findCol = col;
+                                findRow = gongJiQiZiRow;
+                                break;
                             }
                         }
                     }
@@ -288,67 +254,40 @@ namespace Chess.SuanFa // 算法
                         for (int j = 0; j < 10; j++)
                         {
                             // 逐个判断棋子的可移动路径，如果此路径点的行列位置与炮的行列均不相同，则可解杀成功。
-                            if (points[i, j] == true && i != gongJiQiZiCol && j != gongJiQiZiRow) return true;
+                            if (points[i, j] == true && i != gongJiQiZiCol && j != gongJiQiZiRow)
+                            {
+                                if (!MoveCheck.AfterMoveStillJiangJun(GlobalValue.QiPan[findCol, findRow], findCol, findRow, GlobalValue.QiPan))
+                                    return true;
+                            }
                         }
                     }
                     break;
 
                 case 25:
                 case 26:    //  攻击棋子为红方炮(25,26)，查找红炮与黑将之间的黑方棋子，如可移开，则解杀
-                    if (IsOtherPaoAtBack(gongJiQiZi)) return false;
                     findCol = -1;
                     findRow = -1;
                     if (gongJiQiZiCol == blackJiangCol) // 红炮与黑将在同一列时，攻击方向为纵向
                     {
-                        if (gongJiQiZiRow < blackJiangRow) // 从上方攻击
+                        for (int row = Math.Min(gongJiQiZiRow, blackJiangRow) + 1; row < Math.Max(gongJiQiZiRow, blackJiangRow); row++)
                         {
-                            for (int row = gongJiQiZiRow + 1; row < blackJiangRow; row++)
+                            if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 0 and < 16)
                             {
-                                if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 0 and < 16)
-                                {
-                                    findCol = gongJiQiZiCol;
-                                    findRow = row;
-                                    break;
-                                }
-                            }
-                        }
-                        else // 从下方攻击
-                        {
-                            for (int row = blackJiangRow + 1; row < gongJiQiZiRow; row++)
-                            {
-                                if (GlobalValue.QiPan[gongJiQiZiCol, row] is > 0 and < 16)
-                                {
-                                    findCol = gongJiQiZiCol;
-                                    findRow = row;
-                                    break;
-                                }
+                                findCol = gongJiQiZiCol;
+                                findRow = row;
+                                break;
                             }
                         }
                     }
                     if (gongJiQiZiRow == blackJiangRow) // 红炮与黑将在同一行时，攻击方向为横向
                     {
-                        if (gongJiQiZiCol < blackJiangCol) // 从左方攻击
+                        for (int col = Math.Min(gongJiQiZiCol, blackJiangCol) + 1; col < Math.Max(gongJiQiZiCol, blackJiangCol); col++)
                         {
-                            for (int col = gongJiQiZiCol + 1; col < blackJiangCol; col++)
+                            if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 0 and < 16)
                             {
-                                if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 0 and < 16)
-                                {
-                                    findCol = col;
-                                    findRow = gongJiQiZiRow;
-                                    break;
-                                }
-                            }
-                        }
-                        else // 从右方攻击
-                        {
-                            for (int col = blackJiangCol + 1; col < gongJiQiZiCol; col++)
-                            {
-                                if (GlobalValue.QiPan[col, gongJiQiZiRow] is > 0 and < 16)
-                                {
-                                    findCol = col;
-                                    findRow = gongJiQiZiRow;
-                                    break;
-                                }
+                                findCol = col;
+                                findRow = gongJiQiZiRow;
+                                break;
                             }
                         }
                     }
@@ -359,7 +298,11 @@ namespace Chess.SuanFa // 算法
                         for (int j = 0; j < 10; j++)
                         {
 
-                            if (points[i, j] == true && i != gongJiQiZiCol && j != gongJiQiZiRow) return true;
+                            if (points[i, j] == true && i != gongJiQiZiCol && j != gongJiQiZiRow)
+                            {
+                                if (!MoveCheck.AfterMoveStillJiangJun(GlobalValue.QiPan[findCol, findRow], findCol, findRow, GlobalValue.QiPan))
+                                    return true;
+                            }
                         }
                     }
                     break;
@@ -419,39 +362,18 @@ namespace Chess.SuanFa // 算法
                 case 8:     //  攻击棋子为黑方车(7,8)
                 case 9:
                 case 10:    //  攻击棋子为黑方炮(9,10)
-                    //if ((gongJiQiZi is 9 or 10) && IsOtherPaoInFront(gongJiQiZi)) break;
                     if (gongJiQiZiCol == redShuaiCol) // 攻击方向为纵向
                     {
-                        if (gongJiQiZiRow < redShuaiRow) // 从上方攻击
+                        for (int row = Math.Min(gongJiQiZiRow, redShuaiRow) + 1; row < Math.Max(gongJiQiZiRow, redShuaiRow); row++)
                         {
-                            for (int row = gongJiQiZiRow + 1; row < redShuaiRow; row++)
-                            {
-                                jieShaPoints.Add(new int[] { gongJiQiZiCol, row });
-                            }
-                        }
-                        else // 从下方攻击
-                        {
-                            for (int row = redShuaiRow + 1; row < gongJiQiZiRow; row++)
-                            {
-                                jieShaPoints.Add(new int[] { gongJiQiZiCol, row });
-                            }
+                            jieShaPoints.Add(new int[] { gongJiQiZiCol, row });
                         }
                     }
                     if (gongJiQiZiRow == redShuaiRow) // 攻击方向为横向
                     {
-                        if (gongJiQiZiCol < redShuaiCol) // 从左方攻击
+                        for (int col = Math.Min(gongJiQiZiCol, redShuaiCol) + 1; col < Math.Max(gongJiQiZiCol, redShuaiCol); col++)
                         {
-                            for (int col = gongJiQiZiCol + 1; col < redShuaiCol; col++)
-                            {
-                                jieShaPoints.Add(new int[] { col, gongJiQiZiRow });
-                            }
-                        }
-                        else // 从右方攻击
-                        {
-                            for (int col = redShuaiCol + 1; col < gongJiQiZiCol; col++)
-                            {
-                                jieShaPoints.Add(new int[] { col, gongJiQiZiRow });
-                            }
+                            jieShaPoints.Add(new int[] { col, gongJiQiZiRow });
                         }
                     }
                     break;
@@ -459,39 +381,18 @@ namespace Chess.SuanFa // 算法
                 case 24:    //  攻击棋子为红方车(23,24)
                 case 25:
                 case 26:    //  攻击棋子为红方炮(25,26)
-                    //if ((gongJiQiZi is 25 or 26) && IsOtherPaoInFront(gongJiQiZi)) break;
                     if (gongJiQiZiCol == blackJiangCol) // 攻击方向为纵向
                     {
-                        if (gongJiQiZiRow < blackJiangRow) // 从上方攻击
+                        for (int row = Math.Min(gongJiQiZiRow, blackJiangRow) + 1; row < Math.Max(gongJiQiZiRow, blackJiangRow); row++)
                         {
-                            for (int row = gongJiQiZiRow + 1; row < blackJiangRow; row++)
-                            {
-                                jieShaPoints.Add(new int[] { gongJiQiZiCol, row });
-                            }
-                        }
-                        else // 从下方攻击
-                        {
-                            for (int row = blackJiangRow + 1; row < gongJiQiZiRow; row++)
-                            {
-                                jieShaPoints.Add(new int[] { gongJiQiZiCol, row });
-                            }
+                            jieShaPoints.Add(new int[] { gongJiQiZiCol, row });
                         }
                     }
                     if (gongJiQiZiRow == blackJiangRow) // 攻击方向为横向
                     {
-                        if (gongJiQiZiCol < blackJiangCol) // 从左方攻击
+                        for (int col = Math.Min(gongJiQiZiCol, blackJiangCol) + 1; col < Math.Max(gongJiQiZiCol, blackJiangCol); col++)
                         {
-                            for (int col = gongJiQiZiCol + 1; col < blackJiangCol; col++)
-                            {
-                                jieShaPoints.Add(new int[] { col, gongJiQiZiRow });
-                            }
-                        }
-                        else // 从右方攻击
-                        {
-                            for (int col = blackJiangCol + 1; col < gongJiQiZiCol; col++)
-                            {
-                                jieShaPoints.Add(new int[] { col, gongJiQiZiRow });
-                            }
+                            jieShaPoints.Add(new int[] { col, gongJiQiZiRow });
                         }
                     }
                     break;
@@ -500,7 +401,6 @@ namespace Chess.SuanFa // 算法
             }
             #endregion
 
-            //if (JieShaPoints.Count == 0) return false;  // 不存在可以解除攻击的点位，则不能解杀。估计不存在这个情况。
             bool[,] thispoints;
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 10; j++)
@@ -513,7 +413,7 @@ namespace Chess.SuanFa // 算法
                         {
                             if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
                             {
-                                if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
+                                if (!MoveCheck.AfterMoveStillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
                                     return true;  // true=能够解杀
                             }
                         }
@@ -525,7 +425,7 @@ namespace Chess.SuanFa // 算法
                         {
                             if (thispoints[point[0], point[1]] == true) // 本方棋子的可移动路径是否包含解除攻击点
                             {
-                                if (!MoveCheck.AfterMoveWillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
+                                if (!MoveCheck.AfterMoveStillJiangJun(qizi, point[0], point[1], GlobalValue.QiPan))
                                     return true;  // true=能够解杀
                             }
                         }
@@ -534,97 +434,8 @@ namespace Chess.SuanFa // 算法
             return false;  // false=不能解杀
         }
 
-        /// <summary>
-        /// 是否还有一个炮在这个炮的背后
-        /// </summary>
-        /// <param name="v1"></param>
-        /// <param name="v2"></param>
-        /// <returns></returns>
-        private static bool IsOtherPaoAtBack(int pao1)
-        {
-            int jiangOrShuai = (pao1 < 16) ? 16 : 0;
-            int pao2 = (pao1 == 9) ? 10 : 9;
-            if (pao1 > 16) pao2 = (pao1 == 25) ? 25 : 25;
-            // 如果两个炮与对方将帅在同一列
-            if (GlobalValue.qiZiArray[jiangOrShuai].Col == GlobalValue.qiZiArray[pao1].Col
-                && GlobalValue.qiZiArray[jiangOrShuai].Col == GlobalValue.qiZiArray[pao2].Col)
-            {
-                int col = GlobalValue.qiZiArray[pao1].Col;
-                int startRow = Math.Min(GlobalValue.qiZiArray[pao1].Row, GlobalValue.qiZiArray[pao2].Row) + 1;
-                int endRow = Math.Max(GlobalValue.qiZiArray[pao1].Row, GlobalValue.qiZiArray[pao2].Row) - 1;
-                for (int row = startRow; row <= endRow; row++)
-                {
-                    // 两个炮之间如果没有棋子，则是重炮
-                    if (GlobalValue.QiPan[col, row] != -1) return false;
-                }
-                // 如果另一个炮不在这个炮和将帅之间，则返回true
-                if (!IsBetween(GlobalValue.qiZiArray[pao2].Row, GlobalValue.qiZiArray[pao1].Row, GlobalValue.qiZiArray[jiangOrShuai].Row))
-                    return true;
-            }
-            // 如果两个炮与对方将帅在同一行
-            if (GlobalValue.qiZiArray[jiangOrShuai].Row == GlobalValue.qiZiArray[pao1].Row
-                && GlobalValue.qiZiArray[jiangOrShuai].Row == GlobalValue.qiZiArray[pao2].Row)
-            {
-                int row = GlobalValue.qiZiArray[pao1].Row;
-                int startCol = Math.Min(GlobalValue.qiZiArray[pao1].Col, GlobalValue.qiZiArray[pao2].Col) + 1;
-                int endCol = Math.Max(GlobalValue.qiZiArray[pao1].Col, GlobalValue.qiZiArray[pao2].Col) - 1;
-                for (int col = startCol; row <= endCol; row++)
-                {
-                    // 两个炮之间如果没有棋子，则是重炮
-                    if (GlobalValue.QiPan[col, row] != -1) return false;
-                }
-                // 如果另一个炮在这个炮和将帅之间，则返回true
-                if (!IsBetween(GlobalValue.qiZiArray[pao2].Col, GlobalValue.qiZiArray[pao1].Col, GlobalValue.qiZiArray[jiangOrShuai].Col))
-                    return true;
-            }
-            return false;
-        }
-        /// <summary>
-        /// 是否还有一个炮在这个炮的前面
-        /// </summary>
-        /// <param name="v1"></param>
-        /// <param name="v2"></param>
-        /// <returns></returns>
-        private static bool IsOtherPaoInFront(int pao1)
-        {
-            int jiangOrShuai = (pao1 < 16) ? 16 : 0;
-            int pao2 = (pao1 == 9) ? 10 : 9;
-            if (pao1 > 16) pao2 = (pao1 == 25) ? 25 : 25;
-            // 如果两个炮与对方将帅在同一列
-            if (GlobalValue.qiZiArray[jiangOrShuai].Col == GlobalValue.qiZiArray[pao1].Col
-                && GlobalValue.qiZiArray[jiangOrShuai].Col == GlobalValue.qiZiArray[pao2].Col)
-            {
-                int col = GlobalValue.qiZiArray[pao1].Col;
-                int startRow = Math.Min(GlobalValue.qiZiArray[pao1].Row, GlobalValue.qiZiArray[pao2].Row) + 1;
-                int endRow = Math.Max(GlobalValue.qiZiArray[pao1].Row, GlobalValue.qiZiArray[pao2].Row) - 1;
-                for (int row = startRow; row <= endRow; row++)
-                {
-                    // 两个炮之间如果没有棋子，则是重炮
-                    if (GlobalValue.QiPan[col, row] != -1) return false;
-                }
-                // 如果另一个炮在这个炮和将帅之间，则返回true
-                if (IsBetween(GlobalValue.qiZiArray[pao2].Row, GlobalValue.qiZiArray[pao1].Row, GlobalValue.qiZiArray[jiangOrShuai].Row))
-                    return true;
-            }
-            // 如果两个炮与对方将帅在同一行
-            if (GlobalValue.qiZiArray[jiangOrShuai].Row == GlobalValue.qiZiArray[pao1].Row
-                && GlobalValue.qiZiArray[jiangOrShuai].Row == GlobalValue.qiZiArray[pao2].Row)
-            {
-                int row = GlobalValue.qiZiArray[pao1].Row;
-                int startCol = Math.Min(GlobalValue.qiZiArray[pao1].Col, GlobalValue.qiZiArray[pao2].Col) + 1;
-                int endCol = Math.Max(GlobalValue.qiZiArray[pao1].Col, GlobalValue.qiZiArray[pao2].Col) - 1;
-                for (int col = startCol; col <= endCol; col++)
-                {
-                    // 两个炮之间如果没有棋子，则是重炮
-                    if (GlobalValue.QiPan[col, row] != -1) return false;
-                }
-                // 如果另一个炮在这个炮和将帅之间，则返回true
-                if (IsBetween(GlobalValue.qiZiArray[pao2].Col, GlobalValue.qiZiArray[pao1].Col, GlobalValue.qiZiArray[jiangOrShuai].Col))
-                    return true;
-            }
-            return false;
-        }
-        public static bool IsBetween(int num,int start,int end)
+
+        public static bool IsBetween(int num, int start, int end)
         {
             if (num >= Math.Min(start, end) && num <= Math.Max(start, end)) return true;
             return false;

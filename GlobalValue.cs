@@ -133,7 +133,7 @@ namespace Chess
                 player.Play();
             }
 
-            if (MoveCheck.AfterMoveWillJiangJun(qiZi, m, n, QiPan)) return false; // 如果棋子移动后，本方处于将军状态，则不可以移动。
+            if (MoveCheck.AfterMoveStillJiangJun(qiZi, m, n, QiPan)) return false; // 如果棋子移动后，本方处于将军状态，则不可以移动。
             
             qiZiArray[qiZi].SetPosition(m, n);
             GlobalValue.QiPan[x0, y0] = -1;
