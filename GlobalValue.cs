@@ -153,8 +153,20 @@ namespace Chess
             {
                 IsGameOver = true;
                 jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+                return false;
             }
-
+            if (JiangJun.IsKunBi(qiZi)) // 检查是否困毙
+            {
+                IsGameOver = true;
+                jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+                return false;
+            }
+            if (GlobalValue.qiPuRecordRoot.IsLianSha()) // 检查是否连杀超过3次
+            {
+                IsGameOver = true;
+                jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+                return false;
+            }
             if (dieQiZi != -1) // 如果杀死了棋子
             {
                 qiZiArray[dieQiZi].SetDied();
@@ -162,6 +174,7 @@ namespace Chess
                 {
                     IsGameOver = true;
                     jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+                    return false;
                 }
             }
 

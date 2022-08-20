@@ -119,18 +119,18 @@ namespace Chess
                         if (step != null) step.LunchStep();
                     }
                     // 电脑对战，第一步需人为走出
-                    if (MainWindow.menuItem == 2)
+                    if (MainWindow.menuItem == 2 && GlobalValue.IsGameOver == false)
                     {
                         GlobalValue.EnableGameStop = false;
-                        while (GlobalValue.EnableGameStop == false)
+                        while (GlobalValue.EnableGameStop == false && GlobalValue.IsGameOver==false)
                         {
-                            GlobalValue.Delay(1000);
+                            GlobalValue.Delay(300);
                             CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                             if (step != null) step.LunchStep(); else break;
                         }
                     }
                     // 残局练习
-                    if (MainWindow.menuItem == 6)
+                    if (MainWindow.menuItem == 6 && GlobalValue.IsGameOver == false)
                     {
                         GlobalValue.Delay(10);
                         CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();

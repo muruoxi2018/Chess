@@ -181,12 +181,13 @@ namespace Chess.CustomClass
 
             double circleX, circleY;
             double cirlcePos = 1.0;
-            if (haveQizi > -1 || sameTargetPoint)
+            /*if (haveQizi > -1 || sameTargetPoint)
             {
                 // 目标位置没有棋子时，圆圈及数字的位置设置在目标位置的棋盘交叉点上，有棋子时，位置设置至箭头后面
                 // 多个箭头指向同一位置时，圆圈及数字的位置设置在箭头后面
                 cirlcePos = arrowLong * -1.75;
-            }
+            }*/
+            cirlcePos = arrowLong * -1.75;
             //计算圆圈的位置，其中心设置在箭杆的中心线上
             circleX = Math.Floor(x1 + (cirlcePos * Math.Cos(angle))) - 10; // 10是圆圈的半径。计算结果为圆心位置，而margin是从其边界计算，因此需用半径修正数据。
             circleY = Math.Floor(y1 + (cirlcePos * Math.Sin(angle))) - 10;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 
 namespace Chess.SuanFa // 算法
 {
@@ -26,7 +27,7 @@ namespace Chess.SuanFa // 算法
             if (jiangJunQiZi[1] != -1) gongJiQiZi1 = GlobalValue.qiZiImageFileName[jiangJunQiZi[1]]; else gongJiQiZi1 = "";
             string gongJiQiZi2; // 第二个攻击棋子的名字
             if (jiangJunQiZi[2] != -1) gongJiQiZi2 = "和" + GlobalValue.qiZiImageFileName[jiangJunQiZi[2]]; else gongJiQiZi2 = "";
-            
+
             if (jiangJunQiZi[0] == 0) // 被将军的是黑将
             {
                 GlobalValue.jiangJunTiShi.Text = "1、【黑将】正被将军！";
@@ -439,6 +440,93 @@ namespace Chess.SuanFa // 算法
         {
             if (num >= Math.Min(start, end) && num <= Math.Max(start, end)) return true;
             return false;
+        }
+        /// <summary>
+        /// 检查是否困毙
+        /// </summary>
+        /// <param name="qizi">最后一个走动的棋子</param>
+        /// <returns>被困毙时，返回true。</returns>
+        public static bool IsKunBi(int qizi)
+        {
+            if (qizi < 16)
+            {
+                // 黑棋走完后，检查红方是否困毙
+                for (int row = 0; row <= 6; row++)
+                    for (int col = 0; col <= 6; col++)
+                    {
+                        // 红方兵行线以上有棋子时，不可能被困毙
+                        if (GlobalValue.QiPan[col, row] is > 16 and < 32) return false;
+                    }
+                int[,] redpos = new int[16, 2]{ {0,9}, {0,8},{0,7}, {1,9}, {1,8}, {1,7}, {2,8}, {2,7},
+                    {6,8}, {6,7}, {7,9}, {7,8}, {7,7}, {8,9}, {8,8}, {8,7}};
+                for (int i = 0; i < 16; i++)
+                {
+                    // 其余指定位置，如果有红方棋子，也不可能被困毙
+                    if (GlobalValue.QiPan[redpos[i, 0], redpos[i, 1]] is > 16 and < 32) return false;
+                }
+                // 以下位置的红方棋子，有可能造成困毙
+                int[,] redKunBiPos = new int[11, 2] { { 2, 9 }, { 3, 9 }, { 3, 8 }, { 3, 7 }, { 4, 9 }, { 4, 8 }, { 4, 7 }, { 5, 9 }, { 5, 8 }, { 5, 7 }, { 6, 9 } };
+                for (int i = 0; i < 11; i++)
+                {
+                    // 其余指定位置，如果有红方棋子，也不可能被困毙
+                    int redqizi = GlobalValue.QiPan[redKunBiPos[i, 0], redKunBiPos[i, 1]];
+                    if (redqizi is > 16 and < 32)
+                    {
+                        bool[,] PathBool= MoveCheck.GetPathPoints(redqizi, GlobalValue.QiPan);
+                        for (int col = 0; col <= 8; col++)
+                        {
+                            for (int row = 0; row <= 9; row++)
+                            {
+                                if (PathBool[col, row] == true)
+                                {
+                                    // 找到一个可移动点，如果棋子移动到该点后，不再被将军，则没有困毙
+                                    if (!MoveCheck.AfterMoveStillJiangJun(redqizi, col, row, GlobalValue.QiPan)) return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (qizi >= 16)
+            {
+                // 红棋走完后，检查黑方是否困毙
+                for (int row = 3; row <= 9; row++)
+                    for (int col = 0; col <= 6; col++)
+                    {
+                        // 黑方兵行线以上有棋子时，不可能被困毙
+                        if (GlobalValue.QiPan[col, row] is >0 and < 16) return false;
+                    }
+                int[,] blackpos =new int[16,2]{ {0,0}, {0,1},{0,2}, {1,0}, {1,1}, {1,2}, {2,1}, {2,2},
+                    {6,1}, {6,2}, {7,0}, {7,1}, {7,2}, {8,0}, {8,1}, {8,2}};
+                for (int i = 0; i < 16; i++)
+                {
+                    // 其余指定位置，如果有黑方棋子，也不可能被困毙
+                    if (GlobalValue.QiPan[blackpos[i, 0], blackpos[i, 1]] is > 0 and < 16) return false;
+                }
+                // 以下位置的黑方棋子，有可能造成困毙
+                int[,] blackKunBiPos =new int[11,2] { { 2, 0 }, { 3, 0 }, { 3, 1 }, { 3, 2 }, { 4, 0 }, { 4, 1 }, { 4, 2 }, { 5, 0 }, { 5, 1 }, { 5, 2 }, { 6, 0 } };
+                for (int i = 0; i < 11; i++)
+                {
+                    // 其余指定位置，如果有黑方棋子，也不可能被困毙
+                    int blackqizi = GlobalValue.QiPan[blackKunBiPos[i, 0], blackKunBiPos[i, 1]];
+                    if (blackqizi is >= 0 and < 16)
+                    {
+                        bool[,] PathBool = MoveCheck.GetPathPoints(blackqizi, GlobalValue.QiPan);
+                        for (int col = 0; col <= 8; col++)
+                        {
+                            for (int row = 0; row <= 9; row++)
+                            {
+                                if (PathBool[col, row] == true)
+                                {
+                                    // 找到一个可移动点，如果棋子移动到该点后，不再被将军，则没有困毙
+                                    if (!MoveCheck.AfterMoveStillJiangJun(blackqizi, col, row, GlobalValue.QiPan)) return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 

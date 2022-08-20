@@ -134,16 +134,6 @@ namespace Chess
         /// <param name="y">行坐标</param>
         public void SetPosition(int x, int y)
         {
-            //if (Visibility != Visibility.Visible) return false;
-
-            /*if (QiziId > -1 && (Col >= 0 && Col < 9) && (Row >= 0 && Row < 10)) // 仅仅对棋子有效
-            {
-                GlobalValue.QiPan[Col, Row] = -1;
-            }
-            if (QiziId > -1 && (x >= 0 && x < 9) && (y >= 0 && y < 10)) // 仅仅对棋子有效
-            {
-                GlobalValue.QiPan[x, y] = QiziId;
-            }*/
             Col = x;
             Row = y;
             if (GlobalValue.IsQiPanFanZhuan) // 如果棋盘翻转为上红下黑，则进行坐标转换

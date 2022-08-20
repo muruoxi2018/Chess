@@ -316,18 +316,46 @@ namespace Chess.CustomClass
             /// <returns></returns>
             public string Get6Moves()
             {
-                string str="";
-                QiPuRecord record =this.Cursor;
+                string str = "";
+                QiPuRecord record = this.Cursor;
                 if (record.IsRoot()) return str;
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     if (!record.IsRoot())
                     {
-                        str +=" " + record.StepData.UcciStep;
+                        str += " " + record.StepData.UcciStep;
                         record = record.GetParent();
                     }
                 }
                 return " moves " + str;
+            }
+            /// <summary>
+            /// 连续杀4次，则判负。
+            /// </summary>
+            /// <returns></returns>
+            public bool IsLianSha()
+            {
+                QiPuRecord record = this.Cursor;
+                if (record.IsRoot()) return false;
+                string[] stepString = new string[20];
+                for (int i = 0; i < 20; i++)
+                {
+                    stepString[i] = "";
+                    if (!record.IsRoot())
+                    {
+                        stepString[i] = record.StepData.UcciStep;
+                        record = record.GetParent();
+                    }
+                }
+                string step1 = stepString[0] + stepString[1] + stepString[2] + stepString[3];
+                string step2 = stepString[4] + stepString[5] + stepString[6] + stepString[7];
+                string step3 = stepString[8] + stepString[9] + stepString[10] + stepString[11];
+
+                if (step1.Equals(step2) && step1.Equals(step3))
+                {
+                    return true;
+                }
+                return false;
             }
         }
         /// <summary>

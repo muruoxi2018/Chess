@@ -236,10 +236,10 @@ namespace Chess.Engine
             /// <returns></returns>
             public List<System.Drawing.Point> GetPoint()
             {
-                List<System.Drawing.Point> points = new List<System.Drawing.Point>();
-                System.Drawing.Point pt0 = new System.Drawing.Point(FirstStep.X0, FirstStep.Y0);
+                List<System.Drawing.Point> points = new();
+                System.Drawing.Point pt0 = new(FirstStep.X0, FirstStep.Y0);
                 points.Add(pt0);
-                System.Drawing.Point pt1 = new System.Drawing.Point(FirstStep.X1, FirstStep.Y1);
+                System.Drawing.Point pt1 = new(FirstStep.X1, FirstStep.Y1);
                 points.Add(pt1);
                 return points;
             }
@@ -320,7 +320,7 @@ namespace Chess.Engine
                 {
                     str = $"最佳着法： {InfoSource}";
                 }
-                if (showarrow) ShowArrows();
+                if (showarrow || MainWindow.menuItem == 1) ShowArrows();
                 return str;
             }
 
