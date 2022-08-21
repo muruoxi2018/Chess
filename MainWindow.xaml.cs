@@ -1,13 +1,5 @@
-﻿using Chess.OpenSource;
-using Newtonsoft.Json;
-using System;
-using System.Data;
+﻿using System;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using Chess.SubWindow;
-using Chess.CustomClass;
-using System.Windows.Controls;
 
 namespace Chess
 {
@@ -21,7 +13,6 @@ namespace Chess
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
         /// <summary>
@@ -37,8 +28,6 @@ namespace Chess
 
         private void OnLoad(object sender, RoutedEventArgs e)
         {
-            //this.Width = SystemParameters.PrimaryScreenWidth;
-            //this.WindowState = WindowState.Maximized;
             menuItem = 0;
             ReturnButton.Visibility = Visibility.Hidden;
         }
@@ -49,6 +38,16 @@ namespace Chess
             MainMenu.Visibility = Visibility.Visible;
             ReturnButton.Visibility = Visibility.Hidden;
             menuItem = 0;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void AllwayOnTop(object sender, RoutedEventArgs e)
+        {
+            this.Topmost = !this.Topmost;
         }
         /// <summary>
         /// 人机对战
@@ -95,15 +94,6 @@ namespace Chess
             ReturnButton.Visibility = Visibility.Visible;
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
-        private void AllwayOnTop(object sender, RoutedEventArgs e)
-        {
-            this.Topmost = !this.Topmost;
-        }
         /// <summary>
         /// 残局设计
         /// </summary>

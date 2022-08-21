@@ -44,7 +44,9 @@
                 <Border x:Name="PCVsPc" VerticalAlignment="Bottom" Height="75" Margin="10,0,10,10" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1" BorderBrush="#E5056955" Background="#33000000" Visibility="Hidden">
                     <Grid Visibility="Visible">
                         <WrapPanel Height="30" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,10,0,0">
-                            <d:Button Content="终局"  Style="{StaticResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Width="70" Click="GameOverClick"/>
+                            <Button x:Name="PCVsPcAutoMoveCanJuQiZi" Content="自动走棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="AutoMoveCanJu"/>
+                            <Button x:Name="PCVsPcStopAutoMove" Content="停止走棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="StopAutoMoveCanJu" IsEnabled="False"/>
+                            <Slider x:Name="MoveDelayTime" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" AutoToolTipPlacement="TopLeft" Maximum="1000" SmallChange="100" LargeChange="100" TickFrequency="100" TickPlacement="TopLeft" Value="500" Foreground="#FFD4D4D3" ToolTip="调整走棋间隔时间（毫秒）。" Margin="100,0,0,0" IsSnapToTickEnabled="True" />
                         </WrapPanel>
                     </Grid>
                 </Border>
@@ -56,6 +58,7 @@
                             <Button Content="设置" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Click="SetupOption" Width="70"/>
                             <Button Content="另存为..." Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Click="SaveQiPu" Width="70"/>
                             <Button Content="保 存" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Click="UpdateQiPu" Width="70"/>
+                        
                         </WrapPanel>
 
                         <WrapPanel VerticalAlignment="Top" Height="30" MinHeight="30" MaxHeight="30" MinWidth="767" Width="767" MaxWidth="767" Visibility="Visible" Margin="0,40,0,0">
@@ -70,7 +73,7 @@
                 </Border>
                 <Border x:Name="CanJuLianXi" VerticalAlignment="Bottom" Height="75" Margin="10,0,10,10" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1" BorderBrush="#E5056955" Background="#33000000" Visibility="Hidden">
                     <Grid Visibility="Visible">
-                        <WrapPanel Height="30" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,10,0,0">
+                        <WrapPanel Height="30" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,6,0,0">
                             <Button Content="重来"  Style="{StaticResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Width="70" Click="ReStartCanJu"/>
                             <Button x:Name="AutoMoveCanJuQiZi" Content="自动走棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="AutoMoveCanJu"/>
                             <Button Content="上一局" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="PerCanJu"/>

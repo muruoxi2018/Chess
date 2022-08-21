@@ -19,9 +19,31 @@ namespace Chess
         public const float GRID_WIDTH = 67.5f;   //棋盘格大小为 67.5*67.5
         public const bool BLACKSIDE = false;  // 黑方
         public const bool REDSIDE = true;   //红方
-        public static bool SideTag;  // 当前走棋方
-        public static bool IsGameOver; // 游戏结束，系统自动检测
+        private static bool _sideTag;
+        public static bool SideTag 
+        {
+            get { return _sideTag; }
+            set {
+                _sideTag = value;
+                if (value == BLACKSIDE)
+                {
+                    // 黑方走棋指示灯
+                    blackSideRect.Fill = Brushes.LightGoldenrodYellow;
+                    redSideRect.Fill = Brushes.DarkGreen;
+                }
+                else
+                {
+                    // 红方走棋指示灯
+                    blackSideRect.Fill = Brushes.DarkGreen;
+                    redSideRect.Fill = Brushes.LightGoldenrodYellow;
+                }
+                
+                
+            } 
+        }  // 当前走棋方
+        public static bool IsGameOver;  // 游戏结束，系统自动检测
         public static bool EnableGameStop; // 人为停止游戏，用于电脑自动走棋过程中，中止走棋
+
         public static bool IsQiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
         public static int CurrentQiZi;  // 当前选定的棋子
         public static int[,] QiPan = new int[9, 10]; // 棋盘数据，9列10行，记录棋子位置，如果为-1，则表示该位置没有棋子。
@@ -121,6 +143,7 @@ namespace Chess
         public static bool QiZiMoveTo(int qiZi, int m, int n, bool sound)  // 运子
         {
             if (qiZi is < 0 or > 31) return false;
+            if (GlobalValue.IsGameOver == true) return false;
             // 运子到(m,n)位置
             int x0 = qiZiArray[qiZi].Col;
             int y0 = qiZiArray[qiZi].Row;
@@ -148,7 +171,7 @@ namespace Chess
                     pathPointImage[i, j].HasPoint = false; // 走棋后，隐藏走棋路径
                 }
             }
-
+            SideTag = !SideTag;  // 变换走棋方
             if (JiangJun.IsJueSha(qiZi)) // 检查是否绝杀
             {
                 IsGameOver = true;
@@ -177,23 +200,11 @@ namespace Chess
                     return false;
                 }
             }
+            
 
-            SideTag = !SideTag;  // 变换走棋方
-            if (SideTag == BLACKSIDE)
-            {
-                // 黑方走棋指示灯
-                blackSideRect.Fill = Brushes.LightGoldenrodYellow;
-                redSideRect.Fill = Brushes.DarkGreen;
-            }
-            else
-            {
-                // 红方走棋指示灯
-                blackSideRect.Fill = Brushes.DarkGreen;
-                redSideRect.Fill = Brushes.LightGoldenrodYellow;
-            }
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
-            Delay(500);
+            Delay(200);
             jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
             return true;
         }
@@ -406,7 +417,7 @@ namespace Chess
             {
                 item.SetInitPosition(); // 所有棋子的位置信息复位
             }
-            SideTag = REDSIDE; // 红方先走
+            
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
@@ -429,7 +440,9 @@ namespace Chess
 
             blackSideRect.Fill = Brushes.DarkGreen; // 黑方走棋指示灯灭
             redSideRect.Fill = Brushes.LightGoldenrodYellow; // 红方走棋指标灯亮
+            GlobalValue.EnableGameStop = false;
             IsGameOver = false;
+            SideTag = REDSIDE; // 红方先走
         }
 
         /// <summary>
@@ -611,7 +624,7 @@ namespace Chess
             //[SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
             public static void DoEvents()
             {
-                DispatcherFrame frame = new DispatcherFrame();
+                DispatcherFrame frame = new();
                 // Dispatcher的作用是用于管理线程工作项队列，类似于Win32中的消息队列
                 Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(ExitFrames), frame);
                 try { Dispatcher.PushFrame(frame); }

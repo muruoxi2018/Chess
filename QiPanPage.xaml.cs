@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Chess.OpenSource;
 using Newtonsoft.Json;
 using Chess.SubWindow;
@@ -30,6 +20,7 @@ namespace Chess
         private static SpyWindow spyWindow;    // 棋盘数据监视窗口
         private static DataTable CanJuData;
         private static int CanJuIndex = 0;
+
         public QiPanPage()
         {
             InitializeComponent();
@@ -114,8 +105,14 @@ namespace Chess
             this.FreeDaPu.Visibility = Visibility.Hidden;
             this.FuPan.Visibility = Visibility.Hidden;
             GlobalValue.Reset();
+            GlobalValue.EnableGameStop = true;
+            AutoMoveCanJuQiZi.IsEnabled = true;
+            StopAutoMove.IsEnabled = false;
+            PCVsPcAutoMoveCanJuQiZi.IsEnabled = true;
+            PCVsPcStopAutoMove.IsEnabled = false;
             GlobalValue.jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
             CanJuIndex = 0;
+            GlobalValue.EnableGameStop = false;
             switch (MainWindow.menuItem)
             {
                 case 1: // 人机对战
@@ -132,7 +129,7 @@ namespace Chess
                     break;
                 case 6:// 残局练习
                     this.CanJuLianXi.Visibility = Visibility.Visible;
-                    CanJuData = OpenSource.SqliteHelper.Select("CanJuKu", "rowid,*");
+                    CanJuData = SqliteHelper.Select("CanJuKu", "rowid,*");
                     for (int i = 0; i < 32; i++)
                     {
                         GlobalValue.qiZiArray[i].SetDied();
@@ -271,7 +268,7 @@ namespace Chess
         /// <param name="e"></param>
         private void SaveQiPu(object sender, RoutedEventArgs e)
         {
-            SubWindow.Save_Window window = new();
+            Save_Window window = new();
             _ = window.ShowDialog();
         }
 
@@ -357,8 +354,10 @@ namespace Chess
             if (!string.IsNullOrEmpty(Window_QiPu.GetRowid()))
             {
                 GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
-                System.Collections.Generic.Dictionary<string, object> dic = new();
-                dic.Add("jsonrecord", JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot));
+                Dictionary<string, object> dic = new()
+                {
+                    { "jsonrecord", JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot) }
+                };
                 if (SqliteHelper.Update("mybook", $"rowid={Window_QiPu.GetRowid()}", dic) > 0)
                 {
                     MessageBox.Show("数据保存成功！", "提示");
@@ -371,7 +370,7 @@ namespace Chess
             else
             {
                 //  如果棋谱库编号为空，则另存为新棋谱。
-                SubWindow.Save_Window window = new();
+                Save_Window window = new();
                 _ = window.ShowDialog();
             }
             //  更新数据后，刷新棋谱列表
@@ -380,6 +379,8 @@ namespace Chess
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
+            GlobalValue.EnableGameStop = true;
+            GlobalValue.IsGameOver = true;
             //Environment.Exit(0);
         }
 
@@ -415,6 +416,11 @@ namespace Chess
                     }
                 }
             }
+            GlobalValue.EnableGameStop = true;
+            AutoMoveCanJuQiZi.IsEnabled = true;
+            StopAutoMove.IsEnabled = false;
+            PCVsPcAutoMoveCanJuQiZi.IsEnabled = true;
+            PCVsPcStopAutoMove.IsEnabled = false;
             GlobalValue.IsGameOver = false;
             GlobalValue.SideTag = GlobalValue.REDSIDE;
             GlobalValue.jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
@@ -450,16 +456,23 @@ namespace Chess
         private void AutoMoveCanJu(object sender, RoutedEventArgs e)
         {
             //ReStartCanJu(sender, e);
-            AutoMoveCanJuQiZi.IsEnabled = false;
             GlobalValue.EnableGameStop = false;
+            AutoMoveCanJuQiZi.IsEnabled = false;
             StopAutoMove.IsEnabled = true;
-            while (GlobalValue.EnableGameStop == false)
+            PCVsPcAutoMoveCanJuQiZi.IsEnabled = false;
+            PCVsPcStopAutoMove.IsEnabled = true;
+            while (GlobalValue.EnableGameStop == false && GlobalValue.IsGameOver == false)
             {
-                CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                 if (step != null) step.LunchStep(); else break;
-                GlobalValue.Delay(1000);
+                GlobalValue.Delay((int)MoveDelayTime.Value);
             }
-            AutoMoveCanJuQiZi.IsEnabled=true;
+            GlobalValue.EnableGameStop = true;
+            AutoMoveCanJuQiZi.IsEnabled = true;
+            StopAutoMove.IsEnabled = false;
+            PCVsPcAutoMoveCanJuQiZi.IsEnabled = true;
+            PCVsPcStopAutoMove.IsEnabled = false;
+
         }
 
         private void VideoUrl(object sender, RoutedEventArgs e)
@@ -478,6 +491,8 @@ namespace Chess
             GlobalValue.EnableGameStop = true;
             AutoMoveCanJuQiZi.IsEnabled = true;
             StopAutoMove.IsEnabled = false;
+            PCVsPcAutoMoveCanJuQiZi.IsEnabled = true;
+            PCVsPcStopAutoMove.IsEnabled = false;
         }
     }
 }

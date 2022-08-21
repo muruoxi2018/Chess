@@ -1,11 +1,8 @@
-﻿using System;
-using System.Security.Permissions;
-using System.Threading;
+﻿using Chess.CustomClass;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
-using System.Windows.Threading;
 
 namespace Chess
 {
@@ -109,34 +106,33 @@ namespace Chess
             else
             {
                 // 按走棋规则走棋
-                if (GlobalValue.QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, true))
-                {
-                    // 人机对战，电脑执黑
-                    if (MainWindow.menuItem == 1 && GlobalValue.SideTag == GlobalValue.BLACKSIDE && GlobalValue.IsGameOver == false)
+                if (GlobalValue.IsGameOver == false)
+                    if (GlobalValue.QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, true))
                     {
-                        GlobalValue.Delay(500);
-                        CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
-                        if (step != null) step.LunchStep();
-                    }
-                    // 电脑对战，第一步需人为走出
-                    if (MainWindow.menuItem == 2 && GlobalValue.IsGameOver == false)
-                    {
-                        GlobalValue.EnableGameStop = false;
-                        while (GlobalValue.EnableGameStop == false && GlobalValue.IsGameOver==false)
+                        if (MainWindow.menuItem == 1 && GlobalValue.SideTag == GlobalValue.BLACKSIDE)
                         {
-                            GlobalValue.Delay(300);
-                            CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
-                            if (step != null) step.LunchStep(); else break;
+                            GlobalValue.Delay(500);
+                            Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                            if (step != null) step.LunchStep();
+                        }
+                        // 电脑对战，第一步需人为走出
+                        if (MainWindow.menuItem == 100)
+                        {
+                            while (GlobalValue.EnableGameStop == false && GlobalValue.IsGameOver == false)
+                            {
+                                GlobalValue.Delay(500);
+                                Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                                if (step != null) step.LunchStep(); else break;
+                            }
+                        }
+                        // 残局练习
+                        if (MainWindow.menuItem == 6)
+                        {
+                            GlobalValue.Delay(500);
+                            Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
+                            if (step != null) step.LunchStep();
                         }
                     }
-                    // 残局练习
-                    if (MainWindow.menuItem == 6 && GlobalValue.IsGameOver == false)
-                    {
-                        GlobalValue.Delay(10);
-                        CustomClass.Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
-                        if (step != null) step.LunchStep();
-                    }
-                }
             }
         }
     }
