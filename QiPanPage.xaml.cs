@@ -113,6 +113,7 @@ namespace Chess
             GlobalValue.jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
             CanJuIndex = 0;
             GlobalValue.EnableGameStop = false;
+            
             switch (MainWindow.menuItem)
             {
                 case 1: // 人机对战
@@ -465,7 +466,7 @@ namespace Chess
             {
                 Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                 if (step != null) step.LunchStep(); else break;
-                GlobalValue.Delay((int)MoveDelayTime.Value);
+                GlobalValue.Delay(Settings.Default.MoveDelayTime);
             }
             GlobalValue.EnableGameStop = true;
             AutoMoveCanJuQiZi.IsEnabled = true;
@@ -494,5 +495,6 @@ namespace Chess
             PCVsPcAutoMoveCanJuQiZi.IsEnabled = true;
             PCVsPcStopAutoMove.IsEnabled = false;
         }
+
     }
 }

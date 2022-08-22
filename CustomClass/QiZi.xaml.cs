@@ -121,8 +121,11 @@ namespace Chess
             SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi); // 获取可移动路径，并显示在棋盘上
             GlobalValue.yuanWeiZhi.SetPosition(Col, Row); // 棋子原位置标记，显示在当前位置
             GlobalValue.yuanWeiZhi.ShowYuanWeiZhiImage();
-            GlobalValue.player.Open(new Uri("Sounds/select.mp3", UriKind.Relative));
-            GlobalValue.player.Play();
+            if (Settings.Default.EnableSound)
+            {
+                GlobalValue.player.Open(new Uri("Sounds/select.mp3", UriKind.Relative));
+                GlobalValue.player.Play();
+            }
 
         }
 

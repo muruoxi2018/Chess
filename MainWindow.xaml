@@ -13,17 +13,19 @@
         <Border BorderBrush="#FF7F7F7F" BorderThickness="0,1,0,0"></Border>
         <Frame x:Name="MainFrame" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="767" MinHeight="800" NavigationUIVisibility="Hidden" />
         <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,63,0,0">
-            <Button Content="人机对战"  Style="{StaticResource mainMenuButton}" Click="PersonVsPC"/>
-            <Button Content="电脑对战"  Style="{StaticResource mainMenuButton}" Click="PCVsPC"/>
-            <Button Content="自由打谱"  Style="{StaticResource mainMenuButton}" Click="FreeDaPu"/>
-            <Button Content="棋谱记录"  Style="{StaticResource mainMenuButton}" Click="FuPan"/>
-            <Button Content="残局设计"  Style="{StaticResource mainMenuButton}" Click="CanJuSheJi"/>
-            <Button Content="残局练习"  Style="{StaticResource mainMenuButton}" Click="CanJuLianXi"/>
+            <Button x:Name="btn_PersonVsPC" Content="人机对战"  Style="{StaticResource mainMenuButton}" Click="MainMenuClick" Tag="1"/>
+            <Button x:Name="btn_PCVsPC" Content="电脑对战"  Style="{StaticResource mainMenuButton}" Tag="2" Click="MainMenuClick"/>
+            <Button x:Name="btn_FreeDaPu" Content="自由打谱"  Style="{StaticResource mainMenuButton}" Tag="3" Click="MainMenuClick"/>
+            <Button x:Name="btn_FuPan" Content="棋谱记录"  Style="{StaticResource mainMenuButton}" Tag="4" Click="MainMenuClick"/>
+            <Button x:Name="btn_CanJuSheJi" Content="残局设计"  Style="{StaticResource mainMenuButton}" Tag="5" Click="MainMenuClick"/>
+            <Button x:Name="btn_CanJuLianXi" Content="残局练习"  Style="{StaticResource mainMenuButton}" Tag="6" Click="MainMenuClick"/>
             <Image HorizontalAlignment="Center" Source="/picture/大象.png" Stretch="Uniform" StretchDirection="Both" VerticalAlignment="Bottom" Width="300" Margin="0,30,0,0" Opacity="0.75" />
         </StackPanel>
-        <Button x:Name="ReturnButton" Content="返回" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,50" Padding="5,1,5,1" Click="ReturnMainMenu" Width="45"/>
-        <Button Content="置顶" Style="{StaticResource button}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20" Padding="5,1,5,1" Click="AllwayOnTop" Width="45"/>
-
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,15,0">
+            <Button Content="置顶" Style="{StaticResource button}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,1,5,1" Click="AllwayOnTop" Width="45"/>
+            <Button Content="设置" Style="{StaticResource button}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,1,5,1" Click="SystemSetup" Width="45" Margin="0,10,0,0"/>
+            <Button x:Name="ReturnButton" Content="返回" Style="{StaticResource button}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,1,5,1" Click="ReturnMainMenu" Width="45" Margin="0,10,0,0"/>
+        </StackPanel>
     </Grid>
-    
+
 </Window>

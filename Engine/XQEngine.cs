@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.Engine
 {
@@ -145,10 +142,10 @@ namespace Chess.Engine
                 }
                 if (char.IsDigit(c)) // 如果是数字
                 {
-                    int num =(int)Char.GetNumericValue(c);
+                    int num = (int)Char.GetNumericValue(c);
                     while (num > 0)
                     {
-                        output[col,row] = -1;
+                        output[col, row] = -1;
                         col++;
                         num--;
                     }
@@ -156,7 +153,7 @@ namespace Chess.Engine
                 else
                 {
                     // 如果是字符
-                    int offset = Array.IndexOf(locFen,c+"");
+                    int offset = Array.IndexOf(locFen, c + "");
                     output[col, row] = offset;
                     col++;
                     locFen[offset] = "";
@@ -251,7 +248,7 @@ namespace Chess.Engine
         public class UcciInfoClass
         {
             private string _InfoSource;
-            private string InfoSource
+            private string InfoSource // 象棋引擎返回的多行字符串，需里进行解析，并保存到相应变量中。
             {
                 get { return _InfoSource; }
                 set
@@ -293,8 +290,8 @@ namespace Chess.Engine
                     }
                 }
             }
-            private string Bestmove { get; set; }
-            private string Ponder { get; set; }
+            private string Bestmove;    // 最佳着法
+            private string Ponder;  // 后续的最佳着法
             private List<PvClass> InfoList { get; set; }
             public UcciInfoClass()
             {
@@ -325,7 +322,8 @@ namespace Chess.Engine
             }
 
             /// <summary>
-            /// 显示所有推荐着法的提示箭头
+            /// 显示所有推荐着法的提示箭头。
+            /// 提示箭头的数量限定为5个。
             /// </summary>
             private void ShowArrows()
             {
@@ -337,7 +335,8 @@ namespace Chess.Engine
                     {
                         points.Add(p.GetPoint());
                     }
-                    for (int i = 0; i < points.Count; i++)
+                    int arrowCount = (points.Count > Settings.Default.ArrowsMaxNum) ? Settings.Default.ArrowsMaxNum : points.Count; // 提示箭头的数量限定为5个。超过5个时，多余的没有用，且界面太乱。
+                    for (int i = 0; i < arrowCount; i++)
                     {
                         bool sameTargetPoint = false;
                         if (i > 0)
@@ -352,9 +351,10 @@ namespace Chess.Engine
                             }
                         }
                         string tipInfo = $"{InfoList[i].Score}分{Environment.NewLine}{InfoList[i].GetMove()}";
-                        GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], sameTargetPoint, tipInfo);
+                        GlobalValue.arrows.SetPathData(i, points[i][0], points[i][1], sameTargetPoint, tipInfo);
                     }
                 }
+                GlobalValue.arrows.ShowAllPath();
             }
             public CustomClass.Qipu.StepCode GetBestSetp()
             {
@@ -422,6 +422,13 @@ namespace Chess.Engine
             }
             return resultstr;
         }
+
+        /// <summary>
+        /// 将UCCI着法转换为step着法数据
+        /// </summary>
+        /// <param name="ucciStr">UCCI着法字符串，一般是从象棋引擎中取得</param>
+        /// <param name="qipan">棋盘数据。此变量建议保留。</param>
+        /// <returns></returns>
         private static CustomClass.Qipu.StepCode GetStep(string ucciStr, int[,] qipan)
         {
             ucciStr = ucciStr.Trim();
@@ -437,7 +444,7 @@ namespace Chess.Engine
             int y1 = rows.IndexOf(ucciStr[3]);
             int qizi = qipan[x0, y0];
             int dieQiZi = qipan[x1, y1];
-            CustomClass.Qipu.StepCode step = new CustomClass.Qipu.StepCode(qizi, x0, y0, x1, y1, dieQiZi);
+            CustomClass.Qipu.StepCode step = new(qizi, x0, y0, x1, y1, dieQiZi);
             return step;
         }
     }

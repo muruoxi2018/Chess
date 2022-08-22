@@ -111,7 +111,7 @@ namespace Chess
                     {
                         if (MainWindow.menuItem == 1 && GlobalValue.SideTag == GlobalValue.BLACKSIDE)
                         {
-                            GlobalValue.Delay(500);
+                            GlobalValue.Delay(Settings.Default.MoveDelayTime);
                             Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                             if (step != null) step.LunchStep();
                         }
@@ -120,7 +120,7 @@ namespace Chess
                         {
                             while (GlobalValue.EnableGameStop == false && GlobalValue.IsGameOver == false)
                             {
-                                GlobalValue.Delay(500);
+                                GlobalValue.Delay(Settings.Default.MoveDelayTime);
                                 Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                                 if (step != null) step.LunchStep(); else break;
                             }
@@ -128,7 +128,7 @@ namespace Chess
                         // 残局练习
                         if (MainWindow.menuItem == 6)
                         {
-                            GlobalValue.Delay(500);
+                            GlobalValue.Delay(Settings.Default.MoveDelayTime);
                             Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                             if (step != null) step.LunchStep();
                         }

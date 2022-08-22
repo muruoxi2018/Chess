@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Chess.SubWindow;
+using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Chess
 {
@@ -22,7 +24,7 @@ namespace Chess
         /// <param name="e"></param>
         private void OnMainWindowClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Settings.Default.Save();
+            Settings.Default.Save(); // 保存用户更改的设置
             Environment.Exit(0); // 关闭所有窗口，并释放所有资源，包括相关辅助窗口。
         }
 
@@ -49,74 +51,53 @@ namespace Chess
         {
             this.Topmost = !this.Topmost;
         }
-        /// <summary>
-        /// 人机对战
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PersonVsPC(object sender, RoutedEventArgs e)
+
+        private void MainMenuClick(object sender, RoutedEventArgs e)
         {
-            menuItem = 1;
-            MainMenu.Visibility = Visibility.Hidden;
-            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
-            ReturnButton.Visibility = Visibility.Visible;
-        }
-        /// <summary>
-        /// 电脑对战
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PCVsPC(object sender, RoutedEventArgs e)
-        {
-            menuItem = 2;
-            MainMenu.Visibility = Visibility.Hidden;
-            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
-            ReturnButton.Visibility = Visibility.Visible;
-        }
-        /// <summary>
-        /// 自由打谱
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FreeDaPu(object sender, RoutedEventArgs e)
-        {
-            menuItem = 3;
-            MainMenu.Visibility = Visibility.Hidden;
-            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
-            ReturnButton.Visibility = Visibility.Visible;
+            Button btn = (Button)sender;
+            switch (btn.Tag.ToString())
+            {
+                case "1":
+                    menuItem = 1;
+                    MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+                    break;
+                case "2":
+                    menuItem = 2;
+                    MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+                    break;
+                case "3":
+                    menuItem = 3;
+                    MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+                    break;
+                case "4":
+                    menuItem = 4;
+                    MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+                    break;
+                case "5":
+                    menuItem = 5;
+                    MainFrame.Source = new Uri("CanJuSheJi.xaml", UriKind.RelativeOrAbsolute);
+                    break;
+                case "6":
+                    menuItem = 6;
+                    MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
+                    break;
+                default:
+                    menuItem = 100;
+                    MainMenu.Visibility = Visibility.Visible;
+                    ReturnButton.Visibility = Visibility.Hidden;
+                    break;
+            }
+            if (menuItem is >= 1 and <= 6)
+            {
+                MainMenu.Visibility = Visibility.Hidden;
+                ReturnButton.Visibility = Visibility.Visible;
+            }
         }
 
-        private void FuPan(object sender, RoutedEventArgs e)
+        private void SystemSetup(object sender, RoutedEventArgs e)
         {
-            menuItem = 4;
-            MainMenu.Visibility = Visibility.Hidden;
-            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
-            ReturnButton.Visibility = Visibility.Visible;
-        }
-
-        /// <summary>
-        /// 残局设计
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CanJuSheJi(object sender, RoutedEventArgs e)
-        {
-            menuItem = 5;
-            MainMenu.Visibility = Visibility.Hidden;
-            MainFrame.Source = new Uri("CanJuSheJi.xaml", UriKind.RelativeOrAbsolute);
-            ReturnButton.Visibility = Visibility.Visible;
-        }
-        /// <summary>
-        /// 残局练习
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CanJuLianXi(object sender, RoutedEventArgs e)
-        {
-            menuItem = 6;
-            MainMenu.Visibility = Visibility.Hidden;
-            MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
-            ReturnButton.Visibility = Visibility.Visible;
+            SystemSetting setWindow = new();
+            setWindow.ShowDialog();
         }
     }
 }

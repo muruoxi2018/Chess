@@ -27,7 +27,7 @@ namespace Chess.CustomClass
         private static readonly int arrowAngle = 160; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowAngle1 = 170; // 箭头斜边相对箭杆的偏角
         private static readonly int arrowLong = 30; // 箭头斜边的长度
-
+        private static int arrowCount = 0;// 当前有效的箭头数量
         /// <summary>
         /// 初始化走棋提示箭头
         /// </summary>
@@ -58,7 +58,7 @@ namespace Chess.CustomClass
                 {
                     Width = 20,
                     Height = 20,
-                    Stroke =  Brushes.ForestGreen,
+                    Stroke = Brushes.ForestGreen,
                     StrokeThickness = 1,
                     Fill = Brushes.GreenYellow,
                     Opacity = 0.8 - i * 0.1,
@@ -106,10 +106,23 @@ namespace Chess.CustomClass
             {
                 item.Visibility = Visibility.Hidden;
             }
-
             foreach (MyPrompt prompt in MemoPrompt)
             {
                 prompt.Visibility = Visibility.Hidden;
+            }
+        }
+
+        public void ShowAllPath()
+        {
+            if (Settings.Default.ArrowVisable)
+            {
+                for (int i = 0; i < arrowCount; i++)
+                {
+                    ArrowPath[i].Visibility = Visibility.Visible;
+                    ArrowEllipses[i].Visibility = Visibility.Visible;
+                    ArrowText[i].Visibility = Visibility.Visible;
+                    MemoPrompt[i].Visibility = Visibility.Visible;
+                }
             }
         }
         /// <summary>
@@ -119,8 +132,9 @@ namespace Chess.CustomClass
         /// <param name="point0">起始点</param>
         /// <param name="point1">终点</param>
         /// <param name="sameTargetPoint">箭头指向同一位置时，第二个参数为true，避免编号位置重叠</param>
-        public void SetPathDataAndShow(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1, bool sameTargetPoint, string memo)
+        public void SetPathData(int arrowId, System.Drawing.Point point0, System.Drawing.Point point1, bool sameTargetPoint, string memo)
         {
+            arrowCount = arrowId + 1;// 有效箭头数量取最后一次提交的编号
             if (arrowId > _maxNum - 1) return; // 箭头从0开始编号，数量不能超过上限（_maxNum）
             int haveQizi = GlobalValue.QiPan[point1.X, point1.Y]; // 目标位置的棋子编号，-1表示没有棋子。
             if (GlobalValue.IsQiPanFanZhuan)
@@ -177,7 +191,7 @@ namespace Chess.CustomClass
             pointFs.Add(new PointF((float)xn, (float)yn));  // 存入第六个点
 
             ArrowPath[arrowId].Data = Geometry.Parse(MakePathData(pointFs));
-            ArrowPath[arrowId].Visibility = Visibility.Visible;
+            //ArrowPath[arrowId].Visibility = Visibility.Visible;
 
             double circleX, circleY;
             double cirlcePos = 1.0;
@@ -193,16 +207,16 @@ namespace Chess.CustomClass
             circleY = Math.Floor(y1 + (cirlcePos * Math.Sin(angle))) - 10;
 
             ArrowEllipses[arrowId].Margin = new Thickness(circleX, circleY, 0, 0);
-            ArrowEllipses[arrowId].Visibility = Visibility.Visible;
+            //ArrowEllipses[arrowId].Visibility = Visibility.Visible;
 
             ArrowText[arrowId].Margin = new Thickness(circleX + 5, circleY, 0, 0); // 5是经验数据，用于修正文字的偏移。文字的字体大小为16时，在+5后，文字正好在圆圈中心。如果字体大小有改变，需修正此数据。
-            ArrowText[arrowId].Visibility = Visibility.Visible;
+            //ArrowText[arrowId].Visibility = Visibility.Visible;
 
             if (memo == null || string.IsNullOrEmpty(memo)) return;
             memo = $"{arrowId + 1}：{memo}";
 
             MemoPrompt[arrowId].SetText(memo);
-            MemoPrompt[arrowId].SetVisible();
+            //MemoPrompt[arrowId].SetVisible();
 
             MemoPrompt[arrowId].Margin = new Thickness(circleX, circleY + 22, 80, 0);
             #endregion

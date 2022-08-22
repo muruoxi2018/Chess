@@ -37,8 +37,6 @@ namespace Chess
                     blackSideRect.Fill = Brushes.DarkGreen;
                     redSideRect.Fill = Brushes.LightGoldenrodYellow;
                 }
-                
-                
             } 
         }  // 当前走棋方
         public static bool IsGameOver;  // 游戏结束，系统自动检测
@@ -150,7 +148,7 @@ namespace Chess
             int dieQiZi = QiPan[m, n];
 
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
-            if (sound)
+            if (sound && Settings.Default.EnableSound)
             {
                 player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
                 player.Play();
@@ -204,7 +202,7 @@ namespace Chess
 
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
-            Delay(200);
+            //Delay(200);
             jiangJunTiShi.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
             return true;
         }
@@ -224,7 +222,7 @@ namespace Chess
             int dieQiZi = QiPan[m, n];
 
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
-            if (sound)
+            if (sound && Settings.Default.EnableSound)
             {
                 player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
                 player.Play();
@@ -242,16 +240,14 @@ namespace Chess
                     pathPointImage[i, j].HasPoint = false; // 走棋后，隐藏走棋路径
                 }
             }
-
             if (dieQiZi != -1) // 如果杀死了棋子
             {
                 qiZiArray[dieQiZi].SetInitPosition();
             }
-
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
             
-            Delay(500);
+            //Delay(500);
         }
         /// <summary>
         /// 添加一条棋谱记录

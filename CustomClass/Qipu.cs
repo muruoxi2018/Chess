@@ -174,8 +174,9 @@ namespace Chess.CustomClass
                                     sameTargetPoint = true;
                                 }
                             }
-                            GlobalValue.arrows.SetPathDataAndShow(i, points[i][0], points[i][1], sameTargetPoint, _cursor.ChildNode[i].Remarks);
+                            GlobalValue.arrows.SetPathData(i, points[i][0], points[i][1], sameTargetPoint, _cursor.ChildNode[i].Remarks);
                         }
+                        GlobalValue.arrows.ShowAllPath();
                     }
                     if (_cursor.Remarks != null)
                         GlobalValue.jiangJunTiShi.Text = _cursor.Remarks;
