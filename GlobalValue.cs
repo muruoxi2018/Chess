@@ -198,22 +198,7 @@ namespace Chess
                     pathPointImage[i, j].HasPoint = false; // 走棋后，隐藏走棋路径
                 }
             }
-            
-            if (JiangJun.IsJueSha(qiZi)) // 检查是否绝杀
-            {
-                IsGameOver = true;
-                return false;
-            }
-            if (JiangJun.IsKunBi(qiZi)) // 检查是否困毙
-            {
-                IsGameOver = true;
-                return false;
-            }
-            if (GlobalValue.qiPuRecordRoot.IsLianSha()) // 检查是否连杀超过3次
-            {
-                IsGameOver = true;
-                return false;
-            }
+            SideTag = !SideTag;  // 变换走棋方
             if (dieQiZi != -1) // 如果杀死了棋子
             {
                 qiZiArray[dieQiZi].SetDied();
@@ -223,7 +208,22 @@ namespace Chess
                     return false;
                 }
             }
-            SideTag = !SideTag;  // 变换走棋方
+            if (JiangJun.IsJueSha(qiZi)) // 检查是否绝杀
+            {
+                IsGameOver = true;
+                return false;
+            }
+            if (JiangJun.IsKunBi(SideTag)) // 检查是否困毙
+            {
+                IsGameOver = true;
+                return false;
+            }
+            if (GlobalValue.qiPuRecordRoot.IsLianSha()) // 检查是否连杀超过3次
+            {
+                IsGameOver = true;
+                return false;
+            }
+            
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
             //Delay(200);

@@ -446,29 +446,29 @@ namespace Chess.SuanFa // 算法
         /// </summary>
         /// <param name="qizi">最后一个走动的棋子</param>
         /// <returns>被困毙时，返回true。</returns>
-        public static bool IsKunBi(int qizi)
+        public static bool IsKunBi(bool side)
         {
-            if (qizi < 16)
+            if (side==GlobalValue.REDSIDE)
             {
                 // 黑棋走完后，检查红方是否困毙
                 for (int row = 0; row <= 6; row++)
-                    for (int col = 0; col <= 6; col++)
+                    for (int col = 0; col <= 8; col++)
                     {
-                        // 红方兵行线以上有棋子时，不可能被困毙
+                        // 红方兵行线以上有棋子时，可走闲，不会被困毙
                         if (GlobalValue.QiPan[col, row] is > 16 and < 32) return false;
                     }
                 int[,] redpos = new int[16, 2]{ {0,9}, {0,8},{0,7}, {1,9}, {1,8}, {1,7}, {2,8}, {2,7},
                     {6,8}, {6,7}, {7,9}, {7,8}, {7,7}, {8,9}, {8,8}, {8,7}};
                 for (int i = 0; i < 16; i++)
                 {
-                    // 其余指定位置，如果有红方棋子，也不可能被困毙
+                    // 上述位置如果有红方棋子，可走闲，也不会被困毙
                     if (GlobalValue.QiPan[redpos[i, 0], redpos[i, 1]] is > 16 and < 32) return false;
                 }
-                // 以下位置的红方棋子，有可能造成困毙
+                // 仅仅以下位置有红方棋子时，有可能造成困毙
                 int[,] redKunBiPos = new int[11, 2] { { 2, 9 }, { 3, 9 }, { 3, 8 }, { 3, 7 }, { 4, 9 }, { 4, 8 }, { 4, 7 }, { 5, 9 }, { 5, 8 }, { 5, 7 }, { 6, 9 } };
                 for (int i = 0; i < 11; i++)
                 {
-                    // 其余指定位置，如果有红方棋子，也不可能被困毙
+                    // 逐个验证上述位置的红方棋子，是否可移动
                     int redqizi = GlobalValue.QiPan[redKunBiPos[i, 0], redKunBiPos[i, 1]];
                     if (redqizi is > 16 and < 32)
                     {
@@ -487,27 +487,27 @@ namespace Chess.SuanFa // 算法
                     }
                 }
             }
-            if (qizi >= 16)
+            if (side==GlobalValue.BLACKSIDE)
             {
                 // 红棋走完后，检查黑方是否困毙
                 for (int row = 3; row <= 9; row++)
-                    for (int col = 0; col <= 6; col++)
+                    for (int col = 0; col <= 8; col++)
                     {
-                        // 黑方兵行线以上有棋子时，不可能被困毙
+                        // 黑方兵行线以上有棋子时，可走闲，不会被困毙
                         if (GlobalValue.QiPan[col, row] is >0 and < 16) return false;
                     }
                 int[,] blackpos =new int[16,2]{ {0,0}, {0,1},{0,2}, {1,0}, {1,1}, {1,2}, {2,1}, {2,2},
                     {6,1}, {6,2}, {7,0}, {7,1}, {7,2}, {8,0}, {8,1}, {8,2}};
                 for (int i = 0; i < 16; i++)
                 {
-                    // 其余指定位置，如果有黑方棋子，也不可能被困毙
+                    // 上述位置如果有黑方棋子，可走闲，也不会被困毙
                     if (GlobalValue.QiPan[blackpos[i, 0], blackpos[i, 1]] is > 0 and < 16) return false;
                 }
-                // 以下位置的黑方棋子，有可能造成困毙
+                // 仅仅以下位置有黑方棋子时，有可能造成困毙
                 int[,] blackKunBiPos =new int[11,2] { { 2, 0 }, { 3, 0 }, { 3, 1 }, { 3, 2 }, { 4, 0 }, { 4, 1 }, { 4, 2 }, { 5, 0 }, { 5, 1 }, { 5, 2 }, { 6, 0 } };
                 for (int i = 0; i < 11; i++)
                 {
-                    // 其余指定位置，如果有黑方棋子，也不可能被困毙
+                    // 逐个验证上述位置的黑方棋子，是否可移动
                     int blackqizi = GlobalValue.QiPan[blackKunBiPos[i, 0], blackKunBiPos[i, 1]];
                     if (blackqizi is >= 0 and < 16)
                     {
