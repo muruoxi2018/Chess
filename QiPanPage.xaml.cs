@@ -250,19 +250,6 @@ namespace Chess
         }
 
         /// <summary>
-        /// 打开软件设置窗口
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SetupOption(object sender, RoutedEventArgs e)
-        {
-            SetupWindow sw = new();
-            sw.Show();
-        }
-
-
-
-        /// <summary>
         /// 保存棋谱
         /// </summary>
         /// <param name="sender"></param>

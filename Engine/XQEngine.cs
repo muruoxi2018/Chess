@@ -113,7 +113,7 @@ namespace Chess.Engine
             {
                 output += " w";
             }
-            output += " - - 0 1";
+            //output += " - - 0 1";
             output += GlobalValue.qiPuRecordRoot.Get6Moves();
             return output;
             #endregion

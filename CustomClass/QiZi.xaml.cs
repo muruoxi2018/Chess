@@ -23,7 +23,42 @@ namespace Chess
         public int Col { get; set; }  // 棋子的列坐标
         public int Row { get; set; }  // 棋子的行坐标
         public int QiziId { get; set; }  // 棋子编号
-        public bool Selected { get; set; }  // 棋子的选中状态
+        private bool _selected;
+        public bool Selected    // 棋子的选中状态
+        { 
+            get { return _selected; } 
+            set { 
+                _selected = value; 
+                if (value)
+                {
+                    DoubleAnimation DA = new DoubleAnimation  // 阴影动画
+                    {
+                        From = 8.0,
+                        To = 25.0,
+                        FillBehavior = FillBehavior.HoldEnd,
+                        AutoReverse = false,
+                        Duration = new Duration(TimeSpan.FromSeconds(0.05))
+                    };
+                    QiZiImage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
+                    yuxuankuang.Visibility = Visibility.Visible;
+                    GlobalValue.CurrentQiZi = QiziId;
+                    //Scall(1.01);
+                    SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi); // 获取可移动路径，并显示在棋盘上
+                    GlobalValue.yuanWeiZhi.SetPosition(Col, Row); // 棋子原位置标记，显示在当前位置
+                    GlobalValue.yuanWeiZhi.ShowYuanWeiZhiImage();
+                    if (Settings.Default.EnableSound)
+                    {
+                        GlobalValue.player.Open(new Uri("Sounds/select.mp3", UriKind.Relative));
+                        GlobalValue.player.Play();
+                    }
+                }
+                else
+                {
+                    QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
+                    yuxuankuang.Visibility = Visibility.Hidden; // 本棋子的预先框隐藏
+                }
+            }
+        }  
         public bool SideColor { get; set; }  // 棋子属于哪一方，false：黑棋，true：红棋
 
         /// <summary>
@@ -79,15 +114,15 @@ namespace Chess
                 //item.Selected = false;
                 //item.PutDown();
                 //item.yuxuankuang.Visibility = Visibility.Hidden;
-                item.Deselect();
+                item.Selected=false;
             }
             if (SideColor == GlobalValue.SideTag)
             {
-                Select();
+                Selected = true;
             }
             if (MainWindow.menuItem == 5)
             {
-                Select();
+                Selected = true;
             }
         }
 
@@ -97,8 +132,6 @@ namespace Chess
         public void Deselect()
         {
             Selected = false;
-            QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
-            yuxuankuang.Visibility = Visibility.Hidden; // 本棋子的预先框隐藏
         }
         /// <summary>
         /// 选中时的处理
@@ -106,27 +139,6 @@ namespace Chess
         public void Select()
         {
             Selected = true;
-            DoubleAnimation DA = new DoubleAnimation  // 阴影动画
-            {
-                From = 8.0,
-                To = 25.0,
-                FillBehavior = FillBehavior.HoldEnd,
-                AutoReverse = false,
-                Duration = new Duration(TimeSpan.FromSeconds(0.05))
-            };
-            QiZiImage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
-            yuxuankuang.Visibility = Visibility.Visible;
-            GlobalValue.CurrentQiZi = QiziId;
-            //Scall(1.01);
-            SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi); // 获取可移动路径，并显示在棋盘上
-            GlobalValue.yuanWeiZhi.SetPosition(Col, Row); // 棋子原位置标记，显示在当前位置
-            GlobalValue.yuanWeiZhi.ShowYuanWeiZhiImage();
-            if (Settings.Default.EnableSound)
-            {
-                GlobalValue.player.Open(new Uri("Sounds/select.mp3", UriKind.Relative));
-                GlobalValue.player.Play();
-            }
-
         }
 
         /// <summary>
@@ -168,7 +180,7 @@ namespace Chess
         {
             Visibility = Visibility.Visible;  // 棋子复活
             SetPosition(init_col, init_row);
-            Deselect();
+            Selected=false;
         }
         /// <summary>
         /// 缩放

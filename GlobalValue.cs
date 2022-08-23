@@ -20,26 +20,55 @@ namespace Chess
         public const bool BLACKSIDE = false;  // 黑方
         public const bool REDSIDE = true;   //红方
         private static bool _sideTag;
-        public static bool SideTag 
+        public static bool SideTag   // 当前走棋方
         {
             get { return _sideTag; }
-            set {
+            set
+            {
                 _sideTag = value;
+                const double delayTime = 200.0; // 动画延续时间，毫秒
+                #region 走棋方指示灯动画
+                DoubleAnimation DAscale = new()
+                {
+                    From = 1,
+                    To = 1.5,
+                    FillBehavior = FillBehavior.Stop,
+                    Duration = new Duration(TimeSpan.FromSeconds(delayTime / 1000))
+                };
+                ScaleTransform scale = new();
                 if (value == BLACKSIDE)
                 {
                     // 黑方走棋指示灯
                     blackSideRect.Fill = Brushes.LightGoldenrodYellow;
                     redSideRect.Fill = Brushes.DarkGreen;
+                    redSideRect.RenderTransform = null;
+                    blackSideRect.RenderTransform = scale;
+                    blackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
                 }
                 else
                 {
                     // 红方走棋指示灯
                     blackSideRect.Fill = Brushes.DarkGreen;
                     redSideRect.Fill = Brushes.LightGoldenrodYellow;
+                    redSideRect.RenderTransform = scale;
+                    blackSideRect.RenderTransform = null;
+                    redSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
                 }
-            } 
-        }  // 当前走棋方
-        public static bool IsGameOver;  // 游戏结束，系统自动检测
+
+                scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // 走棋方指示灯动画，x方向缩放
+                scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
+                #endregion
+            }
+        }
+        private static bool _isGameOver;
+        public static bool IsGameOver  // 游戏结束标志
+        {
+            get { return _isGameOver; }
+            set { 
+                _isGameOver = value; 
+                if (value) jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+            }
+        }  // 游戏结束，系统自动检测
         public static bool EnableGameStop; // 人为停止游戏，用于电脑自动走棋过程中，中止走棋
 
         public static bool IsQiPanFanZhuan; // 棋盘上下翻转，默认值为false，下红上黑，设为true后，翻转后为下黑上红
@@ -155,7 +184,7 @@ namespace Chess
             }
 
             if (MoveCheck.AfterMoveStillJiangJun(qiZi, m, n, QiPan)) return false; // 如果棋子移动后，本方处于将军状态，则不可以移动。
-            
+
             qiZiArray[qiZi].SetPosition(m, n);
             GlobalValue.QiPan[x0, y0] = -1;
             GlobalValue.QiPan[m, n] = qiZi;
@@ -169,23 +198,20 @@ namespace Chess
                     pathPointImage[i, j].HasPoint = false; // 走棋后，隐藏走棋路径
                 }
             }
-            SideTag = !SideTag;  // 变换走棋方
+            
             if (JiangJun.IsJueSha(qiZi)) // 检查是否绝杀
             {
                 IsGameOver = true;
-                jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
                 return false;
             }
             if (JiangJun.IsKunBi(qiZi)) // 检查是否困毙
             {
                 IsGameOver = true;
-                jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
                 return false;
             }
             if (GlobalValue.qiPuRecordRoot.IsLianSha()) // 检查是否连杀超过3次
             {
                 IsGameOver = true;
-                jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
                 return false;
             }
             if (dieQiZi != -1) // 如果杀死了棋子
@@ -194,12 +220,10 @@ namespace Chess
                 if (dieQiZi is 0 or 16) // 将帅被吃，则游戏结束。本系统通过将军和绝杀判断，不允许出现此种情况。仅仅暂且保留此代码。
                 {
                     IsGameOver = true;
-                    jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
                     return false;
                 }
             }
-            
-
+            SideTag = !SideTag;  // 变换走棋方
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
             //Delay(200);
@@ -227,7 +251,7 @@ namespace Chess
                 player.Open(new Uri("sounds/go.mp3", UriKind.Relative));
                 player.Play();
             }
-            if (!MoveCheck.FreeMoveCheck(qiZi,m,n)) return; // 棋子摆放位置是否合规
+            if (!MoveCheck.FreeMoveCheck(qiZi, m, n)) return; // 棋子摆放位置是否合规
 
             qiZiArray[qiZi].SetPosition(m, n);
             if (y0 >= 0 && y0 < 10) GlobalValue.QiPan[x0, y0] = -1;
@@ -246,7 +270,7 @@ namespace Chess
             }
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
-            
+
             //Delay(500);
         }
         /// <summary>
@@ -327,32 +351,35 @@ namespace Chess
         {
             const double delayTime = 200.0; // 动画延续时间，毫秒
             double Grid_y0 = 0.0;
-            if (y0 >= 0 && y0 < 10)
+            #region 棋子有效位置检测
+
+            if (y0 >= 0 && y0 < 10) // 棋子在棋盘内
             {
                 Grid_y0 = QiPanGrid_Y[y0] - GRID_WIDTH / 2;
             }
-            if (y0 == -1)
+            if (y0 == -1) // 残局设计时，棋子初始位置在棋盘外
             {
                 Grid_y0 = QiPanGrid_Y_0;
             }
-            if (y0 == 10)
+            if (y0 == 10) // 残局设计时，棋子初始位置在棋盘外
             {
                 Grid_y0 = QiPanGrid_Y_10;
             }
             double Grid_y1 = 0.0;
-            if (y1 >= 0 && y1 < 10)
+            if (y1 >= 0 && y1 < 10) // 棋子在棋盘内
             {
                 Grid_y1 = QiPanGrid_Y[y1] - GRID_WIDTH / 2;
             }
-            if (y1 == -1)
+            if (y1 == -1) // 残局设计时，棋子初始位置在棋盘外
             {
                 Grid_y1 = QiPanGrid_Y_0;
             }
-            if (y1 == 10)
+            if (y1 == 10) // 残局设计时，棋子初始位置在棋盘外
             {
                 Grid_y1 = QiPanGrid_Y_10;
             }
-            #region 动画参数设置
+            #endregion
+            #region 棋子移动动画参数设置
             DoubleAnimation PAx = new()
             {
                 From = QiPanGrid_X[x0] - GRID_WIDTH / 2,
@@ -378,30 +405,6 @@ namespace Chess
             #endregion
             qiZiArray[qiZi].BeginAnimation(Canvas.LeftProperty, PAx); // 棋子移动动画
             qiZiArray[qiZi].BeginAnimation(Canvas.TopProperty, PAy);
-
-            DoubleAnimation DAscale = new()
-            {
-                From = 1,
-                To = 1.5,
-                FillBehavior = FillBehavior.Stop,
-                Duration = new Duration(TimeSpan.FromSeconds(delayTime / 1000))
-            };
-            ScaleTransform scale = new();
-            if (SideTag == REDSIDE)
-            {
-                redSideRect.RenderTransform = scale;
-                blackSideRect.RenderTransform = null;
-                redSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
-            }
-            if (SideTag == BLACKSIDE)
-            {
-                redSideRect.RenderTransform = null;
-                blackSideRect.RenderTransform = scale;
-                blackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
-            }
-            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // 走棋方指示灯动画，x方向缩放
-            scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
-
         }
 
         /// <summary>
@@ -413,7 +416,7 @@ namespace Chess
             {
                 item.SetInitPosition(); // 所有棋子的位置信息复位
             }
-            
+
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)

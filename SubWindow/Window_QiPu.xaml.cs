@@ -97,6 +97,8 @@ namespace Chess
             FuPanDataGrid.ItemsSource = Qipu.ContractQiPu.ChildSteps;
             TrueTree.ItemsSource = GlobalValue.qiPuRecordRoot.ChildNode;
             CompressTree.ItemsSource = Qipu.ContractQiPu.ChildSteps;
+
+            GlobalValue.qiPuRecordRoot.Cursor = GlobalValue.qiPuRecordRoot; // 指向棋谱第一步，提示箭头自动显示
         }
         
 
