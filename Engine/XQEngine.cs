@@ -317,7 +317,7 @@ namespace Chess.Engine
                 {
                     str = $"最佳着法： {InfoSource}";
                 }
-                if (showarrow || MainWindow.menuItem == 1) ShowArrows();
+                if (showarrow || MainWindow.menuItem == GlobalValue.PERSON_PC) ShowArrows();
                 return str;
             }
 

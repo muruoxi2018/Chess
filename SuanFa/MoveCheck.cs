@@ -21,7 +21,7 @@ namespace Chess.SuanFa // 算法
                     PathBool[i, j] = false;
                 }
             }
-            if (qiZi > -1 && MainWindow.menuItem != 5)
+            if (qiZi > -1 && MainWindow.menuItem != GlobalValue.CANJU_DESIGN)
             {
                 PathBool = GetPathPoints(qiZi, GlobalValue.QiPan);
                 for (int i = 0; i <= 8; i++)
@@ -36,7 +36,7 @@ namespace Chess.SuanFa // 算法
             }
             
             // 残局设计时
-            if (MainWindow.menuItem == 5)
+            if (MainWindow.menuItem == GlobalValue.CANJU_DESIGN)
             {
                 for (int i = 0; i <= 8; i++)
                 {

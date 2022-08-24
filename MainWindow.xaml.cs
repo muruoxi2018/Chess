@@ -2,6 +2,8 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Chess
 {
@@ -33,7 +35,6 @@ namespace Chess
             menuItem = 0;
             ReturnButton.Visibility = Visibility.Hidden;
         }
-
         private void ReturnMainMenu(object sender, RoutedEventArgs e)
         {
             MainFrame.Source = null;
@@ -58,31 +59,31 @@ namespace Chess
             switch (btn.Tag.ToString())
             {
                 case "1":
-                    menuItem = 1;
+                    menuItem = GlobalValue.PERSON_PC;
                     MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
                     break;
                 case "2":
-                    menuItem = 2;
+                    menuItem = GlobalValue.PC_PC;
                     MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
                     break;
                 case "3":
-                    menuItem = 3;
+                    menuItem = GlobalValue.FREE_DAPU;
                     MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
                     break;
                 case "4":
-                    menuItem = 4;
+                    menuItem = GlobalValue.QIPU_RECORD;
                     MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
                     break;
                 case "5":
-                    menuItem = 5;
+                    menuItem = GlobalValue.CANJU_DESIGN;
                     MainFrame.Source = new Uri("CanJuSheJi.xaml", UriKind.RelativeOrAbsolute);
                     break;
                 case "6":
-                    menuItem = 6;
+                    menuItem = GlobalValue.CANJU_POJIE;
                     MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
                     break;
                 default:
-                    menuItem = 100;
+                    menuItem = 0;
                     MainMenu.Visibility = Visibility.Visible;
                     ReturnButton.Visibility = Visibility.Hidden;
                     break;

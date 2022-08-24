@@ -28,6 +28,7 @@
                         <WrapPanel Height="30" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,10,0,0">
                             <Button Content="开局"  Style="{StaticResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Width="70" Click="ResetBtnClick"/>
                             <Button Content="翻转棋盘" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="OnFanZhuanQiPan"/>
+                            <Button Content="悔棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="HuiQiButton"/>
                             <CheckBox x:Name="ArrowsShowOrHidden" Content="显示提示箭头" Background="#FFF9F08D" Foreground="#FFE6CD2A" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,0" IsChecked="{Binding Default.ArrowVisable}" />
                         </WrapPanel>
                     </Grid>
@@ -65,10 +66,11 @@
                     <Grid Visibility="Visible">
                         <WrapPanel Height="30" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,6,0,0">
                             <Button Content="重来"  Style="{StaticResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Width="70" Click="ReStartCanJu"/>
-                            <Button x:Name="AutoMoveCanJuQiZi" Content="自动走棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="AutoMoveCanJu"/>
                             <Button Content="上一局" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="PerCanJu"/>
                             <Button Content="下一局" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="NextCanJu"/>
+                            <Button Content="悔棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="HuiQiButton"/>
                             <Button Content="视频教程" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="VideoUrl"/>
+                            <Button x:Name="AutoMoveCanJuQiZi" Content="自动走棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="AutoMoveCanJu"/>
                             <Button x:Name="StopAutoMove" Content="停止走棋" Style="{StaticResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="StopAutoMoveCanJu" IsEnabled="False"/>
                         </WrapPanel>
                         <TextBlock x:Name="CanJuComment" HorizontalAlignment="Stretch" Margin="10,36,10,0" VerticalAlignment="Top" Foreground="#FFEAF587" FontSize="14" TextWrapping="Wrap"/>

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,5 +35,33 @@ namespace Chess.SubWindow
         {
             Settings.Default.Save();
         }
+        /// <summary>
+        /// 选择窗口背景图片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectBKImage(object sender, RoutedEventArgs e)
+        {
+            string imageDefaultPath = $"{AppDomain.CurrentDomain.BaseDirectory}picture\\BackGround\\";
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "图像文件|*.jpg;*.png;*.bmp|所有文件|*.*";
+            openFileDialog.InitialDirectory = imageDefaultPath;
+            openFileDialog.DefaultExt = string.Empty;
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Title = "选择窗口背景图片";
+            if ((bool)openFileDialog.ShowDialog())
+            {
+                FileInfo sourceFile = new FileInfo(openFileDialog.FileName);
+                string targetFile = imageDefaultPath + sourceFile.Name;
+                if (!File.Exists(targetFile))
+                {
+                    // 如果在picture\BackGround\文件夹下没有该文件，再复制到该文件夹。
+                    File.Copy(sourceFile.FullName, targetFile, true);
+                }
+                Settings.Default.mainBKImage = @"\\picture\\BackGround\\" + sourceFile.Name;
+                Settings.Default.Save();
+            }
+        }
+
     }
 }

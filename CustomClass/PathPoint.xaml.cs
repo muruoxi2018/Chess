@@ -1,7 +1,10 @@
 ﻿using Chess.CustomClass;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 
 namespace Chess
@@ -45,7 +48,7 @@ namespace Chess
             }
             HasPoint = false;
             Setposition(x, y);
-            if (MainWindow.menuItem == 5) image.Visibility = Visibility.Hidden;
+            if (MainWindow.menuItem == GlobalValue.CANJU_DESIGN) image.Visibility = Visibility.Hidden;
 
         }
 
@@ -72,23 +75,45 @@ namespace Chess
         }
 
         /// <summary>
-        /// 当鼠标进入标记范围内时，显示阴影效果
+        /// 当鼠标进入标记范围内时，标记放大1.5倍
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnMouseEnter(object sender, MouseEventArgs e)
         {
-            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 4, Opacity = 0.7 });
+            DoubleAnimation DAscale = new()
+            {
+                From = 1,
+                To = 1.5,
+                FillBehavior = FillBehavior.HoldEnd,
+                Duration = new Duration(TimeSpan.FromSeconds(0.2))
+            };
+            ScaleTransform scale = new();
+            image.RenderTransform = scale;
+            image.RenderTransformOrigin = new Point(0.5, 0.5);
+            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // x方向缩放
+            scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
         }
 
         /// <summary>
-        /// 当鼠标离开标记范围时，去除阴影效果
+        /// 当鼠标离开标记范围时，标记回复原始大小
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnMouseLeave(object sender, MouseEventArgs e)
         {
-            image.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 2, Opacity = 0.7 });
+            DoubleAnimation DAscale = new()
+            {
+                From = 1.5,
+                To = 1,
+                FillBehavior = FillBehavior.HoldEnd,
+                Duration = new Duration(TimeSpan.FromSeconds(0.5))
+            };
+            ScaleTransform scale = new();
+            image.RenderTransform = scale;
+            image.RenderTransformOrigin = new Point(0.5, 0.5);
+            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // x方向缩放
+            scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
         }
 
         /// <summary>
@@ -98,7 +123,7 @@ namespace Chess
         /// <param name="e"></param>
         private void OnMouseup(object sender, MouseButtonEventArgs e)
         {
-            if (MainWindow.menuItem == 5)
+            if (MainWindow.menuItem == GlobalValue.CANJU_DESIGN)
             {
                 // 自由摆放棋子
                 GlobalValue.QiZiFreeMoveTo(GlobalValue.CurrentQiZi, Col, Row, true);
@@ -109,13 +134,13 @@ namespace Chess
                 if (GlobalValue.IsGameOver == false)
                     if (GlobalValue.QiZiMoveTo(GlobalValue.CurrentQiZi, Col, Row, true))
                     {
-                        if (MainWindow.menuItem == 1 && GlobalValue.SideTag == GlobalValue.BLACKSIDE)
+                        if (MainWindow.menuItem == GlobalValue.PERSON_PC && GlobalValue.SideTag == GlobalValue.BLACKSIDE)
                         {
                             GlobalValue.Delay(Settings.Default.MoveDelayTime);
                             Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();
                             if (step != null) step.LunchStep();
                         }
-                        // 电脑对战，第一步需人为走出
+                        // 电脑对战，第一步需人为走出。此处暂保留，后期可能删除
                         if (MainWindow.menuItem == 100)
                         {
                             while (GlobalValue.EnableGameStop == false && GlobalValue.IsGameOver == false)
@@ -125,8 +150,8 @@ namespace Chess
                                 if (step != null) step.LunchStep(); else break;
                             }
                         }
-                        // 残局练习
-                        if (MainWindow.menuItem == 6)
+                        // 残局破解
+                        if (MainWindow.menuItem == GlobalValue.CANJU_POJIE)
                         {
                             GlobalValue.Delay(Settings.Default.MoveDelayTime);
                             Qipu.StepCode step = Engine.XQEngine.UcciInfo.GetBestSetp();

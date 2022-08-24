@@ -31,7 +31,7 @@ namespace Chess
                 _selected = value; 
                 if (value)
                 {
-                    DoubleAnimation DA = new DoubleAnimation  // 阴影动画
+                    DoubleAnimation DA = new()
                     {
                         From = 8.0,
                         To = 25.0,
@@ -40,12 +40,15 @@ namespace Chess
                         Duration = new Duration(TimeSpan.FromSeconds(0.05))
                     };
                     QiZiImage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
-                    yuxuankuang.Visibility = Visibility.Visible;
+                    yuxuankuang_image.Visibility = Visibility.Visible;
                     GlobalValue.CurrentQiZi = QiziId;
                     //Scall(1.01);
                     SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi); // 获取可移动路径，并显示在棋盘上
                     GlobalValue.yuanWeiZhi.SetPosition(Col, Row); // 棋子原位置标记，显示在当前位置
-                    GlobalValue.yuanWeiZhi.ShowYuanWeiZhiImage();
+                    if (MainWindow.menuItem != GlobalValue.CANJU_DESIGN)
+                    {
+                        GlobalValue.yuanWeiZhi.ShowYuanWeiZhiImage();
+                    }
                     if (Settings.Default.EnableSound)
                     {
                         GlobalValue.player.Open(new Uri("Sounds/select.mp3", UriKind.Relative));
@@ -55,7 +58,8 @@ namespace Chess
                 else
                 {
                     QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
-                    yuxuankuang.Visibility = Visibility.Hidden; // 本棋子的预先框隐藏
+                    yuxuankuang_image.Visibility = Visibility.Hidden; // 本棋子的预先框隐藏
+                    
                 }
             }
         }  
@@ -90,7 +94,7 @@ namespace Chess
             QiZiImage.Source = bi;
             init_col = GlobalValue.qiZiInitPosition[id, 0]; // 开局时，棋子的位置
             init_row = GlobalValue.qiZiInitPosition[id, 1];
-            if (MainWindow.menuItem == 5)
+            if (MainWindow.menuItem == GlobalValue.CANJU_DESIGN)
             {
                 init_col = GlobalValue.qiZiCanJuInitPosition[id, 0]; // 残局设计开局时，棋子的位置
                 init_row = GlobalValue.qiZiCanJuInitPosition[id, 1];
@@ -111,16 +115,13 @@ namespace Chess
         {
             foreach (QiZi item in GlobalValue.qiZiArray)
             {
-                //item.Selected = false;
-                //item.PutDown();
-                //item.yuxuankuang.Visibility = Visibility.Hidden;
                 item.Selected=false;
             }
             if (SideColor == GlobalValue.SideTag)
             {
                 Selected = true;
             }
-            if (MainWindow.menuItem == 5)
+            if (MainWindow.menuItem == GlobalValue.CANJU_DESIGN)
             {
                 Selected = true;
             }
@@ -138,6 +139,10 @@ namespace Chess
         /// </summary>
         public void Select()
         {
+            foreach(QiZi item in GlobalValue.qiZiArray)
+            {
+                item.Deselect();
+            }
             Selected = true;
         }
 
@@ -205,6 +210,7 @@ namespace Chess
         /// </summary>
         public void SetDied()
         {
+            Selected = false;
             Visibility = Visibility.Collapsed;
             //yuxuankuang.Visibility = Visibility.Hidden;
         }
@@ -219,11 +225,11 @@ namespace Chess
 
         public void ShowYuanWeiZhiImage()
         {
-            yuanweizhi.Visibility = Visibility.Visible;
+            yuanweizhi_image.Visibility = Visibility.Visible;
         }
         public void HiddenYuanWeiZhiImage()
         {
-            yuanweizhi.Visibility = Visibility.Hidden;
+            yuanweizhi_image.Visibility = Visibility.Hidden;
         }
         /// <summary>
         /// 在残局设计界面，可移除棋子
@@ -232,7 +238,7 @@ namespace Chess
         /// <param name="e"></param>
         private void DeleteQiZi(object sender, RoutedEventArgs e)
         {
-            if (MainWindow.menuItem == 5)
+            if (MainWindow.menuItem == GlobalValue.CANJU_DESIGN)
             {
                 GlobalValue.QiPan[Col, Row] = -1;
                 SetInitPosition();

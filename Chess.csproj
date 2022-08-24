@@ -43,6 +43,7 @@
     <None Remove="juesha.png" />
     <None Remove="KaiJuKu.db" />
     <None Remove="picture\background.jpg" />
+    <None Remove="picture\BackGround\青草.jpg" />
     <None Remove="picture\break_roleH_10zhanghan.png" />
     <None Remove="picture\juesha.png" />
     <None Remove="picture\juesha_0.png" />
@@ -70,7 +71,6 @@
     <None Remove="picture\象棋棋子阴影.png" />
     <None Remove="picture\路径点.png" />
     <None Remove="picture\青草.jpeg" />
-    <None Remove="picture\青草.jpg" />
     <None Remove="picture\预选框.png" />
     <None Remove="picture\黑卒.png" />
     <None Remove="picture\黑士.png" />
@@ -243,6 +243,9 @@
     <Content Include="Sounds\Woman_jiangjun.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="picture\BackGround\青草.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="picture\juesha.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -255,9 +258,9 @@
     <Resource Include="picture\大象.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="picture\小师妹.png">
+    <Content Include="picture\BackGround\小师妹.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Resource Include="picture\棋盘（红上）.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -293,9 +296,6 @@
     </Resource>
     <Resource Include="picture\路径点.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\青草.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="picture\预选框.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -344,13 +344,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
@@ -359,6 +352,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

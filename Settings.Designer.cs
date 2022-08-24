@@ -29,13 +29,13 @@ namespace Chess {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsDescriptionAttribute("主窗口背景色")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SteelBlue")]
-        public global::System.Drawing.Color mainBKColor {
+        [global::System.Configuration.DefaultSettingValueAttribute("picture\\BackGround\\青草.jpg")]
+        public string mainBKImage {
             get {
-                return ((global::System.Drawing.Color)(this["mainBKColor"]));
+                return ((string)(this["mainBKImage"]));
             }
             set {
-                this["mainBKColor"] = value;
+                this["mainBKImage"] = value;
             }
         }
         
@@ -116,6 +116,18 @@ namespace Chess {
             }
             set {
                 this["other"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("eeee")]
+        public string 设置 {
+            get {
+                return ((string)(this["设置"]));
+            }
+            set {
+                this["设置"] = value;
             }
         }
     }

@@ -161,7 +161,7 @@ namespace Chess.CustomClass
                     _cursor = value;
                     _cursor.IsSelected = true;
                     if (GlobalValue.arrows != null) GlobalValue.arrows.HideAllPath();
-                    if (MainWindow.menuItem == 4 && !_cursor.IsLeaf())
+                    if (MainWindow.menuItem == GlobalValue.QIPU_RECORD && !_cursor.IsLeaf())
                     {
                         var points = GetListPoint(_cursor);
                         for (int i = 0; i < points.Count; i++)

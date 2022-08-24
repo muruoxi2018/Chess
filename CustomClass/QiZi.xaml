@@ -25,12 +25,12 @@
                 <DropShadowEffect x:Name="qzShadow" ShadowDepth="8" BlurRadius="10" Opacity="0.6"/>
             </Image.Effect>
         </Image>
-        <Image x:Name="yuxuankuang" HorizontalAlignment="Stretch" Height="66" VerticalAlignment="Stretch" Width="66" Source="/picture/预选框.png" Panel.ZIndex="2" Stretch="Uniform" RenderTransformOrigin="0.5,0.5" RenderTransform="{DynamicResource UserControlRenderTransform1}" Visibility="Hidden">
+        <Image x:Name="yuxuankuang_image" HorizontalAlignment="Stretch" Height="66" VerticalAlignment="Stretch" Width="66" Source="/picture/预选框.png" Panel.ZIndex="2" Stretch="Uniform" RenderTransformOrigin="0.5,0.5" RenderTransform="{DynamicResource UserControlRenderTransform1}" Visibility="Hidden">
             <Image.Effect>
                 <DropShadowEffect Opacity="0.6" ShadowDepth="5"/>
             </Image.Effect>
         </Image>
-        <Image x:Name="yuanweizhi" Stretch="Uniform" Source="/picture/原位置.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False" Visibility="Hidden" Width="66" Height="66">
+        <Image x:Name="yuanweizhi_image" Stretch="Uniform" Source="/picture/原位置.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False" Visibility="Hidden" Width="66" Height="66">
             <Image.Effect>
                 <DropShadowEffect Opacity="0.4" ShadowDepth="5"/>
             </Image.Effect>

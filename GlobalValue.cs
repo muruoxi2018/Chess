@@ -64,8 +64,9 @@ namespace Chess
         public static bool IsGameOver  // 游戏结束标志
         {
             get { return _isGameOver; }
-            set { 
-                _isGameOver = value; 
+            set
+            {
+                _isGameOver = value;
                 if (value) jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
             }
         }  // 游戏结束，系统自动检测
@@ -76,6 +77,13 @@ namespace Chess
         public static int[,] QiPan = new int[9, 10]; // 棋盘数据，9列10行，记录棋子位置，如果为-1，则表示该位置没有棋子。
 
         public static MediaPlayer player = new();
+        public const int PERSON_PC = 1;
+        public const int PC_PC = 2;
+        public const int FREE_DAPU = 3;
+        public const int QIPU_RECORD = 4;
+        public const int CANJU_DESIGN = 5;
+        public const int CANJU_POJIE = 6;
+
 
         #region // 用户界面元素
         public static PathPoint[,] pathPointImage = new PathPoint[9, 10];  // 棋子可走路径的圆点标记
@@ -171,6 +179,7 @@ namespace Chess
         {
             if (qiZi is < 0 or > 31) return false;
             if (GlobalValue.IsGameOver == true) return false;
+            qiZiArray[qiZi].Select(); // 人工走棋时，引代码多余。仅用于电脑走棋时，模拟棋子被选中。
             // 运子到(m,n)位置
             int x0 = qiZiArray[qiZi].Col;
             int y0 = qiZiArray[qiZi].Row;
@@ -472,7 +481,10 @@ namespace Chess
             QiPan[step.X1, step.Y1] = step.DieQz;
             Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count - 1);
             SideTag = !SideTag;
-
+            foreach(var item in pathPointImage)
+            {
+                item.HasPoint = false;
+            }
             if (qiPuRecordRoot.Cursor.GetParent() != null)
             {
                 qiPuRecordRoot.Cursor = qiPuRecordRoot.Cursor.GetParent();

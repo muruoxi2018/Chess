@@ -268,6 +268,10 @@ namespace Chess
         private void HuiQiButton(object sender, RoutedEventArgs e)
         {
             GlobalValue.HuiQi();
+            if (MainWindow.menuItem==GlobalValue.PERSON_PC || MainWindow.menuItem == GlobalValue.CANJU_POJIE)
+            {
+                GlobalValue.HuiQi();
+            }
         }
 
         /// <summary>
@@ -405,6 +409,7 @@ namespace Chess
                 }
             }
             GlobalValue.EnableGameStop = true;
+            GlobalValue.yuanWeiZhi.HiddenYuanWeiZhiImage();
             AutoMoveCanJuQiZi.IsEnabled = true;
             StopAutoMove.IsEnabled = false;
             PCVsPcAutoMoveCanJuQiZi.IsEnabled = true;
