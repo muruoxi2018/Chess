@@ -26,8 +26,8 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="20,10,0,0">
                 <TextBlock Text="窗口背景图片：" Foreground="White"></TextBlock>
-                <TextBox Width="294" Margin="85,0,0,0" IsEnabled="False" FontWeight="Bold" TextAlignment="Left" Text="{Binding Default.mainBKImage}" SourceUpdated="onTextChanged"></TextBox>
-                <Button Content="另选" Margin="30,0,0,0" Width="50"/>
+                <TextBox Width="294" Margin="85,0,0,0" IsEnabled="False" TextAlignment="Left" Text="{Binding Default.mainBKImage}" TextChanged="OnTextChanged"/>
+                <Button Content="另选" Margin="30,0,0,0" Width="50" Click="SelectBKImage"/>
             </StackPanel>
         </StackPanel>
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,25 +44,32 @@ namespace Chess.SubWindow
         private void SelectBKImage(object sender, RoutedEventArgs e)
         {
             string imageDefaultPath = $"{AppDomain.CurrentDomain.BaseDirectory}picture\\BackGround\\";
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "图像文件|*.jpg;*.png;*.bmp|所有文件|*.*";
-            openFileDialog.InitialDirectory = imageDefaultPath;
-            openFileDialog.DefaultExt = string.Empty;
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.Title = "选择窗口背景图片";
+            OpenFileDialog openFileDialog = new()
+            {
+                Filter = "图像文件|*.jpg;*.png;*.bmp|所有文件|*.*",
+                InitialDirectory = imageDefaultPath,
+                DefaultExt = string.Empty,
+                RestoreDirectory = true,
+                Title = "选择窗口背景图片"
+            };
             if ((bool)openFileDialog.ShowDialog())
             {
-                FileInfo sourceFile = new FileInfo(openFileDialog.FileName);
+                FileInfo sourceFile = new(openFileDialog.FileName);
                 string targetFile = imageDefaultPath + sourceFile.Name;
                 if (!File.Exists(targetFile))
                 {
-                    // 如果在picture\BackGround\文件夹下没有该文件，再复制到该文件夹。
+                    // 如果在\picture\BackGround\文件夹下没有该文件，再复制到该文件夹。
                     File.Copy(sourceFile.FullName, targetFile, true);
                 }
-                Settings.Default.mainBKImage = @"\\picture\\BackGround\\" + sourceFile.Name;
+                Settings.Default.mainBKImage = sourceFile.Name;
                 Settings.Default.Save();
+
             }
         }
 
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
     }
 }

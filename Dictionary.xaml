@@ -26,6 +26,4 @@
         <Setter Property="BorderThickness" Value="2,2,2,2"/>
  
     </Style>
-
-
 </ResourceDictionary>

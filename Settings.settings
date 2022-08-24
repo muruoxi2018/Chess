@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="mainBKImage" Description="主窗口背景色" Type="System.String" Scope="User">
-      <Value Profile="(Default)">picture\BackGround\青草.jpg</Value>
+      <Value Profile="(Default)">青草.jpg</Value>
     </Setting>
     <Setting Name="stepArrow" Description="每一步都箭头提示" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
