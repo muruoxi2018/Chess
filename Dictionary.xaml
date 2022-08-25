@@ -26,4 +26,12 @@
         <Setter Property="BorderThickness" Value="2,2,2,2"/>
  
     </Style>
+    <Style x:Key="borderStyle_Green" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#CC0D6905"/>
+        <Setter Property="Background" Value="#330F9C03"/>
+    </Style>
+    <Style x:Key="borderStyle_Blue" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#CC05694B"/>
+        <Setter Property="Background" Value="#33055B4E"/>
+    </Style>
 </ResourceDictionary>
