@@ -44,9 +44,11 @@ namespace Chess.SubWindow
         private void SelectBKImage(object sender, RoutedEventArgs e)
         {
             string imageDefaultPath = $"{AppDomain.CurrentDomain.BaseDirectory}picture\\BackGround\\";
+            // 注意Debug和Release模式的区别，所选模式模式不同，AppDomain.CurrentDomain.BaseDirectory对应的文件夹也不同。它更不是原代码所在的文件夹
+
             OpenFileDialog openFileDialog = new()
             {
-                Filter = "图像文件|*.jpg;*.png;*.bmp|所有文件|*.*",
+                Filter = "图像文件|*.jpg;*.jpeg;*.png;*.bmp|所有文件|*.*",
                 InitialDirectory = imageDefaultPath,
                 DefaultExt = string.Empty,
                 RestoreDirectory = true,
@@ -58,12 +60,11 @@ namespace Chess.SubWindow
                 string targetFile = imageDefaultPath + sourceFile.Name;
                 if (!File.Exists(targetFile))
                 {
-                    // 如果在\picture\BackGround\文件夹下没有该文件，再复制到该文件夹。
+                    // 如果在{AppDomain.CurrentDomain.BaseDirectory}\picture\BackGround\文件夹下没有该文件，则将图片文件复制到该文件夹。
                     File.Copy(sourceFile.FullName, targetFile, true);
                 }
                 Settings.Default.mainBKImage = sourceFile.Name;
                 Settings.Default.Save();
-
             }
         }
 

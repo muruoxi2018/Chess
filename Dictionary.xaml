@@ -16,8 +16,8 @@
         <Setter Property="Padding" Value="20,10,20,10"/>
         <Setter Property="Margin" Value="0,10,0,0"/>
         <Setter Property="Background" Value="#7FDDDDDD"/>
-        <Setter Property="Foreground" Value="#FF024800"/>
-        <Setter Property="BorderBrush" Value="#D83E6B00"/>
+        <Setter Property="Foreground" Value="#FF5D4E03"/>
+        <Setter Property="BorderBrush" Value="#FF5D4E03"/>
         <Setter Property="FontSize" Value="36"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontFamily" Value="KaiTi"/>
