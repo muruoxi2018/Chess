@@ -40,7 +40,7 @@ namespace Chess
                 {
                     // 黑方走棋指示灯
                     blackSideRect.Fill = Brushes.LightGoldenrodYellow;
-                    redSideRect.Fill = Brushes.DarkGreen;
+                    redSideRect.Fill = Brushes.Gray;
                     redSideRect.RenderTransform = null;
                     blackSideRect.RenderTransform = scale;
                     blackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
@@ -48,7 +48,7 @@ namespace Chess
                 else
                 {
                     // 红方走棋指示灯
-                    blackSideRect.Fill = Brushes.DarkGreen;
+                    blackSideRect.Fill = Brushes.Gray;
                     redSideRect.Fill = Brushes.LightGoldenrodYellow;
                     redSideRect.RenderTransform = scale;
                     blackSideRect.RenderTransform = null;

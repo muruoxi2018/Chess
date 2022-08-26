@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="设置" Height="450" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="OnWindowLoaded" Unloaded="OnWindowUnloaded">
     <Grid>
-        <StackPanel Background="#FF151500" Opacity="0.8">
+        <StackPanel Style="{DynamicResource setupWindowBackground}">
             <StackPanel.DataContext>
                 <Chess:Settings/>
             </StackPanel.DataContext>
@@ -35,6 +35,7 @@
                     <ComboBoxItem Content="橙色"/>
                     <ComboBoxItem Content="绿色"/>
                     <ComboBoxItem Content="蓝色"/>
+                    <ComboBoxItem Content="紫色"/>
                     <ComboBoxItem Content="无"/>
                 </ComboBox>
             </StackPanel>

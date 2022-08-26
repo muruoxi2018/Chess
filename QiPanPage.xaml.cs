@@ -85,7 +85,7 @@ namespace Chess
                 Margin = new Thickness(15, 500, 30, 0),
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Top,
-                Fill = new SolidColorBrush(Colors.DarkGreen),
+                Fill = new SolidColorBrush(Colors.Gray),
                 Stroke = new SolidColorBrush(Colors.Goldenrod),
             };
             _ = mainGrid.Children.Add(GlobalValue.redSideRect);
@@ -96,7 +96,7 @@ namespace Chess
                 Margin = new Thickness(15, 260, 30, 0),
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Top,
-                Fill = new SolidColorBrush(Colors.DarkGreen),
+                Fill = new SolidColorBrush(Colors.Gray),
                 Stroke = new SolidColorBrush(Colors.Goldenrod),
             };
             _ = mainGrid.Children.Add(GlobalValue.blackSideRect);

@@ -15,9 +15,9 @@
     <Style x:Key="mainMenuButton" TargetType="{x:Type Button}">
         <Setter Property="Padding" Value="20,10,20,10"/>
         <Setter Property="Margin" Value="0,10,0,0"/>
-        <Setter Property="Background" Value="#7FDDDDDD"/>
-        <Setter Property="Foreground" Value="#FF5D4E03"/>
-        <Setter Property="BorderBrush" Value="#FF5D4E03"/>
+        <Setter Property="Background" Value="#CCE2AAE2"/>
+        <Setter Property="Foreground" Value="#FF371358"/>
+        <Setter Property="BorderBrush" Value="DarkViolet"/>
         <Setter Property="FontSize" Value="36"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontFamily" Value="KaiTi"/>
@@ -27,7 +27,10 @@
  
     </Style>
     <Style x:Key="borderStyle" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="#CC0D6905"/>
-        <Setter Property="Background" Value="#330F9C03"/>
+        <Setter Property="BorderBrush" Value="DarkViolet"/>
+        <Setter Property="Background" Value="#33EE82EE"/>
+    </Style>
+    <Style x:Key="setupWindowBackground" TargetType="{x:Type StackPanel}">
+        <Setter Property="Background" Value="#FF21002F"/>
     </Style>
 </ResourceDictionary>

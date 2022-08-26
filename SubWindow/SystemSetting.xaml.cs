@@ -85,7 +85,8 @@ namespace Chess.SubWindow
                 0 => "Dictionary_Orange.xaml",
                 1 => "Dictionary_Green.xaml",
                 2 => "Dictionary_Blue.xaml",
-                3 => "Dictionary_Null.xaml",
+                3 => "Dictionary_Violet.xaml",
+                4 => "Dictionary_Null.xaml",
                 _ => "Dictionary_Green.xaml",
             };
             Application.Current.Resources.MergedDictionaries.Clear();
