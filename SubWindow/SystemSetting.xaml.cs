@@ -70,7 +70,28 @@ namespace Chess.SubWindow
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            
+
         }
+        /// <summary>
+        /// 选择主题
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ThemsChangeed(object sender, SelectionChangedEventArgs e)
+        {
+            // 要想使用新主题，xaml中应使用DynamicResource，而不是StaticResource，否则，主题不会生效
+            string themsFile = thems_combox.SelectedIndex switch
+            {
+                0 => "Dictionary_Orange.xaml",
+                1 => "Dictionary_Green.xaml",
+                2 => "Dictionary_Blue.xaml",
+                3 => "Dictionary_Null.xaml",
+                _ => "Dictionary_Green.xaml",
+            };
+            Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(@"/Thems/" + themsFile, UriKind.Relative) });
+        }
+
+
     }
 }
