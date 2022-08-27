@@ -37,6 +37,13 @@ namespace Chess
         {
             menuItem = 0;
             ReturnButton.Visibility = Visibility.Hidden;
+            // 应用用户上次选择的主题
+            string[] themfiles = { "Orange", "Green", "Blue", "Violet", "Null" };
+            int index = (Settings.Default.ThemsIndex < themfiles.Length) ? Settings.Default.ThemsIndex : 0;
+            Settings.Default.ThemsIndex = index;
+            Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(@"/Thems/Dictionary_" + themfiles[index] + ".xaml", UriKind.Relative) });
+
         }
         private void ReturnMainMenu(object sender, RoutedEventArgs e)
         {

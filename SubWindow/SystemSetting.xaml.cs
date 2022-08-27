@@ -80,18 +80,11 @@ namespace Chess.SubWindow
         private void ThemsChangeed(object sender, SelectionChangedEventArgs e)
         {
             // 要想使用新主题，xaml中应使用DynamicResource，而不是StaticResource，否则，主题不会生效
-            string themsFile = thems_combox.SelectedIndex switch
-            {
-                0 => "Dictionary_Orange.xaml",
-                1 => "Dictionary_Green.xaml",
-                2 => "Dictionary_Blue.xaml",
-                3 => "Dictionary_Violet.xaml",
-                4 => "Dictionary_Null.xaml",
-                _ => "Dictionary_Green.xaml",
-            };
+            string[] themfiles = {"Orange","Green","Blue","Violet","Null"};
+            int index = (thems_combox.SelectedIndex < themfiles.Length) ? thems_combox.SelectedIndex : 0;
             Application.Current.Resources.MergedDictionaries.Clear();
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(@"/Thems/" + themsFile, UriKind.Relative) });
-        }
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(@"/Thems/Dictionary_" + themfiles[index]+".xaml", UriKind.Relative) });
+            }
 
 
     }
