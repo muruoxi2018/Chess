@@ -102,5 +102,12 @@ namespace Chess
                 }
             }
         }
+
+        private void CanJuName_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tbx = sender as TextBox;
+            tbx.SelectAll();
+            e.Handled = true;
+        }
     }
 }

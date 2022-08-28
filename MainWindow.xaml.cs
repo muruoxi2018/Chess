@@ -121,7 +121,7 @@ namespace Chess
             if (!string.IsNullOrEmpty(path))
             {
                 FileInfo fileInfo = new(path);
-                string fileFullName= AppDomain.CurrentDomain.BaseDirectory + "/picture/BackGround/" + fileInfo.Name;
+                string fileFullName = AppDomain.CurrentDomain.BaseDirectory + "/picture/BackGround/" + fileInfo.Name;
                 if (!File.Exists(fileFullName)) return null; // 如果文件不存在，则返回NULL。
                 return new BitmapImage(new Uri(fileFullName, UriKind.Absolute));
             }

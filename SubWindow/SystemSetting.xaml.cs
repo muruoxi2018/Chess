@@ -84,7 +84,8 @@ namespace Chess.SubWindow
             int index = (thems_combox.SelectedIndex < themfiles.Length) ? thems_combox.SelectedIndex : 0;
             Application.Current.Resources.MergedDictionaries.Clear();
             Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(@"/Thems/Dictionary_" + themfiles[index]+".xaml", UriKind.Relative) });
-            }
+
+        }
 
 
     }

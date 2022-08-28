@@ -36,7 +36,7 @@
                     <ComboBoxItem Content="绿色"/>
                     <ComboBoxItem Content="蓝色"/>
                     <ComboBoxItem Content="紫色"/>
-                    <ComboBoxItem Content="无"/>
+                    <ComboBoxItem Content="灰色"/>
                 </ComboBox>
             </StackPanel>
         </StackPanel>

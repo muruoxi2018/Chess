@@ -63,7 +63,7 @@ namespace Chess
             GlobalValue.jiangJunTiShi = new() // 将军状态文字提示
             {
                 Text = "",
-                Foreground = Brushes.Yellow,
+                Foreground = Brushes.LightYellow,
                 FontSize = 14,
                 Margin = new Thickness(100, 0, 0, 0),
                 VerticalAlignment = VerticalAlignment.Center,
