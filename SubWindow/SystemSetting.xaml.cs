@@ -48,7 +48,7 @@ namespace Chess.SubWindow
 
             OpenFileDialog openFileDialog = new()
             {
-                Filter = "图像文件|*.jpg;*.jpeg;*.png;*.bmp|所有文件|*.*",
+                Filter = "图像文件|*.jpg;*.jpeg;*.png;*.bmp;|所有文件|*.*",
                 InitialDirectory = imageDefaultPath,
                 DefaultExt = string.Empty,
                 RestoreDirectory = true,
@@ -80,13 +80,17 @@ namespace Chess.SubWindow
         private void ThemsChangeed(object sender, SelectionChangedEventArgs e)
         {
             // 要想使用新主题，xaml中应使用DynamicResource，而不是StaticResource，否则，主题不会生效
-            string[] themfiles = {"Orange","Green","Blue","Violet","Null"};
+            string[] themfiles = {"Orange","Green","Blue","Violet","Null","ChinaRed","DarkGreen","DarkViolet"};
             int index = (thems_combox.SelectedIndex < themfiles.Length) ? thems_combox.SelectedIndex : 0;
             Application.Current.Resources.MergedDictionaries.Clear();
             Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(@"/Thems/Dictionary_" + themfiles[index]+".xaml", UriKind.Relative) });
 
         }
 
-
+        private void OpenColorWindow(object sender, RoutedEventArgs e)
+        {
+            SystemColor systemColor = new SystemColor();
+            systemColor.Show();
+        }
     }
 }

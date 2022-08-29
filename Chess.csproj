@@ -53,6 +53,11 @@
     <None Remove="picture\break_roleH_10zhanghan.png" />
     <None Remove="picture\juesha.png" />
     <None Remove="picture\juesha_0.png" />
+    <None Remove="picture\Resource\木纹1.png" />
+    <None Remove="picture\Resource\木纹3.png" />
+    <None Remove="picture\Resource\木纹4_.jpg" />
+    <None Remove="picture\Resource\木纹_浅色3000.png" />
+    <None Remove="picture\Resource\木纹_深色2243.png" />
     <None Remove="picture\原位置.png" />
     <None Remove="picture\大理石1.jpeg" />
     <None Remove="picture\大理石1.png" />
@@ -138,9 +143,9 @@
     <Content Include="Engine\ELEEYE.EXE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="picture\background.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="picture\background.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="picture\BackGround\星云.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -275,6 +280,21 @@
     </Resource>
     <Resource Include="picture\juesha_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\Resource\木纹1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\Resource\木纹3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\Resource\木纹4_.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\Resource\木纹_浅色3000.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\Resource\木纹_深色2243.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="picture\原位置.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

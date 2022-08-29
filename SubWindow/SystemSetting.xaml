@@ -32,14 +32,18 @@
             <StackPanel Orientation="Horizontal" Margin="20,10,0,0">
                 <TextBlock Text="更换主题：" Foreground="White"></TextBlock>
                 <ComboBox x:Name="thems_combox" Width="200" Margin="109,0,0,0" SelectedIndex="{Binding Default.ThemsIndex}" SelectionChanged="ThemsChangeed">
-                    <ComboBoxItem Content="橙色"/>
-                    <ComboBoxItem Content="绿色"/>
-                    <ComboBoxItem Content="蓝色"/>
-                    <ComboBoxItem Content="紫色"/>
-                    <ComboBoxItem Content="灰色"/>
+                    <ComboBoxItem Content="橙色_半透明"/>
+                    <ComboBoxItem Content="绿色_半透明"/>
+                    <ComboBoxItem Content="蓝色_半透明"/>
+                    <ComboBoxItem Content="紫色_半透明"/>
+                    <ComboBoxItem Content="灰色_半透明"/>
+                    <ComboBoxItem Content="中国红"/>
+                    <ComboBoxItem Content="墨绿色"/>
+                    <ComboBoxItem Content="皇家紫"/>
                 </ComboBox>
             </StackPanel>
-        </StackPanel>
+            </StackPanel>
+        <Button Content="打开颜色窗口" HorizontalAlignment="Center" Padding="5,1,5,1" VerticalAlignment="Bottom" Margin="0,0,0,10" Click="OpenColorWindow"/>
 
     </Grid>
 </Window>

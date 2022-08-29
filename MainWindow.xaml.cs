@@ -38,7 +38,7 @@ namespace Chess
             menuItem = 0;
             ReturnButton.Visibility = Visibility.Hidden;
             // 应用用户上次选择的主题
-            string[] themfiles = { "Orange", "Green", "Blue", "Violet", "Null" };
+            string[] themfiles = { "Orange", "Green", "Blue", "Violet", "Null", "ChinaRed", "DarkGreen", "DarkViolet" };
             int index = (Settings.Default.ThemsIndex < themfiles.Length) ? Settings.Default.ThemsIndex : 0;
             Settings.Default.ThemsIndex = index;
             Application.Current.Resources.MergedDictionaries.Clear();
