@@ -20,7 +20,7 @@ namespace Chess.SuanFa // 算法
             int[] jiangJunQiZi = { -1, -1, -1 };
             if (moveQiZi < 16) jiangJunQiZi = IsJiangJun(16); // 检查红帅是否被将军。
             if (moveQiZi >= 16) jiangJunQiZi = IsJiangJun(0); // 检查黑将是否被将军
-            GlobalValue.jiangJunTiShi.Text = ""; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
+            GlobalValue.jiangJunTiShi.Text = "战况信息："; // 在棋盘上部用文字显示棋局状态，主要用于调试，后期可优化为图像模式
             if (jiangJunQiZi[0] == -1) return false;  // 没有被将军时，则不需检测是否绝杀
 
             string gongJiQiZi1; // 第一个攻击棋子的名字
@@ -30,7 +30,7 @@ namespace Chess.SuanFa // 算法
 
             if (jiangJunQiZi[0] == 0) // 被将军的是黑将
             {
-                GlobalValue.jiangJunTiShi.Text = "1、【黑将】正被将军！";
+                GlobalValue.jiangJunTiShi.Text = System.Environment.NewLine + "【黑将】正被将军！";
 
                 bool[,] points = MoveCheck.GetPathPoints(0, GlobalValue.QiPan); // 获取黑将的可移动路径
                 bool selfCanMove = false;
@@ -45,7 +45,7 @@ namespace Chess.SuanFa // 算法
                     }
                 if (selfCanMove)  // 黑将可移动解杀时
                 {
-                    GlobalValue.jiangJunTiShi.Text += " 2、【黑将】被" + gongJiQiZi1 + "将军，可移动位置解杀。";
+                    GlobalValue.jiangJunTiShi.Text += System.Environment.NewLine+"【黑将】被" + gongJiQiZi1 + "将军，可移动位置解杀。";
                     return false;
                 }
                 else  // 黑将不可移动时
@@ -54,18 +54,18 @@ namespace Chess.SuanFa // 算法
                     {
                         if ((jiangJunQiZi[1] is 21 or 22) || (jiangJunQiZi[2] is 21 or 22))
                         {
-                            GlobalValue.jiangJunTiShi.Text += " 3、【黑将】不能移动，被" + gongJiQiZi1 + gongJiQiZi2 + "双将绝杀！";
+                            GlobalValue.jiangJunTiShi.Text += Environment.NewLine + "【黑将】不能移动，被" + gongJiQiZi1 + gongJiQiZi2 + "双将绝杀！";
                             return true;
                         }
-                        GlobalValue.jiangJunTiShi.Text += " 4、【黑将】被" + gongJiQiZi1 + gongJiQiZi2 + "双将，请求外援！";
+                        GlobalValue.jiangJunTiShi.Text += Environment.NewLine + "【黑将】被" + gongJiQiZi1 + gongJiQiZi2 + "双将，请求外援！";
                     }
                     else
                     {
-                        GlobalValue.jiangJunTiShi.Text += " 5、【黑将】被" + gongJiQiZi1 + "将军，不能移动，请求外援。";
+                        GlobalValue.jiangJunTiShi.Text += Environment.NewLine + "【黑将】被" + gongJiQiZi1 + "将军，不能移动，请求外援。";
                     }
                     if (!JieSha(jiangJunQiZi[1])) // 本方其他棋子解杀不成
                     {
-                        GlobalValue.jiangJunTiShi.Text += " 6、【黑将】被" + gongJiQiZi1 + "绝杀！";
+                        GlobalValue.jiangJunTiShi.Text += Environment.NewLine + "【黑将】被" + gongJiQiZi1 + "绝杀！";
                         return true;
                     }
                 }
@@ -73,7 +73,7 @@ namespace Chess.SuanFa // 算法
             if (jiangJunQiZi[0] == 16) // 被将军的是红帅
             {
                 #region 被将军的是红帅
-                GlobalValue.jiangJunTiShi.Text = " 2、【红帅】被" + gongJiQiZi1 + "将军！";
+                GlobalValue.jiangJunTiShi.Text = Environment.NewLine + "【红帅】被" + gongJiQiZi1 + "将军！";
 
                 bool[,] points = MoveCheck.GetPathPoints(16, GlobalValue.QiPan);
                 bool selfCanMove = false;
@@ -88,7 +88,7 @@ namespace Chess.SuanFa // 算法
                     }
                 if (selfCanMove)
                 {
-                    GlobalValue.jiangJunTiShi.Text = " 3、【红帅】被" + gongJiQiZi1 + "将军！！红帅可自己移动解杀。";
+                    GlobalValue.jiangJunTiShi.Text = Environment.NewLine + "【红帅】被" + gongJiQiZi1 + "将军！！红帅可自己移动解杀。";
                 }
                 else
                 {
@@ -96,19 +96,19 @@ namespace Chess.SuanFa // 算法
                     {
                         if ((jiangJunQiZi[1] is 5 or 6) || (jiangJunQiZi[2] is 5 or 6))
                         {
-                            GlobalValue.jiangJunTiShi.Text += " 5、【红帅】不能移动，被" + gongJiQiZi1 + gongJiQiZi2 + "双将绝杀！";
+                            GlobalValue.jiangJunTiShi.Text += Environment.NewLine + "【红帅】不能移动，被" + gongJiQiZi1 + gongJiQiZi2 + "双将绝杀！";
                             return true;
                         }
 
-                        GlobalValue.jiangJunTiShi.Text = " 4、【红帅】被" + gongJiQiZi1 + gongJiQiZi2 + "双将，不能移动，请求外援！";
+                        GlobalValue.jiangJunTiShi.Text = Environment.NewLine + "【红帅】被" + gongJiQiZi1 + gongJiQiZi2 + "双将，不能移动，请求外援！";
                     }
                     else // 单将
                     {
-                        GlobalValue.jiangJunTiShi.Text = " 5、【红帅】被" + gongJiQiZi1 + "将军，不能移动，请求外援。";
+                        GlobalValue.jiangJunTiShi.Text = Environment.NewLine + "【红帅】被" + gongJiQiZi1 + "将军，不能移动，请求外援。";
                     }
                     if (!JieSha(jiangJunQiZi[1]))  // 绝杀判断
                     {
-                        GlobalValue.jiangJunTiShi.Text = " 6、【红帅】被" + gongJiQiZi1 + "绝杀！";
+                        GlobalValue.jiangJunTiShi.Text = Environment.NewLine + "【红帅】被" + gongJiQiZi1 + "绝杀！";
                         return true;
                     }
 

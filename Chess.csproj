@@ -53,6 +53,8 @@
     <None Remove="picture\break_roleH_10zhanghan.png" />
     <None Remove="picture\juesha.png" />
     <None Remove="picture\juesha_0.png" />
+    <None Remove="picture\Resource\information_board.png" />
+    <None Remove="picture\Resource\information_board_321_321.png" />
     <None Remove="picture\Resource\木纹1.png" />
     <None Remove="picture\Resource\木纹3.png" />
     <None Remove="picture\Resource\木纹4_.jpg" />
@@ -281,6 +283,8 @@
     <Resource Include="picture\juesha_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="picture\Resource\information_board.png" />
+    <Resource Include="picture\Resource\information_board_321_321.png" />
     <Resource Include="picture\Resource\木纹1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

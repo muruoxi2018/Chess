@@ -16,6 +16,8 @@ namespace Chess.CustomClass
             InitializeComponent();
             Visibility = Visibility.Hidden;
             Opacity = 1.0;
+            HorizontalAlignment = HorizontalAlignment.Center;
+            VerticalAlignment = VerticalAlignment.Center;
             IsHitTestVisible = false; // 是否接受鼠标事件
         }
 
@@ -36,15 +38,15 @@ namespace Chess.CustomClass
             ScaleTransform scale = new();
             DoubleAnimation DAscaleX = new()
             {
-                From = 1.75,
-                To = 7.0,
+                From = 1.0,
+                To = 8.0,
                 FillBehavior = FillBehavior.Stop,
                 Duration = new Duration(TimeSpan.FromSeconds(4))
             };
             DoubleAnimation DAscaleY = new()
             {
-                From = 1.45,
-                To = 5.8,
+                From = 1.0,
+                To = 8.0,
                 FillBehavior = FillBehavior.Stop,
                 Duration = new Duration(TimeSpan.FromSeconds(4))
             };

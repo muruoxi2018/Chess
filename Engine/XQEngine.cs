@@ -311,11 +311,11 @@ namespace Chess.Engine
                 {
                     int maxscore = InfoList.Max(x => x.Score);
                     str = InfoList.FirstOrDefault(x => x.Score == maxscore).GetMove();
-                    str = $"最佳着法（{maxscore}分）： {str}";
+                    str = $"最佳着法（{maxscore}分）：{System.Environment.NewLine} {str}";
                 }
                 else
                 {
-                    str = $"最佳着法： {InfoSource}";
+                    str = $"最佳着法： {System.Environment.NewLine}{InfoSource}";
                 }
                 if (showarrow || MainWindow.menuItem == GlobalValue.PERSON_PC) ShowArrows();
                 return str;
@@ -414,6 +414,7 @@ namespace Chess.Engine
             if (qizi > -1)
             {
                 resultstr = GlobalValue.TranslateToCN(qizi, x0, y0, x1, y1);
+                if (qizi<16) resultstr+=System.Environment.NewLine;
                 if (writeQipan)
                 {
                     qipan[x0, y0] = -1;
