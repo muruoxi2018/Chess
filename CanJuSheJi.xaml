@@ -5,14 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Chess"
       mc:Ignorable="d" 
-      d:DesignHeight="1000" d:DesignWidth="900"
-      Title="QiPanPage" Loaded="MainFormLoaded">
+      
+      Title="QiPanPage" Loaded="MainFormLoaded" UseLayoutRounding="True" SnapsToDevicePixels="True">
 
     <Grid>
-        <Border>
-            <d:Border.Background>
-                <ImageBrush ImageSource="/picture/BackGround/青草.jpg" Stretch="Fill"/>
-            </d:Border.Background>
+        <Viewbox StretchDirection="DownOnly">
             <Grid x:Name="mainGrid" Width="767" Height="900">
                 <Border BorderThickness="3" CornerRadius="5,5,5,5" Style="{DynamicResource borderStyle}"/>
                 <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
@@ -31,12 +28,19 @@
                     <Button Content="保存残局"  Style="{DynamicResource button}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="70" Click="SaveCanJu"/>
                     <Button Content="清空棋盘" Style="{DynamicResource button}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="70" Click="ClearQiPan" Margin="0,10,0,0"/>
                 </StackPanel>
+                
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,10">
-                    <TextBox x:Name="CanJuName" HorizontalAlignment="Left" Margin="20,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="108" Background="#E5FFFFFF" ToolTip="残局名称" AutomationProperties.HelpText="残局名称" Foreground="#FF443E00" Padding="1,1,1,1" GotFocus="CanJuName_GotFocus" Text="残局名称"/>
-                    <TextBox x:Name="Comment" Margin="20,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Background="#E5FFFFFF" AutomationProperties.HelpText="残局说明" ToolTip="残局说明" Foreground="#FF443E00" Padding="1,1,1,1" HorizontalAlignment="Left" MinWidth="600"/>
+                    <WrapPanel Orientation="Vertical" Margin="20,0,0,0">
+                        <TextBlock Text="残局名称:" Foreground="LightYellow"/>
+                        <TextBox x:Name="CanJuName" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="108" Background="#E5FFFFFF" ToolTip="残局名称" AutomationProperties.HelpText="残局名称" Foreground="#FF443E00" Padding="1,1,1,1" GotFocus="CanJuName_GotFocus" Margin="0,5,0,0"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Vertical" Margin="20,0,0,0">
+                        <TextBlock Text="残局说明:" Foreground="LightYellow"/>
+                        <TextBox x:Name="Comment" Margin="0,5,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Background="#E5FFFFFF" AutomationProperties.HelpText="残局说明" ToolTip="残局说明" Foreground="#FF443E00" Padding="1,1,1,1" HorizontalAlignment="Left" MinWidth="600"/>
+                    </WrapPanel>
                 </StackPanel>
             </Grid>
-        </Border>
+        </Viewbox>
         <TextBlock x:Name="SaveOk" Text="提示：已保存到残局数据库。" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,141,110" Background="#D8F2FB9B" Padding="3,2,3,2" Visibility="Hidden"/>
         <TextBlock x:Name="SaveNotOk" Text="提示：保存未成功！" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,141,119" Background="#D8F2FB9B" Padding="3,2,3,2" Visibility="Hidden"></TextBlock>
     </Grid>

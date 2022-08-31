@@ -5,6 +5,7 @@
         <Setter Property="BorderBrush" Value="#FF564808"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="Background" Value="#FFD8B67C"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect Opacity="0.5" ShadowDepth="5" BlurRadius="5" Color="#FF6D530D" RenderingBias="Performance"/>

@@ -43,6 +43,7 @@
     <None Remove="juesha.png" />
     <None Remove="KaiJuKu.db" />
     <None Remove="picture\background.jpg" />
+    <None Remove="picture\BackGround\山水之间.jpeg" />
     <None Remove="picture\BackGround\星云.jpeg" />
     <None Remove="picture\BackGround\晚霞.jpg" />
     <None Remove="picture\BackGround\木纹_浅色3000.jpeg" />
@@ -143,6 +144,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\ELEEYE.EXE">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="picture\BackGround\山水之间.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="picture\background.jpg">

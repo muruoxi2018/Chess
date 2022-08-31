@@ -95,11 +95,11 @@ namespace Chess
             GlobalValue.arrows = new();
             DrawGrid.Children.Add(GlobalValue.arrows.grid); // 走棋提示箭头
 
-            GlobalValue.redSideRect = new System.Windows.Shapes.Ellipse()
+            GlobalValue.redSideRect = new System.Windows.Shapes.Ellipse() // 走棋方提示灯
             {
                 Width = 30,
                 Height = 30,
-                Margin = new Thickness(15, 500, 30, 0),
+                Margin = new Thickness(25, 500, 30, 0),
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 Fill = new SolidColorBrush(Colors.Gray),
@@ -110,7 +110,7 @@ namespace Chess
             {
                 Width = 30,
                 Height = 30,
-                Margin = new Thickness(15, 260, 30, 0),
+                Margin = new Thickness(25, 260, 30, 0),
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 Fill = new SolidColorBrush(Colors.Gray),

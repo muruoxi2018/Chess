@@ -5,33 +5,29 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Chess" xmlns:customclass="clr-namespace:Chess.CustomClass" 
       mc:Ignorable="d" 
-      d:DesignHeight="900" d:DesignWidth="1500"
-      Title="QiPanPage" Loaded="MainFormLoaded" SnapsToDevicePixels="True">
+      Title="QiPanPage" Loaded="MainFormLoaded" SnapsToDevicePixels="True" UseLayoutRounding="True">
     <Grid>
-        <Border>
-            <d:Border.Background>
-                <ImageBrush ImageSource="/picture/BackGround/青草.jpg" Stretch="Fill"/>
-            </d:Border.Background>
-            <Grid x:Name="mainGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1100" Height="842" MinWidth="1100" MaxWidth="1100">
+        <Viewbox StretchDirection="DownOnly">
+            <Grid x:Name="mainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="1100" MaxWidth="1100">
                 <Grid.DataContext>
                     <local:Settings/>
                 </Grid.DataContext>
                 <Border BorderThickness="3" CornerRadius="5,5,5,5" Style="{DynamicResource borderStyle}"/>
                 <Grid Width="{Binding Width, ElementName=qipan_topBlack}" HorizontalAlignment="Left" Height="{Binding Height, ElementName=qipan_topBlack}" VerticalAlignment="Top">
-                <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Visible">
-                    <Image.Effect>
-                        <DropShadowEffect Color="#FF7B7A7A" Opacity="1" BlurRadius="10"/>
-                    </Image.Effect>
-                </Image>
-                <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
-                    <Image.Effect>
-                        <DropShadowEffect Color="#FF7B7A7A" Opacity="1" BlurRadius="10"/>
-                    </Image.Effect>
-                </Image>
-                <Canvas x:Name="qiziCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" Cursor="Arrow"/>
-                <Grid x:Name="DrawGrid" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Visible">
+                        <Image.Effect>
+                            <DropShadowEffect Color="#FF7B7A7A" Opacity="1" BlurRadius="10"/>
+                        </Image.Effect>
+                    </Image>
+                    <Image x:Name="qipan_topRed" Source="/picture/棋盘（红上）.png" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
+                        <Image.Effect>
+                            <DropShadowEffect Color="#FF7B7A7A" Opacity="1" BlurRadius="10"/>
+                        </Image.Effect>
+                    </Image>
+                    <Canvas x:Name="qiziCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" Cursor="Arrow"/>
+                    <Grid x:Name="DrawGrid" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </Grid>
-                <StackPanel x:Name="Infomation_board" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,57,60,18" MinWidth="321" MinHeight="321">
+                <StackPanel x:Name="Infomation_board" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,55,60,18" MinWidth="321" MinHeight="321">
                     <StackPanel.Background>
                         <ImageBrush ImageSource="/picture/Resource/information_board_321_321.png"/>
                     </StackPanel.Background>
@@ -41,7 +37,7 @@
                     <TextBlock x:Name="CanJuComment" HorizontalAlignment="Stretch" Margin="10,20,10,0" VerticalAlignment="Top" Foreground="Black" FontSize="14" TextWrapping="Wrap" FontFamily="Microsoft YaHei" Width="300"/>
                 </StackPanel>
 
-                <Border x:Name="PersonVsPC" VerticalAlignment="Bottom" Height="75" Margin="10,0,10,10" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1"  Style="{DynamicResource borderStyle}" Visibility="Visible">
+                <Border x:Name="PersonVsPC" VerticalAlignment="Bottom" Height="75" Margin="10,0,10,10" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1"  Style="{DynamicResource borderStyle}" Visibility="Hidden">
                     <WrapPanel Height="30" VerticalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <Button Content="开局"  Style="{DynamicResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Width="70" Click="ResetBtnClick"/>
                         <Button Content="翻转棋盘" Style="{DynamicResource button}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="70" Click="OnFanZhuanQiPan"/>
@@ -81,7 +77,7 @@
                         </WrapPanel>
                     </StackPanel>
                 </Border>
-                <Border x:Name="FuPan" VerticalAlignment="Bottom" Height="75" Margin="10,0,10,10" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1"  Style="{DynamicResource borderStyle}" Visibility="Visible">
+                <Border x:Name="FuPan" VerticalAlignment="Bottom" Height="75" Margin="10,0,10,10" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1"  Style="{DynamicResource borderStyle}" Visibility="Hidden">
                     <StackPanel Visibility="Visible">
                         <WrapPanel VerticalAlignment="Top" Height="30" Visibility="Visible" Margin="0,5,0,0">
                             <Button Content="打开棋谱" Style="{DynamicResource button}" HorizontalAlignment="Left" Margin="77,0,0,0" VerticalAlignment="Center" Click="OpenFuPanWindow" Width="70"/>
@@ -105,7 +101,7 @@
                 </Grid>
                 <Grid x:Name="childSelectGrid" VerticalAlignment="Bottom" Height="100" HorizontalAlignment="Center" Width="600" Visibility="Hidden">
                 </Grid>
-                </Grid>
-        </Border>
+            </Grid>
+        </Viewbox>
     </Grid>
 </Page>

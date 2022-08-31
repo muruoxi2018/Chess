@@ -102,6 +102,7 @@ namespace Chess
             {
                 MainMenu.Visibility = Visibility.Hidden;
                 ReturnButton.Visibility = Visibility.Visible;
+                WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
         }
 
@@ -109,6 +110,11 @@ namespace Chess
         {
             SystemSetting setWindow = new();
             setWindow.ShowDialog();
+        }
+
+        private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Title = $"中国象棋  {Width} x {Height}";
         }
     }
     public class StringToImageSourceConverter : IValueConverter
@@ -122,7 +128,8 @@ namespace Chess
             {
                 FileInfo fileInfo = new(path);
                 string fileFullName = AppDomain.CurrentDomain.BaseDirectory + "/picture/BackGround/" + fileInfo.Name;
-                if (!File.Exists(fileFullName)) return null; // 如果文件不存在，则返回NULL。
+                if (!File.Exists(fileFullName))  // 如果文件不存在，则使用默认背景图。
+                    fileFullName = AppDomain.CurrentDomain.BaseDirectory + "/picture/BackGround/山水之间.jpeg";
                 return new BitmapImage(new Uri(fileFullName, UriKind.Absolute));
             }
             else
