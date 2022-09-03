@@ -67,7 +67,11 @@ namespace Chess
             set
             {
                 _isGameOver = value;
-                if (value) _isGameOver = value; // 已绝杀时，显示绝杀图像
+                if (value)
+                {
+                    Juesha = new();
+                    JueShaGrid.Children.Add(Juesha);
+                } // 已绝杀时，显示绝杀图像
             }
         }  // 游戏结束，系统自动检测
         public static bool EnableGameStop; // 人为停止游戏，用于电脑自动走棋过程中，中止走棋
@@ -91,6 +95,7 @@ namespace Chess
         public static QiZi yuanWeiZhi;  // 棋子走动后在原位置显示圆圈
         public static TextBlock jiangJunTiShi; // 将军时的文字提示
         public static TextBlock BestMoveInfo; // 将军时的文字提示
+        public static Grid JueShaGrid;
         public static JueSha Juesha; // 绝杀时显示图片
         public static Window_QiPu qiPuKuForm; // 棋谱库窗口
         public static MyGraphics arrows; // 走棋指示箭头
@@ -228,7 +233,7 @@ namespace Chess
                 IsGameOver = true;
                 if (SideTag == BLACKSIDE)
                 {
-                    jiangJunTiShi.Text="战况信息："+Environment.NewLine+"【黑方】被困毙！";
+                    jiangJunTiShi.Text = "战况信息：" + Environment.NewLine + "【黑方】被困毙！";
                 }
                 if (SideTag == REDSIDE)
                 {
@@ -249,7 +254,7 @@ namespace Chess
                 }
                 return false;
             }
-            
+
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
             //Delay(200);
@@ -499,7 +504,7 @@ namespace Chess
             QiPan[step.X1, step.Y1] = step.DieQz;
             Qipu.QiPuList.RemoveAt(Qipu.QiPuList.Count - 1);
             SideTag = !SideTag;
-            foreach(var item in pathPointImage)
+            foreach (var item in pathPointImage)
             {
                 item.HasPoint = false;
             }

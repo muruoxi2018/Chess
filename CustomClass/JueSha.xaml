@@ -1,14 +1,15 @@
-﻿<UserControl x:Class="Chess.CustomClass.JueSha"
+﻿<UserControl x:Name="userControl" x:Class="Chess.CustomClass.JueSha"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Chess.CustomClass"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="560" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center">
-    <Grid>
+              IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Width="629" Height="695">
+    <Grid x:Name="usergrid">
+        <Grid x:Name="mainGrid" Background="#CC8B0000"/>
         <Viewbox>
-            <Grid x:Name="ItemGrid">
+            <Grid x:Name="ItemGrid" Margin="10,0,10,10">
                 <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="29,74,0,0">
                     <Border x:Name="tuoba" HorizontalAlignment="Center" VerticalAlignment="Center" Width="310" Height="220" Visibility="Visible">
                         <Border.Background>
@@ -43,18 +44,20 @@
             </Grid>
         </Viewbox>
         <Grid.Triggers>
-            <EventTrigger RoutedEvent="Window.Loaded">
+            <EventTrigger RoutedEvent="Loaded">
                 <BeginStoryboard>
                     <Storyboard>
                         <ParallelTimeline AutoReverse="False">
-                            <DoubleAnimation Storyboard.TargetName="jue1" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.5" Duration="0:0:1.5" From="1" To="0"/>
+                            <DoubleAnimation Storyboard.TargetName="mainGrid" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0" Duration="0:0:0.1" From="0.8" To="0.9"/>
+
+                            <DoubleAnimation Storyboard.TargetName="jue1" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.5" Duration="0:0:2" From="1" To="0"/>
                             <DoubleAnimation Storyboard.TargetName="jue5" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.5" Duration="0:0:1.5" From="0" To="1"/>
 
-                            <DoubleAnimation Storyboard.TargetName="sha1" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.8" Duration="0:0:1.5" From="1" To="0"/>
+                            <DoubleAnimation Storyboard.TargetName="sha1" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.8" Duration="0:0:2.3" From="1" To="0"/>
                             <DoubleAnimation Storyboard.TargetName="sha5" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.8" Duration="0:0:1.5" From="0" To="1"/>
 
-                            <DoubleAnimation Storyboard.TargetName="tuoba" Storyboard.TargetProperty="Opacity" BeginTime="0:0:1.5" Duration="0:0:0.5" From="0" To="1"/>
-                            <DoubleAnimation Storyboard.TargetName="ItemGrid" Storyboard.TargetProperty="Opacity" BeginTime="0:0:4" Duration="0:0:0.3" From="1" To="0"/>
+                            <DoubleAnimation Storyboard.TargetName="tuoba" Storyboard.TargetProperty="Opacity" BeginTime="0:0:2" Duration="0:0:0.5" From="0" To="1"/>
+                            <DoubleAnimation Storyboard.TargetName="usergrid" Storyboard.TargetProperty="Opacity" BeginTime="0:0:5" Duration="0:0:0.2" From="1" To="0"/>
                         </ParallelTimeline>
                     </Storyboard>
                 </BeginStoryboard>
@@ -62,4 +65,5 @@
         </Grid.Triggers>
 
     </Grid>
+
 </UserControl>

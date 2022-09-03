@@ -15,6 +15,7 @@ namespace Chess.CustomClass
             sha1.Opacity = 0;
             sha5.Opacity = 0;
             tuoba.Opacity = 0;
+            mainGrid.Opacity = 0;
         }
     }
 }

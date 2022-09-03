@@ -26,6 +26,7 @@
                     </Image>
                     <Canvas x:Name="qiziCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" Cursor="Arrow"/>
                     <Grid x:Name="DrawGrid" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <Grid x:Name="JueshaGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Width="629" Height="695" Margin="67,53,0,0"/>
                 </Grid>
                 <StackPanel x:Name="Infomation_board" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,55,60,18" MinWidth="321" MinHeight="321">
                     <StackPanel.Background>
