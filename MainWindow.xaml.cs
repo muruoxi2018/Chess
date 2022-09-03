@@ -38,7 +38,7 @@ namespace Chess
             menuItem = 0;
             ReturnButton.Visibility = Visibility.Hidden;
             // 应用用户上次选择的主题
-            string[] themfiles = { "Orange", "Green", "Blue", "Violet", "Null", "ChinaRed", "DarkGreen", "DarkViolet" };
+            string[] themfiles = { "Orange", "Green", "Blue", "Violet", "Null", "ChinaRed", "DarkGreen", "DarkViolet","Wood", "Wood_Light" };
             int index = (Settings.Default.ThemsIndex < themfiles.Length) ? Settings.Default.ThemsIndex : 0;
             Settings.Default.ThemsIndex = index;
             Application.Current.Resources.MergedDictionaries.Clear();
@@ -115,6 +115,30 @@ namespace Chess
         private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
             Title = $"中国象棋  {Width} x {Height}";
+        }
+        /// <summary>
+        /// 键盘输入处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+
+            if (e.Key == System.Windows.Input.Key.Delete)
+            {
+                if ((menuItem == GlobalValue.CANJU_DESIGN) && (GlobalValue.CurrentQiZi is >= 0 and < 32))
+                {
+                    GlobalValue.qiZiArray[GlobalValue.CurrentQiZi].SetInitPosition();
+                    GlobalValue.CurrentQiZi = 100;
+                    for (int i = 0; i <= 8; i++)
+                    {
+                        for (int j = 0; j <= 9; j++)
+                        {
+                            GlobalValue.pathPointImage[i, j].HasPoint = false; // 走棋后，隐藏走棋路径
+                        }
+                    }
+                }
+            }
         }
     }
     public class StringToImageSourceConverter : IValueConverter

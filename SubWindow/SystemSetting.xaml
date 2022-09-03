@@ -40,6 +40,8 @@
                     <ComboBoxItem Content="中国红"/>
                     <ComboBoxItem Content="墨绿色"/>
                     <ComboBoxItem Content="皇家紫"/>
+                    <ComboBoxItem Content="深色木纹"/>
+                    <ComboBoxItem Content="浅色木纹"/>
                 </ComboBox>
             </StackPanel>
             </StackPanel>

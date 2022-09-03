@@ -56,6 +56,7 @@
     <None Remove="picture\juesha_0.png" />
     <None Remove="picture\Resource\information_board.png" />
     <None Remove="picture\Resource\information_board_321_321.png" />
+    <None Remove="picture\Resource\juesha.png" />
     <None Remove="picture\Resource\木纹1.png" />
     <None Remove="picture\Resource\木纹3.png" />
     <None Remove="picture\Resource\木纹4_.jpg" />
@@ -93,6 +94,7 @@
     <None Remove="picture\黑象.png" />
     <None Remove="picture\黑车.png" />
     <None Remove="picture\黑马.png" />
+    <None Remove="Settings.settings" />
     <None Remove="Sounds\alarm.mp3" />
     <None Remove="Sounds\bg.mp3" />
     <None Remove="Sounds\eat.mp3" />
@@ -289,6 +291,7 @@
     </Resource>
     <Resource Include="picture\Resource\information_board.png" />
     <Resource Include="picture\Resource\information_board_321_321.png" />
+    <Resource Include="picture\Resource\juesha.png" />
     <Resource Include="picture\Resource\木纹1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -383,15 +386,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="CustomClass\JueSha.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -414,7 +415,15 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CustomToolNamespace></CustomToolNamespace>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="CustomClass\JueSha.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="mainBKImage" Description="主窗口背景色" Type="System.String" Scope="User">
-      <Value Profile="(Default)">青草.jpg</Value>
+      <Value Profile="(Default)">山水之间.jpeg</Value>
     </Setting>
     <Setting Name="stepArrow" Description="每一步都箭头提示" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -24,7 +24,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ThemsIndex" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
   </Settings>
 </SettingsFile>

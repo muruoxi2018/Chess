@@ -89,8 +89,8 @@ namespace Chess
             };
 
             Infomation_board.Children.Add(GlobalValue.jiangJunTiShi);
-            GlobalValue.jueShaImage = new(); // 绝杀图片
-            _ = DrawGrid.Children.Add(GlobalValue.jueShaImage);
+            GlobalValue.Juesha = new(); // 绝杀图片
+            _ = DrawGrid.Children.Add(GlobalValue.Juesha);
 
             GlobalValue.arrows = new();
             DrawGrid.Children.Add(GlobalValue.arrows.grid); // 走棋提示箭头

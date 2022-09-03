@@ -29,7 +29,7 @@ namespace Chess {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsDescriptionAttribute("主窗口背景色")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("青草.jpg")]
+        [global::System.Configuration.DefaultSettingValueAttribute("山水之间.jpeg")]
         public string mainBKImage {
             get {
                 return ((string)(this["mainBKImage"]));
@@ -121,7 +121,7 @@ namespace Chess {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int ThemsIndex {
             get {
                 return ((int)(this["ThemsIndex"]));

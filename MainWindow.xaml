@@ -9,7 +9,7 @@
     ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" 
     VerticalContentAlignment="Stretch" WindowState="Normal" Loaded="OnLoad" 
     WindowStyle="ThreeDBorderWindow"  Unloaded="OnUnloaded" SnapsToDevicePixels="True" 
-    Width="1120" Height="887" MinWidth="500" MinHeight="500" SizeChanged="WindowSizeChanged" UseLayoutRounding="True">
+    Width="1120" Height="887" MinWidth="500" MinHeight="500" SizeChanged="WindowSizeChanged" UseLayoutRounding="True" KeyUp="OnKeyUp">
     <Window.Resources>
         <local:StringToImageSourceConverter x:Key="stringToImage"/>
     </Window.Resources>
@@ -19,18 +19,12 @@
     <Window.Background>
         <ImageBrush ImageSource="{Binding Default.mainBKImage,Mode=OneWay,Converter={StaticResource stringToImage}}"/>
     </Window.Background>
-        
+
     <Grid x:Name="grid" >
-        <d:Grid.Background>
-            <ImageBrush ImageSource="{Binding Default.mainBKImage,Mode=OneWay,Converter={StaticResource stringToImage}}"/>
-        </d:Grid.Background>
-        <d:Grid.DataContext>
-            <local:Settings/>
-        </d:Grid.DataContext>
         <Border BorderBrush="#FF7F7F7F" BorderThickness="0,1,0,0"/>
         <Frame x:Name="MainFrame" VerticalAlignment="Center" HorizontalAlignment="Center" NavigationUIVisibility="Hidden" />
         <Viewbox StretchDirection="DownOnly" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,63,0,0" Orientation="Vertical">
+            <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Margin="0,50,0,20">
                 <StackPanel Orientation="Vertical">
                     <Button x:Name="btn_PersonVsPC" Content="人机对战"  Style="{DynamicResource mainMenuButton}" Click="MainMenuClick" Tag="1" Margin="0,0,0,0"/>
                     <Button x:Name="btn_PCVsPC" Content="电脑对战"  Style="{DynamicResource mainMenuButton}" Tag="2" Click="MainMenuClick" Margin="0,20,0,0"/>
@@ -50,5 +44,4 @@
             <Button Content="置顶" Style="{DynamicResource button}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,1,5,1" Click="AllwayOnTop" Width="45" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
-
 </Window>

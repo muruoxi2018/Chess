@@ -109,5 +109,16 @@ namespace Chess
             tbx.SelectAll();
             e.Handled = true;
         }
+
+        private void OnKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Delete)
+            {
+                if (GlobalValue.CurrentQiZi is >=0 and < 32)
+                {
+                    GlobalValue.qiZiArray[GlobalValue.CurrentQiZi].SetInitPosition();
+                }
+            }
+        }
     }
 }

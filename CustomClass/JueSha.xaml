@@ -5,9 +5,61 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Chess.CustomClass"
              mc:Ignorable="d" 
-             Visibility="Visible">
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Image x:Name="image" Stretch="None" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="Both" Visibility="Visible" RenderTransformOrigin="0.5,0.5" Source="/picture/juesha_0.png" Height="246">
-        </Image>
+             d:DesignHeight="450" d:DesignWidth="560" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid>
+        <Viewbox>
+            <Grid x:Name="ItemGrid">
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="29,74,0,0">
+                    <Border x:Name="tuoba" HorizontalAlignment="Center" VerticalAlignment="Center" Width="310" Height="220" Visibility="Visible">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/picture/Resource/juesha.png" ViewboxUnits="RelativeToBoundingBox" ViewportUnits="Absolute" Viewbox="0,0,1,1" Viewport="0,0,310,220" AlignmentX="Left" AlignmentY="Top" Stretch="None"/>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+                <Grid  HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Border x:Name="jue1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="270" Height="270" Visibility="Visible"  Panel.ZIndex="10" Opacity="0">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/picture/Resource/juesha.png" ViewboxUnits="Absolute" ViewportUnits="Absolute" Viewbox="0,230,240,470" Viewport="0,0,300,300" AlignmentX="Left" AlignmentY="Top" Stretch="None"/>
+                        </Border.Background>
+                    </Border>
+                    <Border x:Name="jue5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="90" Visibility="Visible" >
+                        <Border.Background>
+                            <ImageBrush ImageSource="/picture/Resource/juesha.png" ViewboxUnits="Absolute" ViewportUnits="Absolute" Viewbox="590,90,0,0" AlignmentX="Left" AlignmentY="Top" Stretch="None" Viewport="0,0,100,90"/>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,34,0,0">
+                    <Border x:Name="sha1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="270" Height="270" Visibility="Visible" Panel.ZIndex="10" Opacity="0">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/picture/Resource/juesha.png" ViewboxUnits="Absolute" ViewportUnits="Absolute" Viewbox="328,0,0,0" Viewport="0,0,300,300" AlignmentX="Left" AlignmentY="Top" Stretch="None"/>
+                        </Border.Background>
+                    </Border>
+                    <Border x:Name="sha5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="90" Visibility="Visible" >
+                        <Border.Background>
+                            <ImageBrush ImageSource="/picture/Resource/juesha.png" ViewboxUnits="Absolute" ViewportUnits="Absolute" Viewbox="590,0,0,0" AlignmentX="Left" AlignmentY="Top" Stretch="None" Viewport="0,0,100,90"/>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Viewbox>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Window.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ParallelTimeline AutoReverse="False">
+                            <DoubleAnimation Storyboard.TargetName="jue1" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.5" Duration="0:0:1.5" From="1" To="0"/>
+                            <DoubleAnimation Storyboard.TargetName="jue5" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.5" Duration="0:0:1.5" From="0" To="1"/>
+
+                            <DoubleAnimation Storyboard.TargetName="sha1" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.8" Duration="0:0:1.5" From="1" To="0"/>
+                            <DoubleAnimation Storyboard.TargetName="sha5" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.8" Duration="0:0:1.5" From="0" To="1"/>
+
+                            <DoubleAnimation Storyboard.TargetName="tuoba" Storyboard.TargetProperty="Opacity" BeginTime="0:0:1.5" Duration="0:0:0.5" From="0" To="1"/>
+                            <DoubleAnimation Storyboard.TargetName="ItemGrid" Storyboard.TargetProperty="Opacity" BeginTime="0:0:4" Duration="0:0:0.3" From="1" To="0"/>
+                        </ParallelTimeline>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+
     </Grid>
 </UserControl>

@@ -67,7 +67,7 @@ namespace Chess
             set
             {
                 _isGameOver = value;
-                if (value) jueShaImage.ShowJueShaImage(); // 已绝杀时，显示绝杀图像
+                if (value) _isGameOver = value; // 已绝杀时，显示绝杀图像
             }
         }  // 游戏结束，系统自动检测
         public static bool EnableGameStop; // 人为停止游戏，用于电脑自动走棋过程中，中止走棋
@@ -91,7 +91,7 @@ namespace Chess
         public static QiZi yuanWeiZhi;  // 棋子走动后在原位置显示圆圈
         public static TextBlock jiangJunTiShi; // 将军时的文字提示
         public static TextBlock BestMoveInfo; // 将军时的文字提示
-        public static JueSha jueShaImage; // 绝杀时显示图片
+        public static JueSha Juesha; // 绝杀时显示图片
         public static Window_QiPu qiPuKuForm; // 棋谱库窗口
         public static MyGraphics arrows; // 走棋指示箭头
         public static Ellipse redSideRect = new();  // 红方走棋提示灯
@@ -269,6 +269,7 @@ namespace Chess
             // 运子到(m,n)位置
             int x0 = qiZiArray[qiZi].Col;
             int y0 = qiZiArray[qiZi].Row;
+            if (x0 == m && y0 == n) return;
             int dieQiZi = QiPan[m, n];
 
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，放在此处，是为了提高应用体验，点击时能够有所反馈。后期注意验证。
@@ -294,7 +295,7 @@ namespace Chess
             {
                 qiZiArray[dieQiZi].SetInitPosition();
             }
-            CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
+            //CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
 
             //Delay(500);
