@@ -94,7 +94,6 @@
     <None Remove="picture\黑象.png" />
     <None Remove="picture\黑车.png" />
     <None Remove="picture\黑马.png" />
-    <None Remove="Settings.settings" />
     <None Remove="Sounds\alarm.mp3" />
     <None Remove="Sounds\bg.mp3" />
     <None Remove="Sounds\eat.mp3" />
@@ -393,6 +392,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
 

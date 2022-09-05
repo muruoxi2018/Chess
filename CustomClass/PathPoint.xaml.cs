@@ -23,6 +23,8 @@ namespace Chess
                 _haspoint = value;
                 if (value) Visibility = Visibility.Visible;
                 else Visibility = Visibility.Hidden;
+                if (value && Settings.Default.EnablePathPoint) { image.Visibility= Visibility.Visible; } // 依据用户设置，是否显示路径点
+                else { image.Visibility= Visibility.Hidden; }
             }
         }  // 是否是有效的走棋路径点
         public int Col { get; set; }    // 路径点的列坐标
@@ -72,48 +74,6 @@ namespace Chess
         public void FanZhuPosition()
         {
             Setposition(Col, Row);
-        }
-
-        /// <summary>
-        /// 当鼠标进入标记范围内时，标记放大1.5倍
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnMouseEnter(object sender, MouseEventArgs e)
-        {
-            DoubleAnimation DAscale = new()
-            {
-                From = 1,
-                To = 1.5,
-                FillBehavior = FillBehavior.HoldEnd,
-                Duration = new Duration(TimeSpan.FromSeconds(0.2))
-            };
-            ScaleTransform scale = new();
-            image.RenderTransform = scale;
-            image.RenderTransformOrigin = new Point(0.5, 0.5);
-            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // x方向缩放
-            scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
-        }
-
-        /// <summary>
-        /// 当鼠标离开标记范围时，标记回复原始大小
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            DoubleAnimation DAscale = new()
-            {
-                From = 1.5,
-                To = 1,
-                FillBehavior = FillBehavior.HoldEnd,
-                Duration = new Duration(TimeSpan.FromSeconds(0.5))
-            };
-            ScaleTransform scale = new();
-            image.RenderTransform = scale;
-            image.RenderTransformOrigin = new Point(0.5, 0.5);
-            scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // x方向缩放
-            scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
         }
 
         /// <summary>

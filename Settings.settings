@@ -20,8 +20,8 @@
     <Setting Name="EnableSound" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="other" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="EnablePathPoint" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ThemsIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>

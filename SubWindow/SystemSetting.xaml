@@ -18,12 +18,13 @@
                 <TextBox Width="50" Margin="30,0,0,0" VerticalAlignment="Bottom" MaxLines="1" TextAlignment="Center" Text="{Binding Value, ElementName=MoveDelayTime}" IsEnabled="False" Foreground="Black" FontWeight="Bold"/>
             </StackPanel>
             <CheckBox x:Name="Sound" Content="走棋声音" Background="White" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0" IsChecked="{Binding Default.EnableSound}" />
-            <CheckBox x:Name="ArrowsShowOrHidden" Content="显示提示箭头" Background="White" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0" IsChecked="{Binding Default.ArrowVisable}" />
+            <CheckBox x:Name="ArrowsShowOrHidden" Content="显示下一个着法的提示箭头" Background="White" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0" IsChecked="{Binding Default.ArrowVisable}" />
             <StackPanel Orientation="Horizontal" Margin="20,0,20,0">
                 <TextBlock HorizontalAlignment="Left" Width="100" Text="提示箭头显示个数：" Foreground="White" VerticalAlignment="Bottom"/>
                 <Slider x:Name="ArrowMaxNumSlider" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" AutoToolTipPlacement="TopLeft" Maximum="8" SmallChange="1" TickPlacement="TopLeft" Value="{Binding Default.ArrowsMaxNum}" Foreground="#FFD4D4D3" ToolTip="调整走棋间隔时间（毫秒）。" IsSnapToTickEnabled="True" Margin="65,0,0,0" Minimum="1" />
                 <TextBox Width="50" Margin="30,0,0,0" VerticalAlignment="Bottom" MaxLines="1" TextAlignment="Center" Text="{Binding Value, ElementName=ArrowMaxNumSlider}" IsEnabled="False" Foreground="Black" Background="White" FontWeight="Bold"/>
             </StackPanel>
+            <CheckBox Content="显示走棋路径点" Background="White" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0" IsChecked="{Binding Default.EnablePathPoint}" />
             <StackPanel Orientation="Horizontal" Margin="20,10,0,0">
                 <TextBlock Text="窗口背景图片：" Foreground="White" VerticalAlignment="Center"></TextBlock>
                 <TextBox Width="294" Margin="85,0,0,0" IsEnabled="False" TextAlignment="Left" Text="{Binding Default.mainBKImage}" TextChanged="OnTextChanged"/>
