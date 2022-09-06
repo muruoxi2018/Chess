@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess" x:Name="MainWin" x:Class="Chess.MainWindow" mc:Ignorable="d"
-        Title="中国象棋" ResizeMode="CanResize"  WindowStartupLocation="CenterScreen" Closing="OnMainWindowClose" 
+        Title="中国象棋 单机版 V5.0" ResizeMode="CanResize"  WindowStartupLocation="CenterScreen" Closing="OnMainWindowClose" 
     Icon="/picture/象128.png"  SizeToContent="Manual" 
     ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" 
     VerticalContentAlignment="Stretch" WindowState="Normal" Loaded="OnLoad" 

@@ -95,7 +95,7 @@ namespace Chess
         public static QiZi yuanWeiZhi;  // 棋子走动后在原位置显示圆圈
         public static TextBlock jiangJunTiShi; // 将军时的文字提示
         public static TextBlock BestMoveInfo; // 将军时的文字提示
-        public static Grid JueShaGrid;
+        public static Grid JueShaGrid;  // 绝杀图片的容器
         public static JueSha Juesha; // 绝杀时显示图片
         public static Window_QiPu qiPuKuForm; // 棋谱库窗口
         public static MyGraphics arrows; // 走棋指示箭头

@@ -42,7 +42,6 @@
     <None Remove="Engine\ELEEYE.EXE" />
     <None Remove="juesha.png" />
     <None Remove="KaiJuKu.db" />
-    <None Remove="picture\background.jpg" />
     <None Remove="picture\BackGround\山水之间.jpeg" />
     <None Remove="picture\BackGround\星云.jpeg" />
     <None Remove="picture\BackGround\晚霞.jpg" />
@@ -52,8 +51,7 @@
     <None Remove="picture\BackGround\胡杨林.jpg" />
     <None Remove="picture\BackGround\青草.jpg" />
     <None Remove="picture\break_roleH_10zhanghan.png" />
-    <None Remove="picture\juesha.png" />
-    <None Remove="picture\juesha_0.png" />
+    <None Remove="picture\Resource\huohuan.png" />
     <None Remove="picture\Resource\information_board.png" />
     <None Remove="picture\Resource\information_board_321_321.png" />
     <None Remove="picture\Resource\juesha.png" />
@@ -62,7 +60,6 @@
     <None Remove="picture\Resource\木纹4_.jpg" />
     <None Remove="picture\Resource\木纹_浅色3000.png" />
     <None Remove="picture\Resource\木纹_深色2243.png" />
-    <None Remove="picture\原位置.png" />
     <None Remove="picture\大理石1.jpeg" />
     <None Remove="picture\大理石1.png" />
     <None Remove="picture\大象.png" />
@@ -84,9 +81,7 @@
     <None Remove="picture\红马.png" />
     <None Remove="picture\象128.png" />
     <None Remove="picture\象棋棋子阴影.png" />
-    <None Remove="picture\路径点.png" />
     <None Remove="picture\青草.jpeg" />
-    <None Remove="picture\预选框.png" />
     <None Remove="picture\黑卒.png" />
     <None Remove="picture\黑士.png" />
     <None Remove="picture\黑将.png" />
@@ -150,9 +145,6 @@
     <Content Include="picture\BackGround\山水之间.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="picture\background.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Content Include="picture\BackGround\星云.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -282,12 +274,7 @@
     <Content Include="picture\BackGround\青草.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="picture\juesha.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\juesha_0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="picture\Resource\huohuan.png" />
     <Resource Include="picture\Resource\information_board.png" />
     <Resource Include="picture\Resource\information_board_321_321.png" />
     <Resource Include="picture\Resource\juesha.png" />
@@ -305,9 +292,6 @@
     </Resource>
     <Resource Include="picture\Resource\木纹_深色2243.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\原位置.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="picture\大象.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -346,12 +330,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="picture\象128.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\路径点.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="picture\预选框.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Content Include="picture\黑卒.png">

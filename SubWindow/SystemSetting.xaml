@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess.SubWindow"
-        xmlns:Chess="clr-namespace:Chess" x:Class="Chess.SubWindow.SystemSetting"
+        xmlns:Chess="clr-namespace:Chess" xmlns:CustomClass="clr-namespace:Chess.CustomClass" x:Class="Chess.SubWindow.SystemSetting"
         mc:Ignorable="d"
-        Title="设置" Height="450" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="OnWindowLoaded" Unloaded="OnWindowUnloaded">
+        Title="设置" Height="600" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="OnWindowLoaded" Unloaded="OnWindowUnloaded">
     <Grid>
         <StackPanel Style="{DynamicResource setupWindowBackground}">
             <StackPanel.DataContext>
@@ -26,12 +26,12 @@
             </StackPanel>
             <CheckBox Content="显示走棋路径点" Background="White" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0" IsChecked="{Binding Default.EnablePathPoint}" />
             <StackPanel Orientation="Horizontal" Margin="20,10,0,0">
-                <TextBlock Text="窗口背景图片：" Foreground="White" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="窗口背景图片：" Foreground="White" VerticalAlignment="Center"/>
                 <TextBox Width="294" Margin="85,0,0,0" IsEnabled="False" TextAlignment="Left" Text="{Binding Default.mainBKImage}" TextChanged="OnTextChanged"/>
                 <Button Content="另选" Margin="30,0,0,0" Width="50" Click="SelectBKImage"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="20,10,0,0">
-                <TextBlock Text="更换主题：" Foreground="White"></TextBlock>
+                <TextBlock Text="更换主题：" Foreground="White"/>
                 <ComboBox x:Name="thems_combox" Width="200" Margin="109,0,0,0" SelectedIndex="{Binding Default.ThemsIndex}" SelectionChanged="ThemsChangeed">
                     <ComboBoxItem Content="橙色_半透明"/>
                     <ComboBoxItem Content="绿色_半透明"/>
@@ -45,7 +45,10 @@
                     <ComboBoxItem Content="浅色木纹"/>
                 </ComboBox>
             </StackPanel>
-            </StackPanel>
+            <Grid Height="210" Margin="0,100,0,0">
+                <CustomClass:HuoHuan Width="210" Height="210"/>
+            </Grid>
+        </StackPanel>
         <Button Content="打开颜色窗口" HorizontalAlignment="Center" Padding="5,1,5,1" VerticalAlignment="Bottom" Margin="0,0,0,10" Click="OpenColorWindow"/>
 
     </Grid>

@@ -5,13 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Chess"
              mc:Ignorable="d" 
-             d:DesignHeight="70" d:DesignWidth="70" RenderTransformOrigin="0.5,0.5" Width="66" Height="66">
+             d:DesignHeight="66" d:DesignWidth="66" RenderTransformOrigin="0.5,0.5" Width="66" Height="66">
     <UserControl.Resources>
         <TransformGroup x:Key="UserControlRenderTransform1">
             <ScaleTransform ScaleX="1"/>
-            <SkewTransform/>
-            <RotateTransform/>
-            <TranslateTransform/>
         </TransformGroup>
     </UserControl.Resources>
     <Grid RenderTransform="{DynamicResource UserControlRenderTransform1}" x:Name="MaingGrid" MouseLeftButtonUp="Image_MouseLeftButtonUp">
@@ -25,18 +22,47 @@
                 <DropShadowEffect x:Name="qzShadow" ShadowDepth="8" BlurRadius="10" Opacity="0.6"/>
             </Image.Effect>
         </Image>
-        <Border x:Name="yuxuankuang_image" BorderThickness="2,2,2,2" BorderBrush="Red" Margin="7,7,7,7"/>
-        <Image HorizontalAlignment="Stretch" Height="66" VerticalAlignment="Stretch" Width="66" Source="/picture/预选框.png" Panel.ZIndex="2" Stretch="Uniform" RenderTransformOrigin="0.5,0.5" RenderTransform="{DynamicResource UserControlRenderTransform1}" Visibility="Hidden">
-            <Image.Effect>
-                <DropShadowEffect Opacity="0.6" ShadowDepth="5"/>
-            </Image.Effect>
-        </Image>
-        <Image x:Name="yuanweizhi_image" Stretch="Uniform" Source="/picture/原位置.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False" Visibility="Hidden" Width="66" Height="66">
-            <Image.Effect>
-                <DropShadowEffect Opacity="0.4" ShadowDepth="5"/>
-            </Image.Effect>
-        </Image>
-        <d:Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="/picture/红帅.png" Visibility="Visible" Width="66" Height="66">
+        <Path x:Name="yuxuankuang_image" Fill="Red" StrokeThickness="0" Visibility="Hidden">
+            <Path.Effect>
+                <DropShadowEffect Opacity="0.5" BlurRadius="2" ShadowDepth="2"/>
+            </Path.Effect>
+            <Path.Data>
+                <CombinedGeometry GeometryCombineMode="Exclude">
+                    <CombinedGeometry.Geometry1>
+                        <CombinedGeometry GeometryCombineMode="Exclude">
+                            <CombinedGeometry.Geometry1>
+                                <RectangleGeometry Rect="3,3,60,60"/>
+                            </CombinedGeometry.Geometry1>
+                            <CombinedGeometry.Geometry2>
+                                <RectangleGeometry Rect="6,6,54,54"/>
+                            </CombinedGeometry.Geometry2>
+                        </CombinedGeometry>
+                        
+                    </CombinedGeometry.Geometry1>
+                    <CombinedGeometry.Geometry2>
+                        <RectangleGeometry Rect="-2,-2,70,70">
+                            <RectangleGeometry.Transform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="45" CenterX="33" CenterY="33"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </RectangleGeometry.Transform>
+                        </RectangleGeometry>
+                    </CombinedGeometry.Geometry2>
+                </CombinedGeometry>
+            </Path.Data>
+        </Path>
+
+        <Grid x:Name="yuanweizhi_image" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.9" Visibility="Hidden">
+            <Grid.Effect>
+                <DropShadowEffect Opacity="0.5"/>
+            </Grid.Effect>
+            <Ellipse Width="33" Height="33" StrokeThickness="2" Stroke="White"/>
+            <Ellipse Width="15" Height="15" Fill="White"/>
+        </Grid>
+        <d:Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="/picture/红帅.png" Width="66" Height="66">
             <Image.Effect>
                 <DropShadowEffect/>
             </Image.Effect>

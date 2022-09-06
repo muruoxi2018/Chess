@@ -105,7 +105,11 @@ namespace Chess
                 WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
         }
-
+        /// <summary>
+        /// 打开用户设置窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SystemSetup(object sender, RoutedEventArgs e)
         {
             SystemSetting setWindow = new();
@@ -114,7 +118,7 @@ namespace Chess
 
         private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Title = $"中国象棋  {Width} x {Height}";
+            Title = $"中国象棋 单机版 V5.0  {Width} x {Height}";
         }
         /// <summary>
         /// 键盘输入处理
@@ -141,6 +145,9 @@ namespace Chess
             }
         }
     }
+    /// <summary>
+    /// 转换器。将文件名字符串转换为BitMapImage实例。
+    /// </summary>
     public class StringToImageSourceConverter : IValueConverter
     {
         #region Converter
