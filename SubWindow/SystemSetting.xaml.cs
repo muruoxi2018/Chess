@@ -31,6 +31,8 @@ namespace Chess.SubWindow
             //MoveDelayTime.Value = Settings.Default.MoveDelayTime;
             //ArrowsShowOrHidden.IsChecked = Settings.Default.ArrowVisable;
             //ArrowMaxNumSlider.Value = Settings.Default.ArrowsMaxNum;
+            CustomClass.HuoHuan huoHuan = new CustomClass.HuoHuan();
+            DongHuaGrid.Children.Add(huoHuan);
         }
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {

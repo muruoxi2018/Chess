@@ -26,19 +26,9 @@ namespace Chess
         public QiPanPage()
         {
             InitializeComponent();
-
-        }
-        /// <summary>
-        /// 主窗口载入时，初始化自定义控件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MainFormLoaded(object sender, RoutedEventArgs e)
-        {
-
-            GlobalValue.yuanWeiZhi = new QiZi(); // 棋子原位置图片
-            _ = qiziCanvas.Children.Add(GlobalValue.yuanWeiZhi);
-
+            #region 添加界面控件元素
+            GlobalValue.yuanWeiZhi = new();
+            _ = qiziCanvas.Children.Add(GlobalValue.yuanWeiZhi);// 棋子原位置图片
             for (int i = 0; i < 32; i++)
             {
                 GlobalValue.qiZiArray[i] = new QiZi(i);  // 初始化32个棋子
@@ -52,16 +42,7 @@ namespace Chess
                     _ = qiziCanvas.Children.Add(GlobalValue.pathPointImage[i, j]);
                 }
             }
-            GlobalValue.IsQiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
-            QiPanChange(false);
-            jipuWindow = new Window_JiPu(); // 棋谱记录窗口
-            jipuWindow.Hide();
-            spyWindow = new SpyWindow(); // 棋盘数据监视窗口
-            spyWindow.Hide();
-
-            GlobalValue.qiPuKuForm = new Window_QiPu(); // 棋谱库浏览窗口
-            GlobalValue.qiPuKuForm.Hide();
-            GlobalValue.BestMoveInfo = new() // 下一步最佳着法提示信息
+            GlobalValue.BestMoveInfo = new()
             {
                 Text = "",
                 Foreground = Brushes.Black,
@@ -73,29 +54,26 @@ namespace Chess
                 TextWrapping = TextWrapping.Wrap,
 
             };
-
-            Infomation_board.Children.Add(GlobalValue.BestMoveInfo);
-            GlobalValue.jiangJunTiShi = new() // 将军状态文字提示
+            Infomation_board.Children.Add(GlobalValue.BestMoveInfo); // 下一步最佳着法提示信息
+            GlobalValue.jiangJunTiShi = new()
             {
                 Text = "战况信息：",
                 Foreground = Brushes.Black,
                 FontSize = 14,
-                Width=300,
+                Width = 300,
                 Margin = new Thickness(10, 10, 10, 10),
                 VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment= HorizontalAlignment.Stretch,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
                 TextWrapping = TextWrapping.Wrap,
 
             };
-
-            Infomation_board.Children.Add(GlobalValue.jiangJunTiShi);
-            GlobalValue.JueShaGrid = new(); // 绝杀图片
-            _ = JueshaGrid.Children.Add(GlobalValue.JueShaGrid);
+            Infomation_board.Children.Add(GlobalValue.jiangJunTiShi);// 将军状态文字提示
+            GlobalValue.JueShaGrid = new();
+            _ = JueshaGrid.Children.Add(GlobalValue.JueShaGrid); // 绝杀图片
 
             GlobalValue.arrows = new();
-            DrawGrid.Children.Add(GlobalValue.arrows.grid); // 走棋提示箭头
-
-            GlobalValue.redSideRect = new System.Windows.Shapes.Ellipse() // 走棋方提示灯
+            _ = DrawGrid.Children.Add(GlobalValue.arrows.grid); // 走棋提示箭头
+            GlobalValue.redSideRect = new()
             {
                 Width = 30,
                 Height = 30,
@@ -105,8 +83,8 @@ namespace Chess
                 Fill = new SolidColorBrush(Colors.Gray),
                 Stroke = new SolidColorBrush(Colors.Goldenrod),
             };
-            _ = mainGrid.Children.Add(GlobalValue.redSideRect);
-            GlobalValue.blackSideRect = new System.Windows.Shapes.Ellipse()
+            _ = mainGrid.Children.Add(GlobalValue.redSideRect);// 走棋方提示灯
+            GlobalValue.blackSideRect = new()
             {
                 Width = 30,
                 Height = 30,
@@ -117,10 +95,33 @@ namespace Chess
                 Stroke = new SolidColorBrush(Colors.Goldenrod),
             };
             _ = mainGrid.Children.Add(GlobalValue.blackSideRect);
+
+            jipuWindow = new Window_JiPu(); // 棋谱记录窗口
+            jipuWindow.Hide();
+            spyWindow = new SpyWindow(); // 棋盘数据监视窗口
+            spyWindow.Hide();
+
+            GlobalValue.qiPuKuForm = new Window_QiPu(); // 棋谱库浏览窗口
+            GlobalValue.qiPuKuForm.Hide();
+            #endregion
+        }
+        /// <summary>
+        /// 页面载入时，初始化参数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainFormLoaded(object sender, RoutedEventArgs e)
+        {
+
+            GlobalValue.IsQiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
+            QiPanChange(false);
+
             this.PCVsPc.Visibility = Visibility.Hidden;
             this.PersonVsPC.Visibility = Visibility.Hidden;
             this.FreeDaPu.Visibility = Visibility.Hidden;
             this.FuPan.Visibility = Visibility.Hidden;
+            this.CanJuLianXi.Visibility = Visibility.Hidden;
+
             GlobalValue.Reset();
             GlobalValue.EnableGameStop = true;
             AutoMoveCanJuQiZi.IsEnabled = true;
@@ -130,7 +131,7 @@ namespace Chess
             CanJuIndex = 0;
             GlobalValue.EnableGameStop = false;
 
-            switch (MainWindow.menuItem)
+            switch (MainWindow.menuItem) // 根据主菜单，打开对应的按钮面板
             {
                 case 1: // 人机对战
                     this.PersonVsPC.Visibility = Visibility.Visible;
@@ -143,6 +144,7 @@ namespace Chess
                     break;
                 case 4: // 复盘
                     this.FuPan.Visibility = Visibility.Visible;
+                    GlobalValue.qiPuKuForm.Visibility = Visibility.Visible;
                     break;
                 case 6:// 残局练习
                     this.CanJuLianXi.Visibility = Visibility.Visible;
@@ -165,7 +167,7 @@ namespace Chess
                             }
                         }
                     }
-                    CanJuComment.Text = $"第{CanJuIndex + 1}局/共{CanJuData.Rows.Count}局{System.Environment.NewLine}【{CanJuData.Rows[CanJuIndex]["Name"].ToString()}】：{System.Environment.NewLine}{ CanJuData.Rows[CanJuIndex]["Comment"].ToString()}";
+                    CanJuComment.Text = $"第{CanJuIndex + 1}局/共{CanJuData.Rows.Count}局{System.Environment.NewLine}【{CanJuData.Rows[CanJuIndex]["Name"].ToString()}】：{System.Environment.NewLine}{CanJuData.Rows[CanJuIndex]["Comment"].ToString()}";
                     break;
                 default:
                     break;
@@ -434,7 +436,7 @@ namespace Chess
             GlobalValue.IsGameOver = false;
             GlobalValue.SideTag = GlobalValue.REDSIDE;
             GlobalValue.BestMoveInfo.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
-            CanJuComment.Text = $"{CanJuIndex + 1}/{CanJuData.Rows.Count}  " + CanJuData.Rows[CanJuIndex]["Name"].ToString() + "："+System.Environment.NewLine + CanJuData.Rows[CanJuIndex]["Comment"].ToString();
+            CanJuComment.Text = $"{CanJuIndex + 1}/{CanJuData.Rows.Count}  " + CanJuData.Rows[CanJuIndex]["Name"].ToString() + "：" + System.Environment.NewLine + CanJuData.Rows[CanJuIndex]["Comment"].ToString();
         }
         /// <summary>
         /// 前一个残局

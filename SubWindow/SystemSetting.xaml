@@ -14,14 +14,14 @@
             </StackPanel.DataContext>
             <StackPanel Orientation="Horizontal" Margin="20,20,0,0">
                 <TextBlock HorizontalAlignment="Left" Text="自动走棋时间间隔（毫秒）：" Foreground="White" VerticalAlignment="Bottom"/>
-                <Slider x:Name="MoveDelayTime" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="300" AutoToolTipPlacement="TopLeft" Maximum="2000" SmallChange="100" LargeChange="100" TickFrequency="100" TickPlacement="TopLeft" Value="{Binding Default.MoveDelayTime}" Foreground="#FFD4D4D3" ToolTip="调整走棋间隔时间（毫秒）。" IsSnapToTickEnabled="True" Margin="20,0,0,0" Minimum="100" />
+                <Slider x:Name="MoveDelayTime" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="300" AutoToolTipPlacement="TopLeft" Maximum="2000" SmallChange="100" LargeChange="100" TickFrequency="100" TickPlacement="TopLeft" Value="{Binding Default.MoveDelayTime}" Foreground="#FFD4D4D3" ToolTip="走棋间隔时间（毫秒）。" IsSnapToTickEnabled="True" Margin="20,0,0,0" Minimum="100" />
                 <TextBox Width="50" Margin="30,0,0,0" VerticalAlignment="Bottom" MaxLines="1" TextAlignment="Center" Text="{Binding Value, ElementName=MoveDelayTime}" IsEnabled="False" Foreground="Black" FontWeight="Bold"/>
             </StackPanel>
             <CheckBox x:Name="Sound" Content="走棋声音" Background="White" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0" IsChecked="{Binding Default.EnableSound}" />
             <CheckBox x:Name="ArrowsShowOrHidden" Content="显示下一个着法的提示箭头" Background="White" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0" IsChecked="{Binding Default.ArrowVisable}" />
             <StackPanel Orientation="Horizontal" Margin="20,0,20,0">
                 <TextBlock HorizontalAlignment="Left" Width="100" Text="提示箭头显示个数：" Foreground="White" VerticalAlignment="Bottom"/>
-                <Slider x:Name="ArrowMaxNumSlider" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" AutoToolTipPlacement="TopLeft" Maximum="8" SmallChange="1" TickPlacement="TopLeft" Value="{Binding Default.ArrowsMaxNum}" Foreground="#FFD4D4D3" ToolTip="调整走棋间隔时间（毫秒）。" IsSnapToTickEnabled="True" Margin="65,0,0,0" Minimum="1" />
+                <Slider x:Name="ArrowMaxNumSlider" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" AutoToolTipPlacement="TopLeft" Maximum="8" SmallChange="1" TickPlacement="TopLeft" Value="{Binding Default.ArrowsMaxNum}" Foreground="#FFD4D4D3" ToolTip="提示箭头显示个数。" IsSnapToTickEnabled="True" Margin="65,0,0,0" Minimum="1" />
                 <TextBox Width="50" Margin="30,0,0,0" VerticalAlignment="Bottom" MaxLines="1" TextAlignment="Center" Text="{Binding Value, ElementName=ArrowMaxNumSlider}" IsEnabled="False" Foreground="Black" Background="White" FontWeight="Bold"/>
             </StackPanel>
             <CheckBox Content="显示走棋路径点" Background="White" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0" IsChecked="{Binding Default.EnablePathPoint}" />
@@ -46,7 +46,7 @@
                 </ComboBox>
             </StackPanel>
             <Grid Height="210" Margin="0,100,0,0">
-                <CustomClass:HuoHuan Width="210" Height="210"/>
+                <Grid x:Name="DongHuaGrid" Width="210" Height="210" HorizontalAlignment="Center" VerticalAlignment="Center"></Grid>
             </Grid>
         </StackPanel>
         <Button Content="打开颜色窗口" HorizontalAlignment="Center" Padding="5,1,5,1" VerticalAlignment="Bottom" Margin="0,0,0,10" Click="OpenColorWindow"/>

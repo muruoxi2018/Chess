@@ -99,8 +99,8 @@ namespace Chess
         public static JueSha Juesha; // 绝杀时显示图片
         public static Window_QiPu qiPuKuForm; // 棋谱库窗口
         public static MyGraphics arrows; // 走棋指示箭头
-        public static Ellipse redSideRect = new();  // 红方走棋提示灯
-        public static Ellipse blackSideRect = new();  // 黑方走棋提示灯
+        public static Ellipse redSideRect;  // 红方走棋提示灯
+        public static Ellipse blackSideRect;  // 黑方走棋提示灯
         #endregion
 
         #region 数据存储
