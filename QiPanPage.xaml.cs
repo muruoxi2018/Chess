@@ -77,7 +77,7 @@ namespace Chess
             {
                 Width = 30,
                 Height = 30,
-                Margin = new Thickness(25, 500, 30, 0),
+                Margin = new Thickness(30, 500, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 Fill = new SolidColorBrush(Colors.Gray),
@@ -88,7 +88,7 @@ namespace Chess
             {
                 Width = 30,
                 Height = 30,
-                Margin = new Thickness(25, 260, 30, 0),
+                Margin = new Thickness(30, 260, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 Fill = new SolidColorBrush(Colors.Gray),
@@ -220,15 +220,15 @@ namespace Chess
             {
                 qipan_topBlack.Visibility = Visibility.Hidden;
                 qipan_topRed.Visibility = Visibility.Visible;
-                GlobalValue.redSideRect.Margin = new Thickness(15, 260, 30, 0);
-                GlobalValue.blackSideRect.Margin = new Thickness(15, 500, 30, 0);
+                GlobalValue.redSideRect.Margin = new Thickness(30, 260, 0, 0);
+                GlobalValue.blackSideRect.Margin = new Thickness(30, 500, 0, 0);
             }
             else
             {
                 qipan_topBlack.Visibility = Visibility.Visible;
                 qipan_topRed.Visibility = Visibility.Hidden;
-                GlobalValue.redSideRect.Margin = new Thickness(15, 500, 30, 0);
-                GlobalValue.blackSideRect.Margin = new Thickness(15, 260, 30, 0);
+                GlobalValue.redSideRect.Margin = new Thickness(30, 500, 0, 0);
+                GlobalValue.blackSideRect.Margin = new Thickness(30, 260, 0, 0);
             }
         }
 

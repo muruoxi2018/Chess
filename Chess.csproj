@@ -60,6 +60,8 @@
     <None Remove="picture\Resource\木纹4_.jpg" />
     <None Remove="picture\Resource\木纹_浅色3000.png" />
     <None Remove="picture\Resource\木纹_深色2243.png" />
+    <None Remove="picture\Resource\红帅.png" />
+    <None Remove="picture\Resource\黑将.png" />
     <None Remove="picture\大理石1.jpeg" />
     <None Remove="picture\大理石1.png" />
     <None Remove="picture\大象.png" />
@@ -163,6 +165,12 @@
     <Content Include="picture\BackGround\胡杨林.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="picture\Resource\黑将.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="picture\Resource\红帅.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Sounds\alarm.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

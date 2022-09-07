@@ -41,6 +41,6 @@
         </Setter>
     </Style>
     <Style x:Key="setupWindowBackground" TargetType="{x:Type StackPanel}">
-        <Setter Property="Background" Value="#FF423703"/>
+        <Setter Property="Background" Value="#FF1D1801"/>
     </Style>
 </ResourceDictionary>

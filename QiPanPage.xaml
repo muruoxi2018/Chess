@@ -96,9 +96,9 @@
                     </StackPanel>
                 </Border>
 
-                <Grid x:Name="remarkGrid" VerticalAlignment="Bottom" Height="65" Margin="0,0,0,9" Background="#FF846E06" Opacity="0.95" Visibility="Hidden">
-                    <TextBox x:Name="remarkTextBox" Margin="5,5,100,5" />
-                    <Button Width="70" Height="26" Content="保  存" HorizontalAlignment="Right" Margin="0,0,10,0" Click="SaveRemark" />
+                <Grid x:Name="remarkGrid" VerticalAlignment="Bottom" Height="65" Margin="0,0,0,9" ToolTip="备注信息" Visibility="Hidden">
+                    <TextBox x:Name="remarkTextBox" Margin="20,5,100,5" />
+                    <Button Width="70" Height="26" Content="保  存" HorizontalAlignment="Right" Margin="0,0,20,0" Click="SaveRemark" />
                 </Grid>
                 <Grid x:Name="childSelectGrid" VerticalAlignment="Bottom" Height="100" HorizontalAlignment="Center" Width="600" Visibility="Hidden">
                 </Grid>

@@ -46,7 +46,8 @@
                 </ComboBox>
             </StackPanel>
             <Grid Height="210" Margin="0,100,0,0">
-                <Grid x:Name="DongHuaGrid" Width="210" Height="210" HorizontalAlignment="Center" VerticalAlignment="Center"></Grid>
+                <Grid x:Name="DongHuaGrid" Width="210" Height="210" HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="10"></Grid>
+                <Image Source="/picture/Resource/黑将.png" VerticalAlignment="Center" IsEnabled="False" Stretch="Fill" HorizontalAlignment="Center" Margin="0,10,5,0" Width="100" Height="100"/>
             </Grid>
         </StackPanel>
         <Button Content="打开颜色窗口" HorizontalAlignment="Center" Padding="5,1,5,1" VerticalAlignment="Bottom" Margin="0,0,0,10" Click="OpenColorWindow"/>

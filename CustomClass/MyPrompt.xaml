@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="72.936" d:DesignWidth="142.202" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#B2F9FFD6" ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="50" MaxWidth="300" >
+    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#B2FDF6A3" ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="50" MaxWidth="300" >
         <TextBlock x:Name="textBlock" d:Text="测试测试。" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5,3,5,5" FontSize="11" TextWrapping="Wrap" />
     </Border>
 </UserControl>

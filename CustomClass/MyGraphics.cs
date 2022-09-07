@@ -121,7 +121,8 @@ namespace Chess.CustomClass
                     ArrowPath[i].Visibility = Visibility.Visible;
                     ArrowEllipses[i].Visibility = Visibility.Visible;
                     ArrowText[i].Visibility = Visibility.Visible;
-                    MemoPrompt[i].Visibility = Visibility.Visible;
+                    if (MemoPrompt[i].textBlock.Text.Length != 0)
+                        MemoPrompt[i].Visibility = Visibility.Visible;
                 }
             }
         }
