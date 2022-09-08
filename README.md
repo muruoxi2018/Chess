@@ -4,20 +4,22 @@
 喜欢象棋，也喜欢编程，所以，有了这个象棋软件。
 本软件在设计上，借鉴了国内知名象棋软件通行的设计思想，具有友好的操作界面，符合大众使用习惯。
 
-主要功能如下：
-* 可人机对战，测试自己的象棋水平。
-* 可电脑对战，观看电脑控制红黑双方棋子如何攻杀。
-* 可自由打谱，练习各种变化，添加着法注释，并能够全部保存。
-* 具有复盘功能，所有保存的棋谱及其着法变化，都可以随时打开进行温习。
-* 可进行残局破解，测试残局能力。系统自带30个残局，有视频破解教程。
-* 具备残局设计功能，可不断收集、扩展残局库。
-[![9EVxw.png](https://s1.328888.xyz/2022/09/08/9EVxw.png)](https://imgloc.com/i/9EVxw)
-[![9EzaF.png](https://s1.328888.xyz/2022/09/08/9EzaF.png)](https://imgloc.com/i/9EzaF)
-[![9EUjs.png](https://s1.328888.xyz/2022/09/08/9EUjs.png)](https://imgloc.com/i/9EUjs)
-[![9Exc0.png](https://s1.328888.xyz/2022/09/08/9Exc0.png)](https://imgloc.com/i/9Exc0)
-[![9EJQp.png](https://s1.328888.xyz/2022/09/08/9EJQp.png)](https://imgloc.com/i/9EJQp)
-[![9EyNo.png](https://s1.328888.xyz/2022/09/08/9EyNo.png)](https://imgloc.com/i/9EyNo)
-##### 已具备的其他功能
+#### 主要功能如下：
+1. 人机对战，测试自己的象棋水平。
+2. 电脑对战，观看电脑控制红黑双方棋子如何攻杀。
+3. 自由打谱，练习各种变化，添加着法注释，并能够全部保存。
+4. 具有复盘功能，所有保存的棋谱及其着法变化，都可以随时打开进行温习。
+5. 残局破解，测试残局能力。系统自带30个残局，有视频破解教程。
+6. 残局设计，可不断收集、扩展残局库。
+
+[![主菜单界面](https://s1.328888.xyz/2022/09/08/9EVxw.png)](https://imgloc.com/i/9EVxw)
+[![主菜单界面](https://s1.328888.xyz/2022/09/08/9EzaF.png)](https://imgloc.com/i/9EzaF)
+[![用户设置窗口](https://s1.328888.xyz/2022/09/08/9EUjs.png)](https://imgloc.com/i/9EUjs)
+[![着法提示与打分](https://s1.328888.xyz/2022/09/08/9Exc0.png)](https://imgloc.com/i/9Exc0)
+[![棋谱库](https://s1.328888.xyz/2022/09/08/9EJQp.png)](https://imgloc.com/i/9EJQp)
+[![残局设计](https://s1.328888.xyz/2022/09/08/9EyNo.png)](https://imgloc.com/i/9EyNo)
+
+#### 已具备的其他功能
 * 棋盘可上下翻转，红方可在下方，也可以在上方。运行期间可随意翻转棋盘。
 * 走棋具备动画效果，有悔棋功能。
 * 可显示棋子移动的有效位置，非法目标位置将不可走到。
@@ -45,7 +47,7 @@ C#，NET5.0/6.0，WPF，SQLite3.0
 
 #### 安装教程
 
-通过NuGet安装如下包：
+使用源码时，通过NuGet安装如下包：
 1.  Newtonsoft.Json
 2.  System.Data.SQLite
 

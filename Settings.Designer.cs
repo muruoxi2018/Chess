@@ -130,5 +130,17 @@ namespace Chess {
                 this["ThemsIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ArrowsMemo {
+            get {
+                return ((bool)(this["ArrowsMemo"]));
+            }
+            set {
+                this["ArrowsMemo"] = value;
+            }
+        }
     }
 }

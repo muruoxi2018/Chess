@@ -10,6 +10,8 @@ using System.Windows.Media;
 using Chess;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Data;
+using System.Runtime.CompilerServices;
 
 namespace Chess.CustomClass
 {
@@ -37,12 +39,25 @@ namespace Chess.CustomClass
             grid.Opacity = 1;
             grid.HorizontalAlignment = HorizontalAlignment.Stretch;
             grid.VerticalAlignment = VerticalAlignment.Stretch;
+            var pathStroke = new Binding("Stroke")
+            {
+                AsyncState = BindingMode.OneWay,
+                Source = Application.Current.Resources,
+                
+            };
+            var pathFill = new Binding("Fill")
+            {
+                AsyncState = BindingMode.OneWay,
+                Source = Application.Current.Resources.Source,
+
+            };
+
             for (int i = 0; i < ArrowPath.Length; i++)
             {
                 ArrowPath[i] = new Path // 箭头本体
                 {
                     SnapsToDevicePixels = false,
-                    Stroke = Brushes.ForestGreen,
+                    Stroke =Brushes.ForestGreen,
                     StrokeThickness = 1,
                     Fill = Brushes.GreenYellow,
                     Opacity = 0.8 - i * 0.1,
@@ -50,6 +65,10 @@ namespace Chess.CustomClass
                     VerticalAlignment = VerticalAlignment.Top,
                     Visibility = Visibility.Hidden
                 };
+                //BindingOperations.SetBinding(ArrowPath[i], Path.StretchProperty, pathStroke);
+                //BindingOperations.SetBinding(ArrowPath[i], Path.FillProperty, pathFill);
+                ArrowPath[i].SetBinding(Path.StrokeProperty, pathStroke);
+                ArrowPath[i].SetBinding(Path.FillProperty, pathFill);
                 _ = grid.Children.Add(ArrowPath[i]);
             }
             for (int i = 0; i < ArrowPath.Length; i++)
@@ -108,7 +127,7 @@ namespace Chess.CustomClass
             }
             foreach (MyPrompt prompt in MemoPrompt)
             {
-                prompt.Visibility = Visibility.Hidden;
+                prompt.SetHidden();
             }
         }
 
@@ -121,8 +140,8 @@ namespace Chess.CustomClass
                     ArrowPath[i].Visibility = Visibility.Visible;
                     ArrowEllipses[i].Visibility = Visibility.Visible;
                     ArrowText[i].Visibility = Visibility.Visible;
-                    if (MemoPrompt[i].textBlock.Text.Length != 0)
-                        MemoPrompt[i].Visibility = Visibility.Visible;
+
+                    MemoPrompt[i].SetVisible();
                 }
             }
         }

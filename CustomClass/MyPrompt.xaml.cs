@@ -42,8 +42,12 @@ namespace Chess.CustomClass
         public void SetVisible()
         {
             if (textBlock.Text == null || string.IsNullOrEmpty(textBlock.Text)) Visibility = Visibility.Hidden;
-            else Visibility = Visibility.Visible;
+            else if (Settings.Default.ArrowsMemo) Visibility = Visibility.Visible;
         }
-        public void SetHidden() { Visibility = Visibility.Hidden; }
+        public void SetHidden()
+        {
+            SetText("");
+            Visibility = Visibility.Hidden;
+        }
     }
 }
