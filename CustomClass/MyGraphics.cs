@@ -39,19 +39,13 @@ namespace Chess.CustomClass
             grid.Opacity = 1;
             grid.HorizontalAlignment = HorizontalAlignment.Stretch;
             grid.VerticalAlignment = VerticalAlignment.Stretch;
-            var pathStroke = new Binding("Stroke")
+            var pathStyle = Application.Current.Resources.MergedDictionaries[0];
+            dynamic pathStyle1 = new Binding()
             {
                 AsyncState = BindingMode.OneWay,
-                Source = Application.Current.Resources,
+                Source = Application.Current.Resources.MergedDictionaries[0],
                 
             };
-            var pathFill = new Binding("Fill")
-            {
-                AsyncState = BindingMode.OneWay,
-                Source = Application.Current.Resources.Source,
-
-            };
-
             for (int i = 0; i < ArrowPath.Length; i++)
             {
                 ArrowPath[i] = new Path // 箭头本体
@@ -63,12 +57,13 @@ namespace Chess.CustomClass
                     Opacity = 0.8 - i * 0.1,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Visibility = Visibility.Hidden
+                    Visibility = Visibility.Hidden,
+                    
                 };
-                //BindingOperations.SetBinding(ArrowPath[i], Path.StretchProperty, pathStroke);
+                BindingOperations.SetBinding(ArrowPath[i], Path.StyleProperty, pathStyle1);
                 //BindingOperations.SetBinding(ArrowPath[i], Path.FillProperty, pathFill);
-                ArrowPath[i].SetBinding(Path.StrokeProperty, pathStroke);
-                ArrowPath[i].SetBinding(Path.FillProperty, pathFill);
+                //ArrowPath[i].SetBinding(Path.StyleProperty, pathStyle);
+                //ArrowPath[i].SetBinding(Path.FillProperty, pathFill);
                 _ = grid.Children.Add(ArrowPath[i]);
             }
             for (int i = 0; i < ArrowPath.Length; i++)

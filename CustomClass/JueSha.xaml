@@ -9,9 +9,9 @@
     <Grid x:Name="usergrid">
         <Grid x:Name="mainGrid">
             <Grid.Background>
-                <RadialGradientBrush>
+                <RadialGradientBrush SpreadMethod="Pad">
                     <GradientStop Color="#7FFF0000" Offset="0.599"/>
-                    <GradientStop Color="Red" Offset="1"/>
+                    <GradientStop Color="#BFFF0000" Offset="1"/>
                 </RadialGradientBrush>
             </Grid.Background>
         </Grid>
