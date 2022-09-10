@@ -46,7 +46,7 @@
         <Setter Property="Background" Value="#FF3A2801"/>
     </Style>
     <Style x:Key="myPath" TargetType="{x:Type Path}">
-        <Setter Property="Stroke" Value="DarkOrange"/>
+        <Setter Property="Stroke" Value="OrangeRed"/>
         <Setter Property="Fill" Value="Orange"/>
     </Style>
 </ResourceDictionary>

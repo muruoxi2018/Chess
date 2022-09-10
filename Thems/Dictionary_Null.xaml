@@ -41,6 +41,6 @@
     </Style>
     <Style x:Key="myPath" TargetType="{x:Type Path}">
         <Setter Property="Stroke" Value="Black"/>
-        <Setter Property="Fill" Value="Gray"/>
+        <Setter Property="Fill" Value="LightGray"/>
     </Style>
 </ResourceDictionary>

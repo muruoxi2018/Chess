@@ -34,12 +34,12 @@
     <Style x:Key="borderStyle" TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="Green"/>
         <Setter Property="Background" Value="#FF003100"/>
-
-
     </Style>
     <Style x:Key="setupWindowBackground" TargetType="{x:Type StackPanel}">
         <Setter Property="Background" Value="#FF001200"/>
-
-
+    </Style>
+    <Style x:Key="myPath" TargetType="{x:Type Path}">
+        <Setter Property="Stroke" Value="DarkGreen"/>
+        <Setter Property="Fill" Value="GreenYellow"/>
     </Style>
 </ResourceDictionary>

@@ -43,4 +43,8 @@
     <Style x:Key="setupWindowBackground" TargetType="{x:Type StackPanel}">
         <Setter Property="Background" Value="#FF423703"/>
     </Style>
+    <Style x:Key="myPath" TargetType="{x:Type Path}">
+        <Setter Property="Stroke" Value="OrangeRed"/>
+        <Setter Property="Fill" Value="Orange"/>
+    </Style>
 </ResourceDictionary>
