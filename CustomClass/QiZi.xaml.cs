@@ -24,11 +24,13 @@ namespace Chess
         public int Row { get; set; }  // 棋子的行坐标
         public int QiziId { get; set; }  // 棋子编号
         private bool _selected;
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Selected    // 棋子的选中状态
         { 
             get { return _selected; } 
             set { 
-                _selected = value; 
                 if (value)
                 {
                     DoubleAnimation DA = new()
@@ -57,10 +59,25 @@ namespace Chess
                 }
                 else
                 {
-                    QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
+                    //QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
+
+                    /*if (_selected == true)  // 如果棋子由选中，改为不选中，则阴影变小
+                    {
+                        DoubleAnimation DA = new()
+                        {
+                            From = 25.0,
+                            To = 8.0,
+                            FillBehavior = FillBehavior.HoldEnd,
+                            AutoReverse = false,
+                            Duration = new Duration(TimeSpan.FromSeconds(0.5))
+                        };
+                        QiZiImage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
+                    }*/
                     yuxuankuang_image.Visibility = Visibility.Hidden; // 本棋子的预先框隐藏
                     
                 }
+                _selected = value;
+
             }
         }  
         public bool SideColor { get; set; }  // 棋子属于哪一方，false：黑棋，true：红棋
@@ -72,7 +89,9 @@ namespace Chess
         public QiZi()
         {
             InitializeComponent();
+            yuxuankuang_image.Visibility=Visibility.Hidden;
             QiziId = -1;
+
         }
         /// <summary>
         /// 棋子类构造函数
@@ -102,8 +121,6 @@ namespace Chess
             SetPosition(init_col, init_row);
             SideColor = id >= 16;
             Selected = false;
-            //yuxuankuang.Visibility = Visibility.Hidden;
-            //Scall(1);
         }
 
         /// <summary>
@@ -174,7 +191,10 @@ namespace Chess
             {
                 SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y_10);
             }
-            QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
+            Storyboard sb = (Storyboard)this.Resources["YinYingCancel"];  // 阴影取消，动画
+            sb.Begin();
+
+            //QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
         }
 
 

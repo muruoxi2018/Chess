@@ -24,17 +24,37 @@
                             <DropShadowEffect Color="#FF7B7A7A" Opacity="1" BlurRadius="10"/>
                         </Image.Effect>
                     </Image>
+                    <Grid x:Name="QiPanOver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="629" Height="695" Margin="67,53,0,0" Background="#4CA7ED17" Visibility="Hidden"/>
+
                     <Canvas x:Name="qiziCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" Cursor="Arrow"/>
                     <Grid x:Name="DrawGrid" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <Grid x:Name="JueshaGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Width="629" Height="695" Margin="67,53,0,0"/>
                 </Grid>
-                <StackPanel x:Name="Infomation_board" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,55,60,18" MinWidth="321" MinHeight="321">
+                <StackPanel x:Name="Infomation_board" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,55,60,18" MinWidth="321" MinHeight="321" Height="695">
                     <StackPanel.Background>
                         <ImageBrush ImageSource="/picture/Resource/information_board_321_321.png"/>
                     </StackPanel.Background>
                     <StackPanel.Effect>
                         <DropShadowEffect Color="#FF7B7A7A" Opacity="1" BlurRadius="10"/>
                     </StackPanel.Effect>
+                    <Border Margin="10,20,10,0" Height="5" Opacity="0.3">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterX="0.5" CenterY="0.5"/>
+                                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                        <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#FFF1CD94" Offset="0"/>
+                                <GradientStop Color="#FFEDC78E" Offset="1"/>
+                                <GradientStop Color="#FFBC7E21" Offset="0.939"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                    </Border>
                     <TextBlock x:Name="CanJuComment" HorizontalAlignment="Stretch" Margin="10,20,10,0" VerticalAlignment="Top" Foreground="Black" FontSize="14" TextWrapping="Wrap" FontFamily="Microsoft YaHei" Width="300"/>
                 </StackPanel>
 

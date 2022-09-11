@@ -35,13 +35,13 @@
                                 Duration="0:0:0.1" 
                                 Storyboard.TargetName="image"
                                 Storyboard.TargetProperty="Width" 
-                                From="12" To="15"/>
+                                From="12" To="13"/>
                             <DoubleAnimation 
                                 BeginTime="0:0:0" 
                                 Duration="0:0:0.1" 
                                 Storyboard.TargetName="image"
                                 Storyboard.TargetProperty="Height" 
-                                From="12" To="15"/>
+                                From="12" To="13"/>
                         </ParallelTimeline>
                     </Storyboard>
                 </BeginStoryboard>
@@ -52,22 +52,22 @@
                         <ParallelTimeline AutoReverse="False">
                             <DoubleAnimation 
                                 BeginTime="0:0:0" 
-                                Duration="0:0:0.5" 
+                                Duration="0:0:0.2" 
                                 Storyboard.TargetName="image"
                                 Storyboard.TargetProperty="Opacity" 
                                 From="1" To="0.7"/>
                             <DoubleAnimation 
                                 BeginTime="0:0:0" 
-                                Duration="0:0:0.5" 
+                                Duration="0:0:0.2" 
                                 Storyboard.TargetName="image"
                                 Storyboard.TargetProperty="Width" 
-                                From="15" To="12"/>
+                                From="13" To="12"/>
                             <DoubleAnimation 
                                 BeginTime="0:0:0" 
-                                Duration="0:0:0.5" 
+                                Duration="0:0:0.2" 
                                 Storyboard.TargetName="image"
                                 Storyboard.TargetProperty="Height" 
-                                From="15" To="12"/>
+                                From="13" To="12"/>
                         </ParallelTimeline>
                     </Storyboard>
                 </BeginStoryboard>

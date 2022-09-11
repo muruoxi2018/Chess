@@ -11,6 +11,8 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using Newtonsoft.Json;
 using System.Windows.Threading;
+using System.Windows.Media.Effects;
+using System.Runtime.CompilerServices;
 
 namespace Chess
 {
@@ -256,7 +258,7 @@ namespace Chess
             }
 
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
-            AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
+            //AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
             //Delay(200);
             BestMoveInfo.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
             return true;
@@ -412,6 +414,7 @@ namespace Chess
             }
             #endregion
             #region 棋子移动动画参数设置
+            Storyboard sb = new();
             DoubleAnimation PAx = new()
             {
                 From = QiPanGrid_X[x0] - GRID_WIDTH / 2,
@@ -434,9 +437,18 @@ namespace Chess
                 PAy.From = QiPanGrid_Y[9 - y0] - GRID_WIDTH / 2;
                 PAy.To = QiPanGrid_Y[9 - y1] - GRID_WIDTH / 2;
             }
+
+            Storyboard.SetTarget(PAx, qiZiArray[qiZi]);
+            Storyboard.SetTarget(PAy, qiZiArray[qiZi]);
+            Storyboard.SetTargetProperty(PAx, new PropertyPath(Canvas.LeftProperty));
+            Storyboard.SetTargetProperty(PAy, new PropertyPath(Canvas.TopProperty));
+            sb.Children.Add(PAx);
+            sb.Children.Add(PAy);
+            sb.Begin();
+            //qiZiArray[qiZi].Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
             #endregion
-            qiZiArray[qiZi].BeginAnimation(Canvas.LeftProperty, PAx); // 棋子移动动画
-            qiZiArray[qiZi].BeginAnimation(Canvas.TopProperty, PAy);
+            //qiZiArray[qiZi].BeginAnimation(Canvas.LeftProperty, PAx); // 棋子移动动画
+            //qiZiArray[qiZi].BeginAnimation(Canvas.TopProperty, PAy);
         }
 
         /// <summary>
