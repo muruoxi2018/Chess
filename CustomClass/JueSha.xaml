@@ -55,8 +55,8 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <ParallelTimeline AutoReverse="False">
-                            <DoubleAnimation Storyboard.TargetName="mainGrid" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0" Duration="0:0:0.1" From="0.8" To="0.9"/>
-                            <DoubleAnimation Storyboard.TargetName="mainGrid" Storyboard.TargetProperty="Opacity" BeginTime="0:0:1" Duration="0:0:1.5" From="0.9" To="0"/>
+                            <DoubleAnimation Storyboard.TargetName="mainGrid" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0" Duration="0:0:0.2" From="0.6" To="0.9"/>
+                            <DoubleAnimation Storyboard.TargetName="mainGrid" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.5" Duration="0:0:0.5" From="0.9" To="0"/>
 
                             <DoubleAnimation Storyboard.TargetName="jue1" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.5" Duration="0:0:2" From="1" To="0"/>
                             <DoubleAnimation Storyboard.TargetName="jue5" Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.5" Duration="0:0:1.5" From="0" To="1"/>

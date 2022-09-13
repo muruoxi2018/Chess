@@ -12,6 +12,62 @@
                 <Grid.DataContext>
                     <local:Settings/>
                 </Grid.DataContext>
+                <Ellipse x:Name="redSideRect" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Stroke="Black" StrokeThickness="2">
+                    <Ellipse.Fill>
+                        <SolidColorBrush Color="Gray"/>
+                    </Ellipse.Fill>
+                    <Ellipse.Style>
+                        <Style TargetType="{x:Type Ellipse}">
+                            <Style.Triggers>
+                                <DataTrigger Value="True" Binding="{Binding Default.CurrentSide, Mode=OneWay}">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard  Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)" AutoReverse="False" FillBehavior="HoldEnd">
+                                                <ColorAnimation  From="#333333" To="LightYellow" Duration="0:0:0.2"  />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)" AutoReverse="False" FillBehavior="HoldEnd">
+                                                <ColorAnimation From="LightYellow" To="#333333" Duration="0:0:0.2"  />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+
+                    </Ellipse.Style>
+                </Ellipse>
+                <Ellipse x:Name="blackSideRect" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,60,0,0" Stroke="Black" StrokeThickness="2">
+                    <Ellipse.Fill>
+                        <SolidColorBrush Color="Gray"/>
+                    </Ellipse.Fill>
+                    <Ellipse.Style>
+                        <Style TargetType="{x:Type Ellipse}">
+                            <Style.Triggers>
+                                <DataTrigger Value="True" Binding="{Binding Default.CurrentSide, Mode=OneWay}">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard  Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)" AutoReverse="False" FillBehavior="HoldEnd">
+                                                <ColorAnimation  From="LightYellow" To="#333333" Duration="0:0:0.2"  />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)" AutoReverse="False" FillBehavior="HoldEnd">
+                                                <ColorAnimation From="#333333" To="LightYellow" Duration="0:0:0.2"  />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+
+                    </Ellipse.Style>
+                </Ellipse>
                 <Border BorderThickness="3" CornerRadius="5,5,5,5" Style="{DynamicResource borderStyle}"/>
                 <Grid Width="{Binding Width, ElementName=qipan_topBlack}" HorizontalAlignment="Left" Height="{Binding Height, ElementName=qipan_topBlack}" VerticalAlignment="Top">
                     <Image x:Name="qipan_topBlack" Stretch="None" Source="/picture/棋盘（黑上）.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Visible">
@@ -34,28 +90,7 @@
                     <StackPanel.Background>
                         <ImageBrush ImageSource="/picture/Resource/information_board_321_321.png"/>
                     </StackPanel.Background>
-                    <StackPanel.Effect>
-                        <DropShadowEffect Color="#FF7B7A7A" Opacity="1" BlurRadius="10"/>
-                    </StackPanel.Effect>
-                    <Border Margin="10,20,10,0" Height="5" Opacity="0.3">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
-                                <LinearGradientBrush.RelativeTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform CenterX="0.5" CenterY="0.5"/>
-                                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                        <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </LinearGradientBrush.RelativeTransform>
-                                <GradientStop Color="#FFF1CD94" Offset="0"/>
-                                <GradientStop Color="#FFEDC78E" Offset="1"/>
-                                <GradientStop Color="#FFBC7E21" Offset="0.939"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-
-                    </Border>
-                    <TextBlock x:Name="CanJuComment" HorizontalAlignment="Stretch" Margin="10,20,10,0" VerticalAlignment="Top" Foreground="Black" FontSize="14" TextWrapping="Wrap" FontFamily="Microsoft YaHei" Width="300"/>
+                    <TextBlock x:Name="CanJuComment" HorizontalAlignment="Stretch" Margin="10,20,10,0" VerticalAlignment="Top" Foreground="Black" FontSize="14" TextWrapping="Wrap" FontFamily="Microsoft YaHei" Width="300" Background="#33FFFFE0" Padding="5,5,5,5"/>
                 </StackPanel>
 
                 <Border x:Name="PersonVsPC" VerticalAlignment="Bottom" Height="75" Margin="10,0,10,10" CornerRadius="3,3,3,3" Visibility="Hidden">

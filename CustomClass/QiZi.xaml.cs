@@ -33,23 +33,21 @@ namespace Chess
             set { 
                 if (value)
                 {
-                    DoubleAnimation DA = new()
-                    {
-                        From = 8.0,
-                        To = 25.0,
-                        FillBehavior = FillBehavior.HoldEnd,
-                        AutoReverse = false,
-                        Duration = new Duration(TimeSpan.FromSeconds(0.05))
-                    };
-                    QiZiImage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
+                    Storyboard sb = (Storyboard)this.Resources["QiZiSeleted"];  // 阴影取消，动画
+                    sb.Begin();
+                    
                     yuxuankuang_image.Visibility = Visibility.Visible;
                     GlobalValue.CurrentQiZi = QiziId;
                     //Scall(1.01);
-                    SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi); // 获取可移动路径，并显示在棋盘上
+                    if (_selected==false && SideColor==GlobalValue.SideTag)SuanFa.MoveCheck.GetAndShowPathPoints(GlobalValue.CurrentQiZi); // 获取可移动路径，并显示在棋盘上
                     GlobalValue.yuanWeiZhi.SetPosition(Col, Row); // 棋子原位置标记，显示在当前位置
                     if (MainWindow.menuItem != GlobalValue.CANJU_DESIGN)
                     {
                         GlobalValue.yuanWeiZhi.ShowYuanWeiZhiImage();
+                    }
+                    else
+                    {
+                        GlobalValue.yuanWeiZhi.HiddenYuanWeiZhiImage();
                     }
                     if (Settings.Default.EnableSound)
                     {
@@ -59,22 +57,12 @@ namespace Chess
                 }
                 else
                 {
-                    //QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
-
-                    /*if (_selected == true)  // 如果棋子由选中，改为不选中，则阴影变小
+                    yuxuankuang_image.Visibility = Visibility.Hidden; // 本棋子的预选框隐藏
+                    if (_selected == true) // 棋子由选中状态变为非选中状态时
                     {
-                        DoubleAnimation DA = new()
-                        {
-                            From = 25.0,
-                            To = 8.0,
-                            FillBehavior = FillBehavior.HoldEnd,
-                            AutoReverse = false,
-                            Duration = new Duration(TimeSpan.FromSeconds(0.5))
-                        };
-                        QiZiImage.Effect.BeginAnimation(DropShadowEffect.ShadowDepthProperty, DA);
-                    }*/
-                    yuxuankuang_image.Visibility = Visibility.Hidden; // 本棋子的预先框隐藏
-                    
+                        Storyboard sb = (Storyboard)this.Resources["YinYingCancel"];  // 阴影取消，动画
+                        sb.Begin();
+                    }
                 }
                 _selected = value;
 
@@ -115,7 +103,7 @@ namespace Chess
             init_row = GlobalValue.qiZiInitPosition[id, 1];
             if (MainWindow.menuItem == GlobalValue.CANJU_DESIGN)
             {
-                init_col = GlobalValue.qiZiCanJuInitPosition[id, 0]; // 残局设计开局时，棋子的位置
+                init_col = GlobalValue.qiZiCanJuInitPosition[id, 0]; // 残局设计开局时，棋子的位置，在棋盘外。
                 init_row = GlobalValue.qiZiCanJuInitPosition[id, 1];
             }
             SetPosition(init_col, init_row);
@@ -134,9 +122,14 @@ namespace Chess
             {
                 item.Selected=false;
             }
-            if (SideColor == GlobalValue.SideTag)
+            if (SideColor == GlobalValue.SideTag) // 只有走棋方的棋子，才可以选中
             {
                 Selected = true;
+            }
+            else
+            {
+                Selected = true; // 点击非走棋方棋子时，阴影变化一下，表示选不中。
+                Selected = false;
             }
             if (MainWindow.menuItem == GlobalValue.CANJU_DESIGN)
             {
@@ -191,8 +184,7 @@ namespace Chess
             {
                 SetValue(Canvas.TopProperty, GlobalValue.QiPanGrid_Y_10);
             }
-            Storyboard sb = (Storyboard)this.Resources["YinYingCancel"];  // 阴影取消，动画
-            sb.Begin();
+            Selected = false;
 
             //QiZiImage.SetValue(EffectProperty, new DropShadowEffect() { ShadowDepth = 8, BlurRadius = 10, Opacity = 0.6 });
         }

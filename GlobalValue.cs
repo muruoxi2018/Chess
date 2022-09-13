@@ -1,5 +1,6 @@
 ﻿using Chess.SuanFa;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -21,45 +22,14 @@ namespace Chess
         public const float GRID_WIDTH = 67.5f;   //棋盘格大小为 67.5*67.5
         public const bool BLACKSIDE = false;  // 黑方
         public const bool REDSIDE = true;   //红方
-        private static bool _sideTag;
-        public static bool SideTag   // 当前走棋方
+        public static bool _sideTag;
+        public static bool  SideTag   // 当前走棋方
         {
             get { return _sideTag; }
             set
             {
                 _sideTag = value;
-                const double delayTime = 200.0; // 动画延续时间，毫秒
-                #region 走棋方指示灯动画
-                DoubleAnimation DAscale = new()
-                {
-                    From = 1,
-                    To = 1.5,
-                    FillBehavior = FillBehavior.Stop,
-                    Duration = new Duration(TimeSpan.FromSeconds(delayTime / 1000))
-                };
-                ScaleTransform scale = new();
-                if (value == BLACKSIDE)
-                {
-                    // 黑方走棋指示灯
-                    blackSideRect.Fill = Brushes.LightGoldenrodYellow;
-                    redSideRect.Fill = Brushes.Gray;
-                    redSideRect.RenderTransform = null;
-                    blackSideRect.RenderTransform = scale;
-                    blackSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
-                }
-                else
-                {
-                    // 红方走棋指示灯
-                    blackSideRect.Fill = Brushes.Gray;
-                    redSideRect.Fill = Brushes.LightGoldenrodYellow;
-                    redSideRect.RenderTransform = scale;
-                    blackSideRect.RenderTransform = null;
-                    redSideRect.RenderTransformOrigin = new Point(0.5, 0.5);
-                }
-
-                scale.BeginAnimation(ScaleTransform.ScaleXProperty, DAscale); // 走棋方指示灯动画，x方向缩放
-                scale.BeginAnimation(ScaleTransform.ScaleYProperty, DAscale); // y方向缩放
-                #endregion
+                Settings.Default.CurrentSide = value;
             }
         }
         private static bool _isGameOver;
@@ -473,7 +443,7 @@ namespace Chess
             {
                 QiPan[qiZiArray[i].Col, qiZiArray[i].Row] = i; // 棋子位置信息转换到棋盘上
             }
-            yuanWeiZhi.HiddenYuanWeiZhiImage(); // 原位置指标标志隐藏
+            yuanWeiZhi.HiddenYuanWeiZhiImage(); // 原位置标志隐藏
             Qipu.QiPuList.Clear(); // 棋谱记录清空
 
             arrows.HideAllPath();  // 隐藏所有提示箭头
@@ -481,8 +451,6 @@ namespace Chess
             qiPuRecordRoot.Cursor = qiPuRecordRoot;  // 棋谱记录指针回到根部
             qiPuRecordRoot.DeleteChildNode(); // 棋谱记录清除所有子节点
 
-            blackSideRect.Fill = Brushes.DarkGreen; // 黑方走棋指示灯灭
-            redSideRect.Fill = Brushes.LightGoldenrodYellow; // 红方走棋指标灯亮
             GlobalValue.EnableGameStop = false;
             IsGameOver = false;
             SideTag = REDSIDE; // 红方先走

@@ -142,5 +142,17 @@ namespace Chess {
                 this["ArrowsMemo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CurrentSide {
+            get {
+                return ((bool)(this["CurrentSide"]));
+            }
+            set {
+                this["CurrentSide"] = value;
+            }
+        }
     }
 }

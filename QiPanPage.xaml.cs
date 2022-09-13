@@ -49,6 +49,7 @@ namespace Chess
                 FontSize = 14,
                 Width = 300,
                 Margin = new Thickness(10, 10, 10, 10),
+                Padding = new Thickness(5, 5, 5, 5),
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 TextWrapping = TextWrapping.Wrap,
@@ -62,10 +63,10 @@ namespace Chess
                 FontSize = 14,
                 Width = 300,
                 Margin = new Thickness(10, 10, 10, 10),
+                Padding = new Thickness(5, 5, 5, 5),
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 TextWrapping = TextWrapping.Wrap,
-
             };
             Infomation_board.Children.Add(GlobalValue.jiangJunTiShi);// 将军状态文字提示
             GlobalValue.JueShaGrid = new();
@@ -73,29 +74,7 @@ namespace Chess
 
             GlobalValue.arrows = new();
             _ = DrawGrid.Children.Add(GlobalValue.arrows.grid); // 走棋提示箭头
-            GlobalValue.redSideRect = new()
-            {
-                Width = 30,
-                Height = 30,
-                Margin = new Thickness(30, 500, 0, 0),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                Fill = new SolidColorBrush(Colors.Gray),
-                Stroke = new SolidColorBrush(Colors.Goldenrod),
-            };
-            _ = mainGrid.Children.Add(GlobalValue.redSideRect);// 走棋方提示灯
-            GlobalValue.blackSideRect = new()
-            {
-                Width = 30,
-                Height = 30,
-                Margin = new Thickness(30, 260, 0, 0),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                Fill = new SolidColorBrush(Colors.Gray),
-                Stroke = new SolidColorBrush(Colors.Goldenrod),
-            };
-            _ = mainGrid.Children.Add(GlobalValue.blackSideRect);
-
+            
             jipuWindow = new Window_JiPu(); // 棋谱记录窗口
             jipuWindow.Hide();
             spyWindow = new SpyWindow(); // 棋盘数据监视窗口
@@ -103,6 +82,7 @@ namespace Chess
 
             GlobalValue.qiPuKuForm = new Window_QiPu(); // 棋谱库浏览窗口
             GlobalValue.qiPuKuForm.Hide();
+
             #endregion
         }
         /// <summary>
@@ -220,15 +200,15 @@ namespace Chess
             {
                 qipan_topBlack.Visibility = Visibility.Hidden;
                 qipan_topRed.Visibility = Visibility.Visible;
-                GlobalValue.redSideRect.Margin = new Thickness(30, 260, 0, 0);
-                GlobalValue.blackSideRect.Margin = new Thickness(30, 500, 0, 0);
+                redSideRect.Margin = new Thickness(30, 260, 0, 0);
+                blackSideRect.Margin = new Thickness(30, 500, 0, 0);
             }
             else
             {
                 qipan_topBlack.Visibility = Visibility.Visible;
                 qipan_topRed.Visibility = Visibility.Hidden;
-                GlobalValue.redSideRect.Margin = new Thickness(30, 500, 0, 0);
-                GlobalValue.blackSideRect.Margin = new Thickness(30, 260, 0, 0);
+                redSideRect.Margin = new Thickness(30, 500, 0, 0);
+                blackSideRect.Margin = new Thickness(30, 260, 0, 0);
             }
         }
 

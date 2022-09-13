@@ -10,9 +10,14 @@
         <TransformGroup x:Key="UserControlRenderTransform1">
             <ScaleTransform ScaleX="1"/>
         </TransformGroup>
+        <Storyboard x:Key="QiZiSeleted">
+            <ParallelTimeline AutoReverse="False">
+                <DoubleAnimation BeginTime="0:0:0" Duration="0:0:0.1" Storyboard.TargetName="qzShadow" Storyboard.TargetProperty="ShadowDepth" From="8" To="25"/>
+            </ParallelTimeline>
+        </Storyboard>
         <Storyboard x:Key="YinYingCancel">
             <ParallelTimeline AutoReverse="False">
-                <DoubleAnimation x:Name="YinYinCancelAnimation" BeginTime="0:0:0.2" Duration="0:0:0.2" Storyboard.TargetName="qzShadow" Storyboard.TargetProperty="ShadowDepth" From="25" To="8"/>
+                <DoubleAnimation BeginTime="0:0:0.2" Duration="0:0:0.1" Storyboard.TargetName="qzShadow" Storyboard.TargetProperty="ShadowDepth" From="25" To="8"/>
             </ParallelTimeline>
         </Storyboard>
     </UserControl.Resources>
@@ -24,7 +29,7 @@
         </Grid.ContextMenu>
         <Image x:Name="QiZiImage"  HorizontalAlignment="Stretch" Height="66" VerticalAlignment="Stretch" Width="66" Stretch="Uniform" Panel.ZIndex="5" RenderTransform="{DynamicResource UserControlRenderTransform1}" MinWidth="66" MinHeight="66" MaxWidth="66" MaxHeight="66" Cursor="Hand">
             <Image.Effect>
-                <DropShadowEffect x:Name="qzShadow" ShadowDepth="8" BlurRadius="10" Opacity="0.6"/>
+                <DropShadowEffect x:Name="qzShadow" ShadowDepth="8" BlurRadius="15" Opacity="0.5"/>
             </Image.Effect>
         </Image>
         <Path x:Name="yuxuankuang_image1" Fill="Red" StrokeThickness="0" Visibility="Hidden">
@@ -66,13 +71,16 @@
         </Ellipse>
 
         <Ellipse x:Name="yuanweizhi_image" Width="33" Height="33" StrokeThickness="2">
+            <Ellipse.Effect>
+                <DropShadowEffect BlurRadius="2" ShadowDepth="2" Opacity="0.3"/>
+            </Ellipse.Effect>
             <Ellipse.Fill>
                 <RadialGradientBrush>
                     <GradientStop Color="white" Offset="0.4"/>
-                    <GradientStop Color="Transparent" Offset="0.5"/>
-                    <GradientStop Offset="1" Color="white"/>
+                    <GradientStop Color="Transparent" Offset="0.6"/>
+                    <GradientStop Color="Transparent" Offset="0.75"/>
                     <GradientStop Offset="0.95" Color="white"/>
-                    <GradientStop Color="Transparent" Offset="0.8"/>
+                    <GradientStop Offset="1" Color="white"/>
                 </RadialGradientBrush>
             </Ellipse.Fill>
         </Ellipse>

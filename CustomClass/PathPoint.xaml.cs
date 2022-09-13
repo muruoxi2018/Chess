@@ -25,6 +25,7 @@ namespace Chess
                 else Visibility = Visibility.Hidden;
                 if (value && Settings.Default.EnablePathPoint) { image.Visibility= Visibility.Visible; } // 依据用户设置，是否显示路径点
                 else { image.Visibility= Visibility.Hidden; }
+                if (MainWindow.menuItem==GlobalValue.CANJU_DESIGN) { image.Visibility= Visibility.Hidden; }
             }
         }  // 是否是有效的走棋路径点
         public int Col { get; set; }    // 路径点的列坐标
