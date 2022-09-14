@@ -14,22 +14,26 @@ using Newtonsoft.Json;
 using System.Windows.Threading;
 using System.Windows.Media.Effects;
 using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace Chess
 {
-    public static class GlobalValue
+    internal class GlobalValue
     {
         public const float GRID_WIDTH = 67.5f;   //棋盘格大小为 67.5*67.5
         public const bool BLACKSIDE = false;  // 黑方
         public const bool REDSIDE = true;   //红方
+        public static event EventHandler<PropertyChangedEventArgs> SideTagChanged;
+        
         public static bool _sideTag;
-        public static bool  SideTag   // 当前走棋方
+        public static bool SideTag   // 当前走棋方
         {
             get { return _sideTag; }
             set
             {
                 _sideTag = value;
                 Settings.Default.CurrentSide = value;
+                SideTagChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(SideTag)));
             }
         }
         private static bool _isGameOver;
@@ -71,8 +75,6 @@ namespace Chess
         public static JueSha Juesha; // 绝杀时显示图片
         public static Window_QiPu qiPuKuForm; // 棋谱库窗口
         public static MyGraphics arrows; // 走棋指示箭头
-        public static Ellipse redSideRect;  // 红方走棋提示灯
-        public static Ellipse blackSideRect;  // 黑方走棋提示灯
         #endregion
 
         #region 数据存储
@@ -144,6 +146,8 @@ namespace Chess
         /// </summary>
         public static readonly string[] CnNumber = { "", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
         #endregion
+
+        public GlobalValue() { }
 
         /// <summary>
         /// 棋子移动的处理，如果棋子移动后配方被将军，则不能移动。
