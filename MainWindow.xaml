@@ -30,7 +30,7 @@
                     <Button x:Name="btn_PCVsPC" Content="电脑对战"  Style="{DynamicResource mainMenuButton}" Tag="2" Click="MainMenuClick" Margin="0,20,0,0"/>
                     <Button x:Name="btn_FreeDaPu" Content="自由打谱"  Style="{DynamicResource mainMenuButton}" Tag="3" Click="MainMenuClick" Margin="0,20,0,0"/>
                     <Button x:Name="btn_CanJuLianXi" Content="残局破解"  Style="{DynamicResource mainMenuButton}" Tag="6" Click="MainMenuClick" Margin="0,20,0,0"/>
-                    <Button Content="棋谱导入"  Style="{DynamicResource mainMenuButton}" Tag="6" Click="QiPuInputClick" Margin="0,20,0,0"/>
+                    <Button Content="古谱输入"  Style="{DynamicResource mainMenuButton}" Tag="7" Margin="0,20,0,0" Click="MainMenuClick"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
                     <Button x:Name="btn_FuPan" Content="打谱记录"  Style="{DynamicResource mainMenuButton}" Tag="4" Click="MainMenuClick" Margin="0,0,0,0"/>

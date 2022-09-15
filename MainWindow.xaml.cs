@@ -91,13 +91,17 @@ namespace Chess
                     menuItem = GlobalValue.CANJU_POJIE;
                     MainFrame.Source = new Uri("QiPanPage.xaml", UriKind.RelativeOrAbsolute);
                     break;
+                case "7":
+                    menuItem = 7;
+                    MainFrame.Source = new Uri("QiPuInputPage.xaml", UriKind.RelativeOrAbsolute);
+                    break;
                 default:
                     menuItem = 0;
                     MainMenu.Visibility = Visibility.Visible;
                     ReturnButton.Visibility = Visibility.Hidden;
                     break;
             }
-            if (menuItem is >= 1 and <= 6)
+            if (menuItem is >= 1 and <= 7)
             {
                 MainMenu.Visibility = Visibility.Hidden;
                 ReturnButton.Visibility = Visibility.Visible;
@@ -117,7 +121,7 @@ namespace Chess
 
         private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Title = $"中国象棋 单机版 V5.0  {Width} x {Height}";
+            Title = $"China Chess 单机版 V5.0  {Width} x {Height}";
         }
         /// <summary>
         /// 键盘输入处理

@@ -341,7 +341,6 @@ namespace Chess
             GlobalValue.qiPuRecordRoot.Cursor.IsSelected = true;
 
             GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
-            GlobalValue.qiPuKuForm.remarksTextBlock.Text = JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot);
 
             ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot);
             //x0 = 100;
