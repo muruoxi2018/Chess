@@ -22,30 +22,29 @@
                 <DataGridTextColumn Binding="{Binding video}" Header="视频" />
                 <DataGridTextColumn Binding="{Binding record}" Header="棋谱" />
             </DataGrid.Columns>
-            <d:TabItem/>
-            <d:TabItem/>
             <DataGrid.ContextMenu>
-                <ContextMenu Name="menu">
-                    <MenuItem Name="refresh" Header="刷新" Click="QipuDBListRefresh"/>
+                <ContextMenu x:Name="menu">
+                    <MenuItem x:Name="refresh" Header="刷新" Click="QipuDBListRefresh"/>
                     <Separator/>
-                    <MenuItem Name="delete" Header="删除" Click="DeleteRowData"/>
-                    
+                    <MenuItem x:Name="delete" Header="删除" Click="DeleteRowData"/>
+
                 </ContextMenu>
             </DataGrid.ContextMenu>
+            <d:TabItem/>
+            <d:TabItem/>
         </DataGrid>
         <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3" Margin="0,5,0,0" Grid.Row="1" Background="Ivory" />
         <TabControl VerticalAlignment="Stretch" MinHeight="500" Padding="0,0,0,0" Margin="0,5,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" >
             <TabItem HorizontalAlignment="Center" Height="19" Header="步骤列表" VerticalAlignment="Center" Width="59">
-                <Grid Background="#FFFFFFFF" VerticalAlignment="Top">
-                    <DataGrid x:Name="FuPanDataGrid" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MinHeight="500" HorizontalAlignment="Stretch" MinWidth="250" ScrollViewer.CanContentScroll="False" VerticalContentAlignment="Stretch">
+                <Grid Background="#FFFFFFFF">
+                    <DataGrid x:Name="FuPanDataGrid" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MinHeight="500" HorizontalAlignment="Stretch" MinWidth="250" ScrollViewer.CanContentScroll="False" VerticalContentAlignment="Stretch">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Id}" Header="步" Width="30"/>
                             <DataGridTextColumn Binding="{Binding Cn}" Header="棋谱" MinWidth="100" />
                             <DataGridTextColumn Binding="{Binding Remarks}" Header="备注" MinWidth="100"/>
                         </DataGrid.Columns>
-                        <d:TabItem/>
                         <DataGrid.RowStyle>
-                            <Style TargetType="DataGridRow">
+                            <Style TargetType="{x:Type DataGridRow}">
                                 <Style.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
                                         <Setter Property="Background" Value="Yellow"/>
@@ -59,6 +58,10 @@
             <TabItem HorizontalAlignment="Center" Height="19" Header="压缩树" VerticalAlignment="Center" Width="59">
                 <Grid Background="#FFFFFFFF">
                     <TreeView x:Name="CompressTree" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" AllowDrop="True" MinHeight="500" Margin="0,0,0,-4">
+                        <TreeView.Resources>
+                            <!--选择时的背景色-->
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DarkGreen"/>
+                        </TreeView.Resources>
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding ChildSteps}">
                                 <StackPanel Orientation="Horizontal">
@@ -73,20 +76,20 @@
 
                         </TreeView.ItemTemplate>
                         <TreeView.ItemContainerStyle>
-                            <Style TargetType="TreeViewItem">
+                            <Style TargetType="{x:Type TreeViewItem}">
                                 <Setter Property="IsExpanded" Value="true"/>
                             </Style>
                         </TreeView.ItemContainerStyle>
-                        <TreeView.Resources>
-                            <!--选择时的背景色-->
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DarkGreen"/>
-                        </TreeView.Resources>
                     </TreeView>
                 </Grid>
             </TabItem>
             <TabItem HorizontalAlignment="Center" Height="19" Header="真实树" VerticalAlignment="Center" Width="59">
                 <Grid Background="#FFFFFFFF">
                     <TreeView x:Name="TrueTree" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" AllowDrop="True" MinHeight="500">
+                        <TreeView.Resources>
+                            <!--选择时的背景色-->
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Yellow"/>
+                        </TreeView.Resources>
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding ChildNode}">
                                 <StackPanel Orientation="Horizontal">
@@ -103,15 +106,11 @@
 
                         </TreeView.ItemTemplate>
                         <TreeView.ItemContainerStyle>
-                            <Style TargetType="TreeViewItem">
+                            <Style TargetType="{x:Type TreeViewItem}">
                                 <Setter Property="IsExpanded" Value="true"/>
                                 <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
                             </Style>
                         </TreeView.ItemContainerStyle>
-                        <TreeView.Resources>
-                            <!--选择时的背景色-->
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Yellow"/>
-                        </TreeView.Resources>
                     </TreeView>
                 </Grid>
             </TabItem>
@@ -123,7 +122,7 @@
             <TabItem HorizontalAlignment="Center" Height="19" Header="教学视频" VerticalAlignment="Center" Width="59">
                 <StackPanel Background="#FFFFFFFF">
                     <TextBox x:Name="videoUrl" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto" IsReadOnly="True" MinWidth="200" Margin="10,30,10,0"/>
-                    <Button Content="打开视频" Width="70" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" Click="OpenVideo"></Button>
+                    <Button Content="打开视频" Width="70" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" Click="OpenVideo"/>
                 </StackPanel>
             </TabItem>
         </TabControl>

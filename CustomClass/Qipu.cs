@@ -296,21 +296,7 @@ namespace Chess.CustomClass
                 SideColor = QiZi is >= 0 and <= 15 ? "Black" : "Red";  //  在treeView中，显示不同的颜色。
                 //QiPuList.Add(this);
             }
-            /// <summary>
-            /// 获取当前节点的深度
-            /// </summary>
-            /// <returns></returns>
-            private int GetDepth()
-            {
-                int depth = 1;
-                QiPuRecord point = this;
-                while (!point.IsRoot())
-                {
-                    depth++;
-                    point = point.GetParent();
-                }
-                return depth;
-            }
+            
             /// <summary>
             /// 获取6个历史着法，主要用于象棋引擎的重复走棋判断
             /// </summary>

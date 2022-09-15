@@ -143,6 +143,12 @@ namespace Chess
                 }
             }
         }
+
+        private void QiPuInputClick(object sender, RoutedEventArgs e)
+        {
+            QiPuInput qiPuInput = new();
+            qiPuInput.ShowDialog();
+        }
     }
     /// <summary>
     /// 转换器。将文件名字符串转换为BitMapImage实例。

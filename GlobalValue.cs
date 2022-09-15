@@ -78,10 +78,10 @@ namespace Chess
         #endregion
 
         #region 数据存储
-        public static ObservableCollection<ContractQPClass> fuPanDataList = new(); // 复盘棋谱步骤列表，后期将弃用本变量
+        //public static ObservableCollection<ContractQPClass> fuPanDataList = new(); // 复盘棋谱步骤列表，后期将弃用本变量
         public static QiPuRecord qiPuRecordRoot = new(); // 棋谱树型数据结构
         public static QiPuSimpleRecord qiPuSimpleRecordRoot = new(); // 棋谱树型数据结构的精简版
-        public static List<Qipu.ContractQPClass> cnNumberList = new();  // 棋谱中文步骤列表
+        //public static List<Qipu.ContractQPClass> cnNumberList = new();  // 棋谱中文步骤列表
         #endregion
 
         #region 棋子及棋盘基础数据
