@@ -1,19 +1,12 @@
 ﻿using Chess.SuanFa;
 using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using static Chess.CustomClass.Qipu;
 using Chess.CustomClass;
-using System.Windows.Shapes;
 using System.Windows.Media;
-using Newtonsoft.Json;
 using System.Windows.Threading;
-using System.Windows.Media.Effects;
-using System.Runtime.CompilerServices;
 using System.ComponentModel;
 
 namespace Chess

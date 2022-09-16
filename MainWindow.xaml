@@ -25,16 +25,21 @@
         <Frame x:Name="MainFrame" VerticalAlignment="Center" HorizontalAlignment="Center" NavigationUIVisibility="Hidden" />
         <Viewbox StretchDirection="DownOnly" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Margin="0,50,0,20">
-                <StackPanel Orientation="Vertical">
-                    <Button x:Name="btn_PersonVsPC" Content="人机对战"  Style="{DynamicResource mainMenuButton}" Click="MainMenuClick" Tag="1" Margin="0,0,0,0"/>
-                    <Button x:Name="btn_PCVsPC" Content="电脑对战"  Style="{DynamicResource mainMenuButton}" Tag="2" Click="MainMenuClick" Margin="0,20,0,0"/>
-                    <Button x:Name="btn_FreeDaPu" Content="自由打谱"  Style="{DynamicResource mainMenuButton}" Tag="3" Click="MainMenuClick" Margin="0,20,0,0"/>
-                    <Button x:Name="btn_CanJuLianXi" Content="残局破解"  Style="{DynamicResource mainMenuButton}" Tag="6" Click="MainMenuClick" Margin="0,20,0,0"/>
-                    <Button Content="古谱输入"  Style="{DynamicResource mainMenuButton}" Tag="7" Margin="0,20,0,0" Click="MainMenuClick"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                    <Button Content="古谱练习"  Style="{DynamicResource mainMenuButton}" Tag="8" Margin="0,0,0,0" Click="MainMenuClick"/>
+                    <Button Content="古谱输入"  Style="{DynamicResource mainMenuButton}" Tag="7" Margin="20,0,0,0" Click="MainMenuClick"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
-                    <Button x:Name="btn_FuPan" Content="打谱记录"  Style="{DynamicResource mainMenuButton}" Tag="4" Click="MainMenuClick" Margin="0,0,0,0"/>
+                    <Button x:Name="btn_CanJuLianXi" Content="残局破解"  Style="{DynamicResource mainMenuButton}" Tag="6" Click="MainMenuClick" Margin="0,0,0,0"/>
                     <Button x:Name="btn_CanJuSheJi" Content="残局设计"  Style="{DynamicResource mainMenuButton}" Tag="5" Click="MainMenuClick" Margin="20,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
+                    <Button x:Name="btn_PersonVsPC" Content="人机对战"  Style="{DynamicResource mainMenuButton}" Click="MainMenuClick" Tag="1" Margin="0,0,0,0"/>
+                    <Button x:Name="btn_PCVsPC" Content="电脑对战"  Style="{DynamicResource mainMenuButton}" Tag="2" Click="MainMenuClick" Margin="20,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
+                    <Button x:Name="btn_FreeDaPu" Content="自由打谱"  Style="{DynamicResource mainMenuButton}" Tag="3" Click="MainMenuClick" Margin="0,0,0,0"/>
+                    <Button x:Name="btn_FuPan" Content="打谱记录"  Style="{DynamicResource mainMenuButton}" Tag="4" Click="MainMenuClick" Margin="20,0,0,0"/>
                 </StackPanel>
                 <Image HorizontalAlignment="Center" Source="/picture/大象.png" Stretch="Uniform" StretchDirection="Both" VerticalAlignment="Bottom" Width="200" Margin="0,30,0,0" Opacity="0.75" />
             </StackPanel>

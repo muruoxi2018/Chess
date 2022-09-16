@@ -93,7 +93,11 @@ namespace Chess
                     break;
                 case "7":
                     menuItem = 7;
-                    MainFrame.Source = new Uri("QiPuInputPage.xaml", UriKind.RelativeOrAbsolute);
+                    MainFrame.Source = new Uri("GuPuInputPage.xaml", UriKind.RelativeOrAbsolute);
+                    break;
+                case "8":
+                    menuItem = 8;
+                    MainFrame.Source = new Uri("GuPuLianXiPage.xaml", UriKind.RelativeOrAbsolute);
                     break;
                 default:
                     menuItem = 0;
@@ -101,7 +105,7 @@ namespace Chess
                     ReturnButton.Visibility = Visibility.Hidden;
                     break;
             }
-            if (menuItem is >= 1 and <= 7)
+            if (menuItem is >= 1 and <= 8)
             {
                 MainMenu.Visibility = Visibility.Hidden;
                 ReturnButton.Visibility = Visibility.Visible;
@@ -148,11 +152,6 @@ namespace Chess
             }
         }
 
-        private void QiPuInputClick(object sender, RoutedEventArgs e)
-        {
-            QiPuInput qiPuInput = new();
-            qiPuInput.ShowDialog();
-        }
     }
     /// <summary>
     /// 转换器。将文件名字符串转换为BitMapImage实例。

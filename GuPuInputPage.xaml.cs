@@ -16,11 +16,11 @@ namespace Chess
     /// <summary>
     /// QiPanPage.xaml 的交互逻辑
     /// </summary>
-    public partial class QiPuInputPage : Page
+    public partial class GuPuInputPage : Page
     {
-        private static DataTable CanJuData;
+        private static DataTable GuPuNameList;
 
-        public QiPuInputPage()
+        public GuPuInputPage()
         {
             InitializeComponent();
             #region 添加界面控件元素
@@ -87,8 +87,9 @@ namespace Chess
             GlobalValue.IsQiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
             QiPanChange(false);
             GlobalValue.Reset();
-            CanJuData = SqliteHelper.Select("GuPuList", "rowid,*");
-
+            GuPuNameList = SqliteHelper.Select("GuPuList", "rowid,*");
+            gupunameCombox.ItemsSource = GuPuNameList.DefaultView;
+            QiPuDataGrid.ItemsSource=Qipu.QiPuList;
         }
 
         /// <summary>
@@ -250,6 +251,21 @@ namespace Chess
             }
             //  更新数据后，刷新棋谱列表
             GlobalValue.qiPuKuForm.QipuDBListRefresh();
+        }
+
+        private void OnSaveBtnClick(object sender, RoutedEventArgs e)
+        {
+            string ss = ((DataRowView)gupunameCombox.SelectedItem)["rowid"].ToString();
+            Dictionary<string, object> dic = new();
+            dic.Add("GuPuLeiBie", int.Parse(ss));
+            dic.Add("GuPuName", ((DataRowView)gupunameCombox.SelectedItem)["Name"].ToString());
+            dic.Add("Title", QiJuName.Text);
+            dic.Add("Result", Result.Text);
+            dic.Add("Memo", Remarks.Text);
+            
+            GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
+            dic.Add("Jsonrecord", JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot));
+            _ = SqliteHelper.Insert("GuPuBook", dic);
         }
     }
 }
