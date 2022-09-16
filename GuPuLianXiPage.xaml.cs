@@ -18,7 +18,6 @@ namespace Chess
     /// </summary>
     public partial class GuPuLianXiPage : Page
     {
-        private static DataTable GuPuNameList;
 
         public GuPuLianXiPage()
         {
@@ -87,9 +86,7 @@ namespace Chess
             GlobalValue.IsQiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
             QiPanChange(false);
             GlobalValue.Reset();
-            GuPuNameList = SqliteHelper.Select("GuPuList", "rowid,*");
-            gupunameCombox.ItemsSource = GuPuNameList.DefaultView;
-            QiPuDataGrid.ItemsSource = Qipu.QiPuList;
+            openQiPuGrid.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -149,17 +146,6 @@ namespace Chess
         }
 
         /// <summary>
-        /// 保存棋谱
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SaveQiPu(object sender, RoutedEventArgs e)
-        {
-            Save_Window window = new();
-            _ = window.ShowDialog();
-        }
-
-        /// <summary>
         /// 上一步
         /// </summary>
         /// <param name="sender"></param>
@@ -210,67 +196,34 @@ namespace Chess
                 GlobalValue.qiPuKuForm.Show();
             }
         }
-        /// <summary>
-        /// 添加注释
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddRemark(object sender, RoutedEventArgs e)
-        {
-            string str = GlobalValue.qiPuRecordRoot.Cursor.Remarks;
-            if (str == null || str.Length < 1)
-            {
-                str = GlobalValue.qiPuRecordRoot.Cursor.Cn;
-            }
-        }
-
-
-        private void UpdateQiPu(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(Window_QiPu.GetRowid()))
-            {
-                GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
-                Dictionary<string, object> dic = new()
-                {
-                    { "jsonrecord", JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot) }
-                };
-                if (SqliteHelper.Update("mybook", $"rowid={Window_QiPu.GetRowid()}", dic) > 0)
-                {
-                    MessageBox.Show("数据保存成功！", "提示");
-                }
-                else
-                {
-                    MessageBox.Show("数据没有能够保存，请查找原因！", "提示");
-                }
-            }
-            else
-            {
-                //  如果棋谱库编号为空，则另存为新棋谱。
-                Save_Window window = new();
-                _ = window.ShowDialog();
-            }
-            //  更新数据后，刷新棋谱列表
-            GlobalValue.qiPuKuForm.QipuDBListRefresh();
-        }
-
-        private void OnSaveBtnClick(object sender, RoutedEventArgs e)
-        {
-            string ss = ((DataRowView)gupunameCombox.SelectedItem)["rowid"].ToString();
-            Dictionary<string, object> dic = new();
-            dic.Add("GuPuLeiBie", int.Parse(ss));
-            dic.Add("GuPuName", ((DataRowView)gupunameCombox.SelectedItem)["Name"].ToString());
-            dic.Add("Title", QiJuName.Text);
-            dic.Add("Result", Result.Text);
-            dic.Add("Memo", Remarks.Text);
-
-            GlobalValue.qiPuSimpleRecordRoot = GlobalValue.ConvertQiPuToSimple(GlobalValue.qiPuRecordRoot);  // 更新简易棋谱记录
-            dic.Add("Jsonrecord", JsonConvert.SerializeObject(GlobalValue.qiPuSimpleRecordRoot));
-            _ = SqliteHelper.Insert("GuPuBook", dic);
-        }
 
         private void OnOkClick(object sender, RoutedEventArgs e)
         {
-            openQiPuGrid.Visibility = Visibility.Hidden;
+            
+            if (qipuBook.SelectedIndex > -1)
+            {
+                openQiPuGrid.Visibility = Visibility.Hidden;
+                string rowId = ((DataRowView)qipuBook.SelectedItem).Row["rowid"].ToString();
+                DataTable sr = OpenSource.SqliteHelper.Select("GuPuBook","rowid,*", $"rowid={rowId}");
+                DataRow row = sr.Rows[0];
+                GupuName.Text =row["GuPuName"].ToString();
+                QiJuName.Text = row["Title"].ToString();
+                Result.Text = row["Result"].ToString();
+                Remarks.Text = row["Memo"].ToString();
+                string jsonStr = row["Jsonrecord"].ToString();
+                int maxDepth = 1000;
+                var simpleRecord = JsonConvert.DeserializeObject<Qipu.QiPuSimpleRecord>(jsonStr, new JsonSerializerSettings
+                {
+                    //  MaxDepth默认值为64，此处加大该值
+                    TypeNameHandling = TypeNameHandling.None,
+                    MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+                    MaxDepth = maxDepth
+                }); // 反序列化 
+
+                GlobalValue.qiPuRecordRoot = GlobalValue.ConvertQiPuToFull(simpleRecord); // 转换为完全树数据结构
+                Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot); // 转换为收缩树数据结构
+                GlobalValue.qiPuRecordRoot.Cursor = GlobalValue.qiPuRecordRoot; // 指向棋谱第一步，提示箭头自动显示
+            }
         }
 
         private void OnCancelClick(object sender, RoutedEventArgs e)
@@ -286,7 +239,38 @@ namespace Chess
                 DataTable sr = OpenSource.SqliteHelper.Select("GuPuBook", "rowid,*");
                 if (sr == null) return;
                 qipuBook.ItemsSource = sr.DefaultView;
+
+                DataTable GuPuNameList = SqliteHelper.Select("GuPuList", "rowid,*");
+                ShaiXuan.ItemsSource = GuPuNameList.DefaultView;
+                
             }
+        }
+
+        private void QipuDBListRefresh(object sender, RoutedEventArgs e)
+        {
+            DataTable sr = OpenSource.SqliteHelper.Select("GuPuBook", "rowid,*");
+            if (sr == null) return;
+            qipuBook.ItemsSource = sr.DefaultView;
+        }
+
+        private void DeleteRowData(object sender, RoutedEventArgs e)
+        {
+            if (qipuBook.SelectedIndex > -1)
+            {
+                string rowId = ((DataRowView)qipuBook.SelectedItem).Row["rowid"].ToString();
+                _ = OpenSource.SqliteHelper.Delete("GuPuBook", $"rowid={rowId}");
+                QipuDBListRefresh(sender, e);
+            }
+        }
+
+        private void OnDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OnOkClick(sender, null);
+        }
+
+        private void OpenGuPuBook(object sender, RoutedEventArgs e)
+        {
+            openQiPuGrid.Visibility = Visibility.Visible;
         }
     }
 }
