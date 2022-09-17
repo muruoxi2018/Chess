@@ -62,7 +62,27 @@ namespace Chess
         public static PathPoint[,] pathPointImage = new PathPoint[9, 10];  // 棋子可走路径的圆点标记
         public static QiZi[] qiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
         public static QiZi yuanWeiZhi;  // 棋子走动后在原位置显示圆圈
+
+        public static string jiangJunTiShiText {
+            get { return ""; }
+            set {
+                if (jiangJunTiShi != null)
+                {
+                    jiangJunTiShi.Text = value;
+                }
+            } }
         public static TextBlock jiangJunTiShi; // 将军时的文字提示
+        public static string BestMoveInfoText
+        {
+            get { return ""; }
+            set
+            {
+                if (BestMoveInfo != null)
+                {
+                    BestMoveInfo.Text = value;
+                }
+            }
+        }
         public static TextBlock BestMoveInfo; // 将军时的文字提示
         public static Grid JueShaGrid;  // 绝杀图片的容器
         public static JueSha Juesha; // 绝杀时显示图片
@@ -202,11 +222,11 @@ namespace Chess
                 IsGameOver = true;
                 if (SideTag == BLACKSIDE)
                 {
-                    jiangJunTiShi.Text = "战况信息：" + Environment.NewLine + "【黑方】被困毙！";
+                    jiangJunTiShiText = "战况信息：" + Environment.NewLine + "【黑方】被困毙！";
                 }
                 if (SideTag == REDSIDE)
                 {
-                    jiangJunTiShi.Text = "战况信息：" + Environment.NewLine + "【红方】被困毙！";
+                    jiangJunTiShiText = "战况信息：" + Environment.NewLine + "【红方】被困毙！";
                 }
                 return false;
             }
@@ -215,11 +235,11 @@ namespace Chess
                 IsGameOver = true;
                 if (SideTag == BLACKSIDE)
                 {
-                    jiangJunTiShi.Text = "战况信息：" + Environment.NewLine + "【红方】连续吃将未变招，判负！";
+                    jiangJunTiShiText = "战况信息：" + Environment.NewLine + "【红方】连续吃将未变招，判负！";
                 }
                 if (SideTag == REDSIDE)
                 {
-                    jiangJunTiShi.Text = "战况信息：" + Environment.NewLine + "【黑方】连续吃将未变招，判负！";
+                    jiangJunTiShiText = "战况信息：" + Environment.NewLine + "【黑方】连续吃将未变招，判负！";
                 }
                 return false;
             }
@@ -227,7 +247,7 @@ namespace Chess
             CurrentQiZi = 100;  //  当前预选棋子设为无效棋子
             //AnimationMove(qiZi, x0, y0, m, n); // 动画为异步运行，要注意系统数据的更新是否同步，因此将动画放在最后执行，避免所取数据出现错误。
             //Delay(200);
-            BestMoveInfo.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
+            BestMoveInfoText = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
             return true;
         }
         /// <summary>

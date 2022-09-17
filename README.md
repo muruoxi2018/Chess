@@ -56,10 +56,11 @@
 
 编程环境：Visual Studio 2019/2022
 C#，NET5.0/6.0，WPF，SQLite3.0
+随着功能扩展，代码量快速增长，模块间耦合度过高问题越来越严重。下一步打算使用Prism框架对代码进行重构，重构为MVVM模式，以降低模块间的耦合度，增强可扩展性。
 
 #### 安装教程
 
-使用源码时，在VS中通过NuGet安装如下包：
+使用源码时，在Visual Studio中通过NuGet安装如下包：
 1.  Newtonsoft.Json
 2.  System.Data.SQLite
 如果系统根据依赖关系自动安装了相应包，则不需要手动安装。

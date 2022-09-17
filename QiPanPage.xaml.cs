@@ -152,7 +152,7 @@ namespace Chess
                 default:
                     break;
             }
-            GlobalValue.BestMoveInfo.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
+            GlobalValue.BestMoveInfoText = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
 
         }
 
@@ -415,7 +415,7 @@ namespace Chess
             PCVsPcStopAutoMove.IsEnabled = false;
             GlobalValue.IsGameOver = false;
             GlobalValue.SideTag = GlobalValue.REDSIDE;
-            GlobalValue.BestMoveInfo.Text = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
+            GlobalValue.BestMoveInfoText = Engine.XQEngine.UcciInfo.GetBestMove(false); // 调用象棋引擎，得到下一步推荐着法
             CanJuComment.Text = $"{CanJuIndex + 1}/{CanJuData.Rows.Count}  " + CanJuData.Rows[CanJuIndex]["Name"].ToString() + "：" + System.Environment.NewLine + CanJuData.Rows[CanJuIndex]["Comment"].ToString();
         }
         /// <summary>
