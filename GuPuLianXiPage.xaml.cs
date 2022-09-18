@@ -223,6 +223,7 @@ namespace Chess
                 GlobalValue.qiPuRecordRoot = GlobalValue.ConvertQiPuToFull(simpleRecord); // 转换为完全树数据结构
                 Qipu.ContractQiPu.ConvertFromQiPuRecord(GlobalValue.qiPuRecordRoot); // 转换为收缩树数据结构
                 GlobalValue.qiPuRecordRoot.Cursor = GlobalValue.qiPuRecordRoot; // 指向棋谱第一步，提示箭头自动显示
+                QiPuDataGrid.ItemsSource = Qipu.ContractQiPu.ChildSteps;
             }
         }
 
