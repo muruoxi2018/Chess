@@ -2,7 +2,7 @@
 
 namespace Chess.SuanFa // 算法
 {
-    public class MoveCheck  // 走棋规则检查
+    public static class MoveCheck  // 走棋规则检查
     {
         public static bool[,] PathBool = new bool[9, 10];
 
@@ -55,7 +55,7 @@ namespace Chess.SuanFa // 算法
         /// <param name="moveQiZi">棋子编号</param>
         /// <param name="qiPan">当前棋盘数据</param>
         /// <returns>返回bool二维数组，对应棋盘上的每一点位</returns>
-        public static bool[,] GetPathPoints(int moveQiZi, int[,] qiPan)
+        public static bool[,] GetPathPoints(int moveQiZi, in int[,] qiPan)
         {
             bool[,] points = new bool[9, 10];
             for (int i = 0; i <= 8; i++)
@@ -580,7 +580,7 @@ namespace Chess.SuanFa // 算法
         /// </summary>
         /// <param name="qiZi"></param>
         /// <returns>将帅同列时，如果本棋子是他们之间的唯一棋子，则返回ture。</returns>
-        private static bool JustOneIsThis(int qiZi, int[,] qiPan)
+        private static bool JustOneIsThis(int qiZi, in int[,] qiPan)
         {
             if (GlobalValue.qiZiArray[0].Col != GlobalValue.qiZiArray[16].Col)    // 如果将帅不在同一列
             {
@@ -623,7 +623,7 @@ namespace Chess.SuanFa // 算法
         /// <param name="row">可移动点的行位置</param>
         /// <param name="qiPan">当前棋盘数据</param>
         /// <returns></returns>
-        public static bool IsKilledPoint(int jiangOrShuai, int col, int row, int[,] qiPan)
+        public static bool IsKilledPoint(int jiangOrShuai, int col, int row, in int[,] qiPan)
         {
             // 注意：数组作为参数传递时，不是传递的副本，而是直接数组本身。
             int[,] myQiPan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。
@@ -681,7 +681,7 @@ namespace Chess.SuanFa // 算法
         /// <param name="y1"></param>
         /// <param name="qiPan">棋盘数据</param>
         /// <returns> false=未将军，true=被将军 </returns>
-        public static bool AfterMoveStillJiangJun(int qiZi, int x0, int y0, int x1, int y1, int[,] qiPan)
+        public static bool AfterMoveStillJiangJun(int qiZi, int x0, int y0, int x1, int y1, in int[,] qiPan)
         {
             // 注意：数组作为参数传递时，不是传递参数的副本，而是传递数组本身的地址，是传址而非传参。所以不要直接修改。
             int[,] myQiPan = new int[9, 10]; // 制作棋盘副本，防止破坏原棋盘数据数组。

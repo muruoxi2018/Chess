@@ -29,11 +29,13 @@ namespace Chess
             #region 添加界面控件元素
             GlobalValue.yuanWeiZhi = new();
             _ = qiziCanvas.Children.Add(GlobalValue.yuanWeiZhi);// 棋子原位置图片
+
             for (int i = 0; i < 32; i++)
             {
                 GlobalValue.qiZiArray[i] = new QiZi(i);  // 初始化32个棋子
                 _ = qiziCanvas.Children.Add(GlobalValue.qiZiArray[i]);
             }
+
             for (int i = 0; i <= 8; i++)
             {
                 for (int j = 0; j <= 9; j++)
@@ -74,7 +76,7 @@ namespace Chess
 
             GlobalValue.arrows = new();
             _ = DrawGrid.Children.Add(GlobalValue.arrows.grid); // 走棋提示箭头
-            
+
             jipuWindow = new Window_JiPu(); // 棋谱记录窗口
             jipuWindow.Hide();
             spyWindow = new SpyWindow(); // 棋盘数据监视窗口

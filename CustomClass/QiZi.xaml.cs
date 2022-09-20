@@ -7,6 +7,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media;
 using System.Threading;
 using System.Windows.Media.Animation;
+using System.IO;
 
 namespace Chess
 {
@@ -62,6 +63,7 @@ namespace Chess
                     {
                         Storyboard sb = (Storyboard)this.Resources["YinYingCancel"];  // 阴影取消，动画
                         sb.Begin();
+                        GlobalValue.CurrentQiZi = 100;
                     }
                 }
                 _selected = value;
@@ -96,6 +98,11 @@ namespace Chess
             QiziId = id;
             string path = Environment.CurrentDirectory + @"\picture\" + GlobalValue.qiZiImageFileName[QiziId] + ".png";
             //string path = @"pack://application:,,,/picture/" + GlobalValue.QiZiImageFileName[QiziId] + ".png";
+            if (!File.Exists(path))
+            {
+                MessageBox.Show($"未找到文件：{path}");
+                return;
+            }
             BitmapImage bi = new(new Uri(path, UriKind.Absolute)); // 载入棋子图片
             bi.Freeze();
             QiZiImage.Source = bi;
