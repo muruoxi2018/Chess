@@ -26,6 +26,15 @@ namespace Chess
         public QiPanPage()
         {
             InitializeComponent();
+            
+        }
+        /// <summary>
+        /// 页面载入时，初始化参数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainFormLoaded(object sender, RoutedEventArgs e)
+        {
             #region 添加界面控件元素
             GlobalValue.yuanWeiZhi = new();
             _ = qiziCanvas.Children.Add(GlobalValue.yuanWeiZhi);// 棋子原位置图片
@@ -86,15 +95,6 @@ namespace Chess
             GlobalValue.qiPuKuForm.Hide();
 
             #endregion
-        }
-        /// <summary>
-        /// 页面载入时，初始化参数
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MainFormLoaded(object sender, RoutedEventArgs e)
-        {
-
             GlobalValue.IsQiPanFanZhuan = false; // 棋盘翻转，初始为未翻转，黑方在上，红方在下
             QiPanChange(false);
 

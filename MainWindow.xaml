@@ -24,8 +24,8 @@
         <Border BorderBrush="#FF7F7F7F" BorderThickness="0,1,0,0"/>
         <Frame x:Name="MainFrame" VerticalAlignment="Center" HorizontalAlignment="Center" NavigationUIVisibility="Hidden" />
         <Viewbox StretchDirection="DownOnly" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel x:Name="MainMenu" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Margin="0,50,0,20">
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+            <StackPanel x:Name="MainMenu" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
                     <Button Content="古谱练习"  Style="{DynamicResource mainMenuButton}" Tag="8" Margin="0,0,0,0" Click="MainMenuClick"/>
                     <Button Content="古谱输入"  Style="{DynamicResource mainMenuButton}" Tag="7" Margin="20,0,0,0" Click="MainMenuClick"/>
                 </StackPanel>
@@ -49,5 +49,21 @@
             <Button Content="设置" Style="{DynamicResource button}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,1,5,1" Click="SystemSetup" Width="45" Margin="10,0,0,0"/>
             <Button Content="置顶" Style="{DynamicResource button}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,1,5,1" Click="AllwayOnTop" Width="45" Margin="10,0,0,0"/>
         </StackPanel>
+        <Grid x:Name="Waiting" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Ellipse Width="150" Height="150" StrokeThickness="10" Fill="#BFFFFFFF" Stroke="#CCFFFFFF"/>
+            <Ellipse x:Name="changeEllipse" Stroke="#FFF30808"  Height="140" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Ellipse.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ParallelTimeline AutoReverse="True">
+                                    <DoubleAnimation Storyboard.TargetName="changeEllipse" Storyboard.TargetProperty="width" From="140" To="0" Duration="0:0:0.2"/>
+                                </ParallelTimeline>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Ellipse.Triggers>
+            </Ellipse>
+        </Grid>
     </Grid>
 </Window>
