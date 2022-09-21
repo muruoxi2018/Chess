@@ -112,6 +112,7 @@ namespace Chess
                 WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
         }
+        
         /// <summary>
         /// 打开用户设置窗口
         /// </summary>

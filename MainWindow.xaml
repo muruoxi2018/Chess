@@ -49,21 +49,25 @@
             <Button Content="设置" Style="{DynamicResource button}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,1,5,1" Click="SystemSetup" Width="45" Margin="10,0,0,0"/>
             <Button Content="置顶" Style="{DynamicResource button}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,1,5,1" Click="AllwayOnTop" Width="45" Margin="10,0,0,0"/>
         </StackPanel>
-        <Grid x:Name="Waiting" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid x:Name="Waiting" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
             <Ellipse Width="150" Height="150" StrokeThickness="10" Fill="#BFFFFFFF" Stroke="#CCFFFFFF"/>
-            <Ellipse x:Name="changeEllipse" Stroke="#FFF30808"  Height="140" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Ellipse.Triggers>
-                    <EventTrigger RoutedEvent="Loaded">
+            <Path Stroke="Red" StrokeThickness="5" Margin="75,75,0,0" Opacity="0.8">
+                <Path.Data>
+                    <EllipseGeometry x:Name="changeEllipse" RadiusX="70" RadiusY="70" />
+                </Path.Data>
+                <Path.Triggers>
+                    <EventTrigger RoutedEvent="Path.Loaded">
                         <BeginStoryboard>
                             <Storyboard>
                                 <ParallelTimeline AutoReverse="True">
-                                    <DoubleAnimation Storyboard.TargetName="changeEllipse" Storyboard.TargetProperty="width" From="140" To="0" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="changeEllipse" Storyboard.TargetProperty="RadiusX" From="70" To="0" Duration="0:0:1"/>
+                                    <DoubleAnimation Storyboard.TargetName="changeEllipse" Storyboard.TargetProperty="RadiusY" From="70" To="0" Duration="0:0:2"/>
                                 </ParallelTimeline>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
-                </Ellipse.Triggers>
-            </Ellipse>
+                </Path.Triggers>
+            </Path>
         </Grid>
     </Grid>
 </Window>
