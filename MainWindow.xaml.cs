@@ -1,4 +1,5 @@
 ﻿using Chess.SubWindow;
+using Chess.Test;
 using System;
 using System.Globalization;
 using System.IO;
@@ -153,6 +154,11 @@ namespace Chess
             }
         }
 
+        private void OpenTestWindow(object sender, RoutedEventArgs e)
+        {
+            TestWindow tw=new TestWindow();
+            tw.Show();
+        }
     }
     /// <summary>
     /// 转换器。将文件名字符串转换为BitMapImage实例。
