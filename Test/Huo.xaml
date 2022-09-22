@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:Chess.Test"
       mc:Ignorable="d" 
       Title="Huo" Width="210" Height="210">
-
     <Grid>
         <Border>
             <Border.Background>
