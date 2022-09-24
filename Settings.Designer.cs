@@ -154,5 +154,17 @@ namespace Chess {
                 this["CurrentSide"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CanJuIndex {
+            get {
+                return ((int)(this["CanJuIndex"]));
+            }
+            set {
+                this["CanJuIndex"] = value;
+            }
+        }
     }
 }

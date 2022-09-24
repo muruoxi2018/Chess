@@ -110,7 +110,7 @@ namespace Chess
             StopAutoMove.IsEnabled = false;
             PCVsPcAutoMoveCanJuQiZi.IsEnabled = true;
             PCVsPcStopAutoMove.IsEnabled = false;
-            CanJuIndex = 0;
+            CanJuIndex = Settings.Default.CanJuIndex;
             GlobalValue.EnableGameStop = false;
 
             switch (MainWindow.menuItem) // 根据主菜单，打开对应的按钮面板
@@ -406,6 +406,7 @@ namespace Chess
                         GlobalValue.qiZiArray[qizi].SetPosition(i, j);
                         GlobalValue.qiZiArray[qizi].Setlived();
                     }
+                    GlobalValue.pathPointImage[i, j].HasPoint = false; // 走棋路径点清空
                 }
             }
             GlobalValue.EnableGameStop = true;
@@ -428,6 +429,7 @@ namespace Chess
         {
             CanJuIndex--;
             if (CanJuIndex < 0) CanJuIndex = 0;
+            Settings.Default.CanJuIndex = CanJuIndex;
             ReStartCanJu(sender, e);
         }
         /// <summary>
@@ -439,6 +441,7 @@ namespace Chess
         {
             CanJuIndex++;
             if (CanJuIndex >= CanJuData.Rows.Count) CanJuIndex = CanJuData.Rows.Count - 1;
+            Settings.Default.CanJuIndex = CanJuIndex;
             ReStartCanJu(sender, e);
         }
         /// <summary>
