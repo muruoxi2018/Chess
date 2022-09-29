@@ -16,7 +16,7 @@ namespace Chess
         public const float GRID_WIDTH = 67.5f;   //棋盘格大小为 67.5*67.5
         public const bool BLACKSIDE = false;  // 黑方
         public const bool REDSIDE = true;   //红方
-        
+
         public static bool _sideTag;
         public static bool SideTag   // 当前走棋方
         {
@@ -61,14 +61,17 @@ namespace Chess
         public static QiZi[] qiZiArray = new QiZi[32]; // 棋子数组，所有棋子均在此数组中
         public static QiZi yuanWeiZhi;  // 棋子走动后在原位置显示圆圈
 
-        public static string jiangJunTiShiText {
+        public static string jiangJunTiShiText
+        {
             get { return ""; }
-            set {
+            set
+            {
                 if (jiangJunTiShi != null)
                 {
                     jiangJunTiShi.Text = value;
                 }
-            } }
+            }
+        }
         public static TextBlock jiangJunTiShi; // 将军时的文字提示
         public static string BestMoveInfoText
         {
@@ -126,14 +129,14 @@ namespace Chess
         /// 残局设计时棋子的初始位置
         /// </summary>
         public static readonly int[,] qiZiCanJuInitPosition = new int[32, 2]
-       {
+        {
             {0, -1},{1, -1},{1, -1},{2, -1},{2, -1},{3, -1},{3, -1},{4, -1},{4, -1},
             {5, -1},{5, -1},
             {6, -1},{6, -1},{6, -1},{6, -1},{6, -1},
             {0, 10},{1, 10},{1, 10},{2, 10},{2, 10},{3, 10},{3, 10},{4, 10},{4, 10},
             {5, 10},{5, 10},
             {6, 10},{6, 10},{6, 10},{6, 10},{6, 10}
-       };
+        };
         const int gw = 35;
         /// <summary>
         /// 棋盘每一格的列坐标
