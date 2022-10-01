@@ -1,8 +1,8 @@
-﻿<Window
+﻿<Window x:Class="Chess.Window_QiPu"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Chess="clr-namespace:Chess" x:Class="Chess.Window_QiPu"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Chess="clr-namespace:Chess" 
         mc:Ignorable="d"
         Title="棋谱库列表" Loaded="WindowQiPu_Load" WindowState="Normal" Icon="/picture/象128.png" Width="500" Height="941" UseLayoutRounding="True">
     <Grid x:Name="scrolls" VerticalAlignment="Stretch" Margin="10,10,10,10">
