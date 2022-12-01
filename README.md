@@ -12,13 +12,10 @@
 5. 残局破解，测试残局能力。系统自带30个残局，有视频破解教程。
 6. 残局设计，可不断收集、扩展残局库。
 
-[![主菜单界面](https://s1.328888.xyz/2022/09/08/9EVxw.png)](https://imgloc.com/i/9EVxw)
-[![主菜单界面](https://s1.328888.xyz/2022/09/08/9EzaF.png)](https://imgloc.com/i/9EzaF)
-[![用户设置窗口](https://s1.328888.xyz/2022/09/08/9EUjs.png)](https://imgloc.com/i/9EUjs)
-[![着法提示与打分](https://s1.328888.xyz/2022/09/08/9Exc0.png)](https://imgloc.com/i/9Exc0)
-[![棋谱库](https://s1.328888.xyz/2022/09/08/9EJQp.png)](https://imgloc.com/i/9EJQp)
-[![残局设计](https://s1.328888.xyz/2022/09/08/9EyNo.png)](https://imgloc.com/i/9EyNo)
-
+[![主菜单界面](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E4%B8%BB%E8%8F%9C%E5%8D%95.png)](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E4%B8%BB%E8%8F%9C%E5%8D%95.png)
+[![着法提示与打分](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E6%88%98.png)](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E6%88%98.png)
+[![棋谱库](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E6%A3%8B%E8%B0%B1%E6%95%B0%E6%8D%AE%E5%BA%93.png)](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E6%A3%8B%E8%B0%B1%E6%95%B0%E6%8D%AE%E5%BA%93.png)
+[![残局破解](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E6%AE%8B%E5%B1%80%E7%A0%B4%E8%A7%A3.png)](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E6%AE%8B%E5%B1%80%E7%A0%B4%E8%A7%A3.png)
 #### 已具备的其他功能
 * 棋盘可上下翻转，红方可在下方，也可以在上方。运行期间可随意翻转棋盘。
 * 走棋具备动画效果，有悔棋功能。
@@ -108,7 +105,8 @@ for (int i = 0; i < 9; i++)
 
 
 #### 绝杀算法流程图
-![5PaWA.png](https://s1.328888.xyz/2022/06/02/5PaWA.png)
+[![将军绝杀算法流程图](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E8%B1%A1%E6%A3%8B%E7%BB%9D%E6%9D%80%E6%B5%81%E7%A8%8B%E5%9B%BE.png)](https://gitee.com/cygsd/Chess/raw/Chess/ReadmePic/%E8%B1%A1%E6%A3%8B%E7%BB%9D%E6%9D%80%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
+
 #### 参与贡献
 
 1.  Fork 本仓库：暂无
